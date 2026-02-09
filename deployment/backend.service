@@ -1,0 +1,12 @@
+[Unit]
+Description=Hybrid Intelligence Backend
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/var/www/hybrid-intelligence/backend
+ExecStart=/var/www/hybrid-intelligence/backend/venv/bin/uvicorn server:app --host 0.0.0.0 --port 8000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
