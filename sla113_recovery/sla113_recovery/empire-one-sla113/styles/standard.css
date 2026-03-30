@@ -1,0 +1,42 @@
+/* EMPIRE ONE: SOVEREIGN UI STANDARD */
+
+:root {
+    --midnight-chrome: #121212;
+    --aztec-gold: #C5A059;
+    --sodium-orange: #FF8C00;
+    --glass-blur: blur(12px);
+}
+
+body {
+    background-color: var(--midnight-chrome);
+    color: #E0E0E0;
+    font-family: 'Courier_New_Industrial', monospace;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* THE VIEWPORT CONTAINER */
+.viewport-standard {
+    border: 1px solid var(--aztec-gold);
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+}
+
+/* G-SHIELD PULSE ANIMATION */
+.g-shield-pulse {
+    filter: drop-shadow(0 0 8px var(--aztec-gold));
+    animation: auth-pulse 4s infinite ease-in-out;
+}
+
+@keyframes auth-pulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); color: var(--sodium-orange); }
+}
+
+/* THE OLDIE NOIR FILTER */
+.noir-overlay {
+    pointer-events: none;
+    background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.8) 100%);
+    mix-blend-mode: multiply;
+}

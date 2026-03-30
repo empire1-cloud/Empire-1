@@ -1,0 +1,12 @@
+.viewport {
+  background: #111;
+  border: 1px solid #c5a059; /* Aztec Gold */
+  backdrop-filter: blur(15px);
+  animation: g-shield-pulse 5s infinite;
+}
+
+@keyframes g-shield-pulse {
+  0% { border-color: #c5a059; }
+  50% { border-color: #ff8c00; } /* Sodium Orange */
+  100% { border-color: #c5a059; }
+}
