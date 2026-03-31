@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/ai-studio/page": "app/admin/ai-studio/page.js",
+  "/admin/machines/page": "app/admin/machines/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/regulatory/page": "app/admin/regulatory/page.js",
+  "/admin/revenue/page": "app/admin/revenue/page.js",
+  "/admin/tenants/page": "app/admin/tenants/page.js",
+  "/joey-game/page": "app/joey-game/page.js",
+  "/foundry/page": "app/foundry/page.js",
+  "/operator/page": "app/operator/page.js",
+  "/page": "app/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/admin/foundry/page": "app/admin/foundry/page.js"
+}

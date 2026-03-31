@@ -1,0 +1,7 @@
+Layer,System,File,Status
+Control,Registry,manifest.json,READY
+Audio,Neural Vox,engine.py,READY
+Visual,PBR Shader,sovereign_pbr.glsl,MINTED
+Interface,Standard CSS,standard.css,MINTED
+Radio Pipeline,Suno V5,core/factory/radio/playlist.json,ACTIVE
+Admin Enforcement,G-SHIELD,scripts/enforce_admin.py,PROTECTED

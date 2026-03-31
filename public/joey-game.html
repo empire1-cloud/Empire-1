@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE_HOOD_TROPHY909 - Graduation Game</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(180deg, #000 0%, rgba(251,191,36,0.2) 100%);
+            padding: 20px;
+            border-bottom: 4px solid #fbbf24;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251,191,36,0.5);
+            letter-spacing: 2px;
+        }
+        
+        .header p { color: #ccc; margin-top: 5px; }
+        
+        .menu-container { padding: 20px; max-width: 900px; margin: 0 auto; }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .menu-btn {
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        
+        .menu-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        
+        .btn-play { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; grid-column: span 2; }
+        .btn-play:hover { background: linear-gradient(135deg, #4ade80, #22c55e); }
+        
+        .btn-characters { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+        .btn-weapons { background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; }
+        .btn-vehicles { background: linear-gradient(135deg, #a855f7, #7c3aed); color: white; }
+        .btn-maps { background: linear-gradient(135deg, #f97316, #c2410c); color: white; }
+        .btn-tribute { background: linear-gradient(135deg, #ec4899, #be185d); color: white; }
+        .btn-music { background: linear-gradient(135deg, #fbbf24, #d97706); color: black; }
+        
+        .player-showcase {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            border: 3px solid #fbbf24;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .player-showcase img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            border: 3px solid #fbbf24;
+            margin-bottom: 15px;
+        }
+        
+        .player-showcase h2 { color: #fbbf24; margin-bottom: 10px; }
+        .player-showcase p { font-size: 0.95rem; color: #ccc; }
+        
+        .character-card {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .character-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .tribute-card {
+            background: linear-gradient(135deg, #4c1d95, #7c3aed);
+            border: 3px solid #ec4899;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 15px auto;
+            max-width: 450px;
+        }
+        
+        .tribute-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #fbbf24;
+            margin-bottom: 15px;
+        }
+        
+        .tribute-card h3 { color: #fbbf24; font-size: 1.8rem; }
+        .tribute-card .fly-high { font-size: 2rem; color: #ec4899; margin-top: 15px; animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        .back-btn {
+            padding: 12px 25px;
+            background: #fbbf24;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .screen { display: none; }
+        .screen.active { display: block; }
+        
+        .screen h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #fbbf24;
+            margin-bottom: 25px;
+        }
+        
+        /* GAME SCREEN */
+        #gameScreen { padding: 10px; }
+        
+        .game-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.8);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #fbbf24;
+        }
+        
+        .score { color: #fbbf24; font-size: 1.5rem; font-weight: bold; }
+        
+        .hp-bar {
+            width: 180px;
+            height: 25px;
+            background: #333;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .hp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #22c55e);
+            transition: width 0.3s;
+        }
+        
+        .game-canvas {
+            position: relative;
+            border: 4px solid #fbbf24;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+        
+        canvas { display: block; background: #0a0a1a; }
+        
+        .speech-bubble {
+            position: absolute;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: black;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            z-index: 100;
+            display: none;
+            border: 3px solid #000;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #fbbf24;
+        }
+        
+        .enemy-speech {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+        }
+        
+        .enemy-speech::after { border-top-color: #22c55e; }
+        
+        .controls-hint {
+            text-align: center;
+            padding: 10px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* GAME OVER */
+        .game-over { text-align: center; padding: 40px; }
+        .game-over h2 { font-size: 4rem; color: #ef4444; }
+        .game-over .final-score { font-size: 2rem; color: #fbbf24; margin: 20px 0; }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 800px; margin: 0 auto; }
+        
+        .asset-card {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .asset-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎮 THE_HOOD_TROPHY909 🎮</h1>
+        <p>18th Birthday / Graduation Tribute</p>
+    </div>
+    
+    <!-- MAIN MENU -->
+    <div id="menuScreen" class="menu-container screen active">
+        <div class="menu-grid">
+            <button class="menu-btn btn-play" onclick="game.start()">🎮 PLAY</button>
+            <button class="menu-btn btn-characters" onclick="showScreen('characters')">👥 CREW</button>
+            <button class="menu-btn btn-weapons" onclick="showScreen('weapons')">🔫 WEAPONS</button>
+            <button class="menu-btn btn-vehicles" onclick="showScreen('vehicles')">🚗 RIDES</button>
+            <button class="menu-btn btn-maps" onclick="showScreen('maps')">🗺️ MAPS</button>
+            <button class="menu-btn btn-tribute" onclick="showScreen('tribute')">🙏 TRIBUTE</button>
+            <button class="menu-btn btn-music" onclick="showScreen('music')">🎵 MUSIC</button>
+        </div>
+        
+        <div class="player-showcase">
+            <img id="playerImage" src="https://image.pollinations.ai/prompt/18%20year%20old%20Mexican%20American%20male%2C%20graduation%20cap%20and%20gown%2C%20baby%20face%2C%20wide%20chest%20thin%20waist%2C%20short%20black%20hair%2C%20wearing%20thick%20gold%20chain%20with%20trap%20house%20pendant%2C%20gold%20chain%20with%20AK47%20pendant%2C%20black%20pants%2C%20Air%20Jordan%20sneakers%2C%20confident%20pose%2C%20Mexican%20flag%20colors%20subtle%2C%20gaming%20character%20sprite%2C%20game%20asset%2C%20isolated%20on%20transparent%20background%2C%20high%20quality%2C%20detailed%2C%20digital%20art?width=400&height=400&nologo=true&seed=215292" alt="Joey">
+            <h2>THE_HOOD_TROPHY909 (Joey)</h2>
+            <p>5'8 • Baby Face • Wide Frame • Big Chest</p>
+            <p>Gold Chains: 🔱 Trap House + ⚔️ AK47</p>
+            <p style="color:#fbbf24; margin-top:10px;">🇺🇸 READY FOR THE ARMY!</p>
+        </div>
+        
+        <div class="footer">
+            <p>SAN BERNARDINO • SOUTHERN CALIFORNIA • PURO PAISA</p>
+            <p>Made with love for Joey's 18th Birthday 🎓</p>
+        </div>
+    </div>
+    
+    <!-- CHARACTERS -->
+    <div id="charactersScreen" class="menu-container screen">
+        <button class="back-btn" onclick="showScreen('menu')">← BACK</button>
+        <h2>👥 THE CREW</h2>
+        <div class="grid-3">
+            <div class="character-card" style="border-color:#22c55e;">
+                <img src="https://image.pollinations.ai/prompt/Young%20Mexican%20American%20male%2C%20graduation%20outfit%2C%20dark%20skin%2C%20cholo%20style%2C%20slick%20black%20hair%20with%20gel%2C%20white%20t-shirt%2C%20black%20pants%2C%20gold%20chain%2C%20baby%20face%2C%20skinny%2C%20video%20game%20character%20sprite%2C%20cool%20look%2C%20transparent%20background?width=300&height=300&nologo=true&seed=880586" alt="Bryan">
+                <h3>BRYAN</h3>
+                <p style="color:#22c55e;">🎖️ MEDIC</p>
+                <p>Cholo style, dark skin</p>
+                <p>🚛 Pickup Truck</p>
+            </div>
+            <div class="character-card" style="border-color:#ec4899;">
+                <img src="https://image.pollinations.ai/prompt/Young%20Mexican%20American%20male%2C%20graduation%20outfit%2C%20white%20t-shirt%2C%20tall%20thin%20muscle%20built%20physique%2C%20black%20hair%2C%20baby%20face%2C%20no%20beard%2C%20video%20game%20character%20sprite%2C%20athletic%2C%20transparent%20background?width=300&height=300&nologo=true&seed=52985" alt="LIL MOR">
+                <h3>LIL MOR</h3>
+                <p style="color:#ec4899;">💪 GUNNER</p>
+                <p>Tall, muscle beast!</p>
+                <p>🏎️ 87 Monte Carlo</p>
+            </div>
+            <div class="character-card" style="border-color:#3b82f6;">
+                <img src="https://image.pollinations.ai/prompt/Young%20Mexican%20American%20male%2C%20graduation%20outfit%2C%205%20foot%208%20inches%2C%20short%20stocky%20block%20head%2C%20big%20muscles%2C%20baby%20face%2C%20black%20hair%2C%20no%20beard%2C%20thick%20body%2C%20video%20game%20character%20sprite%2C%20athletic%2C%20transparent%20background?width=300&height=300&nologo=true&seed=15033" alt="PANCHO">
+                <h3>PANCHO</h3>
+                <p style="color:#3b82f6;">🎯 RECON</p>
+                <p>5'8, baby face, muscles!</p>
+                <p>🚙 2025 Tahoe 💰</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- WEAPONS -->
+    <div id="weaponsScreen" class="menu-container screen">
+        <button class="back-btn" onclick="showScreen('menu')">← BACK</button>
+        <h2>🔫 ARMORY</h2>
+        <div class="grid-3">
+            <div class="asset-card" style="border-color:#ef4444;">
+                <img src="https://image.pollinations.ai/prompt/rave%20gun%20weapon%2C%20neon%20rainbow%20colors%2C%20glowing%20LED%20lights%2C%20colorful%20laser%2C%20futuristic%20sci-fi%20weapon%2C%20Call%20of%20Duty%20style%2C%20video%20game%20weapon%20asset%2C%20glowing%20neon%2C%20cyberpunk%2C%20transparent%20background?width=300&height=300&nologo=true&seed=769939" alt="RAVE GUN">
+                <h4>RAVE GUN</h4>
+                <p style="color:#fbbf24;">NEON RAINBOW MAGIC! 😂</p>
+            </div>
+            <div class="asset-card" style="border-color:#a855f7;">
+                <img src="https://image.pollinations.ai/prompt/purple%20baseball%20bat%2C%20purple%20neon%20glow%2C%20glowing%20LED%20lights%2C%20Saints%20Row%20weapon%20style%2C%20purple%20color%2C%20melee%20weapon%2C%20video%20game%20weapon%20asset%2C%20cyberpunk%20neon%2C%20transparent%20background?width=300&height=300&nologo=true&seed=988318" alt="PURPLE BAT">
+                <h4>PURPLE BAT</h4>
+                <p style="color:#fbbf24;">SAINTS ROW CLASSIC! 💜</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- VEHICLES -->
+    <div id="vehiclesScreen" class="menu-container screen">
+        <button class="back-btn" onclick="showScreen('menu')">← BACK</button>
+        <h2>🚗 THE RIDES</h2>
+        <div class="grid-3">
+            <div class="asset-card" style="border-color:#fbbf24;">
+                <img src="https://image.pollinations.ai/prompt/1987%20Chevrolet%20El%20Camino%2C%20silver%20metallic%20paint%2C%20custom%20show%20car%2C%2020%20inch%20chrome%20IROC%20rims%2C%20Raiders%20logo%20emblem%20on%20tailgate%2C%20WIN%20LOSE%20OR%20DIE%20text%20on%20rear%2C%20low%20rider%20stance%2C%20front%20view%2C%20car%20show%20quality%2C%20photorealistic%2C%20dark%20background?width=300&height=300&nologo=true&seed=327760" alt="El Camino">
+                <h4>87' EL CAMINO</h4>
+                <p>Silver • Raiders</p>
+                <p>WIN LOSE OR DIE</p>
+            </div>
+            <div class="asset-card" style="border-color:#22c55e;">
+                <img src="https://image.pollinations.ai/prompt/1987%20Chevrolet%20Monte%20Carlo%2C%20black%20G-body%2C%20sun%20roof%2C%20lowrider%20custom%2C%2013%20inch%20Dayton%20wheels%2C%203%20wheeling%20stance%2C%20car%20show%2C%20Southern%20California%2C%20custom%20paint%2C%20video%20game%20car%20asset%2C%20photorealistic%2C%20dark%20background?width=300&height=300&nologo=true&seed=572757" alt="Monte Carlo">
+                <h4>87' MONTE CARLO</h4>
+                <p>Black G-body</p>
+                <p>SOUTHERN LIFESTYLE 🔥</p>
+            </div>
+            <div class="asset-card" style="border-color:#ec4899;">
+                <img src="https://image.pollinations.ai/prompt/custom%20lowrider%20bike%2C%20black%20chrome%2C%20stretched%20front%20fork%2C%20big%20rear%20wheel%2C%20custom%20handlebars%2C%20flashing%20lights%2C%20show%20bike%2C%20chopper%20style%2C%20side%20view%2C%20photorealistic%2C%20dark%20background?width=300&height=300&nologo=true&seed=2014" alt="Lowrider Bike">
+                <h4>LOWRIDER BIKE</h4>
+                <p>Black Chrome</p>
+                <p>THE HOOD CLASSIC 😂</p>
+            </div>
+            <div class="asset-card" style="border-color:#3b82f6;">
+                <img src="https://image.pollinations.ai/prompt/2025%20Chevrolet%20Tahoe%2C%20black%2C%20premium%20loaded%2C%20custom%20rims%2C%20money%20stacks%20visible%20inside%2C%20cash%2C%20expensive%2C%20luxury%20SUV%2C%20photorealistic%2C%20dark%20background?width=300&height=300&nologo=true&seed=538413" alt="Tahoe">
+                <h4>PANCHO'S TAHOE</h4>
+                <p>2025 Black</p>
+                <p>LOADED WITH CASH 💰</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MAPS -->
+    <div id="mapsScreen" class="menu-container screen">
+        <button class="back-btn" onclick="showScreen('menu')">← BACK</button>
+        <h2>🗺️ SAN BERNARDINO</h2>
+        <div class="grid-3">
+            <div class="asset-card" style="border-color:#f97316;">
+                <h4>🏚️ PURO PAISA RANCH</h4>
+                <p>Dark Ranch Style</p>
+                <p>📍 San Bernardino</p>
+            </div>
+            <div class="asset-card" style="border-color:#ec4899;">
+                <h4>🏨 DOWNTOWN MOTELS</h4>
+                <p>Street Life</p>
+                <p>📍 Downtown SB</p>
+            </div>
+            <div class="asset-card" style="border-color:#22c55e;">
+                <h4>🦠 MUSCOY SWAMPS</h4>
+                <p>COVID Zombie Territory</p>
+                <p>📍 Muscoy, CA</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- TRIBUTE -->
+    <div id="tributeScreen" class="menu-container screen">
+        <button class="back-btn" onclick="showScreen('menu')">← BACK</button>
+        <h2>🙏 FLY HIGH 🌟</h2>
+        <div class="tribute-card">
+            <img src="https://image.pollinations.ai/prompt/Mexican%20American%20male%20hero%20character%2C%20memorial%20tribute%2C%20angel%20wings%2C%20golden%20halo%2C%20wearing%20gold%20chain%20with%20trophy%20pendant%2C%20white%20t-shirt%2C%20black%20pants%2C%20confident%20pose%2C%20warrior%20spirit%2C%20game%20character%20sprite%2C%20memorial%20hero%2C%20isolated%20on%20transparent%20background%2C%20digital%20art?width=300&height=300&nologo=true&seed=825071" alt="LIL MONDO">
+            <h3>BIG MONDO</h3>
+            <p>Grandfather</p>
+            <p class="fly-high">FLY HIGH 🌟</p>
+        </div>
+        <div class="tribute-card" style="background:linear-gradient(135deg,#9f1239,#881337);">
+            <h3>LIL MONDO (POPS)</h3>
+            <p>Uncle</p>
+            <p class="fly-high">FLY HIGH 🌟</p>
+        </div>
+    </div>
+    
+    <!-- MUSIC -->
+    <div id="musicScreen" class="menu-container screen">
+        <button class="back-btn" onclick="showScreen('menu')">← BACK</button>
+        <h2>🎵 OLD SCHOOL FLAVA</h2>
+        <div style="max-width:500px;margin:0 auto;background:rgba(0,0,0,0.5);padding:20px;border-radius:15px;">
+            <div style="text-align:center;padding:15px;background:#000;border-radius:10px;margin-bottom:15px;">
+                <p style="color:#fbbf24;">NOW PLAYING</p>
+                <p style="color:#22c55e;" id="nowPlaying">🎤 Select a track</p>
+            </div>
+            <div style="padding:12px;margin:8px 0;background:rgba(251,191,36,0.1);border-radius:8px;cursor:pointer;" onclick="playTrack(0)">
+                <div style="font-weight:bold;">🎤 AINT NO FUTURE IN A FRONT</div>
+                <div style="font-size:0.85rem;opacity:0.8;">MC Breed - Joey's dad approved! 😂</div>
+            </div>
+            <div style="padding:12px;margin:8px 0;background:rgba(251,191,36,0.1);border-radius:8px;cursor:pointer;" onclick="playTrack(1)">
+                <div style="font-weight:bold;">🥷 PROTECT YA NECK</div>
+                <div style="font-size:0.85rem;opacity:0.8;">Wu-Tang Clan</div>
+            </div>
+            <div style="padding:12px;margin:8px 0;background:rgba(251,191,36,0.1);border-radius:8px;cursor:pointer;" onclick="playTrack(2)">
+                <div style="font-weight:bold;">💰 C.R.E.A.M.</div>
+                <div style="font-size:0.85rem;opacity:0.8;">Wu-Tang Clan</div>
+            </div>
+            <div style="padding:12px;margin:8px 0;background:rgba(251,191,36,0.1);border-radius:8px;cursor:pointer;" onclick="playTrack(3)">
+                <div style="font-weight:bold;">🧢 JUICY</div>
+                <div style="font-size:0.85rem;opacity:0.8;">Biggie Smalls</div>
+            </div>
+            <div style="padding:12px;margin:8px 0;background:rgba(251,191,36,0.1);border-radius:8px;cursor:pointer;" onclick="playTrack(4)">
+                <div style="font-weight:bold;">🌴 CALIFORNIA LOVE</div>
+                <div style="font-size:0.85rem;opacity:0.8;">2Pac</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- GAME SCREEN -->
+    <div id="gameScreen" class="screen">
+        <div class="game-hud">
+            <div class="score">SCORE: <span id="scoreValue">0</span></div>
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="color:#ef4444;">❤️</span>
+                <div class="hp-bar"><div class="hp-fill" id="hpBar"></div></div>
+            </div>
+            <button class="back-btn" onclick="game.quit()" style="margin:0;padding:8px 15px;font-size:0.9rem;">❌ QUIT</button>
+        </div>
+        
+        <div class="game-canvas">
+            <canvas id="gameCanvas" width="800" height="450"></canvas>
+            <div class="speech-bubble" id="speechBubble"></div>
+        </div>
+        
+        <div class="controls-hint">
+            🎮 WASD or ARROWS to move | SPACE to attack | Survive the C1 WANNABE 1 zombies!
+        </div>
+    </div>
+    
+    <!-- GAME OVER -->
+    <div id="gameOverScreen" class="screen">
+        <div class="game-over">
+            <h2>GAME OVER</h2>
+            <p class="final-score">Final Score: <span id="finalScore">0</span></p>
+            <button class="menu-btn btn-play" onclick="game.start()" style="padding:15px 40px;">🔄 PLAY AGAIN</button>
+            <button class="back-btn" onclick="showScreen('menu')" style="padding:15px 40px;">🏠 MAIN MENU</button>
+            <p style="margin-top:30px;color:#ec4899;font-size:1.5rem;">🙏 FLY HIGH 🌟 BIG MONDO & LIL MONDO</p>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screen) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screen + 'Screen').classList.add('active');
+        }
+        
+        const tracks = [
+            { title: "AINT NO FUTURE IN A FRONT", artist: "MC Breed" },
+            { title: "PROTECT YA NECK", artist: "Wu-Tang Clan" },
+            { title: "C.R.E.A.M.", artist: "Wu-Tang Clan" },
+            { title: "JUICY", artist: "Biggie Smalls" },
+            { title: "CALIFORNIA LOVE", artist: "2Pac" }
+        ];
+        
+        function playTrack(index) {
+            document.getElementById('nowPlaying').textContent = '🎵 ' + tracks[index].title + ' - ' + tracks[index].artist;
+        }
+        
+        // GAME ENGINE
+        const game = {
+            canvas: null,
+            ctx: null,
+            running: false,
+            player: null,
+            enemies: [],
+            particles: [],
+            keys: {},
+            
+            JOEY_VOICES: [
+                "We sell treats, just not ours! 😂",
+                "C1 WANNABE get out the way!",
+                "This my graduation party! 🎓",
+                "Gold chains stay gleaming! 🔱",
+                "San Bernardino! Let's go! 🌴",
+                "BOOM! C1 WANNABE DOWN! 🔥"
+            ],
+            
+            ENEMY_VOICES: [
+                "C1 WANNABE 1 from Muscoy! 🧟",
+                "We want that purolife!",
+                "Brainsss... and treats! 🧠"
+            ],
+            
+            init() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                
+                document.addEventListener('keydown', e => {
+                    this.keys[e.key.toLowerCase()] = true;
+                    if (e.key === ' ') { e.preventDefault(); this.attack(); }
+                });
+                document.addEventListener('keyup', e => this.keys[e.key.toLowerCase()] = false);
+            },
+            
+            start() {
+                this.running = true;
+                this.player = { x: 400, y: 225, size: 40, hp: 100, speed: 6, attacking: false, attackTimer: 0 };
+                this.enemies = [];
+                this.particles = [];
+                this.score = 0;
+                this.spawnTimer = 0;
+                showScreen('game');
+                this.showSpeech("We sell treats, just not ours! 😂", '#fbbf24');
+                this.update();
+            },
+            
+            quit() { this.running = false; showScreen('menu'); },
+            
+            attack() {
+                if (!this.player || !this.running) return;
+                this.player.attacking = true;
+                this.player.attackTimer = 10;
+                
+                this.enemies = this.enemies.filter(e => {
+                    const dx = this.player.x - e.x;
+                    const dy = this.player.y - e.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 100) {
+                        this.score += 100;
+                        for (let i = 0; i < 8; i++) {
+                            this.particles.push({ x: e.x, y: e.y, vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10, life: 20, color: '#22c55e' });
+                        }
+                        return false;
+                    }
+                    return true;
+                });
+                
+                this.showSpeech("BOOM! C1 WANNABE DOWN! 🔥", '#fbbf24');
+                document.getElementById('scoreValue').textContent = this.score;
+            },
+            
+            showSpeech(text, color) {
+                const bubble = document.getElementById('speechBubble');
+                bubble.textContent = text;
+                bubble.style.background = color === '#fbbf24' ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : 'linear-gradient(135deg, #22c55e, #16a34a)';
+                bubble.style.color = color === '#fbbf24' ? 'black' : 'white';
+                bubble.style.display = 'block';
+                bubble.style.left = '50%';
+                bubble.style.top = '20px';
+                bubble.style.transform = 'translateX(-50%)';
+                if (this.speechTimer) clearTimeout(this.speechTimer);
+                this.speechTimer = setTimeout(() => bubble.style.display = 'none', 2500);
+            },
+            
+            spawnEnemy() {
+                const side = Math.floor(Math.random() * 4);
+                let ex, ey;
+                if (side === 0) { ex = Math.random() * 800; ey = -30; }
+                else if (side === 1) { ex = Math.random() * 800; ey = 480; }
+                else if (side === 2) { ex = -30; ey = Math.random() * 450; }
+                else { ex = 830; ey = Math.random() * 450; }
+                this.enemies.push({ x: ex, y: ey, size: 35, speed: 1.5 + Math.random() });
+            },
+            
+            update() {
+                if (!this.running) return;
+                
+                if (this.keys['w'] || this.keys['arrowup']) this.player.y = Math.max(30, this.player.y - this.player.speed);
+                if (this.keys['s'] || this.keys['arrowdown']) this.player.y = Math.min(420, this.player.y + this.player.speed);
+                if (this.keys['a'] || this.keys['arrowleft']) this.player.x = Math.max(30, this.player.x - this.player.speed);
+                if (this.keys['d'] || this.keys['arrowright']) this.player.x = Math.min(770, this.player.x + this.player.speed);
+                
+                if (this.player.attackTimer > 0) { this.player.attackTimer--; if (this.player.attackTimer === 0) this.player.attacking = false; }
+                
+                this.spawnTimer++;
+                if (this.spawnTimer > 40 && this.enemies.length < 12) { this.spawnEnemy(); this.spawnTimer = 0; }
+                
+                this.enemies.forEach(e => {
+                    const dx = this.player.x - e.x;
+                    const dy = this.player.y - e.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist > 0) { e.x += (dx/dist) * e.speed; e.y += (dy/dist) * e.speed; }
+                    if (dist < 35) { this.player.hp -= 2; if (Math.random() < 0.1) this.showSpeech("OUCH! C1 WANNABE BIT ME!", '#22c55e'); }
+                });
+                
+                this.particles = this.particles.filter(p => { p.x += p.vx; p.y += p.vy; p.life--; return p.life > 0; });
+                document.getElementById('hpBar').style.width = this.player.hp + '%';
+                document.getElementById('scoreValue').textContent = this.score;
+                
+                if (Math.random() < 0.003) this.showSpeech(this.JOEY_VOICES[Math.floor(Math.random() * this.JOEY_VOICES.length)], '#fbbf24');
+                if (this.enemies.length > 0 && Math.random() < 0.002) this.showSpeech(this.ENEMY_VOICES[Math.floor(Math.random() * this.ENEMY_VOICES.length)], '#22c55e');
+                
+                if (this.player.hp <= 0) {
+                    this.running = false;
+                    document.getElementById('finalScore').textContent = this.score;
+                    showScreen('gameOver');
+                    return;
+                }
+                
+                this.draw();
+                requestAnimationFrame(() => this.update());
+            },
+            
+            draw() {
+                const ctx = this.ctx;
+                
+                // Background
+                const bg = ctx.createLinearGradient(0, 0, 0, 450);
+                bg.addColorStop(0, '#1a0a2e');
+                bg.addColorStop(1, '#0a0a1a');
+                ctx.fillStyle = bg;
+                ctx.fillRect(0, 0, 800, 450);
+                
+                // Downtown SB buildings
+                ctx.fillStyle = '#1f2937';
+                ctx.fillRect(50, 150, 80, 300);
+                ctx.fillRect(150, 100, 100, 350);
+                ctx.fillRect(280, 80, 120, 370);
+                ctx.fillRect(420, 120, 90, 330);
+                ctx.fillRect(540, 60, 100, 390);
+                ctx.fillRect(660, 100, 100, 350);
+                
+                // Windows
+                for (let i = 0; i < 6; i++) {
+                    for (let j = 0; j < 8; j++) {
+                        if (Math.random() > 0.5) {
+                            ctx.fillStyle = Math.random() > 0.7 ? '#fbbf24' : '#fef3c7';
+                            ctx.fillRect(60 + i*25 + j*3, 160 + j*35, 10, 15);
+                        }
+                    }
+                }
+                
+                // Neon signs
+                ctx.font = '35px Arial';
+                ctx.fillStyle = '#ec4899'; ctx.fillText('💜', 300, 140);
+                ctx.fillStyle = '#22c55e'; ctx.fillText('💚', 560, 130);
+                ctx.font = '30px Arial';
+                ctx.fillText('🌴', 60, 400);
+                ctx.fillText('🌴', 700, 400);
+                
+                // Particles
+                this.particles.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI*2); ctx.fill();
+                });
+                
+                // Enemies (C1 WANNABE 1)
+                this.enemies.forEach(e => {
+                    ctx.save();
+                    ctx.translate(e.x, e.y);
+                    // Zombie body
+                    ctx.fillStyle = '#22c55e';
+                    ctx.beginPath(); ctx.ellipse(0, 5, 14, 20, 0, 0, Math.PI*2); ctx.fill();
+                    // Head
+                    ctx.fillStyle = '#166534';
+                    ctx.beginPath(); ctx.arc(0, -15, 12, 0, Math.PI*2); ctx.fill();
+                    // Eyes
+                    ctx.fillStyle = '#ef4444';
+                    ctx.beginPath(); ctx.arc(-4, -17, 3, 0, Math.PI*2); ctx.arc(4, -17, 3, 0, Math.PI*2); ctx.fill();
+                    ctx.restore();
+                });
+                
+                // Player
+                if (this.player) {
+                    ctx.save();
+                    ctx.translate(this.player.x, this.player.y);
+                    
+                    // Attack glow
+                    if (this.player.attacking) {
+                        ctx.strokeStyle = '#fbbf24';
+                        ctx.lineWidth = 4;
+                        ctx.beginPath(); ctx.arc(0, 0, 50, 0, Math.PI*2); ctx.stroke();
+                    }
+                    
+                    // Player body (gown)
+                    ctx.fillStyle = '#1e3a8a';
+                    ctx.beginPath(); ctx.moveTo(0, -5); ctx.lineTo(-18, 30); ctx.lineTo(18, 30); ctx.closePath(); ctx.fill();
+                    
+                    // Head
+                    ctx.fillStyle = '#92400e';
+                    ctx.beginPath(); ctx.arc(0, -15, 14, 0, Math.PI*2); ctx.fill();
+                    
+                    // Gold chain
+                    ctx.strokeStyle = '#fbbf24';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath(); ctx.arc(0, 5, 16, 0.2, Math.PI-0.2); ctx.stroke();
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.fillRect(-4, 20, 8, 10);
+                    
+                    // Cap
+                    ctx.fillStyle = '#1e3a8a';
+                    ctx.fillRect(-18, -32, 36, 6);
+                    ctx.fillRect(-10, -40, 20, 12);
+                    // Tassel
+                    ctx.strokeStyle = '#fbbf24';
+                    ctx.beginPath(); ctx.moveTo(10, -35); ctx.quadraticCurveTo(25, -15, 18, 0); ctx.stroke();
+                    
+                    // Face
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath(); ctx.arc(-5, -17, 2, 0, Math.PI*2); ctx.arc(5, -17, 2, 0, Math.PI*2); ctx.fill();
+                    
+                    ctx.restore();
+                }
+            }
+        };
+        
+        game.init();
+    </script>
+</body>
+</html>

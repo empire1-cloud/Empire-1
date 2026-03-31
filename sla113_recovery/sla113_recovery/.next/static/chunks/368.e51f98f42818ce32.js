@@ -1,0 +1,3 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[368],{37368:function(r,e,t){t.r(e),t.d(e,{oitFinalSimpleBlendPixelShaderWGSL:function(){return u}});var o=t(44953);let n="oitFinalSimpleBlendPixelShader",a=`var uFrontColor: texture_2d<f32>;@fragment
+fn main(input: FragmentInputs)->FragmentOutputs {var fragCoord: vec2i=vec2i(fragmentInputs.position.xy);var frontColor: vec4f=textureLoad(uFrontColor,fragCoord,0);fragmentOutputs.color=frontColor;}
+`;o.v.ShadersStoreWGSL[n]||(o.v.ShadersStoreWGSL[n]=a);let u={name:n,shader:a}}}]);
