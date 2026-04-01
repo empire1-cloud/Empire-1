@@ -64,10 +64,13 @@ class Settings(BaseSettings):
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
     # ---------------------------------------------------------
-    # MONGODB ATLAS (Tenant Usage Logs)
+    # MONGODB ATLAS (Tenant Connections)
     # ---------------------------------------------------------
-    MONGODB_ATLAS_URI: str = os.getenv("MONGODB_ATLAS_URI", "")
-    MONGODB_ATLAS_DB: str = os.getenv("MONGODB_ATLAS_DB", "sla113")
+    MONGODB_ATLAS_EMPIRE_URI: str = os.getenv("MONGODB_ATLAS_EMPIRE_URI", "")
+    MONGODB_ATLAS_EMPIRE_DB: str = os.getenv("MONGODB_ATLAS_EMPIRE_DB", "empire_one")
+    
+    MONGODB_ATLAS_SOUTHERN_URI: str = os.getenv("MONGODB_ATLAS_SOUTHERN_URI", "")
+    MONGODB_ATLAS_SOUTHERN_DB: str = os.getenv("MONGODB_ATLAS_SOUTHERN_DB", "southern_lifestyle")
 
     # ---------------------------------------------------------
     # HYBRID BACKEND (Engine Invocation)

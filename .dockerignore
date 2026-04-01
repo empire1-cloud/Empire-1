@@ -1,0 +1,14 @@
+Dockerfile*
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.next
+.git
+.vscode
+.env
+.env.*
+backend/__pycache__
+backend/.env
+backend/.env.*
+# Keep requirements.txt and app logic!

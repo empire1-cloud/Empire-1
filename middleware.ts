@@ -8,8 +8,7 @@ function detectTenant(host: string): string {
   if (!host) return 'empire1'
   const cleanHost = host.split(':')[0].toLowerCase()
   
-  if (cleanHost.includes('sla113.southernlifestyle.org') || 
-      cleanHost.includes('sla113.empire1.cloud')) {
+  if (cleanHost.includes('sla113.southernlifestyle.org')) {
     return 'sla113'
   }
 

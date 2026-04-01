@@ -1,0 +1,15 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/empire1-frontend', '-f', 'Dockerfile.frontend', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/empire1-frontend']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [
+      'run', 'deploy', 'empire1-frontend',
+      '--image', 'gcr.io/$PROJECT_ID/empire1-frontend',
+      '--region', 'us-central1',
+      '--allow-unauthenticated'
+    ]
+images:
+  - 'gcr.io/$PROJECT_ID/empire1-frontend'
