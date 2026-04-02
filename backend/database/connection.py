@@ -18,17 +18,29 @@ _db = None
 
 def get_mongo_url() -> str:
     """Get MongoDB URL from environment."""
-    url = os.environ.get("MONGO_URL")
+    url = (
+        os.environ.get("MONGO_URL")
+        or os.environ.get("MONGODB_ATLAS_EMPIRE_URI")
+        or os.environ.get("MONGODB_ATLAS_SOUTHERN_URI")
+    )
     if not url:
-        raise ValueError("MONGO_URL environment variable is required")
+        raise ValueError(
+            "Mongo connection string is required. Set MONGO_URL or a MONGODB_ATLAS_*_URI variable."
+        )
     return url
 
 
 def get_db_name() -> str:
     """Get database name from environment."""
-    name = os.environ.get("DB_NAME")
+    name = (
+        os.environ.get("DB_NAME")
+        or os.environ.get("MONGODB_ATLAS_EMPIRE_DB")
+        or os.environ.get("MONGODB_ATLAS_SOUTHERN_DB")
+    )
     if not name:
-        raise ValueError("DB_NAME environment variable is required")
+        raise ValueError(
+            "Mongo database name is required. Set DB_NAME or a MONGODB_ATLAS_*_DB variable."
+        )
     return name
 
 
