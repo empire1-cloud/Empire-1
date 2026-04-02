@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { 
   Activity, Database, 
   Zap, 
@@ -60,6 +61,55 @@ const ENGINE_PRESETS: Record<OsKey, { title: string, desc: string, base: string 
   FANTASY_RPG: { title: "Epic RPG", desc: "Mythic // Boss // Canon", base: "epic fantasy mythical architect, aztec stone motifs, deep obsidian shadows" },
   BPO_PANO: { title: "Paño Arte", desc: "Paño // Chicano", base: "authentic chicano paño arte, blue ballpoint pen ink on white handkerchief cloth" }
 };
+
+function buildInlineImagePlaceholder(label: string) {
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+      <rect width="400" height="400" fill="#050505"/>
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="20">${label}</text>
+    </svg>`
+  )}`;
+}
+
+function AssetImage({
+  src,
+  alt,
+  className,
+  fallbackLabel,
+  fill = false,
+  width,
+  height,
+  sizes,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+  fallbackLabel: string;
+  fill?: boolean;
+  width?: number;
+  height?: number;
+  sizes?: string;
+}) {
+  const [imageSrc, setImageSrc] = useState(src);
+
+  useEffect(() => {
+    setImageSrc(src);
+  }, [src]);
+
+  return (
+    <Image
+      src={imageSrc}
+      alt={alt}
+      className={className}
+      fill={fill}
+      width={width}
+      height={height}
+      sizes={sizes}
+      unoptimized
+      onError={() => setImageSrc(buildInlineImagePlaceholder(fallbackLabel))}
+    />
+  );
+}
 
 /**
  * SLA113 // OPERATOR_CONSOLE
@@ -284,7 +334,16 @@ export default function Sla113Home() {
                   </div>
                   <div className="col-span-12 lg:col-span-7">
                     <div className="glass-panel h-[500px] flex items-center justify-center relative overflow-hidden rounded-sm border border-zinc-900">
-                      {nexusPreview ? <img src={nexusPreview} alt="Render" className="w-full h-full object-contain p-4" /> : <div className="text-zinc-700 uppercase tracking-widest text-[9px]">Awaiting_Compilation</div>}
+                      {nexusPreview ? (
+                        <AssetImage
+                          src={nexusPreview}
+                          alt="Render"
+                          fallbackLabel="Render"
+                          className="object-contain p-4"
+                          fill
+                          sizes="(min-width: 1024px) 58vw, 100vw"
+                        />
+                      ) : <div className="text-zinc-700 uppercase tracking-widest text-[9px]">Awaiting_Compilation</div>}
                     </div>
                   </div>
                 </div>
@@ -338,8 +397,16 @@ export default function Sla113Home() {
                 <section className="lg:col-span-6 bg-[#010204] border border-zinc-900 relative min-h-[500px] flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #333 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
                   <div className="relative">
-                    <img src={`/assets/${selectedSprite}`} alt="Cutter Stage" className="max-w-[400px] border border-dashed border-zinc-700" 
-                         onError={(e: any) => e.target.src='https://placehold.co/400x400/050505/ffffff?text='+selectedSprite} />
+                    <div className="relative w-[400px] h-[400px] border border-dashed border-zinc-700">
+                      <AssetImage
+                        src={`/assets/${selectedSprite}`}
+                        alt="Cutter Stage"
+                        fallbackLabel={selectedSprite}
+                        className="object-contain"
+                        fill
+                        sizes="400px"
+                      />
+                    </div>
                     <div className="hitbox-overlay" style={{ top: `${hitbox.y}%`, left: `${hitbox.x}%`, width: `${hitbox.w}%`, height: `${hitbox.h}%` }}></div>
                   </div>
                 </section>
@@ -380,8 +447,14 @@ export default function Sla113Home() {
                     {[...(auditState.module_a_assets || []), ...(auditState.module_s_assets || [])].map((asset: any, i: number) => (
                       <div key={i} className="glass-panel p-4 border border-zinc-900 group">
                         <div className="aspect-square bg-black border border-zinc-800 mb-4 flex items-center justify-center overflow-hidden relative">
-                          <img src={`/assets/${asset.file}`} alt="Audit" className="max-w-[80%] max-h-[80%] object-contain" 
-                               onError={(e: any) => e.target.src='https://placehold.co/200x200/050505/ffffff?text='+asset.file} />
+                          <AssetImage
+                            src={`/assets/${asset.file}`}
+                            alt="Audit"
+                            fallbackLabel={asset.file}
+                            className="object-contain p-[10%]"
+                            fill
+                            sizes="(min-width: 1024px) 20vw, 40vw"
+                          />
                           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             <Box size={12} className="text-zinc-600" />
                           </div>

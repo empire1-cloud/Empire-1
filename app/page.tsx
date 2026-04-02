@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import EmpireHome from '@/components/tenants/EmpireHome';
-import Sla113Home from '@/components/tenants/Sla113Home';
 import SouthernHome from '@/components/tenants/SouthernHome';
 import ArcadeHome from '@/components/tenants/ArcadeHome';
 
@@ -8,10 +8,10 @@ import ArcadeHome from '@/components/tenants/ArcadeHome';
  * Root Dispatcher
  * 
  * Domain Routing:
- * 1. sla113.southernlifestyle.org -> PRIVATE ADMIN CONSOLE (SLA113)
- * 2. arcade.southernlifestyle.org -> PERSONAL SWEEPSTAKES ARCADE (PixiJS Body)
- * 3. southernlifestyle.org        -> SOUTHERN LYFESTYLE ARCADE (Public Homepage)
- * 4. empire1.cloud                -> EMPIRE ONE (MAIN BUSINESS)
+ * 1. sla113.southernlifestyle.org -> PRIVATE ADMIN CONSOLE (redirects to /admin)
+ * 2. arcade.southernlifestyle.org -> PERSONAL SWEEPSTAKES ARCADE
+ * 3. southernlifestyle.org        -> SOUTHERN LYFESTYLE FRONTEND
+ * 4. empire1.cloud                -> EMPIRE ONE FRONTEND
  */
 export default function RootPage() {
   const headersList = headers();
@@ -20,7 +20,7 @@ export default function RootPage() {
 
   // 1. SLA113 ADMIN CONSOLE (Private)
   if (cleanHost === 'sla113.southernlifestyle.org') {
-    return <Sla113Home />;
+    redirect('/admin');
   }
 
   // 2. PERSONAL SWEEPSTAKES ARCADE (The "Body")

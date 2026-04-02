@@ -2,6 +2,27 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
+const SYMBOLS = [
+  { id: 'crown', char: '👑', weight: 4, pays: {3: 100, 4: 500, 5: 5000}, isJackpot: true },
+  { id: 'wild', char: '⭐', weight: 6, pays: {3: 50, 4: 200, 5: 1000}, isWild: true },
+  { id: 'scatter', char: '🎉', weight: 8, isScatter: true },
+  { id: 'seven', char: '7️⃣', weight: 10, pays: {3: 30, 4: 100, 5: 500} },
+  { id: 'bar', char: '🍀', weight: 15, pays: {3: 20, 4: 50, 5: 200} },
+  { id: 'bell', char: '🔔', weight: 18, pays: {3: 15, 4: 40, 5: 150} },
+  { id: 'cherry', char: '🍒', weight: 25, pays: {3: 10, 4: 25, 5: 75} },
+  { id: 'grape', char: '🍇', weight: 30, pays: {3: 5, 4: 15, 5: 50} },
+];
+
+function getWeightedSymbol() {
+  const totalWeight = SYMBOLS.reduce((sum, s) => sum + s.weight, 0);
+  let rand = Math.random() * totalWeight;
+  for (const sym of SYMBOLS) {
+    rand -= sym.weight;
+    if (rand <= 0) return sym;
+  }
+  return SYMBOLS[0];
+}
+
 /**
  * SOVEREIGN_ARCADE // ARCADE_BODY_v2
  * High-performance PixiJS + GSAP + Sovereign Slam Engine
@@ -11,28 +32,6 @@ export default function ArcadeHome() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [gameState, setGameState] = useState<'LOADING' | 'LOBBY' | 'GAME'>('LOADING');
-
-  // --- SOVEREIGN SLAM BRAIN (LOGIC) ---
-  const SYMBOLS = [
-    { id: 'crown', char: '👑', weight: 4, pays: {3: 100, 4: 500, 5: 5000}, isJackpot: true },
-    { id: 'wild', char: '⭐', weight: 6, pays: {3: 50, 4: 200, 5: 1000}, isWild: true },
-    { id: 'scatter', char: '🎉', weight: 8, isScatter: true },
-    { id: 'seven', char: '7️⃣', weight: 10, pays: {3: 30, 4: 100, 5: 500} },
-    { id: 'bar', char: '🍀', weight: 15, pays: {3: 20, 4: 50, 5: 200} },
-    { id: 'bell', char: '🔔', weight: 18, pays: {3: 15, 4: 40, 5: 150} },
-    { id: 'cherry', char: '🍒', weight: 25, pays: {3: 10, 4: 25, 5: 75} },
-    { id: 'grape', char: '🍇', weight: 30, pays: {3: 5, 4: 15, 5: 50} },
-  ];
-
-  const getWeightedSymbol = () => {
-    const totalWeight = SYMBOLS.reduce((sum, s) => sum + s.weight, 0);
-    let rand = Math.random() * totalWeight;
-    for (const sym of SYMBOLS) {
-      rand -= sym.weight;
-      if (rand <= 0) return sym;
-    }
-    return SYMBOLS[0];
-  };
 
   useEffect(() => {
     // 1. Dynamic Script Loading
@@ -84,7 +83,7 @@ export default function ArcadeHome() {
       const symbolTextures: Record<string, any> = {};
       
       const startLoading = async () => {
-        const assets = await loader.load(['logo', 'titleBg'], (p) => {
+        const assets = await loader.load(['logo', 'titleBg'], (p: number) => {
           setLoadingProgress(Math.floor(p * 100));
         });
         

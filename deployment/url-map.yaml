@@ -1,0 +1,17 @@
+defaultService: projects/PROJECT_ID/global/backendServices/empire1-frontend-backend
+hostRules:
+  - hosts:
+      - empire1.cloud
+      - southernlifestyle.org
+      - www.southernlifestyle.org
+      - arcade.southernlifestyle.org
+      - sla113.southernlifestyle.org
+    pathMatcher: empire1-matcher
+pathMatchers:
+  - name: empire1-matcher
+    defaultService: projects/PROJECT_ID/global/backendServices/empire1-frontend-backend
+    pathRules:
+      - paths:
+          - /api
+          - /api/*
+        service: projects/PROJECT_ID/global/backendServices/empire1-api-backend

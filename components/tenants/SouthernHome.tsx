@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 /**
  * SOUTHERN LYFESTYLE // CANON_FRONT_PAGE
@@ -173,7 +174,14 @@ export default function SouthernHome() {
         </nav>
 
         <section className="min-h-[90vh] flex flex-col items-center justify-center px-6 pt-32 pb-16 pointer-events-auto">
-          <img src="/assets/southern-logo.jpg" alt="SLA113 Crest" className="w-32 md:w-48 rounded-full mb-8 shadow-2xl border border-cyan-500/20" />
+          <Image
+            src="/assets/southern-logo.jpg"
+            alt="SLA113 Crest"
+            width={192}
+            height={192}
+            unoptimized
+            className="w-32 h-32 md:w-48 md:h-48 rounded-full mb-8 shadow-2xl border border-cyan-500/20"
+          />
           <div className="font-mono text-xs uppercase tracking-[0.4em] text-zinc-500 mb-2">Master Build Foundry</div>
           <h1 className="chrome-script mb-4">Southern Lyfestyle</h1>
           <div className="font-mono text-cyan-400 uppercase tracking-[0.3em] font-bold text-sm md:text-base mb-10 drop-shadow-md">Stilo’s Active & Attractive.</div>

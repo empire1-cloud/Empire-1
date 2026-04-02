@@ -84,7 +84,7 @@ export default function ArcadeHome() {
       const symbolTextures: Record<string, any> = {};
       
       const startLoading = async () => {
-        const assets = await loader.load(['logo', 'titleBg'], (p) => {
+        const assets = await loader.load(['logo', 'titleBg'], (p: number) => {
           setLoadingProgress(Math.floor(p * 100));
         });
         

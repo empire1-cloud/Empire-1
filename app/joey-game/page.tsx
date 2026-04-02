@@ -14,6 +14,24 @@ interface GameObject {
   maxHp?: number;
 }
 
+const JOEY_VOICES = [
+  "We sell treats, just not ours! 😂",
+  "C1 WANNABE get out the way!",
+  "This my graduation party! 🎓",
+  "Gold chains stay gleaming! 🔱",
+  "San Bernardino! Let's go! 🌴",
+  "My grandpa would be proud!",
+  "LIL MONDO we miss you! 🙏",
+  "Full moon nights! 🌕 Werewolf coming!"
+];
+
+const ENEMY_VOICES = [
+  "C1 WANNABE 1 from Muscoy! 🧟",
+  "We want that purolife!",
+  "Brainsss... and treats! 🧠",
+  "COVID AINT DEAD YET!"
+];
+
 const JOEY_GAME = {
   title: "THE_HOOD_TROPHY909",
   subtitle: "Graduation Game - 18th Birthday",
@@ -112,26 +130,6 @@ export default function JoeyGame() {
 
     return () => clearInterval(interval);
   }, [gameState, playerPos]);
-
-  // Joey's voice lines
-  const JOEY_VOICES = [
-    "We sell treats, just not ours! 😂",
-    "C1 WANNABE get out the way!",
-    "This my graduation party! 🎓",
-    "Gold chains stay gleaming! 🔱",
-    "San Bernardino! Let's go! 🌴",
-    "My grandpa would be proud!",
-    "LIL MONDO we miss you! 🙏",
-    "Full moon nights! 🌕 Werewolf coming!"
-  ];
-
-  // Enemy voice lines
-  const ENEMY_VOICES = [
-    "C1 WANNABE 1 from Muscoy! 🧟",
-    "We want that purolife!",
-    "Brainsss... and treats! 🧠",
-    "COVID AINT DEAD YET!"
-  ];
 
   // Random speech every few seconds
   useEffect(() => {
@@ -425,7 +423,7 @@ export default function JoeyGame() {
       {/* Footer */}
       <div className="bg-black/50 p-4 mt-8 text-center">
         <p className="text-yellow-400">SAN BERNARDINO • SOUTHERN CALIFORNIA • PURO PAISA</p>
-        <p className="text-sm text-gray-400">Made for Joey's 18th Birthday 🎓🇺🇸</p>
+        <p className="text-sm text-gray-400">Made for Joey&apos;s 18th Birthday 🎓🇺🇸</p>
       </div>
     </div>
   );
