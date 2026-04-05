@@ -14,7 +14,8 @@ function detectTenant(host: string): string {
   }
 
   if (cleanHost === 'southernlifestyle.org' || 
-      cleanHost === 'www.southernlifestyle.org') {
+      cleanHost === 'www.southernlifestyle.org' ||
+      cleanHost === 'arcade.southernlifestyle.org') {
     return 'southern_lyfestyle'
   }
   
@@ -23,7 +24,11 @@ function detectTenant(host: string): string {
   }
   
   if (cleanHost.startsWith('sla113-')) return 'sla113'
-  if (cleanHost.startsWith('arcade-')) return 'southern_lyfestyle'
+  if (cleanHost.startsWith('arcade-') || 
+      cleanHost.includes('arcade.southern') || 
+      cleanHost.includes('cloudshell.dev')) {
+    return 'southern_lyfestyle'
+  }
 
   return 'empire1'
 }

@@ -176,7 +176,12 @@ export default function ArcadeHome() {
           const strip: any[] = [];
           for (let j = 0; j < 5; j++) { // 5 symbols per reel logic
             const symData = getWeightedSymbol();
-            const symbol = new PIXI.Text(symData.char, { fontSize: 60, align: 'center' });
+            const symbol = new PIXI.Text(symData.char, { 
+              fontFamily: 'Space Grotesk', 
+              fontSize: 60, 
+              align: 'center',
+              fill: 0xFFFFFF
+            });
             symbol.anchor.set(0.5);
             symbol.x = reelWidth / 2;
             symbol.y = j * 90 + 45;
@@ -197,7 +202,13 @@ export default function ArcadeHome() {
         spinBtn.cursor = 'pointer';
         stage.addChild(spinBtn);
 
-        const btnText = new PIXI.Text("SLAM", { fontSize: 20, fontWeight: 'bold', fill: 0x000000 });
+        const btnText = new PIXI.Text("SLAM", { 
+          fontFamily: 'Syne', 
+          fontSize: 24, 
+          fontWeight: '800', 
+          fill: 0x000000,
+          letterSpacing: 2
+        });
         btnText.anchor.set(0.5);
         spinBtn.addChild(btnText);
 
@@ -239,13 +250,13 @@ export default function ArcadeHome() {
   }, []);
 
   return (
-    <div className="bg-[#050505] w-full h-screen overflow-hidden flex flex-col items-center justify-center font-mono relative selection:bg-transparent">
+    <div className="bg-[#050505] w-full h-screen overflow-hidden flex flex-col items-center justify-center relative selection:bg-transparent" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
       <div ref={containerRef} className="absolute inset-0" />
       
       {/* HUD Layer */}
       <div className="absolute top-0 left-0 w-full p-8 flex justify-between items-start pointer-events-none z-20">
         <div className="space-y-1">
-          <div className="text-[10px] text-white font-bold tracking-[0.2em] uppercase">SLA113 // ARCADE_SOVEREIGN</div>
+          <div className="text-[10px] text-white font-black tracking-[0.4em] uppercase">SOUTHERN // ARCADE_SOVEREIGN</div>
           <div className="text-[8px] text-zinc-500 uppercase tracking-widest">Engine: <span className="text-[#D4AF37]">PIXI_V7 + GSAP</span></div>
         </div>
       </div>

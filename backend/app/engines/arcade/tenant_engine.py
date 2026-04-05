@@ -10,106 +10,17 @@ before any arcade game engine is dispatched.
 
 from typing import Optional
 
-# Tenant context registry derived from Build Spec
-TENANT_REGISTRY = {
-    "tenant_casino_vegas": {
-        "display_name": "Downtown Vegas Casino",
-        "regulatory_profile": "nevada_lvcc",
-        "region": "us-west",
-        "timezone": "America/Los_Angeles",
-        "governance": {
-            "age_gate_minimum": 21,        # nevada_lvcc
-            "session_timeout_minutes": 45, # tenant override (Build Spec: 45)
-            "max_concurrent_sessions": 2,  # tenant override
-            "loss_limit_per_session_pct": 0.50,
-        },
-        "revenue_routing": {
-            "account_id": "acct_vegas_main",
-            "operator_pct": 0.70,
-            "platform_fee_pct": 0.05,
-            "partner_pct": 0.15,
-            "reserve_pct": 0.10,
-        },
-        "rtp_override": 0.95,
-        "volatility_default": 0.6,
-        "narrative_beat_override": "climactic",
-        "allowed_machine_types": ["fish", "slots", "keno"],
-        "stripe_plan_required": "operator",
-    },
-    "tenant_arcade_london": {
-        "display_name": "London Arcade Club",
-        "regulatory_profile": "uk_gbga",
-        "region": "eu-west",
-        "timezone": "Europe/London",
-        "governance": {
-            "age_gate_minimum": 18,        # uk_gbga
-            "session_timeout_minutes": 60, # tenant override
-            "max_concurrent_sessions": 1,
-            "loss_limit_per_session_pct": 0.40,
-        },
-        "revenue_routing": {
-            "account_id": "acct_london_main",
-            "operator_pct": 0.75,
-            "platform_fee_pct": 0.05,
-            "partner_pct": 0.10,
-            "reserve_pct": 0.10,
-        },
-        "rtp_override": 0.94,
-        "volatility_default": 0.5,
-        "narrative_beat_override": "ambient",
-        "allowed_machine_types": ["fish", "slots", "custom"],
-        "stripe_plan_required": "operator",
-    },
-    "tenant_gaming_sydney": {
-        "display_name": "Sydney Gaming Hub",
-        "regulatory_profile": "australia_ilga",
-        "region": "apac",
-        "timezone": "Australia/Sydney",
-        "governance": {
-            "age_gate_minimum": 18,        # australia_ilga
-            "session_timeout_minutes": 50, # tenant override
-            "max_concurrent_sessions": 1,
-            "loss_limit_per_session_pct": 0.45,
-        },
-        "revenue_routing": {
-            "account_id": "acct_sydney_main",
-            "operator_pct": 0.72,
-            "platform_fee_pct": 0.05,
-            "partner_pct": 0.13,
-            "reserve_pct": 0.10,
-        },
-        "rtp_override": 0.96,
-        "volatility_default": 0.5,
-        "narrative_beat_override": "climactic",
-        "allowed_machine_types": ["fish", "slots", "keno", "custom"],
-        "stripe_plan_required": "factory",
-    },
-    # Legacy EMPIRE 1 internal tenants
-    "southern_lyfestyle_arcade": {
-        "display_name": "Southern Lyfestyle Arcade",
-        "regulatory_profile": "nevada_lvcc",
-        "region": "us-west",
-        "timezone": "America/Los_Angeles",
-        "governance": {
-            "age_gate_minimum": 21,
-            "session_timeout_minutes": 30,
-            "max_concurrent_sessions": 1,
-            "loss_limit_per_session_pct": 0.50,
-        },
-        "revenue_routing": {
-            "account_id": "acct_southern_main",
-            "operator_pct": 0.70,
-            "platform_fee_pct": 0.05,
-            "partner_pct": 0.15,
-            "reserve_pct": 0.10,
-        },
-        "rtp_override": 0.94,
-        "volatility_default": 0.5,
-        "narrative_beat_override": "ambient",
-        "allowed_machine_types": ["fish"],
-        "stripe_plan_required": "operator",
-    },
-}
+from app.core.build_spec_loader import get_spec
+
+# Dynamically load tenants from the Master Build Spec
+_raw_tenants = get_spec().get("tenants", [])
+TENANT_REGISTRY = {t["tenant_id"]: t for t in _raw_tenants}
+
+# Ensure display_name is used consistently
+for tid, t in TENANT_REGISTRY.items():
+    if "display_name" not in t and "identity" in t:
+        t["display_name"] = t["identity"].get("tagline", tid)
+
 
 # Stripe plan tier → allowed tenant types
 STRIPE_PLAN_ENGINE_ACCESS = {

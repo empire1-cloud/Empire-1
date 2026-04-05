@@ -305,6 +305,71 @@ tenants:
       audio_enabled: true
       haptic_feedback_enabled: true
 
+  - tenant_id: "empire1"
+    display_name: "Empire One Corporate"
+    theme_id: "theme_empire_minimal"
+    identity:
+      brand_color_primary: "#000000"
+      brand_color_accent: "#FFFFFF"
+      tagline: "Sovereign Business Intelligence"
+    machine_catalog:
+      fish: false
+      slots: false
+      keno: false
+      custom: true
+    overrides:
+      session_timeout_minutes: 1440
+    revenue_routing:
+      account_id: "acct_empire_prime"
+      operator_pct: 0.95
+      platform_fee_pct: 0.05
+    regulatory_profile: "us_ca_high_compliance"
+    region: "us-west"
+    timezone: "America/Los_Angeles"
+
+  - tenant_id: "southern_lyfestyle"
+    display_name: "Southern Lyfestyle"
+    theme_id: "theme_southern_authentic"
+    identity:
+      brand_color_primary: "#D4AF37"
+      brand_color_accent: "#1A0B2E"
+      tagline: "The Southern Lyfestyle"
+    machine_catalog:
+      fish: true
+      slots: true
+      keno: true
+      custom: true
+    revenue_routing:
+      account_id: "acct_southern_main"
+      operator_pct: 0.85
+      platform_fee_pct: 0.05
+    regulatory_profile: "us_ca_high_compliance"
+    region: "us-west"
+    timezone: "America/Los_Angeles"
+
+  - tenant_id: "southern_lyfestyle_arcade"
+    display_name: "Arcade.Southern"
+    theme_id: "theme_sgv_arcade"
+    identity:
+      brand_color_primary: "#2D1B4E"
+      brand_color_accent: "#FFD700"
+      tagline: "Personal Side System"
+    machine_catalog:
+      fish: true
+      slots: true
+      keno: true
+      custom: true
+    overrides:
+      rtp_override_pct: 0.94
+      volatility_default: 0.7
+    revenue_routing:
+      account_id: "acct_southern_arcade"
+      operator_pct: 0.70
+      platform_fee_pct: 0.05
+    regulatory_profile: "nevada_lvcc"
+    region: "us-west"
+    timezone: "America/Los_Angeles"
+
 # =============================================================================
 # THEMES
 # =============================================================================

@@ -18,14 +18,14 @@ class EngineMetadata(BaseModel):
 # REVENUE ENGINES (Hybrid Intelligence)
 # ========================================================
 ENGINES = {
-    # Creative Engines (SLA113 Operator Layer)
+    # Creative Engines (Southern Lyfestyle Foundry)
     "vision_smith": EngineMetadata(
         name="VisionSmith",
         service="app.services.vision_smith",
         router="app.routers.vision",
         credit_cost=10,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Text-to-image generation with SDXL, LoRAs, and refiners",
+        enabled_for=["SLA113", "Southern"],  # Southern creative | SLA113 foundry
+        description="Text-to-image generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
         engine_type="revenue",
@@ -35,8 +35,8 @@ ENGINES = {
         service="app.services.voice_king",
         router="app.routers.voice",
         credit_cost=5,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Text-to-speech and voice cloning with XTTS/Bark/Coqui",
+        enabled_for=["SLA113", "Southern"],  # Southern creative | SLA113 foundry
+        description="Text-to-speech for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
         engine_type="revenue",
@@ -46,8 +46,8 @@ ENGINES = {
         service="app.services.sonic_forge",
         router="app.routers.sonicforge",
         credit_cost=15,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Music generation and stem separation with AudioCraft/MusicGen",
+        enabled_for=["SLA113", "Southern"],  # Southern creative | SLA113 foundry
+        description="Music generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
         engine_type="revenue",
@@ -57,8 +57,8 @@ ENGINES = {
         service="app.services.vo_engine",
         router="app.routers.video",
         credit_cost=20,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Video generation and voice-over engine",
+        enabled_for=["SLA113", "Southern"],  # Southern creative | SLA113 foundry
+        description="Video generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
         engine_type="revenue",
@@ -69,8 +69,8 @@ ENGINES = {
         service="app.services.image_editor",
         router="app.routers.image_editor",
         credit_cost=8,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Advanced image editing and inpainting",
+        enabled_for=["SLA113", "Southern"],
+        description="Advanced Southern image editing",
         status="unavailable",
         canon_lock=False,
         engine_type="revenue",
@@ -80,8 +80,8 @@ ENGINES = {
         service="app.services.video_editor",
         router="app.routers.video_editor",
         credit_cost=25,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Video editing and composition",
+        enabled_for=["SLA113", "Southern"],
+        description="Southern video composition",
         status="unavailable",
         canon_lock=False,
         engine_type="revenue",
@@ -91,8 +91,8 @@ ENGINES = {
         service="app.services.audio_mixer",
         router="app.routers.audio_mixer",
         credit_cost=12,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Professional audio mixing and mastering",
+        enabled_for=["SLA113", "Southern"],
+        description="Southern audio mixing",
         status="unavailable",
         canon_lock=False,
         engine_type="revenue",
@@ -102,8 +102,8 @@ ENGINES = {
         service="app.services.speech_to_text",
         router="app.routers.speech_to_text",
         credit_cost=3,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Transcription and speech recognition",
+        enabled_for=["SLA113", "Southern"],
+        description="Southern transcription engine",
         status="unavailable",
         canon_lock=False,
         engine_type="revenue",
@@ -113,8 +113,8 @@ ENGINES = {
         service="app.services.text_to_3d",
         router="app.routers.text_to_3d",
         credit_cost=30,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="Text-to-3D model generation",
+        enabled_for=["SLA113", "Southern"],
+        description="Southern 3D asset generation",
         status="unavailable",
         canon_lock=False,
         engine_type="revenue",
@@ -124,8 +124,8 @@ ENGINES = {
         service="app.services.animation_engine",
         router="app.routers.animation_engine",
         credit_cost=35,
-        enabled_for=["EMPIRE1", "SLA113"],  # Empire One SaaS | SLA113 manufacture
-        description="AI-powered animation generation",
+        enabled_for=["SLA113", "Southern"],
+        description="Southern animation generation",
         status="unavailable",
         canon_lock=False,
         engine_type="revenue",
@@ -389,7 +389,7 @@ ARCADE_ENGINES = {
         router="app.routers.arcade",
         credit_cost=2,
         enabled_for=["tenant_casino_vegas", "tenant_arcade_london", "tenant_gaming_sydney",
-                     "Southern", "southern_lyfestyle_arcade", "SLA113"],  # Southern arcade | SLA113 math kernel,
+                     "Southern", "southern_lyfestyle_arcade"],  # Gaming tenants only
         description="Arcade fish shooting game — 30% skill, 70% chance. RTP 0.94. "
                     "Catch tiers: common/uncommon/rare/epic.",
         status="active",
@@ -402,7 +402,7 @@ ARCADE_ENGINES = {
         router="app.routers.arcade",
         credit_cost=2,
         enabled_for=["tenant_casino_vegas", "tenant_arcade_london", "tenant_gaming_sydney",
-                     "Southern", "horror_arcade", "anime_arcade", "SLA113"],  # Southern arcade variants,
+                     "Southern", "horror_arcade", "anime_arcade"],  # Gaming tenants only
         description="Classic 5-reel 20-payline slots. RTP 0.95. Themes: gold_rush, "
                     "ancient_egypt, space_odyssey, wild_west. Progressive jackpot enabled.",
         status="active",
@@ -414,7 +414,7 @@ ARCADE_ENGINES = {
         service="app.engines.arcade.keno_engine_v1",
         router="app.routers.arcade",
         credit_cost=1,
-        enabled_for=["tenant_casino_vegas", "Southern", "SLA113"],  # Southern arcade | SLA113 orchestration,
+        enabled_for=["tenant_casino_vegas", "Southern"],  # Gaming tenants only
         description="Fast-paced keno — pick up to 20 numbers from 1–80. RTP 0.93. "
                     "Draw every 60 seconds. Payout: match-5=1x, match-10=5x, match-15=20x, match-20=500x.",
         status="active",
@@ -604,7 +604,7 @@ EMPIRE_PIPELINES = {
             {"engine": "vision_smith",  "action": "upscale",   "description": "SDXL refiner upscale pass"},
         ],
         "output_type": "image",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -620,7 +620,7 @@ EMPIRE_PIPELINES = {
             {"engine": "voice_king",    "action": "post_process",  "description": "EQ, normalization, stem export"},
         ],
         "output_type": "audio",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -637,7 +637,7 @@ EMPIRE_PIPELINES = {
             {"engine": "audio_mixer",   "action": "master",        "description": "Final mastering pass"},
         ],
         "output_type": "audio",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -655,7 +655,7 @@ EMPIRE_PIPELINES = {
             {"engine": "vo_engine",     "action": "assemble",      "description": "Video assembly and render"},
         ],
         "output_type": "video",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -671,7 +671,7 @@ EMPIRE_PIPELINES = {
             {"engine": "audio_mixer",   "action": "mix",           "description": "Audio mix and EQ"},
         ],
         "output_type": "mixed",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -688,7 +688,7 @@ EMPIRE_PIPELINES = {
             {"engine": "speech_to_text","action": "export",        "description": "SRT/VTT/JSON export"},
         ],
         "output_type": "text",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -705,7 +705,7 @@ EMPIRE_PIPELINES = {
             {"engine": "animation_engine",   "action": "preview",   "description": "Generate animation preview"},
         ],
         "output_type": "3d",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -723,7 +723,7 @@ EMPIRE_PIPELINES = {
             {"engine": "vo_engine",     "action": "package",       "description": "Package into deliverable"},
         ],
         "output_type": "media_pack",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },
@@ -745,7 +745,7 @@ EMPIRE_PIPELINES = {
             {"engine": "vo_engine",          "action": "render",         "description": "Full render output"},
         ],
         "output_type": "video",
-        "enabled_for": ["EMPIRE1", "SLA113"],
+        "enabled_for": ["SLA113", "Southern"],
         "status":      "active",
         "math_rev":    "MATH_CORE_REV_7",
     },

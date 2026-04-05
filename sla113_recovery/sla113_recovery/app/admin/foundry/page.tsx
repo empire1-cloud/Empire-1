@@ -1,10 +1,7 @@
-'use client';
-
-export const dynamic = "force-dynamic";
-
 import { useEffect, useState, Suspense } from 'react';
 import nextDynamic from 'next/dynamic';
-import { Shield, Box, Zap, CheckCircle2, XCircle, Clock, Database, Gem } from 'lucide-react';
+import { Shield, Box, Zap, CheckCircle2, XCircle, Clock, Database, Gem, Activity } from 'lucide-react';
+import { gsap } from 'gsap';
 
 const BabylonScene = nextDynamic(() => import('@/components/BabylonScene'), { ssr: false });
 
@@ -51,8 +48,28 @@ export default function FoundryPage() {
     useEffect(() => {
         sync();
         const interval = setInterval(sync, 2000);
+
+        // Initial entrance animation
+        gsap.from(".asset-card", {
+            y: 20,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: "power3.out"
+        });
+
         return () => clearInterval(interval);
     }, []);
+
+    const triggerScreenShake = () => {
+        gsap.to("main", {
+            x: 5,
+            duration: 0.05,
+            repeat: 5,
+            yoyo: true,
+            onComplete: () => gsap.set("main", { x: 0 })
+        });
+    };
 
     if (isLoading) {
         return (
@@ -99,7 +116,7 @@ export default function FoundryPage() {
             <main className="relative z-10 flex-1 p-12 overflow-y-auto">
                 <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
                     {[...(state?.module_a_assets || []), ...(state?.module_s_assets || [])].map((asset: any, i: number) => (
-                        <div key={`${asset.id}-${i}`} className="group relative bg-black/40 backdrop-blur-md border border-white/5 hover:border-[#c9a84c]/30 transition-all duration-500 flex flex-col p-6 shadow-2xl">
+                        <div key={`${asset.id}-${i}`} className="asset-card group relative bg-black/40 backdrop-blur-md border border-white/5 hover:border-[#c9a84c]/30 transition-all duration-500 flex flex-col p-6 shadow-2xl">
                             {/* Visual Engine Port */}
                             <div className="w-full aspect-square bg-black/60 border border-white/5 group-hover:border-[#c9a84c]/20 transition-all relative mb-6 overflow-hidden">
                                 <div className="absolute inset-0 flex flex-col items-center justify-center opacity-20 group-hover:opacity-60 transition-opacity">
@@ -107,6 +124,11 @@ export default function FoundryPage() {
                                     <span className="text-[9px] font-mono tracking-widest uppercase">{asset.type}_MANIFEST</span>
                                 </div>
                                 
+                                {/* Pulse Effect for High-Value Assets */}
+                                {asset.type === 'GOLD' && (
+                                    <div className="absolute inset-0 border border-[#c9a84c]/20 animate-pulse"></div>
+                                )}
+
                                 {/* Corner Accents */}
                                 <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#c9a84c]/40"></div>
                                 <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#c9a84c]/40"></div>
@@ -169,14 +191,26 @@ export default function FoundryPage() {
 
                 <div className="flex gap-4">
                     <button 
-                        onClick={() => execute('reject')} 
+                        onClick={() => {
+                            triggerScreenShake();
+                            execute('reject');
+                        }} 
                         className="group h-12 px-8 border border-white/10 bg-transparent text-[#737373] hover:text-white hover:border-white/20 text-[10px] font-bold uppercase tracking-[0.3em] flex items-center gap-3 transition-all active:scale-95"
                     >
                         <XCircle className="w-4 h-4 text-red-900 group-hover:text-red-500 transition-colors" />
                         Flush Stage
                     </button>
                     <button 
-                        onClick={() => execute('approve')} 
+                        onClick={() => {
+                            gsap.to(".asset-card", {
+                                scale: 1.05,
+                                duration: 0.1,
+                                yoyo: true,
+                                repeat: 1,
+                                ease: "power2.out"
+                            });
+                            execute('approve');
+                        }} 
                         className="group h-12 px-10 bg-[#c9a84c] text-black text-[10px] font-bold uppercase tracking-[0.3em] flex items-center gap-3 hover:bg-[#d4b96a] transition-all border border-white/10 active:scale-95"
                     >
                         <CheckCircle2 className="w-4 h-4" />

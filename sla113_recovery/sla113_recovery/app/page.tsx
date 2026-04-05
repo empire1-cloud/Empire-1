@@ -24,7 +24,8 @@ export default function RootPage() {
   }
 
   // 2. PERSONAL SWEEPSTAKES ARCADE (The "Body")
-  if (cleanHost === 'arcade.southernlifestyle.org') {
+  if (cleanHost === 'arcade.southernlifestyle.org' || 
+      cleanHost.includes('cloudshell.dev')) {
     return <ArcadeHome />;
   }
 

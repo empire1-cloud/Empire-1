@@ -8,8 +8,14 @@ function detectTenant(host: string): string {
   if (!host) return 'empire1'
   const cleanHost = host.split(':')[0].toLowerCase()
   
-  if (cleanHost.includes('sla113.southernlifestyle.org')) {
+  if (cleanHost.includes('sla113.southernlifestyle.org') || 
+      cleanHost.includes('sla113.empire1.cloud')) {
     return 'sla113'
+  }
+
+  if (cleanHost === 'arcade.southernlifestyle.org' || 
+      cleanHost === 'arcade.southern') {
+    return 'southern_lyfestyle_arcade'
   }
 
   if (cleanHost === 'southernlifestyle.org' || 
@@ -22,7 +28,7 @@ function detectTenant(host: string): string {
   }
   
   if (cleanHost.startsWith('sla113-')) return 'sla113'
-  if (cleanHost.startsWith('arcade-')) return 'southern_lyfestyle'
+  if (cleanHost.startsWith('arcade-')) return 'southern_lyfestyle_arcade'
 
   return 'empire1'
 }

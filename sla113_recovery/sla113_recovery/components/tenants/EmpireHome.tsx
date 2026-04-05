@@ -29,8 +29,18 @@ const EmpireHome = () => {
   // Gemini API Configuration
   const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "AIzaSyBvWiHFNhdicOrYhq3xsmJ0LBqylNWnSR0";
 
+  const [displayCoord, setDisplayCoord] = useState("0.0000");
+
   useEffect(() => {
-    if (chatEndRef.current) {
+    setDisplayCoord(Math.random().toFixed(4));
+    const interval = setInterval(() => {
+        setDisplayCoord(Math.random().toFixed(4));
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (chatEndRef.current && isChatOpen) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chatMessages, isChatOpen]);
@@ -168,7 +178,7 @@ const EmpireHome = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     let width: number, height: number;
-    let particles: Particle[] = [];
+    let particles: any[] = []; // Changed to any[] to avoid missing interface error
 
     const resize = () => {
       width = canvas.width = canvas.parentElement?.clientWidth || 800;
@@ -270,10 +280,8 @@ const EmpireHome = () => {
         </div>
       </div>
 
-      {/* Main Container - Asymmetrical HUD Layout */}
       <div className="pt-16 px-4 md:px-8 pb-32 max-w-[1600px] mx-auto relative z-10">
         
-        {/* Top Header Grid */}
         <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4">
           <div className="lg:col-span-3 border border-[#00e5ff]/20 bg-black/40 p-4 relative tech-border">
             <span className="block text-[10px] font-mono text-[#00e5ff] mb-1">ID // 0xEMPIRE_1</span>
@@ -291,9 +299,7 @@ const EmpireHome = () => {
           </div>
         </header>
 
-        {/* Hero Section - HUD Split */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4 min-h-[60vh]">
-          {/* Left Readout */}
           <div className="lg:col-span-5 flex flex-col justify-end border border-[#00e5ff]/20 bg-black/60 p-8 tech-border relative overflow-hidden">
             <div className="absolute top-4 left-4 text-[9px] font-mono text-[#00e5ff]/40">SEC: 01 // OVERVIEW</div>
             
@@ -317,17 +323,15 @@ const EmpireHome = () => {
             </div>
           </div>
 
-          {/* Right Canvas Terminal */}
           <div className="lg:col-span-7 border border-[#00e5ff]/20 bg-black p-1 tech-border relative h-[50vh] lg:h-auto">
              <div className="absolute top-4 left-4 z-10 flex gap-2">
                <div className="w-2 h-2 bg-[#00e5ff] animate-pulse"></div>
                <span className="text-[9px] font-mono text-[#00e5ff]">LIVE_NETWORK_TOPOLOGY</span>
              </div>
-             <div className="absolute bottom-4 right-4 z-10 text-[9px] font-mono text-white/30 text-right">
-               COORD: {Math.random().toFixed(4)}<br/>
+             <div className="absolute bottom-4 right-4 z-10 text-[9px] font-mono text-white/30 text-right uppercase">
+               COORD: {displayCoord}<br/>
                STATUS: OPTIMAL
              </div>
-             {/* Reticles */}
              <Maximize size={16} className="absolute top-4 right-4 text-[#00e5ff]/30 z-10" />
              <Maximize size={16} className="absolute bottom-4 left-4 text-[#00e5ff]/30 z-10" />
              
@@ -337,7 +341,6 @@ const EmpireHome = () => {
           </div>
         </section>
 
-        {/* System Diagnostics (Features) */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           {[
             { id: "0x1A", title: "OS_TEMPLATES", desc: "Preconfigured AI/Web/GPU nodes. Instant deployment.", val: "99%" },
@@ -355,10 +358,7 @@ const EmpireHome = () => {
           ))}
         </section>
 
-        {/* Live Compiler & Architect Split */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-          
-          {/* OS Build Compiler */}
           <div id="compiler" className="border border-[#00e5ff]/20 bg-black p-1 tech-border flex flex-col">
             <div className="bg-[#00e5ff]/10 border-b border-[#00e5ff]/20 p-3 flex items-center justify-between">
               <span className="text-[10px] font-mono font-bold text-[#00e5ff] uppercase tracking-widest flex items-center gap-2">
@@ -389,7 +389,6 @@ const EmpireHome = () => {
             </div>
           </div>
 
-          {/* Infrastructure Architect */}
           <div id="architect" className="border border-[#00e5ff]/20 bg-black p-1 tech-border flex flex-col">
             <div className="bg-[#00e5ff]/10 border-b border-[#00e5ff]/20 p-3 flex items-center justify-between">
               <span className="text-[10px] font-mono font-bold text-[#00e5ff] uppercase tracking-widest flex items-center gap-2">
@@ -421,7 +420,6 @@ const EmpireHome = () => {
           </div>
         </section>
 
-        {/* Resource Allocation Matrix (Pricing) */}
         <section id="matrix" className="border border-[#00e5ff]/20 bg-black/40 p-1 tech-border mb-4">
           <div className="bg-[#00e5ff]/5 border-b border-[#00e5ff]/20 p-4">
             <h2 className="text-sm font-black text-white tracking-widest uppercase">RESOURCE_ALLOCATION_MATRIX</h2>
@@ -444,7 +442,7 @@ const EmpireHome = () => {
                 </div>
                 
                 <div className="space-y-3 mb-12">
-                  {node.features.map((f, idx) => (
+                  {node.features.map((f: any, idx: number) => (
                     <div key={idx} className="font-mono text-[9px] text-white/60 tracking-widest flex items-center gap-2">
                       <span className="text-[#00e5ff]">+</span> {f}
                     </div>
@@ -470,10 +468,8 @@ const EmpireHome = () => {
 
       </div>
 
-      {/* Logistics Desk Floating Terminal */}
       <div className={`fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 transition-all duration-300 ease-in-out ${isChatOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}>
         <div className="w-[350px] md:w-[450px] h-[500px] bg-black border border-[#00e5ff]/40 shadow-[0_0_30px_rgba(0,229,255,0.1)] flex flex-col tech-border relative">
-          {/* Header */}
           <div className="h-10 bg-[#00e5ff]/10 border-b border-[#00e5ff]/20 flex justify-between items-center px-4">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-[#00e5ff] animate-pulse"></div>
@@ -484,7 +480,6 @@ const EmpireHome = () => {
             </button>
           </div>
           
-          {/* Messages */}
           <div className="flex-grow overflow-y-auto p-4 font-mono text-[10px] flex flex-col gap-4 custom-scrollbar bg-[#010204]">
             {chatMessages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -510,7 +505,6 @@ const EmpireHome = () => {
             <div ref={chatEndRef} />
           </div>
 
-          {/* Input */}
           <div className="p-3 bg-black border-t border-[#00e5ff]/20">
             <form onSubmit={sendChatMessage} className="flex gap-2">
               <input 
@@ -532,7 +526,6 @@ const EmpireHome = () => {
         </div>
       </div>
 
-      {/* Floating Toggle Button */}
       <button 
         onClick={() => setIsChatOpen(true)}
         className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 bg-black border border-[#00e5ff]/50 text-[#00e5ff] px-4 py-3 flex items-center gap-2 hover:bg-[#00e5ff]/10 transition-all duration-300 tech-border ${isChatOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
@@ -541,7 +534,6 @@ const EmpireHome = () => {
         <span className="text-[9px] font-mono font-bold tracking-[2px]">[ OPEN_COM_LINK ]</span>
       </button>
 
-      {/* Internal CSS Styles */}
       <style dangerouslySetInnerHTML={{__html: `
         .custom-scrollbar::-webkit-scrollbar { width: 3px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
