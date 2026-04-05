@@ -1,0 +1,4 @@
+name: projects/disco-amphora-490606-n8/policies/iam.allowedPolicyMemberDomains
+spec:
+  rules:
+  - allowAll: true
