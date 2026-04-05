@@ -19,10 +19,207 @@ export default function ArcadeHome() {
 
   // Simulate Live Jackpot
   useEffect(() => {
-    const interval = setInterval(() => {
-      setJackpot(prev => prev + Math.random() * 0.1);
-    }, 100);
-    return () => clearInterval(interval);
+    // 1. Dynamic Script Loading
+    const loadScripts = async () => {
+      if (window.PIXI && window.gsap) { initEngine(); return; }
+      
+      const pixiScript = document.createElement('script');
+      pixiScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.2/pixi.min.js';
+      document.head.appendChild(pixiScript);
+
+      const gsapScript = document.createElement('script');
+      gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+      document.head.appendChild(gsapScript);
+
+      await Promise.all([
+        new Promise((res) => pixiScript.onload = res),
+        new Promise((res) => gsapScript.onload = res)
+      ]);
+
+      initEngine();
+    };
+
+    const initEngine = () => {
+      if (!containerRef.current || !window.PIXI || !window.gsap) return;
+      const PIXI = window.PIXI;
+      const gsap = window.gsap;
+
+      // Clean up previous app if exists
+      containerRef.current.innerHTML = '';
+
+      const app = new PIXI.Application({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        backgroundColor: 0x050505,
+        antialias: true,
+        resolution: window.devicePixelRatio || 1,
+      });
+      containerRef.current.appendChild(app.view);
+
+      const stage = new PIXI.Container();
+      app.stage.addChild(stage);
+
+      // --- ASSET PIPELINE ---
+      const loader = PIXI.Assets;
+      loader.add('logo', '/brand/southern-logo.png');
+      loader.add('titleBg', '/assets/titleScreen.jpg'); // Best match for titlescene
+      
+      // Generate textures for symbols (Placeholder for Vertex AI)
+      const symbolTextures: Record<string, any> = {};
+      
+      const startLoading = async () => {
+        const assets = await loader.load(['logo', 'titleBg'], (p: number) => {
+          setLoadingProgress(Math.floor(p * 100));
+        });
+        
+        // Generate Text Textures for symbols since we don't have the PNGs yet
+        SYMBOLS.forEach(sym => {
+          const text = new PIXI.Text(sym.char, { fontSize: 60 });
+          symbolTextures[sym.id] = text; // Just storing text obj for now, ideal is texture
+        });
+
+        runLoaderSequence(assets);
+      };
+
+      const runLoaderSequence = (assets: any) => {
+        // "S" Emblem Logic
+        const emblem = new PIXI.Sprite(assets.logo);
+        emblem.anchor.set(0.5);
+        emblem.x = app.screen.width / 2;
+        emblem.y = app.screen.height / 2;
+        emblem.scale.set(0.2);
+        emblem.alpha = 0;
+        stage.addChild(emblem);
+
+        // "Golden Hour" Glow
+        const bloom = new PIXI.BlurFilter(8);
+        emblem.filters = [bloom];
+
+        gsap.to(emblem, { alpha: 1, duration: 1.5, ease: "power2.out" });
+        gsap.to(emblem.scale, { x: 0.22, y: 0.22, duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut" });
+
+        // Simulated Metallic Sweep
+        const sweep = new PIXI.Graphics();
+        sweep.beginFill(0xFFD700, 0.3);
+        sweep.drawRect(0, 0, 50, 500);
+        sweep.endFill();
+        sweep.rotation = 0.5;
+        sweep.x = -200;
+        sweep.y = -200;
+        // stage.addChild(sweep); // Mask logic needed, skipping for simple prototype
+
+        // Transition to Game
+        setTimeout(() => {
+          gsap.to(emblem, { 
+            alpha: 0, 
+            scale: 0.5, 
+            duration: 0.8, 
+            ease: "back.in(1.7)",
+            onComplete: () => initGame(assets)
+          });
+        }, 3000);
+      };
+
+      const initGame = (assets: any) => {
+        setGameState('GAME');
+        stage.removeChildren();
+
+        // Background (Parallax Layer 1)
+        const bg = new PIXI.Sprite(assets.titleBg);
+        bg.anchor.set(0.5);
+        bg.x = app.screen.width / 2;
+        bg.y = app.screen.height / 2;
+        bg.scale.set(Math.max(app.screen.width / bg.width, app.screen.height / bg.height));
+        bg.alpha = 0.4;
+        stage.addChild(bg);
+
+        // Slot Machine Container
+        const machine = new PIXI.Container();
+        machine.x = app.screen.width / 2 - 300;
+        machine.y = app.screen.height / 2 - 200;
+        stage.addChild(machine);
+
+        // Draw Reels
+        const reels: any[] = [];
+        const reelWidth = 120;
+        const reelHeight = 400;
+        
+        for (let i = 0; i < 5; i++) {
+          const reel = new PIXI.Container();
+          reel.x = i * (reelWidth + 10);
+          machine.addChild(reel);
+          
+          // Reel Background
+          const reelBg = new PIXI.Graphics();
+          reelBg.beginFill(0x000000, 0.8);
+          reelBg.drawRect(0, 0, reelWidth, reelHeight);
+          reelBg.endFill();
+          reel.addChild(reelBg);
+
+          // Symbols
+          const strip: any[] = [];
+          for (let j = 0; j < 5; j++) { // 5 symbols per reel logic
+            const symData = getWeightedSymbol();
+            const symbol = new PIXI.Text(symData.char, { fontSize: 60, align: 'center' });
+            symbol.anchor.set(0.5);
+            symbol.x = reelWidth / 2;
+            symbol.y = j * 90 + 45;
+            reel.addChild(symbol);
+            strip.push(symbol);
+          }
+          reels.push({ container: reel, symbols: strip });
+        }
+
+        // Spin Logic (Hydraulic Bounce)
+        const spinBtn = new PIXI.Graphics();
+        spinBtn.beginFill(0xFFD700);
+        spinBtn.drawCircle(0, 0, 50);
+        spinBtn.endFill();
+        spinBtn.x = app.screen.width / 2;
+        spinBtn.y = app.screen.height - 100;
+        spinBtn.interactive = true;
+        spinBtn.cursor = 'pointer';
+        stage.addChild(spinBtn);
+
+        const btnText = new PIXI.Text("SLAM", { fontSize: 20, fontWeight: 'bold', fill: 0x000000 });
+        btnText.anchor.set(0.5);
+        spinBtn.addChild(btnText);
+
+        spinBtn.on('pointerdown', () => {
+          gsap.to(spinBtn.scale, { x: 0.9, y: 0.9, duration: 0.1, yoyo: true, repeat: 1 });
+          
+          reels.forEach((reel, i) => {
+            // GSAP Hydraulic Spin
+            gsap.to(reel.container, {
+              y: reel.container.y + 50, // Pull down (Hydraulic load)
+              duration: 0.2,
+              ease: "back.in(1.7)",
+              onComplete: () => {
+                // Spin Blur
+                // ... (Logic for switching textures would go here)
+                
+                gsap.to(reel.container, {
+                  y: machine.y, // Snap back
+                  duration: 0.5,
+                  delay: i * 0.1,
+                  ease: "elastic.out(1, 0.5)", // The Juice
+                  onComplete: () => {
+                    // Update Symbols
+                    reel.symbols.forEach((s: any) => s.text = getWeightedSymbol().char);
+                  }
+                });
+              }
+            });
+          });
+        });
+      };
+
+      startLoading();
+
+      window.addEventListener('resize', () => app.renderer.resize(window.innerWidth, window.innerHeight));
+    };
+
+    loadScripts();
   }, []);
 
   const selectedFish = AZTEC_GAMES.find(g => g.id === activeGame);

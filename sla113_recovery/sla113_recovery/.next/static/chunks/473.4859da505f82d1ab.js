@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[473],{86473:function(o,r,e){e.r(r),e.d(r,{oitFinalSimpleBlendPixelShader:function(){return t}});var l=e(44953);let i="oitFinalSimpleBlendPixelShader",n=`precision highp float;uniform sampler2D uFrontColor;void main() {ivec2 fragCoord=ivec2(gl_FragCoord.xy);vec4 frontColor=texelFetch(uFrontColor,fragCoord,0);glFragColor=frontColor;}
-`;l.v.ShadersStore[i]||(l.v.ShadersStore[i]=n);let t={name:i,shader:n}}}]);

@@ -17,16 +17,25 @@ load_dotenv(ROOT_DIR / '.env')
 # Import database connection
 from database import connect_to_database, close_database_connection, get_database
 
+DATABASE_CONNECTED = False
+
 # Lifespan context manager for startup/shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    global DATABASE_CONNECTED
     # Startup: Connect to database
-    await connect_to_database()
-    logging.info("Database connected on startup")
+    try:
+        await connect_to_database()
+        DATABASE_CONNECTED = True
+        logging.info("Database connected on startup")
+    except Exception:
+        DATABASE_CONNECTED = False
+        logging.exception("Database connection failed on startup; running in degraded mode")
     yield
     # Shutdown: Close database connection
-    await close_database_connection()
-    logging.info("Database connection closed on shutdown")
+    if DATABASE_CONNECTED:
+        await close_database_connection()
+        logging.info("Database connection closed on shutdown")
 
 # Create the main app with lifespan
 app = FastAPI(
@@ -127,6 +136,7 @@ async def health_check():
     """Health check endpoint for monitoring."""
     return {
         "status": "healthy",
+        "database": "connected" if DATABASE_CONNECTED else "degraded",
         "version": "2.0.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }
@@ -178,7 +188,3 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()

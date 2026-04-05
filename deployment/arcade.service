@@ -1,0 +1,14 @@
+[Unit]
+Description=SLA113 Arcade (Root Next.js)
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/var/www/hybrid-intelligence
+ExecStart=/usr/bin/npm start
+Restart=always
+Environment=PORT=3000
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
