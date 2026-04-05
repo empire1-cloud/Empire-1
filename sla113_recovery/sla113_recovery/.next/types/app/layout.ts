@@ -1,4 +1,4 @@
-// File: /root/frontend/app/layout.tsx
+// File: /home/manda/Empire-1/sla113_recovery/sla113_recovery/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

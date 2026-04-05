@@ -2,8 +2,6 @@
 set -e
 
 PROJECT_DIR="/var/www/hybrid-intelligence"
-PYTHON_BIN="python3"
-VENV_DIR="$PROJECT_DIR/venv"
 BACKEND_DIR="$PROJECT_DIR/backend"
 FRONTEND_DIR="$PROJECT_DIR/frontend"
 
@@ -17,46 +15,37 @@ echo "==> Ensuring project directory exists..."
 sudo mkdir -p "$PROJECT_DIR"
 sudo chown -R "$USER":"$USER" "$PROJECT_DIR"
 
-echo "==> Creating Python virtual environment..."
-if [ ! -d "$VENV_DIR" ]; then
-  $PYTHON_BIN -m venv "$VENV_DIR"
-fi
+echo "==> Setting up Backend..."
+cd "$BACKEND_DIR"
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
 
-echo "==> Activating virtual environment..."
-source "$VENV_DIR/bin/activate"
+echo "==> Building Root Arcade App (Next.js)..."
+cd "$PROJECT_DIR"
+npm install
+npm run build
 
-echo "==> Installing backend dependencies..."
-if [ -f "$BACKEND_DIR/requirements.txt" ]; then
-  pip install --upgrade pip
-  pip install -r "$BACKEND_DIR/requirements.txt"
-else
-  echo "WARNING: $BACKEND_DIR/requirements.txt not found, skipping backend pip install."
-fi
+echo "==> Building Empire1 Dashboard (CRA)..."
+cd "$FRONTEND_DIR"
+npm install
+npm run build
 
-echo "==> Building frontend..."
-if [ -f "$FRONTEND_DIR/package.json" ]; then
-  cd "$FRONTEND_DIR"
-  npm install
-  npm run build || npm run build:prod || echo "WARNING: frontend build command failed or not defined."
-else
-  echo "WARNING: $FRONTEND_DIR/package.json not found, skipping frontend build."
-fi
-
-echo "==> Copying NGINX config..."
+echo "==> Configuring NGINX..."
 sudo cp "$PROJECT_DIR/deployment/nginx.conf" /etc/nginx/sites-available/hybrid-intelligence
 sudo ln -sf /etc/nginx/sites-available/hybrid-intelligence /etc/nginx/sites-enabled/hybrid-intelligence
 sudo rm -f /etc/nginx/sites-enabled/default
-
-echo "==> Testing NGINX config..."
 sudo nginx -t
+sudo systemctl restart nginx
 
-echo "==> Reloading NGINX..."
-sudo systemctl reload nginx || sudo systemctl restart nginx
-
-echo "==> Installing backend systemd service..."
+echo "==> Installing Services..."
 sudo cp "$PROJECT_DIR/deployment/backend.service" /etc/systemd/system/backend.service
-sudo systemctl daemon-reload
-sudo systemctl enable backend.service
-sudo systemctl restart backend.service
+sudo cp "$PROJECT_DIR/deployment/arcade.service" /etc/systemd/system/arcade.service
+sudo cp "$PROJECT_DIR/deployment/empire1.service" /etc/systemd/system/empire1.service
 
-echo "==> Setup complete."
+sudo systemctl daemon-reload
+sudo systemctl enable backend arcade empire1
+sudo systemctl restart backend arcade empire1
+
+echo "==> Deployment Complete."
