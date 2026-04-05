@@ -1,3 +1,4 @@
+name: empire1-web-map
 defaultService: projects/PROJECT_ID/global/backendServices/empire1-frontend-backend
 hostRules:
   - hosts:
