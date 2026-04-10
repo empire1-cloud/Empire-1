@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
+import { getSla113AdminHeaders } from '@/lib/sla113Auth';
+
 interface Engine {
   id: string;
   name: string;
@@ -33,12 +35,8 @@ export default function AnalyticsPanel() {
     setLoading(true);
     setError(null);
     try {
-      const token = typeof window !== 'undefined' 
-        ? localStorage.getItem('admin_token') || 'admin-token-dev' 
-        : 'admin-token-dev';
-      
       const res = await fetch('/api/sla113/admin/engines', {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: getSla113AdminHeaders()
       });
       
       if (!res.ok) throw new Error('Failed to load engines');

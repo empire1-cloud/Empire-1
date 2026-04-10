@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
+import { getSla113AdminHeaders } from '@/lib/sla113Auth';
+
 interface TenantBilling {
   tenant_id: string;
   tenant_name: string;
@@ -43,12 +45,8 @@ export default function RevenuePanel() {
     setLoading(true);
     setError(null);
     try {
-      const token = typeof window !== 'undefined' 
-        ? localStorage.getItem('admin_token') || 'admin-token-dev' 
-        : 'admin-token-dev';
-      
       const res = await fetch('/api/sla113/billing', {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: getSla113AdminHeaders()
       });
       
       if (!res.ok) throw new Error('Failed to load billing data');
@@ -90,12 +88,8 @@ export default function RevenuePanel() {
   async function loadTenantCharges(tenantId: string) {
     setLoading(true);
     try {
-      const token = typeof window !== 'undefined' 
-        ? localStorage.getItem('admin_token') || 'admin-token-dev' 
-        : 'admin-token-dev';
-      
       const res = await fetch(`/api/sla113/billing/${tenantId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: getSla113AdminHeaders()
       });
       
       if (!res.ok) throw new Error('Failed to load charges');

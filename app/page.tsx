@@ -1,8 +1,40 @@
-import { headers } from 'next/headers';
+import type { Metadata } from 'next';
+import { cookies, headers } from 'next/headers';
 import EmpireHome from '@/components/tenants/EmpireHome';
-import Sla113Home from '@/components/tenants/Sla113Home';
 import SouthernHome from '@/components/tenants/SouthernHome';
 import ArcadeHome from '@/components/tenants/ArcadeHome';
+import { redirect } from 'next/navigation';
+
+export function generateMetadata(): Metadata {
+  const host = headers().get('host') || '';
+  const cleanHost = host.split(':')[0].toLowerCase();
+
+  if (cleanHost === 'sla113.southernlifestyle.org') {
+    return {
+      title: 'SLA113 Admin',
+      description: 'SLA113 operator console',
+    };
+  }
+
+  if (cleanHost === 'arcade.southernlifestyle.org') {
+    return {
+      title: 'Southern Arcade',
+      description: 'Southern Lyfestyle arcade experience',
+    };
+  }
+
+  if (cleanHost === 'southernlifestyle.org' || cleanHost === 'www.southernlifestyle.org') {
+    return {
+      title: 'Southern Lyfestyle',
+      description: 'Southern Lyfestyle public homepage',
+    };
+  }
+
+  return {
+    title: 'Empire One',
+    description: 'Empire One platform homepage',
+  };
+}
 
 /**
  * Root Dispatcher
@@ -15,12 +47,14 @@ import ArcadeHome from '@/components/tenants/ArcadeHome';
  */
 export default function RootPage() {
   const headersList = headers();
+  const cookieStore = cookies();
   const host = headersList.get('host') || '';
   const cleanHost = host.split(':')[0].toLowerCase();
 
   // 1. SLA113 ADMIN CONSOLE (Private)
   if (cleanHost === 'sla113.southernlifestyle.org') {
-    return <Sla113Home />;
+    const adminToken = cookieStore.get('admin_token')?.value;
+    redirect(adminToken ? '/admin' : '/admin/login');
   }
 
   // 2. PERSONAL SWEEPSTAKES ARCADE (The "Body")

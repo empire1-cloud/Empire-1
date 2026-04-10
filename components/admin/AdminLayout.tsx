@@ -1,21 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, 
-  Cpu, 
   Users, 
   DollarSign, 
   Shield, 
-  BookOpen,
-  Settings,
   ChevronLeft,
   ChevronRight,
   Gamepad2,
-  Sparkles
+  Sparkles,
+  LogOut
 } from 'lucide-react';
+
+import { clearSla113Session, getSla113AdminRole, getSla113AdminToken } from '@/lib/sla113Auth';
 
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/admin', color: '#374151' },
@@ -27,13 +27,38 @@ const navItems = [
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [role, setRole] = useState('');
+  const [hasSession, setHasSession] = useState(true);
+
+  useEffect(() => {
+    const token = getSla113AdminToken();
+    const sessionRole = getSla113AdminRole();
+
+    setHasSession(Boolean(token));
+    setRole(sessionRole.replace(/_/g, ' '));
+
+    if (!token) {
+      router.replace('/admin/login');
+    }
+  }, [router]);
 
   const isActive = (href: string) => {
     if (href === '/admin') return pathname === '/admin';
     return pathname.startsWith(href);
   };
+
+  const handleLogout = () => {
+    clearSla113Session();
+    router.push('/admin/login');
+    router.refresh();
+  };
+
+  if (!hasSession) {
+    return null;
+  }
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -65,6 +90,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           ))}
         </nav>
 
+        {!collapsed && (
+          <div className="mx-3 mb-3 rounded-lg border border-gray-200 bg-gray-50 px-3 py-3">
+            <p className="text-[10px] uppercase tracking-wider text-gray-500">Active Role</p>
+            <p className="mt-1 text-sm font-medium text-gray-900 capitalize">{role}</p>
+            <button
+              onClick={handleLogout}
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 hover:bg-white"
+            >
+              <LogOut size={14} />
+              Logout
+            </button>
+          </div>
+        )}
+
         {/* Collapse */}
         <button
           onClick={() => setCollapsed(!collapsed)}
@@ -76,6 +115,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Main */}
       <main className="flex-1 overflow-auto bg-gray-50">
+        <div className="border-b border-gray-200 bg-white px-6 py-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-gray-500">SLA113 Admin Host</p>
+              <p className="mt-1 text-sm text-gray-900">Dedicated operator console for sla113.southernlifestyle.org</p>
+            </div>
+            <div className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium uppercase tracking-wider text-emerald-700">
+              Session Active
+            </div>
+          </div>
+        </div>
         {children}
       </main>
     </div>

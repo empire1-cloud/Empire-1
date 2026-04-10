@@ -1,3 +1,5 @@
+import { getSla113AdminHeaders } from '@/lib/sla113Auth'
+
 /**
  * SLA113 Universe API Helper
  * 
@@ -38,16 +40,11 @@ async function fetchApi<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
-  const token = typeof window !== 'undefined' 
-    ? (localStorage.getItem('admin_token') || localStorage.getItem('auth_token') || 'admin-token-dev') 
-    : 'admin-token-dev';
-  
   try {
     const response = await fetch(`${API_BASE}${endpoint}`, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        ...getSla113AdminHeaders(),
         ...options.headers,
       },
     });

@@ -67,7 +67,9 @@ export default function FoundryPage() {
             duration: 0.05,
             repeat: 5,
             yoyo: true,
-            onComplete: () => gsap.set("main", { x: 0 })
+            onComplete: () => {
+                gsap.set("main", { x: 0 });
+            }
         });
     };
 

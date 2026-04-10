@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { getSla113AdminHeaders } from '@/lib/sla113Auth';
+
 type AITab = 'gpt' | 'claude' | 'images' | 'music' | 'voice';
 
 export default function AIStudioPanel() {
@@ -24,10 +26,6 @@ export default function AIStudioPanel() {
     setResult(null);
 
     try {
-      const token = typeof window !== 'undefined' 
-        ? localStorage.getItem('admin_token') || 'admin-token-dev' 
-        : 'admin-token-dev';
-
       let endpoint = '/api/vision/generate';
       let body = JSON.stringify({ prompt });
 
@@ -63,8 +61,7 @@ export default function AIStudioPanel() {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          ...getSla113AdminHeaders(),
         },
         body
       });

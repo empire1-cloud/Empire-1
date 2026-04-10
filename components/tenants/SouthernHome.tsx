@@ -135,7 +135,7 @@ export default function SouthernHome() {
     setResult(null);
     const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "AIzaSyBvWiHFNhdicOrYhq3xsmJ0LBqylNWnSR0";
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
-    const prompt = `You are the SLA113 ArtTech Engine, representing Southern Lyfestyle (SGV x IELA culture). Target Lane: ${lane}. Seed Data: ${story}. Generate a "Digital Blueprint" in HTML.`;
+    const prompt = `You are the Southern Lyfestyle cultural design engine, representing SGV x IELA culture. Target Lane: ${lane}. Seed Data: ${story}. Generate a "Digital Blueprint" in HTML.`;
     try {
       const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
       const data = await response.json();
@@ -166,15 +166,15 @@ export default function SouthernHome() {
           <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div className="font-mono text-[10px] tracking-widest text-cyan-400 uppercase flex items-center gap-3 text-white">
               <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-              SLA113 // ArtTech_Engine
+              Southern // Culture_Portal
             </div>
             <a href="#portal" className="font-mono text-[10px] tracking-widest text-zinc-400 hover:text-white uppercase">Initialize_Terminal</a>
           </div>
         </nav>
 
         <section className="min-h-[90vh] flex flex-col items-center justify-center px-6 pt-32 pb-16 pointer-events-auto">
-          <img src="/assets/southern-logo.jpg" alt="SLA113 Crest" className="w-32 md:w-48 rounded-full mb-8 shadow-2xl border border-cyan-500/20" />
-          <div className="font-mono text-xs uppercase tracking-[0.4em] text-zinc-500 mb-2">Master Build Foundry</div>
+          <img src="/assets/southern-logo.jpg" alt="Southern Lyfestyle Crest" className="w-32 md:w-48 rounded-full mb-8 shadow-2xl border border-cyan-500/20" />
+          <div className="font-mono text-xs uppercase tracking-[0.4em] text-zinc-500 mb-2">Southern Culture Portal</div>
           <h1 className="chrome-script mb-4">Southern Lyfestyle</h1>
           <div className="font-mono text-cyan-400 uppercase tracking-[0.3em] font-bold text-sm md:text-base mb-10 drop-shadow-md">Stilo’s Active & Attractive.</div>
           <div className="glass-panel p-8 md:p-12 rounded-2xl max-w-4xl text-center shadow-2xl relative overflow-hidden group">
@@ -198,7 +198,7 @@ export default function SouthernHome() {
           <div className="w-full lg:w-2/3 glass-panel p-1 rounded-2xl">
             <div className="bg-black/80 rounded-xl p-8 md:p-12 border border-zinc-900 h-full">
               <h2 className="font-mono text-2xl md:text-3xl font-light text-white uppercase tracking-widest mb-2">Culture Portal</h2>
-              <p className="font-mono text-xs text-cyan-500 tracking-widest mb-10">Terminal Active // SLA113_Engine</p>
+              <p className="font-mono text-xs text-cyan-500 tracking-widest mb-10">Terminal Active // SOUTHERN_PORTAL</p>
               <div className="space-y-6 relative z-10">
                 <select value={lane} onChange={(e) => setLane(e.target.value)} className="w-full p-4 input-dark mono text-sm rounded-lg appearance-none">
                   <option value="">Select Directory...</option>
@@ -216,7 +216,7 @@ export default function SouthernHome() {
         </section>
 
         <footer className="mt-20 py-12 text-center border-t border-zinc-900/50 pointer-events-auto glass-panel border-b-0 border-l-0 border-r-0 rounded-t-3xl font-mono text-[10px] text-zinc-600 uppercase tracking-widest">
-          Identity Is Loyalty // Powered by SLA113_ENGINE // © 2026
+          Identity Is Loyalty // Southern Lyfestyle // © 2026
         </footer>
       </div>
     </div>

@@ -53,10 +53,10 @@ export default function AdminHeartbeat() {
       <header className="system-status">
         <div className={`indicator ${status?.processing ? 'active processing' : 'active'}`}></div>
         <span className="gotham">
-          KERNEL: SLA113_REV_7 // STATUS: {status?.processing ? 'PROCESSING' : 'OPERATIONAL'}
+          KERNEL: SLA113_REV_7 {'//'} STATUS: {status?.processing ? 'PROCESSING' : 'OPERATIONAL'}
         </span>
         <span className="timestamp">
-          {new Date().toLocaleDateString('en-GB').replace(/\//g, '-')} // {new Date().toLocaleTimeString('en-GB')}
+          {new Date().toLocaleDateString('en-GB').replace(/\//g, '-')} {'//'} {new Date().toLocaleTimeString('en-GB')}
         </span>
       </header>
       
@@ -68,7 +68,7 @@ export default function AdminHeartbeat() {
           <p>QUEUE_LENGTH: {status?.queue_length || 0}</p>
           <p>RTB_BRACKET: [88.5% - 94.2%]</p>
           {status?.current_build && (
-            <p>BUILD: {status.current_build.build_id} // {status.current_build.game_type}</p>
+            <p>BUILD: {status.current_build.build_id} {'//'} {status.current_build.game_type}</p>
           )}
         </div>
       </main>

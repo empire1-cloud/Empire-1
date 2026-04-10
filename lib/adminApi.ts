@@ -1,3 +1,5 @@
+import { getSla113AdminHeaders, getSla113AdminToken, setSla113Session } from '@/lib/sla113Auth'
+
 /**
  * SLA113 Admin API Helper
  * 
@@ -58,9 +60,7 @@ export interface AdminAPIResponse<T = any> {
 }
 
 function verifyAdminToken(): string {
-  if (typeof window === 'undefined') return 'admin-token-dev'
-  const token = localStorage.getItem('admin_token')
-  return token || 'admin-token-dev'
+  return getSla113AdminToken() || 'admin-token-dev'
 }
 
 async function adminRequest<T>(
@@ -69,14 +69,12 @@ async function adminRequest<T>(
   data?: any
 ): Promise<AdminAPIResponse<T>> {
   try {
-    const token = verifyAdminToken()
     const url = `${API_BASE}${endpoint}`
     
     const response = await fetch(url, {
       method,
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        ...getSla113AdminHeaders(),
       },
       body: data ? JSON.stringify(data) : undefined,
     })
@@ -92,9 +90,8 @@ async function adminRequest<T>(
 export const getEngines = () => adminRequest<EngineList>('/api/admin/universe/engines')
 export const getCanonInfo = () => adminRequest<any>('/api/admin/universe/canon/info')
 export const setAdminToken = (token: string) => {
-  if (typeof window !== 'undefined') localStorage.setItem('admin_token', token)
+  setSla113Session(token, 'operator_advanced')
 }
 export const getAdminToken = () => {
-  if (typeof window !== 'undefined') return localStorage.getItem('admin_token')
-  return null
+  return getSla113AdminToken()
 }

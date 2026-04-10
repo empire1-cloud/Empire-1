@@ -36,6 +36,8 @@ function detectTenant(host: string): string {
 export function middleware(request: NextRequest) {
   let pathname = request.nextUrl.pathname
   const host = request.headers.get('host') || ''
+  const token = request.cookies.get('admin_token')?.value
+  const isDev = host.includes('localhost') || host.includes('127.0.0.1')
   
   // 1. Skip middleware for assets
   if (pathname.startsWith('/api/') || pathname.startsWith('/_next/') || 
@@ -46,6 +48,11 @@ export function middleware(request: NextRequest) {
   }
   
   const tenant = detectTenant(host)
+
+  if (tenant === 'sla113' && pathname === '/') {
+    const targetPath = token || isDev ? '/admin' : '/admin/login'
+    return NextResponse.redirect(new URL(targetPath, request.url))
+  }
 
   // Empire1 Routes - only allow on empire1.cloud
   if (pathname.startsWith('/dashboard') || pathname.startsWith('/operator')) {
@@ -58,6 +65,10 @@ export function middleware(request: NextRequest) {
   if (pathname.startsWith('/admin') || pathname.startsWith('/foundry')) {
     if (tenant !== 'sla113') {
       return NextResponse.redirect(new URL('/', request.url))
+    }
+
+    if (pathname !== '/admin/login' && !token && !isDev) {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
     }
   }
   
@@ -74,21 +85,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL(cleanPath, request.url))
   }
 
-  // 3. Admin Partitioning
-  if (pathname.startsWith('/admin')) {
-    if (tenant !== 'sla113') {
-      return NextResponse.redirect(new URL('/', request.url))
-    }
-    
-    // Auth Check
-    const token = request.cookies.get('admin_token')?.value
-    const isDev = host.includes('localhost') || host.includes('127.0.0.1')
-    if (!token && !isDev) {
-      return NextResponse.redirect(new URL('/', request.url))
-    }
-  }
-  
-  // 4. Custom Tenant Header
+  // 3. Custom Tenant Header
   const response = NextResponse.next()
   response.headers.set('x-tenant-id', tenant)
   return response
