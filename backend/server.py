@@ -170,6 +170,17 @@ async def get_status_checks():
 # Include the router in the main app
 app.include_router(api_router)
 
+# Root-level health endpoint (for load balancer health checks)
+@app.get("/health")
+async def root_health_check():
+    """Root-level health check endpoint for load balancer probes."""
+    return {
+        "status": "healthy",
+        "database": "connected" if DATABASE_CONNECTED else "degraded",
+        "version": "2.0.0",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,

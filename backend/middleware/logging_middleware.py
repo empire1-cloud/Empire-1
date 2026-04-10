@@ -14,6 +14,8 @@ from services.execution_logger import get_logger
 # Endpoints to log (engine endpoints only)
 LOGGED_ENDPOINTS = [
     "/api/strategy",
+    "/api/strategy-to-plan",
+    "/api/drift",
     "/api/plan",
     "/api/analyze",
     "/api/opportunities",
@@ -28,7 +30,9 @@ LOGGED_ENDPOINTS = [
     "/api/money-pipeline",
     "/api/pipeline/compose",
     "/api/core/execute",
-    "/api/route"
+    "/api/route",
+    "/api/analytics",
+    "/api/history",
 ]
 
 
@@ -36,6 +40,8 @@ def get_engine_from_path(path: str) -> str:
     """Extract engine name from path."""
     path_to_engine = {
         "/api/strategy": "strategy_engine",
+        "/api/strategy-to-plan": "strategy_engine",
+        "/api/drift": "drift_monitor_engine",
         "/api/plan": "plan_builder_engine",
         "/api/analyze": "analysis_engine",
         "/api/opportunities": "opportunity_mapper_engine",
@@ -50,7 +56,9 @@ def get_engine_from_path(path: str) -> str:
         "/api/money-pipeline": "money_pipeline_engine",
         "/api/pipeline/compose": "pipeline_composer_engine",
         "/api/core/execute": "hybrid_intelligence_core",
-        "/api/route": "routing_engine"
+        "/api/route": "routing_engine",
+        "/api/analytics": "analytics_engine",
+        "/api/history": "history_protected_engine",
     }
     
     for endpoint, engine in path_to_engine.items():
@@ -65,7 +73,9 @@ class ExecutionLoggingMiddleware(BaseHTTPMiddleware):
         path = request.url.path
         method = request.method
         
-        should_log = method == "POST" and any(path.startswith(ep) for ep in LOGGED_ENDPOINTS)
+        should_log = method in {"GET", "POST", "PUT", "PATCH", "DELETE"} and any(
+            path.startswith(ep) for ep in LOGGED_ENDPOINTS
+        )
         
         if not should_log:
             return await call_next(request)
@@ -96,11 +106,8 @@ class ExecutionLoggingMiddleware(BaseHTTPMiddleware):
         # Parse response
         output_data = None
         error = None
-        status = "success"
-        
         try:
             if response.status_code >= 400:
-                status = "error"
                 error = response_body.decode()[:500]
             else:
                 output_data = json.loads(response_body)
