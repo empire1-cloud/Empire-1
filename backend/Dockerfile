@@ -12,4 +12,5 @@ COPY . /app/
 ENV PORT=8000
 EXPOSE 8000
 
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+# Use $PORT if set by Cloud Run, fallback to 8000 for local
+CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port ${PORT:-8000}"]
