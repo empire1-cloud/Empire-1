@@ -6,21 +6,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..core.config import get_settings
 
-settings = get_settings()
-
-
 def _azure_client():
-    from openai import AzureOpenAI
-    return AzureOpenAI(
-        api_key=settings.AZURE_OPENAI_KEY,
-        azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
-        api_version=settings.AZURE_OPENAI_API_VERSION,
-    )
+
+settings = get_settings()
 
 
 class SonicForgeCore:
     """
-    Sonic Forge — Azure OpenAI GPT-4o music composition engine.
+    Sonic Forge — Vertex AI music composition engine (Azure removed).
     Kinetic Audio. SFX + Arcade Ambience + Soundscape layers.
     Generates detailed music/SFX specs and composition briefs
     that drive downstream audio synthesis.
@@ -33,35 +26,39 @@ Style DNA: G-Funk, Lowrider Soul, Chicano Rap, Barrio Trap, Corrido Tumbado, Azt
 Always output valid JSON."""
 
     async def generate(self, prompt: str, style: str = "g_funk", duration: int = 30) -> dict:
+        import vertexai
+        from vertexai.generative_models import GenerativeModel, Part
         job_id = str(uuid.uuid4())
         output_dir = Path("/var/sla/audio/music")
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        client = _azure_client()
-
+        # Initialize Vertex AI
+        vertexai.init(
+            project=settings.GOOGLE_PROJECT_ID,
+            location=settings.VERTEX_AI_LOCATION,
+            credentials=None  # Uses GOOGLE_APPLICATION_CREDENTIALS env var
+        )
+        model = GenerativeModel(settings.VERTEX_AI_TEXT_MODEL)
         composition_prompt = f"""Generate a detailed audio composition brief for:
 Prompt: {prompt}
 Style: {style}
 Duration: {duration} seconds
 
-Return JSON with: bpm, key, time_signature, instruments[], layers[], mood, 
-fx_chain[], mix_notes, Southern_canon_tags[], production_directives."""
-
-        response = client.chat.completions.create(
-            model=settings.AZURE_OPENAI_DEPLOYMENT,
-            messages=[
-                {"role": "system", "content": self.SYSTEM_PROMPT},
-                {"role": "user", "content": composition_prompt},
-            ],
-            response_format={"type": "json_object"},
-            temperature=0.85,
-            max_tokens=1024,
-        )
-
-        brief = json.loads(response.choices[0].message.content)
+Return JSON with: bpm, key, time_signature, instruments[], layers[], mood, fx_chain[], mix_notes, Southern_canon_tags[], production_directives."""
+        try:
+            response = model.generate_content(
+                [
+                    Part.from_text(self.SYSTEM_PROMPT),
+                    Part.from_text(composition_prompt)
+                ],
+                generation_config={"temperature": 0.85, "max_output_tokens": 1024},
+                stream=False
+            )
+            brief = json.loads(response.text)
+        except Exception as e:
+            brief = {"error": str(e)}
         brief_path = output_dir / f"{job_id}_brief.json"
         brief_path.write_text(json.dumps(brief, indent=2))
-
         return {
             "job_id": job_id,
             "brief_path": str(brief_path),
@@ -69,27 +66,34 @@ fx_chain[], mix_notes, Southern_canon_tags[], production_directives."""
             "style": style,
             "duration": duration,
             "composition_brief": brief,
-            "model": "gpt-4o",
-            "provider": "azure",
+            "model": settings.VERTEX_AI_TEXT_MODEL,
+            "provider": "vertex",
             "status": "brief_ready",
         }
 
     async def generate_sfx(self, scene: str, intensity: str = "medium") -> dict:
+        import vertexai
+        from vertexai.generative_models import GenerativeModel, Part
         job_id = str(uuid.uuid4())
-        client = _azure_client()
-
-        response = client.chat.completions.create(
-            model=settings.AZURE_OPENAI_DEPLOYMENT,
-            messages=[
-                {"role": "system", "content": self.SYSTEM_PROMPT},
-                {"role": "user", "content": f"Generate SFX design spec for: {scene}. Intensity: {intensity}. Return JSON with: sfx_layers[], trigger_events[], spatial_mix, reverb_profile, arcade_zone."},
-            ],
-            response_format={"type": "json_object"},
-            temperature=0.7,
-            max_tokens=512,
+        vertexai.init(
+            project=settings.GOOGLE_PROJECT_ID,
+            location=settings.VERTEX_AI_LOCATION,
+            credentials=None
         )
-
-        spec = json.loads(response.choices[0].message.content)
+        model = GenerativeModel(settings.VERTEX_AI_TEXT_MODEL)
+        sfx_prompt = f"Generate SFX design spec for: {scene}. Intensity: {intensity}. Return JSON with: sfx_layers[], trigger_events[], spatial_mix, reverb_profile, arcade_zone."
+        try:
+            response = model.generate_content(
+                [
+                    Part.from_text(self.SYSTEM_PROMPT),
+                    Part.from_text(sfx_prompt)
+                ],
+                generation_config={"temperature": 0.7, "max_output_tokens": 512},
+                stream=False
+            )
+            spec = json.loads(response.text)
+        except Exception as e:
+            spec = {"error": str(e)}
         return {"job_id": job_id, "scene": scene, "sfx_spec": spec, "status": "spec_ready"}
 
     async def separate(self, file_path: str) -> dict:

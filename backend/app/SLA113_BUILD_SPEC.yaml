@@ -797,7 +797,6 @@ notes: |
   - Full orchestration engine with conflict resolution matrix
   - Role-based dashboard permissions
   - Jurisdiction-specific regulatory profiles (Nevada, UK, Australia)
-  - Anti-addiction enforcement with configurable limits
   - Geographic clusters with SLO targets
   - Complete revenue routing model
   

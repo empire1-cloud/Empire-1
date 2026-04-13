@@ -38,10 +38,10 @@ export default function AztecFishGame({ gameId, themeColor, godName }: AztecFish
       stage.addChild(mist);
 
       // --- GOD EMBLEM (PREMIUM) ---
-      const godText = new PIXI.Text({
-        text: godName.toUpperCase(),
-        style: { fill: themeColor, fontSize: 120, fontWeight: 'black', italic: true, alpha: 0.1 }
-      });
+      const godText = new PIXI.Text(
+        godName.toUpperCase(),
+        { fill: themeColor, fontSize: 120, fontWeight: 'bold', italic: true, alpha: 0.1 }
+      );
       godText.anchor.set(0.5);
       godText.x = 640;
       godText.y = 360;

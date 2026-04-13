@@ -24,7 +24,11 @@ ENGINES = {
         service="app.services.vision_smith",
         router="app.routers.vision",
         credit_cost=10,
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],
+<<<<<<< HEAD
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+=======
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+>>>>>>> f5e075d (wip: save local changes before rebase)
         description="Text-to-image generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
@@ -35,7 +39,11 @@ ENGINES = {
         service="app.services.voice_king",
         router="app.routers.voice",
         credit_cost=5,
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],
+<<<<<<< HEAD
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+=======
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+>>>>>>> f5e075d (wip: save local changes before rebase)
         description="Text-to-speech for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
@@ -46,7 +54,11 @@ ENGINES = {
         service="app.services.sonic_forge",
         router="app.routers.sonicforge",
         credit_cost=15,
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],
+<<<<<<< HEAD
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+=======
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+>>>>>>> f5e075d (wip: save local changes before rebase)
         description="Music generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
@@ -57,7 +69,11 @@ ENGINES = {
         service="app.services.vo_engine",
         router="app.routers.video",
         credit_cost=20,
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],
+<<<<<<< HEAD
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+=======
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
+>>>>>>> f5e075d (wip: save local changes before rebase)
         description="Video generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
@@ -69,7 +85,7 @@ ENGINES = {
         service="app.services.image_editor",
         router="app.routers.image_editor",
         credit_cost=8,
-        enabled_for=["SLA113", "Southern"],
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],
         description="Advanced Southern image editing",
         status="unavailable",
         canon_lock=False,
@@ -80,7 +96,7 @@ ENGINES = {
         service="app.services.video_editor",
         router="app.routers.video_editor",
         credit_cost=25,
-        enabled_for=["SLA113", "Southern"],
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],
         description="Southern video composition",
         status="unavailable",
         canon_lock=False,
@@ -91,7 +107,7 @@ ENGINES = {
         service="app.services.audio_mixer",
         router="app.routers.audio_mixer",
         credit_cost=12,
-        enabled_for=["SLA113", "Southern"],
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],
         description="Southern audio mixing",
         status="unavailable",
         canon_lock=False,
@@ -102,7 +118,7 @@ ENGINES = {
         service="app.services.speech_to_text",
         router="app.routers.speech_to_text",
         credit_cost=3,
-        enabled_for=["SLA113", "Southern"],
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],
         description="Southern transcription engine",
         status="unavailable",
         canon_lock=False,
@@ -113,7 +129,7 @@ ENGINES = {
         service="app.services.text_to_3d",
         router="app.routers.text_to_3d",
         credit_cost=30,
-        enabled_for=["SLA113", "Southern"],
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],
         description="Southern 3D asset generation",
         status="unavailable",
         canon_lock=False,
@@ -124,7 +140,7 @@ ENGINES = {
         service="app.services.animation_engine",
         router="app.routers.animation_engine",
         credit_cost=35,
-        enabled_for=["SLA113", "Southern"],
+        enabled_for=["EMPIRE1", "SLA113", "Southern"],
         description="Southern animation generation",
         status="unavailable",
         canon_lock=False,

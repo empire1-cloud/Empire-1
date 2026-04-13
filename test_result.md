@@ -101,3 +101,85 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Full system integration and deployment—verify all backend and frontend features are working after major refactor and GCP deployment."
+
+backend:
+	- task: "API endpoints functional"
+		implemented: true
+		working: "NA"
+		file: "backend/server.py"
+		stuck_count: 0
+		priority: "high"
+		needs_retesting: true
+		status_history:
+			- working: "NA"
+				agent: "main"
+				comment: "Initial test after refactor and deployment."
+	- task: "Database connectivity"
+		implemented: true
+		working: "NA"
+		file: "backend/core/deps.py"
+		stuck_count: 0
+		priority: "high"
+		needs_retesting: true
+		status_history:
+			- working: "NA"
+				agent: "main"
+				comment: "Initial test after refactor and deployment."
+	- task: "Authentication (JWT)"
+		implemented: true
+		working: "NA"
+		file: "backend/app/routers/auth.py"
+		stuck_count: 0
+		priority: "high"
+		needs_retesting: true
+		status_history:
+			- working: "NA"
+				agent: "main"
+				comment: "Initial test after refactor and deployment."
+
+frontend:
+	- task: "Dashboard loads and displays data"
+		implemented: true
+		working: "NA"
+		file: "components/admin/AnalyticsPanel.tsx"
+		stuck_count: 0
+		priority: "high"
+		needs_retesting: true
+		status_history:
+			- working: "NA"
+				agent: "main"
+				comment: "Initial test after refactor and deployment."
+	- task: "User login/logout UI"
+		implemented: true
+		working: "NA"
+		file: "components/admin/LoginPanel.tsx"
+		stuck_count: 0
+		priority: "high"
+		needs_retesting: true
+		status_history:
+			- working: "NA"
+				agent: "main"
+				comment: "Initial test after refactor and deployment."
+
+metadata:
+	created_by: "main_agent"
+	version: "1.0"
+	test_sequence: 1
+	run_ui: false
+
+test_plan:
+	current_focus:
+		- "API endpoints functional"
+		- "Dashboard loads and displays data"
+		- "Authentication (JWT)"
+		- "User login/logout UI"
+		- "Database connectivity"
+	stuck_tasks: []
+	test_all: true
+	test_priority: "high_first"
+
+agent_communication:
+	- agent: "main"
+		message: "Initialized full-system test plan after refactor and GCP deployment. All major backend and frontend features marked for retesting."

@@ -1,11 +1,12 @@
 """
 Universal Money Pipeline Engine endpoints.
 """
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, List
 
+from core.engine_context import EngineContext, get_engine_context
 from services.money_pipeline_engine import MoneyPipelineEngine
 from services.canon_enforcer import CanonEnforcer
 from services.drift_monitor import DriftMonitor
@@ -126,8 +127,12 @@ class MoneyPipelineResponse(BaseModel):
 
 
 @router.post("/money-pipeline", response_model=MoneyPipelineResponse)
-async def generate_money_pipeline(payload: MoneyPipelineRequest):
+async def generate_money_pipeline(
+    payload: MoneyPipelineRequest,
+    ctx: EngineContext = Depends(get_engine_context),
+):
     """Transform any idea into a complete, monetizable, execution-ready system."""
+    ctx.require_write()
     try:
         raw_pipeline = await MoneyPipelineEngine.generate_pipeline_async(
             idea=payload.idea,
@@ -151,8 +156,13 @@ async def generate_money_pipeline(payload: MoneyPipelineRequest):
 
 
 @router.post("/money-pipeline/quick")
-async def quick_monetize(idea: str, model: Optional[str] = None):
+async def quick_monetize(
+    idea: str,
+    model: Optional[str] = None,
+    ctx: EngineContext = Depends(get_engine_context),
+):
     """Quick monetization analysis with minimal parameters."""
+    ctx.require_write()
     try:
         raw_pipeline = await MoneyPipelineEngine.quick_monetize_async(
             idea=idea,
@@ -171,8 +181,12 @@ async def quick_monetize(idea: str, model: Optional[str] = None):
 
 
 @router.post("/money-pipeline/saas", response_model=MoneyPipelineResponse)
-async def saas_money_pipeline(payload: SaaSPipelineRequest):
+async def saas_money_pipeline(
+    payload: SaaSPipelineRequest,
+    ctx: EngineContext = Depends(get_engine_context),
+):
     """Generate SaaS-specific money pipeline."""
+    ctx.require_write()
     try:
         raw_pipeline = await MoneyPipelineEngine.saas_pipeline_async(
             product=payload.product,
@@ -193,8 +207,12 @@ async def saas_money_pipeline(payload: SaaSPipelineRequest):
 
 
 @router.post("/money-pipeline/service", response_model=MoneyPipelineResponse)
-async def service_money_pipeline(payload: ServicePipelineRequest):
+async def service_money_pipeline(
+    payload: ServicePipelineRequest,
+    ctx: EngineContext = Depends(get_engine_context),
+):
     """Generate service business money pipeline."""
+    ctx.require_write()
     try:
         raw_pipeline = await MoneyPipelineEngine.service_pipeline_async(
             service=payload.service,
@@ -215,8 +233,12 @@ async def service_money_pipeline(payload: ServicePipelineRequest):
 
 
 @router.post("/money-pipeline/ecommerce", response_model=MoneyPipelineResponse)
-async def ecommerce_money_pipeline(payload: EcommercePipelineRequest):
+async def ecommerce_money_pipeline(
+    payload: EcommercePipelineRequest,
+    ctx: EngineContext = Depends(get_engine_context),
+):
     """Generate e-commerce money pipeline."""
+    ctx.require_write()
     try:
         raw_pipeline = await MoneyPipelineEngine.ecommerce_pipeline_async(
             product=payload.product,
@@ -237,8 +259,12 @@ async def ecommerce_money_pipeline(payload: EcommercePipelineRequest):
 
 
 @router.post("/money-pipeline/api", response_model=MoneyPipelineResponse)
-async def api_money_pipeline(payload: APIPipelineRequest):
+async def api_money_pipeline(
+    payload: APIPipelineRequest,
+    ctx: EngineContext = Depends(get_engine_context),
+):
     """Generate API product money pipeline."""
+    ctx.require_write()
     try:
         raw_pipeline = await MoneyPipelineEngine.api_pipeline_async(
             api_concept=payload.api_concept,

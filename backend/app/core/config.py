@@ -39,6 +39,10 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
     GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
+    GOOGLE_PROJECT_ID: str = os.getenv("GOOGLE_PROJECT_ID", "disco-amphora-490606-n8")
+    VERTEX_AI_LOCATION: str = os.getenv("VERTEX_AI_LOCATION", "us-central1")
+    VERTEX_AI_TEXT_MODEL: str = os.getenv("VERTEX_AI_TEXT_MODEL", "gemini-1.5-pro")
+    VERTEX_AI_IMAGE_MODEL: str = os.getenv("VERTEX_AI_IMAGE_MODEL", "imagegeneration@006")
 
     # Azure OpenAI
     AZURE_OPENAI_KEY: str = os.getenv("AZURE_OPENAI_KEY", "")
