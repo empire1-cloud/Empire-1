@@ -19,8 +19,7 @@ function detectTenant(host: string): string {
   }
 
   if (cleanHost === 'southernlifestyle.org' || 
-      cleanHost === 'www.southernlifestyle.org' ||
-      cleanHost === 'arcade.southernlifestyle.org') {
+      cleanHost === 'www.southernlifestyle.org') {
     return 'southern_lyfestyle'
   }
   

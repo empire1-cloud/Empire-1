@@ -27,7 +27,10 @@ const EmpireHome = () => {
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Gemini API Configuration
-  const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "AIzaSyBvWiHFNhdicOrYhq3xsmJ0LBqylNWnSR0";
+  const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+  if (!GOOGLE_API_KEY) {
+    console.error("SYS.ERR // MISSING_API_CREDENTIALS");
+  }
 
   useEffect(() => {
     if (chatEndRef.current) {

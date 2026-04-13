@@ -1,0 +1,74 @@
+FROM node:20-bookworm-slim AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+WORKDIR /app
+
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		python3 \
+		make \
+		g++ \
+		pkg-config \
+		libcairo2-dev \
+		libpango1.0-dev \
+		libjpeg62-turbo-dev \
+		libgif-dev \
+		librsvg2-dev \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Install dependencies based on the preferred package manager
+COPY package.json package-lock.json* ./
+RUN npm install --legacy-peer-deps
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Environment flag
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# If using npm
+RUN npm run build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		libcairo2 \
+		libpango-1.0-0 \
+		libpangocairo-1.0-0 \
+		libjpeg62-turbo \
+		libgif7 \
+		librsvg2-2 \
+	&& rm -rf /var/lib/apt/lists/*
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+ENV PORT=3000
+# set hostname to localhost
+ENV HOSTNAME=0.0.0.0
+
+CMD ["node", "server.js"]
