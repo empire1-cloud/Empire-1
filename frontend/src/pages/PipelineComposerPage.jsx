@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useRouteBase } from "../lib/routeBase";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -75,6 +76,7 @@ const PRESET_PIPELINES = {
 };
 
 const PipelineComposerPage = () => {
+  const { withBase } = useRouteBase();
   const [steps, setSteps] = useState([]);
   const [initialInput, setInitialInput] = useState("");
   const [executing, setExecuting] = useState(false);
@@ -297,7 +299,7 @@ const PipelineComposerPage = () => {
   return (
     <div className="page-container" data-testid="pipeline-composer-page">
       <header className="page-header">
-        <Link to="/" className="back-link">← Home</Link>
+        <Link to={withBase("/")} className="back-link">← Home</Link>
         <h1>🔗 Pipeline Composer</h1>
         <p className="subtitle">Chain multiple engines together for complex workflows</p>
       </header>

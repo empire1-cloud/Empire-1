@@ -9,6 +9,8 @@ import { useAuth } from '../context/AuthContext';
 const SettingsSidebar = () => {
   const { currentTeam, user } = useAuth();
   const location = useLocation();
+  const basePrefix = location.pathname.startsWith('/empire') ? '/empire' : '';
+  const withBase = (path) => `${basePrefix}${path}`;
 
   // Check if user is owner/admin of current team
   const isTeamAdmin = currentTeam && ['owner', 'admin'].includes(currentTeam.role);
@@ -53,13 +55,15 @@ const SettingsSidebar = () => {
     },
   ];
 
-  const isSettingsPage = [
+  const settingsPaths = [
     '/profile',
     '/team/settings',
     '/billing',
     '/settings/api-keys',
     '/admin/overview',
-  ].includes(location.pathname);
+  ];
+  const normalizedPath = location.pathname.replace(/^\/empire/, '') || '/';
+  const isSettingsPage = settingsPaths.includes(normalizedPath);
 
   // Only show sidebar on settings pages
   if (!isSettingsPage) return null;
@@ -76,7 +80,7 @@ const SettingsSidebar = () => {
             <div key={item.path}>
               {item.divider && <div className="sidebar-divider" />}
               <NavLink
-                to={item.path}
+                to={withBase(item.path)}
                 className={({ isActive }) => 
                   `sidebar-item ${isActive ? 'active' : ''}`
                 }

@@ -1,5 +1,5 @@
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppHeader from "./components/AppHeader";
@@ -26,82 +26,53 @@ import PipelineComposerPage from "./pages/PipelineComposerPage";
 import ExecutionHistoryPage from "./pages/ExecutionHistoryPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 
+const routeEntries = [
+  { path: "/login", element: <LoginPage /> },
+  { path: "/signup", element: <SignupPage /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/reset-password", element: <ResetPasswordPage /> },
+  { path: "/oauth/callback", element: <OAuthCallbackPage /> },
+  { path: "/invite/accept", element: <AcceptInvitePage /> },
+  { path: "/", element: <ProtectedRoute><HomePage /></ProtectedRoute> },
+  { path: "/engines", element: <ProtectedRoute><EnginesPage /></ProtectedRoute> },
+  { path: "/money-pipeline", element: <ProtectedRoute><MoneyPipelinePage /></ProtectedRoute> },
+  { path: "/pipeline-composer", element: <ProtectedRoute><PipelineComposerPage /></ProtectedRoute> },
+  { path: "/history", element: <ProtectedRoute><ExecutionHistoryPage /></ProtectedRoute> },
+  { path: "/analytics", element: <ProtectedRoute><AnalyticsPage /></ProtectedRoute> },
+  { path: "/profile", element: <ProtectedRoute><ProfilePage /></ProtectedRoute> },
+  { path: "/team/settings", element: <ProtectedRoute><TeamSettingsPage /></ProtectedRoute> },
+  { path: "/billing", element: <ProtectedRoute><BillingPage /></ProtectedRoute> },
+  { path: "/settings/api-keys", element: <ProtectedRoute><APIKeysPage /></ProtectedRoute> },
+  { path: "/admin/overview", element: <ProtectedRoute><AdminOverviewPage /></ProtectedRoute> },
+];
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <AuthProvider>
           <AppHeader />
+          <div className="universe-context-banner">
+            <span className="banner-label">Parent</span>
+            <span className="banner-value">SLA113 Factory</span>
+            <span className="banner-separator">/</span>
+            <span className="banner-label">Universe</span>
+            <span className="banner-value">Empire</span>
+          </div>
           <SystemStatusBanner />
           <div className="app-layout">
             <SettingsSidebar />
             <main className="app-main">
               <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
-            <Route path="/invite/accept" element={<AcceptInvitePage />} />
-            
-            {/* Protected routes */}
-            <Route path="/" element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            } />
-            <Route path="/engines" element={
-              <ProtectedRoute>
-                <EnginesPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/money-pipeline" element={
-              <ProtectedRoute>
-                <MoneyPipelinePage />
-              </ProtectedRoute>
-            } />
-            <Route path="/pipeline-composer" element={
-              <ProtectedRoute>
-                <PipelineComposerPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/history" element={
-              <ProtectedRoute>
-                <ExecutionHistoryPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/analytics" element={
-              <ProtectedRoute>
-                <AnalyticsPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            } />
-            <Route path="/team/settings" element={
-              <ProtectedRoute>
-                <TeamSettingsPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/billing" element={
-              <ProtectedRoute>
-                <BillingPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/settings/api-keys" element={
-              <ProtectedRoute>
-                <APIKeysPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/overview" element={
-              <ProtectedRoute>
-                <AdminOverviewPage />
-              </ProtectedRoute>
-            } />
-          </Routes>
+                {routeEntries.map(({ path, element }) => (
+                  <Route key={`legacy-${path}`} path={path} element={element} />
+                ))}
+                {routeEntries.map(({ path, element }) => (
+                  <Route key={`empire-${path}`} path={`/empire${path}`} element={element} />
+                ))}
+                <Route path="/empire" element={<Navigate to="/empire/" replace />} />
+                <Route path="*" element={<Navigate to="/empire/" replace />} />
+              </Routes>
             </main>
           </div>
           <Toaster richColors position="top-right" />

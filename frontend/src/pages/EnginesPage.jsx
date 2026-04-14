@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useRouteBase } from "../lib/routeBase";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -221,6 +222,7 @@ const TestModal = ({ engine, config, onClose }) => {
 };
 
 const EnginesPage = () => {
+  const { withBase } = useRouteBase();
   const [engines, setEngines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedEngine, setSelectedEngine] = useState(null);
@@ -275,7 +277,7 @@ const EnginesPage = () => {
   return (
     <div className="page-container" data-testid="engines-page">
       <header className="page-header">
-        <Link to="/" className="back-link">← Home</Link>
+        <Link to={withBase("/")} className="back-link">← Home</Link>
         <h1>📋 Engine Dashboard</h1>
         <p className="subtitle">{engines.length} AI engines available • Click "Test" to try any engine</p>
       </header>

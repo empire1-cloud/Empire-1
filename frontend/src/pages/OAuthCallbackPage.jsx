@@ -6,11 +6,13 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useRouteBase } from '../lib/routeBase';
 
 const OAuthCallbackPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { handleOAuthCallback } = useAuth();
+  const { withBase } = useRouteBase();
   
   const [error, setError] = useState('');
   const [processing, setProcessing] = useState(true);
@@ -39,7 +41,7 @@ const OAuthCallbackPage = () => {
         await handleOAuthCallback(accessToken, refreshToken);
         
         // Redirect to dashboard
-        navigate('/', { replace: true });
+        navigate(withBase('/'), { replace: true });
       } catch (err) {
         setError(err.message || 'Failed to complete authentication');
         setProcessing(false);
@@ -59,7 +61,7 @@ const OAuthCallbackPage = () => {
             <p className="error-message">{error}</p>
             <div className="oauth-actions">
               <button
-                onClick={() => navigate('/login')}
+                onClick={() => navigate(withBase('/login'))}
                 className="btn-primary"
               >
                 Back to Login

@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import TeamSwitcher from './TeamSwitcher';
 
@@ -13,6 +13,9 @@ const AppHeader = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const basePrefix = location.pathname.startsWith('/empire') ? '/empire' : '';
+  const withBase = (path) => `${basePrefix}${path}`;
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -28,7 +31,7 @@ const AppHeader = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/login');
+    navigate(withBase('/login'));
   };
 
   const getUserInitials = () => {
@@ -48,13 +51,13 @@ const AppHeader = () => {
   if (!isAuthenticated) {
     return (
       <header className="app-header" data-testid="app-header">
-        <Link to="/" className="app-logo">
+        <Link to={withBase('/')} className="app-logo">
           <span className="logo-icon">🧠</span>
-          <span className="logo-text">Hybrid Intelligence</span>
+          <span className="logo-text">Empire Universe</span>
         </Link>
         <nav className="header-nav">
-          <Link to="/login" className="nav-link" data-testid="login-nav">Sign In</Link>
-          <Link to="/signup" className="nav-link primary" data-testid="signup-nav">Get Started</Link>
+          <Link to={withBase('/login')} className="nav-link" data-testid="login-nav">Sign In</Link>
+          <Link to={withBase('/signup')} className="nav-link primary" data-testid="signup-nav">Get Started</Link>
         </nav>
       </header>
     );
@@ -62,16 +65,18 @@ const AppHeader = () => {
 
   return (
     <header className="app-header" data-testid="app-header">
-      <Link to="/" className="app-logo">
+      <Link to={withBase('/')} className="app-logo">
         <span className="logo-icon">🧠</span>
-        <span className="logo-text">Hybrid Intelligence</span>
+        <span className="logo-text">Empire Universe</span>
       </Link>
 
       <nav className="header-nav-main">
-        <Link to="/engines" className="nav-link" data-testid="engines-nav">Engines</Link>
-        <Link to="/pipeline-composer" className="nav-link" data-testid="composer-nav">Composer</Link>
-        <Link to="/analytics" className="nav-link" data-testid="analytics-nav">Analytics</Link>
-        <Link to="/history" className="nav-link" data-testid="history-nav">History</Link>
+        <Link to="/sla113" className="nav-link" data-testid="sla113-nav">SLA113</Link>
+        <Link to={withBase('/')} className="nav-link" data-testid="empire-nav">Empire</Link>
+        <Link to={withBase('/engines')} className="nav-link" data-testid="engines-nav">Engines</Link>
+        <Link to={withBase('/pipeline-composer')} className="nav-link" data-testid="composer-nav">Composer</Link>
+        <Link to={withBase('/analytics')} className="nav-link" data-testid="analytics-nav">Analytics</Link>
+        <Link to={withBase('/history')} className="nav-link" data-testid="history-nav">History</Link>
       </nav>
 
       <div className="header-right">
@@ -98,7 +103,7 @@ const AppHeader = () => {
               <div className="dropdown-divider"></div>
               
               <Link
-                to="/profile"
+                to={withBase('/profile')}
                 className="dropdown-item"
                 onClick={() => setShowUserMenu(false)}
                 data-testid="profile-link"
@@ -110,7 +115,7 @@ const AppHeader = () => {
               {isTeamAdmin && (
                 <>
                   <Link
-                    to="/billing"
+                    to={withBase('/billing')}
                     className="dropdown-item"
                     onClick={() => setShowUserMenu(false)}
                     data-testid="billing-link"
@@ -120,7 +125,7 @@ const AppHeader = () => {
                   </Link>
                   
                   <Link
-                    to="/settings/api-keys"
+                    to={withBase('/settings/api-keys')}
                     className="dropdown-item"
                     onClick={() => setShowUserMenu(false)}
                     data-testid="api-keys-link"
@@ -135,7 +140,7 @@ const AppHeader = () => {
                 <>
                   <div className="dropdown-divider"></div>
                   <Link
-                    to="/admin/overview"
+                    to={withBase('/admin/overview')}
                     className="dropdown-item admin-link"
                     onClick={() => setShowUserMenu(false)}
                     data-testid="admin-link"

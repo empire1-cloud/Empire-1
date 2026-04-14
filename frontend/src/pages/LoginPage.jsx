@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { useRouteBase } from '../lib/routeBase';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -26,8 +27,9 @@ const LoginPage = () => {
   const { login, authAxios, refreshTeams, getOAuthProviders, initiateOAuthLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { withBase } = useRouteBase();
   
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || withBase('/');
   
   // Fetch OAuth providers and invite info
   useEffect(() => {
@@ -79,7 +81,7 @@ const LoginPage = () => {
         }
       }
       
-      navigate(from === '/login' ? '/' : from, { replace: true });
+      navigate(from === '/login' || from === '/empire/login' ? withBase('/') : from, { replace: true });
     } else {
       setError(result.error);
     }
@@ -142,7 +144,7 @@ const LoginPage = () => {
           </div>
           
           <div className="forgot-password-link">
-            <Link to="/forgot-password" data-testid="forgot-link">
+            <Link to={withBase('/forgot-password')} data-testid="forgot-link">
               Forgot password?
             </Link>
           </div>
@@ -195,7 +197,7 @@ const LoginPage = () => {
           <p>
             Don't have an account?{' '}
             <Link 
-              to={inviteToken ? `/signup?invite=${inviteToken}&email=${encodeURIComponent(email)}` : '/signup'} 
+              to={inviteToken ? `${withBase('/signup')}?invite=${inviteToken}&email=${encodeURIComponent(email)}` : withBase('/signup')} 
               data-testid="signup-link"
             >
               Create one
