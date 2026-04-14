@@ -6,12 +6,14 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useRouteBase } from '../lib/routeBase';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const ResetPasswordPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { withBase } = useRouteBase();
   const token = searchParams.get('token');
 
   const [validating, setValidating] = useState(true);
@@ -108,7 +110,7 @@ const ResetPasswordPage = () => {
           </div>
 
           <div className="auth-actions">
-            <Link to="/forgot-password" className="btn-primary">
+            <Link to={withBase('/forgot-password')} className="btn-primary">
               Request New Link
             </Link>
           </div>
@@ -134,7 +136,7 @@ const ResetPasswordPage = () => {
           </div>
 
           <div className="auth-actions">
-            <Link to="/login" className="btn-primary" data-testid="login-btn">
+            <Link to={withBase('/login')} className="btn-primary" data-testid="login-btn">
               Sign In
             </Link>
           </div>
@@ -200,7 +202,7 @@ const ResetPasswordPage = () => {
 
         <div className="auth-footer">
           <p>
-            <Link to="/login" data-testid="back-link">Back to login</Link>
+            <Link to={withBase('/login')} data-testid="back-link">Back to login</Link>
           </p>
         </div>
       </div>

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useRouteBase } from "../lib/routeBase";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const MoneyPipelinePage = () => {
+  const { withBase } = useRouteBase();
   const [formData, setFormData] = useState({
     idea: "",
     target_revenue: "",
@@ -74,7 +76,7 @@ const MoneyPipelinePage = () => {
   return (
     <div className="page-container" data-testid="money-pipeline-page">
       <header className="page-header">
-        <Link to="/" className="back-link">← Home</Link>
+        <Link to={withBase("/")} className="back-link">← Home</Link>
         <h1>💵 Universal Money Pipeline</h1>
         <p className="subtitle">Transform any idea into a complete monetizable system</p>
       </header>

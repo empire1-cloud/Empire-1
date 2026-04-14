@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { useRouteBase } from "../lib/routeBase";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const HomePage = () => {
   const { user, currentTeam, authAxios } = useAuth();
+  const { withBase } = useRouteBase();
   const [health, setHealth] = useState(null);
   const [loading, setLoading] = useState(true);
   const [testLoading, setTestLoading] = useState(false);
@@ -104,31 +106,31 @@ const HomePage = () => {
       <section className="action-section">
         <h2>Quick Actions</h2>
         <div className="action-grid">
-          <Link to="/engines" className="action-card" data-testid="view-engines-link">
+          <Link to={withBase("/engines")} className="action-card" data-testid="view-engines-link">
             <span className="action-icon">📋</span>
             <h3>View All Engines</h3>
             <p>Browse {health?.engines?.length || 0} available AI engines</p>
           </Link>
 
-          <Link to="/money-pipeline" className="action-card" data-testid="money-pipeline-link">
+          <Link to={withBase("/money-pipeline")} className="action-card" data-testid="money-pipeline-link">
             <span className="action-icon">💵</span>
             <h3>Money Pipeline</h3>
             <p>Transform ideas into monetizable systems</p>
           </Link>
 
-          <Link to="/pipeline-composer" className="action-card" data-testid="pipeline-composer-link">
+          <Link to={withBase("/pipeline-composer")} className="action-card" data-testid="pipeline-composer-link">
             <span className="action-icon">🔗</span>
             <h3>Pipeline Composer</h3>
             <p>Chain multiple engines together</p>
           </Link>
 
-          <Link to="/history" className="action-card" data-testid="history-link">
+          <Link to={withBase("/history")} className="action-card" data-testid="history-link">
             <span className="action-icon">📜</span>
             <h3>Execution History</h3>
             <p>View all engine call logs</p>
           </Link>
 
-          <Link to="/analytics" className="action-card" data-testid="analytics-link">
+          <Link to={withBase("/analytics")} className="action-card" data-testid="analytics-link">
             <span className="action-icon">📊</span>
             <h3>Analytics Dashboard</h3>
             <p>Monitor performance & AI quality</p>
@@ -151,7 +153,7 @@ const HomePage = () => {
               <p><strong>Market Segments:</strong> {testResult.data.market_analysis?.target_segments?.length || 0}</p>
               <p><strong>Pricing Tiers:</strong> {testResult.data.pricing_model?.tiers?.length || 0}</p>
               <p><strong>Core Offer:</strong> {testResult.data.business_model?.core_offer?.slice(0, 100)}...</p>
-              <Link to="/money-pipeline" className="btn-primary">Open Full Pipeline →</Link>
+              <Link to={withBase("/money-pipeline")} className="btn-primary">Open Full Pipeline →</Link>
             </div>
           ) : (
             <p className="error-text">{testResult.error}</p>
@@ -168,7 +170,7 @@ const HomePage = () => {
             </div>
           ))}
           {health?.engines?.length > 10 && (
-            <Link to="/engines" className="engine-mini-card more">
+            <Link to={withBase("/engines")} className="engine-mini-card more">
               +{health.engines.length - 10} more
             </Link>
           )}

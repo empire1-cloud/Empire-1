@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AZTEC_GAMES } from '@/lib/aztec_registry';
 import { SLOT_GAMES } from '@/lib/slot_registry';
-import AztecFishGame from '@/components/games/AztecFishGame';
 import GShieldWOF from '@/components/games/GShieldWOF';
 import CustomSlotGame from '@/components/games/CustomSlotGame';
 
@@ -312,11 +311,15 @@ export default function ArcadeHome() {
         ) : (
             <div className="flex-1 flex flex-col h-[calc(100vh-200px)]">
                 {gameType === 'FISH' && selectedFish && (
-                    <AztecFishGame 
-                      gameId={activeGame} 
-                      godName={selectedFish.god} 
-                      themeColor={selectedFish.color} 
-                    />
+                    <div className="flex-1 flex items-center justify-center bg-zinc-950 border border-zinc-800 rounded-2xl">
+                      <div className="text-center space-y-3 p-8">
+                        <div className="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.25em]">Fish Arena Update</div>
+                        <h3 className="text-2xl font-black italic tracking-tight">{selectedFish.name.toUpperCase()}</h3>
+                        <p className="text-zinc-400 text-sm max-w-xl">
+                          Aztec fish runtime is temporarily disabled for stability. Slot and WOF engines remain fully live under SLA113 control.
+                        </p>
+                      </div>
+                    </div>
                 )}
                 {gameType === 'SLOT' && selectedSlot && (
                     <CustomSlotGame 

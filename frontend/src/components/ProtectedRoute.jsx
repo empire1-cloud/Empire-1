@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext';
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
+  const basePrefix = location.pathname.startsWith('/empire') ? '/empire' : '';
 
   if (loading) {
     return (
@@ -21,7 +22,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (!isAuthenticated) {
     // Redirect to login, preserving the intended destination
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to={`${basePrefix}/login`} state={{ from: location }} replace />;
   }
 
   return children;

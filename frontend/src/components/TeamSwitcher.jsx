@@ -7,12 +7,14 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import CreateTeamModal from './CreateTeamModal';
+import { useRouteBase } from '../lib/routeBase';
 
 const TeamSwitcher = () => {
   const { teams, currentTeam, switchTeam, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const dropdownRef = useRef(null);
+  const { withBase } = useRouteBase();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -89,7 +91,7 @@ const TeamSwitcher = () => {
             <div className="dropdown-divider"></div>
             
             <Link
-              to="/team/settings"
+              to={withBase('/team/settings')}
               className="team-settings-link"
               onClick={() => setIsOpen(false)}
               data-testid="team-settings-link"

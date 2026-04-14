@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast, Toaster } from "sonner";
 import { useAuth } from "../context/AuthContext";
+import { useRouteBase } from "../lib/routeBase";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, Legend,
@@ -54,6 +55,7 @@ const DEFAULT_WIDGETS = {
 
 const AnalyticsPage = () => {
   const { currentTeam } = useAuth();
+  const { withBase } = useRouteBase();
   // Data states
   const [engineUsage, setEngineUsage] = useState([]);
   const [engineLatency, setEngineLatency] = useState([]);
@@ -531,7 +533,7 @@ const AnalyticsPage = () => {
       <div className={`page-container analytics-page ${theme}`} data-testid="analytics-loading">
         <Toaster position="top-right" theme={theme} />
         <header className="page-header">
-          <Link to="/" className="back-link">← Home</Link>
+          <Link to={withBase("/")} className="back-link">← Home</Link>
           <div className="header-content">
             <h1>📊 Monitoring & Analytics</h1>
             <p className="subtitle">Loading dashboard...</p>
@@ -556,7 +558,7 @@ const AnalyticsPage = () => {
       {showSettings && <SettingsModal />}
       
       <header className="page-header">
-        <Link to="/" className="back-link">← Home</Link>
+        <Link to={withBase("/")} className="back-link">← Home</Link>
         <div className="header-content">
           <h1>📊 Monitoring & Analytics</h1>
           <p className="subtitle">Real-time system performance and AI quality metrics</p>

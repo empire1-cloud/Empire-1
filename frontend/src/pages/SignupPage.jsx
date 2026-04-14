@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { useRouteBase } from '../lib/routeBase';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -30,6 +31,7 @@ const SignupPage = () => {
   
   const { signup, authAxios, refreshTeams } = useAuth();
   const navigate = useNavigate();
+  const { withBase } = useRouteBase();
   
   // Fetch invite info if token present
   useEffect(() => {
@@ -123,7 +125,7 @@ const SignupPage = () => {
         }
       }
       
-      navigate('/', { replace: true });
+      navigate(withBase('/'), { replace: true });
     } else {
       setError(result.error);
     }
@@ -268,7 +270,7 @@ const SignupPage = () => {
           <p>
             Already have an account?{' '}
             <Link 
-              to={inviteToken ? `/login?invite=${inviteToken}&email=${encodeURIComponent(formData.email)}` : '/login'} 
+              to={inviteToken ? `${withBase('/login')}?invite=${inviteToken}&email=${encodeURIComponent(formData.email)}` : withBase('/login')} 
               data-testid="login-link"
             >
               Sign in

@@ -2,9 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { AdminOnly } from "../components/RoleGate";
+import { useRouteBase } from "../lib/routeBase";
 
 const ExecutionHistoryPage = () => {
   const { authAxios, currentTeam } = useAuth();
+  const { withBase } = useRouteBase();
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -109,7 +111,7 @@ const ExecutionHistoryPage = () => {
   return (
     <div className="page-container" data-testid="history-page">
       <header className="page-header">
-        <Link to="/" className="back-link">← Home</Link>
+        <Link to={withBase("/")} className="back-link">← Home</Link>
         <h1>📜 Execution History</h1>
         <p className="subtitle">Log of all engine calls and pipeline runs</p>
       </header>

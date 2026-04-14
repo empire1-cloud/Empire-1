@@ -40,11 +40,12 @@ export default function AztecFishGame({ gameId, themeColor, godName }: AztecFish
       // --- GOD EMBLEM (PREMIUM) ---
       const godText = new PIXI.Text(
         godName.toUpperCase(),
-        { fill: themeColor, fontSize: 120, fontWeight: 'bold', italic: true, alpha: 0.1 }
+        { fill: themeColor, fontSize: 120, fontWeight: 'bold', fontStyle: 'italic' }
       );
       godText.anchor.set(0.5);
       godText.x = 640;
       godText.y = 360;
+      godText.alpha = 0.1;
       stage.addChild(godText);
 
       // --- FISH SPAWNER (JUICE VERSION) ---

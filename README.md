@@ -1,4 +1,6 @@
-# Hybrid Intelligence Core
+# Empire Universe (Routed by SLA113)
+
+Empire remains fully live, but now sits as a routed universe under the SLA113 parent factory.
 
 Multi-model AI pipeline system with GPT-5.2, Claude Sonnet 4.5, and Gemini 3 Flash.
 

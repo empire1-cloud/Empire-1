@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useRouteBase } from '../lib/routeBase';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -14,6 +15,7 @@ const ForgotPasswordPage = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const { withBase } = useRouteBase();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +58,7 @@ const ForgotPasswordPage = () => {
             >
               Try Again
             </button>
-            <Link to="/login" className="btn-primary">
+            <Link to={withBase('/login')} className="btn-primary">
               Back to Login
             </Link>
           </div>
@@ -107,7 +109,7 @@ const ForgotPasswordPage = () => {
         <div className="auth-footer">
           <p>
             Remember your password?{' '}
-            <Link to="/login" data-testid="login-link">Sign in</Link>
+            <Link to={withBase('/login')} data-testid="login-link">Sign in</Link>
           </p>
         </div>
       </div>
