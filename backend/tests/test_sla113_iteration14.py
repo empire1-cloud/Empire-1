@@ -15,8 +15,12 @@ import requests
 import os
 import time
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
-API = f"{BASE_URL}/api/sla113"
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').strip().rstrip('/')
+pytestmark = pytest.mark.skipif(
+    not BASE_URL,
+    reason="REACT_APP_BACKEND_URL is not configured; skipping integration tests that require an absolute backend URL.",
+)
+API = f"{BASE_URL}/api/sla113" if BASE_URL else ""
 
 # Job presets and their expected stages
 JOB_STAGES = {
