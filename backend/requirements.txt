@@ -1,0 +1,27 @@
+# Lyrica 3 SoulPod workers (MMA / PFA / Demucs) — CPU PyTorch for Cloud Run without GPU
+# (avoids pulling default CUDA wheels from PyPI when a matching CPU wheel exists)
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+sqlalchemy==2.0.23
+sqlalchemy[asyncio]==2.0.23
+asyncpg==0.29.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-multipart==0.0.6
+PyJWT==2.9.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+email-validator==2.1.0
+openai==1.30.1
+motor==3.3.2
+pymongo==4.6.3
+pydub==0.25.1
+numpy>=1.24.0
+soundfile>=0.12.1
+torch>=2.0.0
+demucs>=4.0.0
+python-dotenv==1.0.0
+psutil
+google-cloud-aiplatform==1.51.0
