@@ -12,6 +12,7 @@ import {
   ChevronRight,
   Gamepad2,
   Sparkles,
+  Music,
   LogOut
 } from 'lucide-react';
 
@@ -20,6 +21,7 @@ import { clearSla113Session, getSla113AdminRole, getSla113AdminToken } from '@/l
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/admin', color: '#374151' },
   { label: 'AI Studio', icon: Sparkles, href: '/admin/ai-studio', color: '#374151' },
+  { label: 'Stem Deck', icon: Music, href: '/admin/stem-deck', color: '#374151' },
   { label: 'Machines', icon: Gamepad2, href: '/admin/machines', color: '#374151' },
   { label: 'Tenants', icon: Users, href: '/admin/tenants', color: '#374151' },
   { label: 'Revenue', icon: DollarSign, href: '/admin/revenue', color: '#374151' },
