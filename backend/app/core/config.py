@@ -87,6 +87,16 @@ class Settings(BaseSettings):
     SLA113_ADMIN_KEY: str = os.getenv("SLA113_ADMIN_KEY", "dev-admin-key")
 
     # ---------------------------------------------------------
+    # VOXCPM (Voice Synthesis)
+    # ---------------------------------------------------------
+    VOXCPM_MODE: str = os.getenv("VOXCPM_MODE", "remote")
+    VOXCPM_API_URL: str = os.getenv("VOXCPM_API_URL", "http://localhost:8808")
+    VOXCPM_MODEL: str = os.getenv("VOXCPM_MODEL", "openbmb/VoxCPM2")
+    VOXCPM_AUDIO_DIR: str = os.getenv("VOXCPM_AUDIO_DIR", "/var/sla/audio/voxcpm")
+    VOXCPM_DEFAULT_VOICE: str = os.getenv("VOXCPM_DEFAULT_VOICE", "default")
+    VOXCPM_SAMPLE_RATE: int = 48000
+
+    # ---------------------------------------------------------
     # PERSONAL ACCESS TOKENS
     # ---------------------------------------------------------
     PAT_TOKEN_LENGTH: int = 32

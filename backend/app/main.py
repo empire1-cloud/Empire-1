@@ -37,6 +37,8 @@ from app.routers.frontline import router as frontline_router
 from app.routers.billing import router as billing_router
 from app.routers.arcade import router as arcade_router
 from app.routers.my_vertex_universe import router as my_vertex_universe_router
+from app.routers.voxcpm import router as voxcpm_router
+from app.routers.audio_fx import router as audio_fx_router
 
 settings = get_settings()
 
@@ -90,6 +92,8 @@ app.include_router(frontline_router)
 app.include_router(billing_router)
 app.include_router(arcade_router)
 app.include_router(my_vertex_universe_router)
+app.include_router(voxcpm_router)
+app.include_router(audio_fx_router)
 
 # ---------------------------------------------------------
 # STARTUP: CREATE TABLES
