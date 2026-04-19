@@ -81,6 +81,7 @@ from routers.engines import (
     audio_fx_router,
 )
 from routers.engines.history_protected import router as history_protected_router
+from routers.engines.lyrica.agents import router as lyrica_router
 from routers.pipelines import router as pipelines_router
 
 # Include auth and team routers first (higher priority)
@@ -117,6 +118,7 @@ api_router.include_router(money_pipeline_router)
 api_router.include_router(analytics_router)  # Analytics remains public for now (system-wide metrics)
 api_router.include_router(voxcpm_router)
 api_router.include_router(audio_fx_router)
+api_router.include_router(lyrica_router)
 
 
 # Define Models
