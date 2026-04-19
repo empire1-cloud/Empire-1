@@ -71,7 +71,7 @@ function App() {
                   <Route key={`empire-${path}`} path={`/empire${path}`} element={element} />
                 ))}
                 <Route path="/empire" element={<Navigate to="/empire/" replace />} />
-                <Route path="*" element={<Navigate to="/empire/" replace />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
           </div>
