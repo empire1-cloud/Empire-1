@@ -229,6 +229,166 @@ async def synapse_assemble(request: SynapsePayloadRequest):
 
 
 # ---------------------------------------------------------------------------
+# S2 Disruption Engine
+# ---------------------------------------------------------------------------
+
+class S2GrooveRequest(BaseModel):
+    source_path: str = Field(..., description="Path to groove source audio (e.g. SGV beat)")
+    target_path: str = Field(..., description="Path to target audio (e.g. choir, strings)")
+    smoothing_hz: float = Field(default=10.0, ge=1.0, le=50.0)
+
+
+class S2MorphRequest(BaseModel):
+    audio_a_path: str = Field(..., description="Path to audio A")
+    audio_b_path: str = Field(..., description="Path to audio B (rhythmic source)")
+    morph_ratio: float = Field(default=0.5, ge=0.0, le=1.0)
+
+
+class GhostAudioRequest(BaseModel):
+    input_path: str = Field(..., description="Path to raw memory audio (VHS, voicemail, cassette)")
+    artifact_id: Optional[str] = None
+
+
+@router.post("/s2/transplant-groove")
+async def s2_transplant_groove(request: S2GrooveRequest):
+    """Extract groove from source and force target to swing with it."""
+    try:
+        from app.services.lyrica.s2_engine import S2DisruptionEngine
+        engine = S2DisruptionEngine()
+        result = engine.transplant_groove(request.source_path, request.target_path, request.smoothing_hz)
+        return {"success": True, **result}
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/s2/spectral-morph")
+async def s2_spectral_morph(request: S2MorphRequest):
+    """Fuse frequencies of two audio sources via STFT interpolation."""
+    try:
+        from app.services.lyrica.s2_engine import S2DisruptionEngine
+        engine = S2DisruptionEngine()
+        result = engine.spectral_morph(request.audio_a_path, request.audio_b_path, request.morph_ratio)
+        return {"success": True, **result}
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/s2/ghost-ingest")
+async def s2_ghost_ingest(request: GhostAudioRequest):
+    """Ingest raw memory audio and separate into ghost drum kit + 808 sub."""
+    try:
+        from app.services.lyrica.s2_engine import S2DisruptionEngine
+        engine = S2DisruptionEngine()
+        result = engine.ingest_ghost_audio(request.input_path, request.artifact_id)
+        return {"success": True, **result}
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ---------------------------------------------------------------------------
+# Render Engine (MSGO Protocol)
+# ---------------------------------------------------------------------------
+
+class RenderEstimateRequest(BaseModel):
+    num_clips: int = Field(default=1, ge=1, le=100)
+    mode: str = Field(default="FINAL")
+    apply_effects: bool = True
+    num_stems: int = Field(default=1, ge=1, le=10)
+
+
+@router.get("/render/tiers")
+async def render_tiers():
+    """List DRAFT/PREVIEW/FINAL render tiers with costs."""
+    from app.services.lyrica.render_engine import list_render_tiers
+    return {"success": True, "tiers": list_render_tiers()}
+
+
+@router.post("/render/estimate")
+async def render_estimate(request: RenderEstimateRequest):
+    """Estimate session cost for GPU-intensive rendering."""
+    from app.services.lyrica.render_engine import estimate_session_cost
+    result = estimate_session_cost(request.num_clips, request.mode, request.apply_effects, request.num_stems)
+    return {"success": True, **result}
+
+
+# ---------------------------------------------------------------------------
+# Micro-Royalty Ledger (VICS Protocol)
+# ---------------------------------------------------------------------------
+
+class RoyaltyRequest(BaseModel):
+    track_id: str
+    streams: int = Field(..., ge=0)
+    territory: str = Field(default="US")
+    splits: dict = Field(..., description="Contributor splits, e.g. {'beat_maker': 0.5, 'vocalist': 0.3, 'lyricist': 0.2}")
+
+
+class FlipItRequest(BaseModel):
+    parent_dna_tag: str
+    parent_splits: dict
+    child_splits: dict
+
+
+@router.post("/royalty/calculate")
+async def royalty_calculate(request: RoyaltyRequest):
+    """Calculate micro-royalty distribution across contributors."""
+    try:
+        from app.services.lyrica.royalty_ledger import calculate_micro_royalty
+        result = calculate_micro_royalty(request.track_id, request.streams, request.territory, request.splits)
+        return {"success": True, **result}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/royalty/flip-it-validate")
+async def royalty_flip_it(request: FlipItRequest):
+    """Validate Flip It protocol — ensure parent contributors get their cut."""
+    from app.services.lyrica.royalty_ledger import validate_flip_it
+    result = validate_flip_it(request.parent_dna_tag, request.child_splits, request.parent_splits)
+    return {"success": True, **result}
+
+
+# ---------------------------------------------------------------------------
+# CCNA Cultural Matrix
+# ---------------------------------------------------------------------------
+
+@router.get("/ccna/corpora")
+async def ccna_list():
+    """List all cultural corpora, acoustic profiles, and phonetic overrides."""
+    from app.services.lyrica.ccna_corpus import list_all
+    return {"success": True, **list_all()}
+
+
+@router.get("/ccna/corpus/{corpus_name}")
+async def ccna_corpus(corpus_name: str):
+    """Get a specific corpus with all its seeds."""
+    try:
+        from app.services.lyrica.ccna_corpus import get_corpus
+        corpus = get_corpus(corpus_name)
+        return {"success": True, "corpus_name": corpus_name, **corpus}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.get("/ccna/profile/{profile_name}")
+async def ccna_profile(profile_name: str):
+    """Get a specific acoustic profile with texture chain and MMA config."""
+    try:
+        from app.services.lyrica.ccna_corpus import get_acoustic_profile
+        profile = get_acoustic_profile(profile_name)
+        return {"success": True, "profile_name": profile_name, **profile}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+# ---------------------------------------------------------------------------
 # Status
 # ---------------------------------------------------------------------------
 
@@ -247,6 +407,10 @@ async def lyrica_status():
             "pda": {"status": "active", "capabilities": ["tape_saturation", "ssl_console", "vocal_bus", "lofi_vinyl"]},
             "dna_tagger": {"status": "active", "capabilities": ["sha256_provenance", "stem_tagging"]},
             "synapse_payload": {"status": "active", "capabilities": ["payload_assembly", "multi_agent_output"]},
+            "s2_disruption": {"status": "active", "capabilities": ["groove_transplantation", "spectral_morph", "ghost_audio_ingest"]},
+            "render_engine": {"status": "active", "capabilities": ["draft_preview_final", "cost_estimation"]},
+            "royalty_ledger": {"status": "active", "capabilities": ["micro_royalty_calculation", "flip_it_protocol"]},
+            "ccna": {"status": "active", "capabilities": ["5_cultural_corpora", "5_acoustic_profiles", "phonetic_overrides"]},
         },
         "os_hierarchy": {
             "control_plane": "SLA113",
