@@ -8,8 +8,9 @@ import { redirect } from 'next/navigation';
 export function generateMetadata(): Metadata {
   const host = headers().get('host') || '';
   const cleanHost = host.split(':')[0].toLowerCase();
+  const isLocalDev = cleanHost.includes('localhost') || cleanHost.includes('127.0.0.1');
 
-  if (cleanHost === 'sla113.southernlifestyle.org') {
+  if (cleanHost === 'sla113.southernlifestyle.org' || isLocalDev) {
     return {
       title: 'SLA113 Admin',
       description: 'SLA113 operator console',
@@ -50,9 +51,10 @@ export default function RootPage() {
   const cookieStore = cookies();
   const host = headersList.get('host') || '';
   const cleanHost = host.split(':')[0].toLowerCase();
+  const isLocalDev = cleanHost.includes('localhost') || cleanHost.includes('127.0.0.1');
 
   // 1. SLA113 ADMIN CONSOLE (Private)
-  if (cleanHost === 'sla113.southernlifestyle.org') {
+  if (cleanHost === 'sla113.southernlifestyle.org' || isLocalDev) {
     const adminToken = cookieStore.get('admin_token')?.value;
     redirect(adminToken ? '/admin' : '/admin/login');
   }
