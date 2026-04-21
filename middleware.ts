@@ -36,8 +36,9 @@ function detectTenant(host: string): string {
 export function middleware(request: NextRequest) {
   let pathname = request.nextUrl.pathname
   const host = request.headers.get('host') || ''
-  const token = request.cookies.get('admin_token')?.value
   const isDev = host.includes('localhost') || host.includes('127.0.0.1')
+  const token = request.cookies.get('admin_token')?.value
+  const isSla113Path = pathname.startsWith('/admin') || pathname.startsWith('/foundry')
   
   // 1. Skip middleware for assets
   if (pathname.startsWith('/api/') || pathname.startsWith('/_next/') || 
@@ -47,7 +48,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
   
-  const tenant = detectTenant(host)
+  // In local/dev, allow direct SLA113 console work without DNS host mapping.
+  const tenant = isDev && isSla113Path ? 'sla113' : detectTenant(host)
 
   if (tenant === 'sla113' && pathname === '/') {
     const targetPath = token || isDev ? '/admin' : '/admin/login'

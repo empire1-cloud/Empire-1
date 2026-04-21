@@ -1,10 +1,5 @@
-import AdminLayout from '@/components/admin/AdminLayout';
-import AnalyticsPanel from '@/components/admin/AnalyticsPanel';
+import Sla113ConsoleEntry from '@/components/admin/Sla113ConsoleEntry';
 
 export default function AdminDashboardPage() {
-  return (
-    <AdminLayout>
-      <AnalyticsPanel />
-    </AdminLayout>
-  );
+  return <Sla113ConsoleEntry />;
 }
