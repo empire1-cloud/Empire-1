@@ -56,7 +56,7 @@ export default function RootPage() {
   // 1. SLA113 ADMIN CONSOLE (Private)
   if (cleanHost === 'sla113.southernlifestyle.org' || isLocalDev) {
     const adminToken = cookieStore.get('admin_token')?.value;
-    redirect(adminToken ? '/admin' : '/admin/login');
+    redirect(adminToken || isLocalDev ? '/admin' : '/admin/login');
   }
 
   // 2. PERSONAL SWEEPSTAKES ARCADE (The "Body")
