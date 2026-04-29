@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import EmpireHome from '@/components/tenants/EmpireHome';
 import SouthernHome from '@/components/tenants/SouthernHome';
 import ArcadeHome from '@/components/tenants/ArcadeHome';
@@ -12,8 +12,8 @@ export function generateMetadata(): Metadata {
 
   if (cleanHost === 'sla113.southernlifestyle.org' || isLocalDev) {
     return {
-      title: 'SLA113 Admin',
-      description: 'SLA113 operator console',
+      title: 'SLA113',
+      description: 'SLA113 standalone',
     };
   }
 
@@ -41,22 +41,20 @@ export function generateMetadata(): Metadata {
  * Root Dispatcher
  * 
  * Domain Routing:
- * 1. sla113.southernlifestyle.org -> PRIVATE ADMIN CONSOLE (SLA113)
+ * 1. sla113.southernlifestyle.org -> SLA113 STANDALONE
  * 2. arcade.southernlifestyle.org -> PERSONAL SWEEPSTAKES ARCADE (PixiJS Body)
  * 3. southernlifestyle.org        -> SOUTHERN LYFESTYLE ARCADE (Public Homepage)
  * 4. empire1.cloud                -> EMPIRE ONE (MAIN BUSINESS)
  */
 export default function RootPage() {
   const headersList = headers();
-  const cookieStore = cookies();
   const host = headersList.get('host') || '';
   const cleanHost = host.split(':')[0].toLowerCase();
   const isLocalDev = cleanHost.includes('localhost') || cleanHost.includes('127.0.0.1');
 
-  // 1. SLA113 ADMIN CONSOLE (Private)
+  // 1. SLA113 STANDALONE
   if (cleanHost === 'sla113.southernlifestyle.org' || isLocalDev) {
-    const adminToken = cookieStore.get('admin_token')?.value;
-    redirect(adminToken ? '/admin' : '/admin/login');
+    redirect('/sla113');
   }
 
   // 2. PERSONAL SWEEPSTAKES ARCADE (The "Body")
