@@ -24,11 +24,7 @@ ENGINES = {
         service="app.services.vision_smith",
         router="app.routers.vision",
         credit_cost=10,
-<<<<<<< HEAD
         enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
-=======
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
->>>>>>> f5e075d (wip: save local changes before rebase)
         description="Text-to-image generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
@@ -39,11 +35,7 @@ ENGINES = {
         service="app.services.voice_king",
         router="app.routers.voice",
         credit_cost=5,
-<<<<<<< HEAD
         enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
-=======
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
->>>>>>> f5e075d (wip: save local changes before rebase)
         description="Text-to-speech for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
@@ -54,11 +46,7 @@ ENGINES = {
         service="app.services.sonic_forge",
         router="app.routers.sonicforge",
         credit_cost=15,
-<<<<<<< HEAD
         enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
-=======
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
->>>>>>> f5e075d (wip: save local changes before rebase)
         description="Music generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
@@ -69,11 +57,7 @@ ENGINES = {
         service="app.services.vo_engine",
         router="app.routers.video",
         credit_cost=20,
-<<<<<<< HEAD
         enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
-=======
-        enabled_for=["EMPIRE1", "SLA113", "Southern"],  # Full SaaS support
->>>>>>> f5e075d (wip: save local changes before rebase)
         description="Video generation for Southern Lyfestyle",
         status="placeholder",
         canon_lock=False,
