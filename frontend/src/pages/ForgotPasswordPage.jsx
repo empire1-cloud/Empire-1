@@ -7,8 +7,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useRouteBase } from '../lib/routeBase';
+import { getApiBase } from '../lib/apiBase';
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${getApiBase()}/api`;
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
