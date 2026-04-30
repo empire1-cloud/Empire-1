@@ -18,6 +18,13 @@ yarn install
 yarn start
 ```
 
+### Next.js API proxy env vars
+
+Set these in local/dev/prod so routing is explicit:
+
+- `BACKEND_URL`: Hybrid API base (default route for `/api/:path*`), e.g. `http://localhost:8001`
+- `SLA113_BACKEND_URL`: SLA113 API base used for foundry calls (`/api/foundry/:path*`), e.g. `http://localhost:8000`
+
 ## Features
 - 19 specialized AI engines
 - Pipeline composer for chaining engines

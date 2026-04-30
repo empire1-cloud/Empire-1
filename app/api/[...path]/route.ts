@@ -1,14 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const DEFAULT_BACKEND_URL = 'https://empire1-backend-339698334666.us-central1.run.app';
+const DEFAULT_SLA113_BACKEND_URL = 'https://empire1-backend-339698334666.us-central1.run.app';
 
-function getBackendBase(): string {
-  const configured = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL;
-  return (configured || DEFAULT_BACKEND_URL).replace(/\/$/, '');
+function normalizeBaseUrl(url: string): string {
+  return url.replace(/\/$/, '');
+}
+
+function isFoundryPath(pathParts: string[]): boolean {
+  return pathParts[0] === 'foundry';
+}
+
+function getBackendBase(pathParts: string[]): string {
+  const hybridConfigured = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL;
+  const sla113Configured = process.env.SLA113_BACKEND_URL;
+
+  if (isFoundryPath(pathParts)) {
+    return normalizeBaseUrl(sla113Configured || DEFAULT_SLA113_BACKEND_URL);
+  }
+
+  return normalizeBaseUrl(hybridConfigured || DEFAULT_BACKEND_URL);
 }
 
 function buildTargetUrl(pathParts: string[], request: NextRequest): string {
-  const base = getBackendBase();
+  const base = getBackendBase(pathParts);
   const path = pathParts.join('/');
   const search = request.nextUrl.search || '';
   return `${base}/${path}${search}`;
@@ -32,7 +47,7 @@ async function getCloudRunIdentityToken(audience: string): Promise<string | null
 async function proxy(request: NextRequest, context: { params: { path: string[] } }): Promise<NextResponse> {
   const pathParts = context.params.path || [];
   const targetUrl = buildTargetUrl(pathParts, request);
-  const backendBase = getBackendBase();
+  const backendBase = getBackendBase(pathParts);
   const backendOrigin = new URL(backendBase).origin;
 
   const headers = new Headers(request.headers);
