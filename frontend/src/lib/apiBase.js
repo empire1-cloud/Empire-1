@@ -1,5 +1,17 @@
 const normalizeBase = (value) => (value || "").trim().replace(/\/+$/, "");
 
+const getHostRoutedApiBase = (host) => {
+  if (host === "lyrica3.com" || host === "www.lyrica3.com") {
+    return "https://api.lyrica3.com";
+  }
+
+  if (host === "empire1.cloud" || host === "www.empire1.cloud") {
+    return "https://api.empire1.cloud";
+  }
+
+  return null;
+};
+
 const shouldIgnoreEnvBase = (envBase) => {
   if (typeof window === "undefined") return false;
 
@@ -22,6 +34,12 @@ export const getApiBase = () => {
 
   if (typeof window !== "undefined") {
     const host = window.location.hostname.toLowerCase();
+
+    const routedApiBase = getHostRoutedApiBase(host);
+    if (routedApiBase) {
+      return routedApiBase;
+    }
+
     if (host === "localhost" || host === "127.0.0.1") {
       return "http://localhost:8000";
     }
