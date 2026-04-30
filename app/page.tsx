@@ -51,6 +51,7 @@ export default function RootPage() {
   const host = headersList.get('host') || '';
   const cleanHost = host.split(':')[0].toLowerCase();
   const isLocalDev = cleanHost.includes('localhost') || cleanHost.includes('127.0.0.1');
+  const arcadeExternalUrl = process.env.ARCADE_EXTERNAL_URL?.trim();
 
   // 1. SLA113 STANDALONE
   if (cleanHost === 'sla113.southernlifestyle.org' || isLocalDev) {
@@ -59,6 +60,9 @@ export default function RootPage() {
 
   // 2. PERSONAL SWEEPSTAKES ARCADE (The "Body")
   if (cleanHost === 'arcade.southernlifestyle.org') {
+    if (arcadeExternalUrl) {
+      redirect(arcadeExternalUrl);
+    }
     return <ArcadeHome />;
   }
 
