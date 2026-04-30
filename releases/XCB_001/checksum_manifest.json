@@ -1,0 +1,80 @@
+{
+  "release_id": "XCB_001",
+  "track_title": "Xochitl's Concrete Bloom",
+  "dna_tag": "trk_alpha_f9a2e1_empire1",
+  "status": "PLACEHOLDER_PENDING_RENDER",
+  "hash_algorithm": "sha256",
+  "generated_utc": null,
+  "artifacts": {
+    "masters": [
+      {
+        "filename": "XCB_Full_MASTER.wav",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "XCB_Lullaby_MASTER.wav",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "XCB_Acapella_MASTER.wav",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "XCB_Full_STREAM.mp3",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "XCB_Lullaby_STREAM.mp3",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "XCB_Acapella_STREAM.mp3",
+        "sha256": null,
+        "bytes": null
+      }
+    ],
+    "stems": [
+      {
+        "filename": "vox_XCB_70bpm.wav",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "drums_XCB_70bpm.wav",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "bass_XCB_70bpm.wav",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "harp_XCB_70bpm.wav",
+        "sha256": null,
+        "bytes": null
+      },
+      {
+        "filename": "fx_XCB_70bpm.wav",
+        "sha256": null,
+        "bytes": null
+      }
+    ],
+    "cover_art": [
+      {
+        "filename": "XCB_Cover_Artwork.png",
+        "sha256": null,
+        "bytes": null
+      }
+    ]
+  },
+  "notes": [
+    "Fill checksums after final render and before distribution.",
+    "Any missing checksum should block APPROVE_AND_SHIP."
+  ]
+}
