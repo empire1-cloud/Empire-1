@@ -4,6 +4,11 @@ Empire remains fully live, but now sits as a routed universe under the SLA113 pa
 
 Multi-model AI pipeline system with GPT-5.2, Claude Sonnet 4.5, and Gemini 3 Flash.
 
+## Licensing
+
+This repository is published publicly for collaboration and transparency, but source code rights are reserved by default.
+See `LICENSE` and `NOTICE` for legal terms and permitted use.
+
 ## Quick Start
 
 ```bash
