@@ -19,7 +19,8 @@ This is the **Empire Universe** codebase — a multi-tenant SaaS platform with a
 - **Next.js dev server**: Clear `.next/` cache (`rm -rf .next`) if you see `__webpack_modules__[moduleId] is not a function` errors after dependency changes.
 - **Backend venv**: Python dependencies are installed in `backend/.venv`. Always activate with `source backend/.venv/bin/activate` before running backend commands.
 - **Backend tests** use `pytest` and hit the live server (not mocked). Set `REACT_APP_BACKEND_URL=http://localhost:8001` before running: `pytest backend/tests/ -v`.
-- **3 pre-existing test failures** in `test_engine_endpoints.py`: engine count assertion (expects 18, server returns 19) and 2 pipeline endpoints return 401 (require auth tokens the tests don't provide).
+- **Pre-existing test failures**: Without MongoDB, expect ~30 failures and ~33 errors (auth/billing/identity tests need DB). With MongoDB but no auth tokens, 3 failures remain in `test_engine_endpoints.py`: engine count assertion (expects 18, server returns 19) and 2 pipeline endpoints return 401.
+- **CRA frontend may fail on first compile** with babel-metadata-plugin errors (`Cannot read properties of null`). A restart (`Ctrl-C` then re-run) typically resolves it; the visual-edits plugin's file cache initializes correctly on the second pass.
 - **Next.js build fails** due to a pre-existing lint error in `AztecFishGame.tsx` (`react/jsx-no-comment-textnodes`). Dev mode (`npm run dev`) works fine.
 - **Root lint**: `npx next lint` (requires `eslint-config-next@14.2.3` installed as devDependency).
 - **Native dependencies** for the `canvas` npm package: `libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev pkg-config`.
