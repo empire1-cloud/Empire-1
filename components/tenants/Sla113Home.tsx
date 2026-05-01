@@ -6,7 +6,7 @@ import {
   Zap, 
   Cpu, Wallet, SlidersHorizontal,
   Scissors, Save, Shield, CheckCircle2, XCircle,
-  Box, Play, RefreshCw, Layers
+  Box, Play, RefreshCw
 } from 'lucide-react';
 
 // --- Constants & Styles ---
@@ -62,33 +62,36 @@ const ENGINE_PRESETS: Record<OsKey, { title: string, desc: string, base: string 
   BPO_PANO: { title: "Paño Arte", desc: "Paño // Chicano", base: "authentic chicano paño arte, blue ballpoint pen ink on white handkerchief cloth" }
 };
 
-const MODE_SWITCHER: Array<{ key: SlaModeKey; label: string; defaultTab: string; nav: string[] }> = [
-  { key: 'FACTORY', label: 'FACTORY', defaultTab: 'Universal_Builder', nav: ['FRONTLINE', 'WHITE_LABEL_MINT', 'DEPLOY_CENTER', 'UNIVERSES', 'FISH_ARENA'] },
-  { key: 'EMPIRE_1', label: 'EMPIRE 1', defaultTab: 'Sprite_Cutter', nav: ['MINT_LEDGER', 'REVENUE_PIPELINES', 'BESTIARY', 'SLOT_SYMBOLS'] },
-  { key: 'FOUNDRY', label: 'FOUNDRY', defaultTab: 'Southern_Foundry', nav: ['PREBUILD_AUDIT', 'ASSET_SYNC', 'COMMIT_PIPELINE', 'REGEN_QUEUE'] },
-  { key: 'VAULT', label: 'VAULT', defaultTab: 'Ledger_Sync', nav: ['KEY_RING', 'ASSET_REGISTRY', 'EVIDENCE_LOG', 'RECEIPTS'] },
-  { key: 'TECH', label: 'TECH', defaultTab: 'Universal_Builder', nav: ['ROUTER_GRID', 'KERNEL_HEALTH', 'DRIFT_WATCH', 'TELEMETRY'] },
-  { key: 'HUMAN', label: 'HUMAN', defaultTab: 'Sprite_Cutter', nav: ['OPERATOR_NOTES', 'CREATIVE_BRIEF', 'TONE_ENFORCER', 'SUPPORT_QUEUE'] },
+const MODE_SWITCHER: Array<{ key: SlaModeKey; label: string; subtitle: string; defaultTab: string; nav: string[] }> = [
+  { key: 'FACTORY', label: 'FACTORY', subtitle: 'LIVE_OPERATIONS', defaultTab: 'FACTORY_OVERVIEW', nav: ['FRONTLINE', 'WHITE_LABEL_MINT', 'DEPLOY_CENTER', 'UNIVERSES', 'FISH_ARENA'] },
+  { key: 'EMPIRE_1', label: 'EMPIRE 1', subtitle: 'REVENUE_MATRIX', defaultTab: 'EMPIRE_OVERVIEW', nav: ['MINT_LEDGER', 'REVENUE_PIPELINES', 'BESTIARY', 'SLOT_SYMBOLS'] },
+  { key: 'FOUNDRY', label: 'FOUNDRY', subtitle: 'CREATIVE_TOOLS', defaultTab: 'FOUNDRY_OVERVIEW', nav: ['OS_BUILDER', 'VISION_SMITH', 'AUDIO_FORGE', 'SPRITE_REGISTRY', 'GAME_COMPOSER'] },
+  { key: 'VAULT', label: 'VAULT', subtitle: 'SECURITY_CORE', defaultTab: 'VAULT_COMPLIANCE', nav: ['BUILD_PIPELINE', 'COMPLIANCE', 'ARTTECH_NEXUS', 'MATRIX_PARAMS', 'SYSTEM_CORE', 'NIGHT_QUEUE'] },
+  { key: 'TECH', label: 'TECH', subtitle: 'SYSTEM_GRID', defaultTab: 'Universal_Builder', nav: ['ROUTER_GRID', 'KERNEL_HEALTH', 'DRIFT_WATCH', 'TELEMETRY'] },
+  { key: 'HUMAN', label: 'HUMAN', subtitle: 'OPERATOR_LINK', defaultTab: 'Sprite_Cutter', nav: ['OPERATOR_NOTES', 'CREATIVE_BRIEF', 'TONE_ENFORCER', 'SUPPORT_QUEUE'] },
 ];
 
 const MODE_NAV_TO_TAB: Record<string, string> = {
-  FRONTLINE: 'Universal_Builder',
-  WHITE_LABEL_MINT: 'Universal_Builder',
-  DEPLOY_CENTER: 'Ledger_Sync',
-  UNIVERSES: 'Universal_Builder',
-  FISH_ARENA: 'Sprite_Cutter',
-  MINT_LEDGER: 'Ledger_Sync',
-  REVENUE_PIPELINES: 'Ledger_Sync',
-  BESTIARY: 'Sprite_Cutter',
-  SLOT_SYMBOLS: 'Sprite_Cutter',
-  PREBUILD_AUDIT: 'Southern_Foundry',
-  ASSET_SYNC: 'Southern_Foundry',
-  COMMIT_PIPELINE: 'Southern_Foundry',
-  REGEN_QUEUE: 'Southern_Foundry',
-  KEY_RING: 'Ledger_Sync',
-  ASSET_REGISTRY: 'Ledger_Sync',
-  EVIDENCE_LOG: 'Ledger_Sync',
-  RECEIPTS: 'Ledger_Sync',
+  FRONTLINE: 'FACTORY_OVERVIEW',
+  WHITE_LABEL_MINT: 'FACTORY_OVERVIEW',
+  DEPLOY_CENTER: 'FACTORY_OVERVIEW',
+  UNIVERSES: 'FACTORY_OVERVIEW',
+  FISH_ARENA: 'FACTORY_OVERVIEW',
+  MINT_LEDGER: 'EMPIRE_OVERVIEW',
+  REVENUE_PIPELINES: 'EMPIRE_OVERVIEW',
+  BESTIARY: 'EMPIRE_OVERVIEW',
+  SLOT_SYMBOLS: 'EMPIRE_OVERVIEW',
+  OS_BUILDER: 'FOUNDRY_OVERVIEW',
+  VISION_SMITH: 'FOUNDRY_OVERVIEW',
+  AUDIO_FORGE: 'FOUNDRY_OVERVIEW',
+  SPRITE_REGISTRY: 'FOUNDRY_REGISTRY',
+  GAME_COMPOSER: 'FOUNDRY_OVERVIEW',
+  BUILD_PIPELINE: 'VAULT_PIPELINE',
+  COMPLIANCE: 'VAULT_COMPLIANCE',
+  ARTTECH_NEXUS: 'VAULT_COMPLIANCE',
+  MATRIX_PARAMS: 'VAULT_COMPLIANCE',
+  SYSTEM_CORE: 'VAULT_PIPELINE',
+  NIGHT_QUEUE: 'VAULT_PIPELINE',
   ROUTER_GRID: 'Universal_Builder',
   KERNEL_HEALTH: 'Universal_Builder',
   DRIFT_WATCH: 'Southern_Foundry',
@@ -98,6 +101,81 @@ const MODE_NAV_TO_TAB: Record<string, string> = {
   TONE_ENFORCER: 'Universal_Builder',
   SUPPORT_QUEUE: 'Sprite_Cutter',
 };
+
+const MODE_THEME: Record<SlaModeKey, { accent: string; border: string; panel: string }> = {
+  FACTORY: { accent: 'text-cyan-400', border: 'border-cyan-500', panel: 'bg-cyan-900/20' },
+  EMPIRE_1: { accent: 'text-indigo-400', border: 'border-indigo-500', panel: 'bg-indigo-900/20' },
+  FOUNDRY: { accent: 'text-yellow-400', border: 'border-yellow-500', panel: 'bg-yellow-900/20' },
+  VAULT: { accent: 'text-red-400', border: 'border-red-500', panel: 'bg-red-900/20' },
+  TECH: { accent: 'text-zinc-200', border: 'border-zinc-500', panel: 'bg-zinc-800/70' },
+  HUMAN: { accent: 'text-emerald-400', border: 'border-emerald-500', panel: 'bg-emerald-900/20' },
+};
+
+const BUILD_ARCHITECTURE_LEDGER = [
+  { id: 'OS_BUILD_1775530940808', project: 'Neon Fish Hunt', className: 'fish_shooter' },
+  { id: 'OS_BUILD_1775597123678', project: 'Gold Rush Slots', className: 'slot_machine' },
+  { id: 'OS_BUILD_1775597773789', project: 'Barrio Runner', className: 'platformer' },
+  { id: 'OS_BUILD_1775597869804', project: 'Aztec Gold', className: 'slot_machine' },
+  { id: 'OS_BUILD_17756039865459', project: 'Sovereign Fish Arena', className: 'fish_shooter' },
+  { id: 'OS_BUILD_1775683989804', project: 'Shadow Pack', className: 'fish_shooter' },
+  { id: 'OS_BUILD_1775803915307', project: 'Jaguar Champion', className: 'boss_hunt' },
+  { id: 'OS_BUILD_1776061875297', project: 'Aztec Gold Sovereign', className: 'slot_machine' },
+  { id: 'OS_BUILD_1776221025501', project: 'Sovereign Fish Arena v2', className: 'fish_shooter' },
+  { id: 'OS_BUILD_1776408841208', project: 'Aztec Depths', className: 'fish_shooter' },
+  { id: 'OS_BUILD_1776502200011', project: 'Aztec Depths v3', className: 'fish_shooter' },
+];
+
+const SPRITE_ASSET_REGISTRY = [
+  { name: 'Southern Lifestyle Loader', type: 'UI', frames: 1, size: '1080x1080' },
+  { name: 'Slam Members Only', type: 'UI', frames: 1, size: '1920x1920' },
+  { name: 'SouthernLyfestyle Arcade Lobby', type: 'BACKGROUND', frames: 1, size: '2048x2048' },
+  { name: 'G-Wolf', type: 'BOSS', frames: 19, size: '410x512' },
+  { name: 'Aztec Fish Species V2', type: 'FISH', frames: 15, size: '512x512' },
+  { name: 'Jaguar Warrior Champion', type: 'BOSS', frames: 19, size: '400x400' },
+  { name: 'Jaguar Warrior Elite', type: 'BOSS', frames: 23, size: '320x400' },
+  { name: 'Wolf Xolotl Pack', type: 'BOSS', frames: 27, size: '512x512' },
+];
+
+const VAULT_COMPLIANCE_REPORTS = [
+  { id: 'CMP-00310256', target: 'Aztec Depths v3 / GLI', status: 'NEEDS_REMEDIATION', checks: '3/6' },
+  { id: 'CMP-0776EF14', target: 'Aztec Depths v3 / GLI', status: 'CONDITIONAL', checks: '3/6' },
+  { id: 'CMP-500E4730', target: 'Build_1775597123678 / UKGC', status: 'NEEDS_REMEDIATION', checks: '2/6' },
+  { id: 'CMP-91A10391', target: 'Sovereign Fish Arena / MGA', status: 'PASS', checks: '6/6' },
+];
+
+const FACTORY_BUILD_LEDGER = [
+  'Neon Fish Hunt',
+  'Deploy Test Game',
+  'Gold Rush Slots',
+  'Barrio Runner',
+  'Aztec Gold Slots',
+  'Southern Gold Slots',
+  'Sovereign Fish Arena',
+  'Aztec Depths v5',
+];
+
+const FOUNDRY_ASSETS = [
+  { name: 'Southern Lifestyle Loader', type: 'UI', frames: 1, resolution: '1080x1080', grid: '1x1' },
+  { name: 'Slam Members Only', type: 'UI', frames: 1, resolution: '1920x1920', grid: '1x1' },
+  { name: 'SouthernLyfestyle Arcade Lobby', type: 'BACKGROUND', frames: 1, resolution: '2048x2048', grid: '1x1' },
+  { name: 'G-Wolf', type: 'BOSS', frames: 19, resolution: '410x512', grid: '5x4' },
+  { name: 'Aztec Fish Species V2', type: 'FISH', frames: 15, resolution: '512x512', grid: '4x4' },
+  { name: 'Jaguar Warrior Champion', type: 'BOSS', frames: 19, resolution: '400x400', grid: '4x5' },
+  { name: 'Jaguar Warrior Elite', type: 'BOSS', frames: 23, resolution: '320x400', grid: '5x5' },
+  { name: 'Wolf Xolotl Pack', type: 'BOSS', frames: 24, resolution: '640x640', grid: '6x4' },
+];
+
+const VAULT_REPORTS = [
+  { id: 'CMP-00310256', target: 'Aztec Depths v3 / GLI', status: 'NEEDS_REMEDIATION', checks: ['RTP Verification', 'RNG Seed Audit', 'Paytable Integrity', 'Max Bet Limits'] },
+  { id: 'CMP-D776EF14', target: 'Aztec Depths v3 / GLI', status: 'CONDITIONAL', checks: ['RTP Verification', 'RNG Seed Audit', 'Session Timeout Compliance', 'Responsible Gaming Controls'] },
+  { id: 'CMP-500E4730', target: 'OS_BUILD_1775597123678 / UKGC', status: 'NEEDS_REMEDIATION', checks: ['RTP Verification', 'RNG Seed Audit', 'Paytable Integrity', 'Responsible Gaming Controls'] },
+];
+
+const EMPIRE_BOSS_ROSTER = [
+  { name: 'Xochipilli Scathed', tier: 'MYTHIC', hp: '850K' },
+  { name: 'Lobo Negro', tier: 'LEGENDARY', hp: '628K' },
+  { name: 'La Reina Oscura', tier: 'MYTHIC', hp: '780K' },
+];
 
 /**
  * SLA113 // OPERATOR_CONSOLE
@@ -193,6 +271,10 @@ export default function Sla113Home() {
     { name: 'Southern_Foundry', icon: Database },
     { name: 'Ledger_Sync', icon: Wallet },
   ];
+  const activeModeConfig = MODE_SWITCHER.find((entry) => entry.key === activeMode) || MODE_SWITCHER[0];
+  const activeModeTheme = MODE_THEME[activeMode];
+  const hasDedicatedModeSurface = activeMode === 'FOUNDRY' || activeMode === 'VAULT' || activeMode === 'EMPIRE_1';
+  const isLegacyMode = activeMode === 'TECH' || activeMode === 'HUMAN';
 
   return (
     <>
@@ -203,14 +285,18 @@ export default function Sla113Home() {
         {/* SIDEBAR */}
         <aside className="w-64 bg-black/80 border-r border-zinc-900 flex flex-col z-20">
           <div className="p-6 border-b border-zinc-900">
-            <h1 className="liquid-chrome text-xl tracking-tight text-white italic font-black">SLA113</h1>
-            <p className="text-[9px] text-zinc-500 uppercase tracking-widest mt-1 font-bold">Admin_Control_Vault</p>
+            <h1 className="liquid-chrome text-xl tracking-tight text-white italic font-black">
+              SLA113 <span className={activeModeTheme.accent}>{'//'} {activeModeConfig.label}</span>
+            </h1>
+            <p className="text-[9px] text-zinc-500 uppercase tracking-widest mt-1 font-bold">
+              {activeModeConfig.subtitle.replace('_', ' ')}
+            </p>
           </div>
 
           <div className="p-3 border-b border-zinc-900 bg-black/70">
             <p className="text-[8px] text-zinc-600 uppercase tracking-[0.18em] mb-2">Mode_Navigation</p>
             <div className="space-y-1">
-              {(MODE_SWITCHER.find((entry) => entry.key === activeMode)?.nav || []).map((item) => (
+              {activeModeConfig.nav.map((item) => (
                 <button
                   key={item}
                   onClick={() => {
@@ -220,7 +306,7 @@ export default function Sla113Home() {
                   }}
                   className={`w-full text-left px-3 py-2 rounded-sm text-[9px] uppercase tracking-[0.16em] border ${
                     activeModeNav === item
-                      ? 'border-cyan-500 text-cyan-300 bg-cyan-900/20'
+                      ? `${activeModeTheme.border} ${activeModeTheme.accent} ${activeModeTheme.panel}`
                       : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/50'
                   }`}
                 >
@@ -247,17 +333,19 @@ export default function Sla113Home() {
             ))}
           </nav>
 
-          {/* FModel Quick Stats */}
-          <div className="p-6 border-t border-zinc-900 bg-black/40">
-            <h4 className="text-[8px] text-zinc-600 uppercase mb-4 tracking-widest">FModel_Utility_Status</h4>
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-[9px]">
-                <RefreshCw size={10} className="text-cyan-500 animate-spin" />
-                <span className="text-zinc-400 uppercase">Texture_Link: ACTIVE</span>
+          {/* DAEMON STATUS */}
+          <div className="p-4 border-t border-zinc-900 bg-black/40">
+            <div className={`text-[9px] uppercase tracking-[0.2em] border px-3 py-1 ${activeModeTheme.border} ${activeModeTheme.accent}`}>
+              Daemon_Uplink
+            </div>
+            <div className="mt-3 space-y-2 text-[9px] uppercase tracking-wider">
+              <div className="flex justify-between text-zinc-500">
+                <span>CPU / RAM</span>
+                <span>14% / 42.8 GB</span>
               </div>
-              <div className="flex items-center gap-2 text-[9px]">
-                <Layers size={10} className="text-[#bd93f9]" />
-                <span className="text-zinc-400 uppercase">Mesh_Buffer: READY</span>
+              <div className="flex justify-between text-zinc-500">
+                <span>NIGHT_QUEUE</span>
+                <span className={activeModeTheme.accent}>0 PENDING</span>
               </div>
             </div>
           </div>
@@ -268,17 +356,18 @@ export default function Sla113Home() {
           <header className="sticky top-0 z-50 flex justify-between items-center px-8 py-3 border-b border-zinc-900 bg-black/90 backdrop-blur-md text-[9px]">
             <div className="flex items-center gap-6">
               <div className="text-white font-bold tracking-widest uppercase">Operator_Environment_v2.0.4</div>
+              <div className="text-zinc-500 uppercase tracking-widest">Net_Revenue <span className="text-white text-2xl align-middle ml-1">$142,500</span></div>
               <div className="text-zinc-600">ID: <span className="text-zinc-400">ADMIN_OVERRIDE</span></div>
             </div>
             <div className="flex items-center gap-5">
-              <div className="hidden xl:flex items-center gap-1 rounded-sm border border-zinc-800 bg-black/70 p-1">
+              <div className="hidden lg:flex items-center gap-1 rounded-sm border border-zinc-800 bg-black/70 p-1">
                 {MODE_SWITCHER.map((mode) => (
                   <button
                     key={mode.key}
                     onClick={() => setActiveMode(mode.key)}
                     className={`px-2 py-1 text-[8px] uppercase tracking-widest border ${
                       activeMode === mode.key
-                        ? 'border-cyan-600 text-cyan-300 bg-cyan-900/20'
+                        ? `${MODE_THEME[mode.key].border} ${MODE_THEME[mode.key].accent} ${MODE_THEME[mode.key].panel}`
                         : 'border-transparent text-zinc-500 hover:text-zinc-300'
                     }`}
                   >
@@ -288,7 +377,7 @@ export default function Sla113Home() {
               </div>
               <div className="text-zinc-600 uppercase tracking-widest text-[8px] hidden lg:block">Auto_Discovery_Active</div>
               <div className="text-[#50fa7b] font-bold flex items-center gap-2 uppercase">
-                <Activity size={12} /> {activeMode.replace('_', ' ')}_Stable
+                <Activity size={12} /> {activeModeConfig.label}_Stable
               </div>
             </div>
           </header>
@@ -296,8 +385,137 @@ export default function Sla113Home() {
           <div className="p-8 lg:p-12 max-w-7xl mx-auto w-full space-y-10 relative">
             <div className="scanline"></div>
 
+            {activeMode === 'FOUNDRY' && (
+              <div className="space-y-6 animate-in fade-in duration-500">
+                {activeModeNav === 'SPRITE_REGISTRY' ? (
+                  <div className="glass-panel border border-yellow-700/30 overflow-hidden">
+                    <div className="p-4 border-b border-zinc-900 flex items-center justify-between">
+                      <h2 className="text-yellow-300 uppercase tracking-[0.25em] text-[11px] font-black">Sprite Asset Registry</h2>
+                      <button className="px-3 py-1 border border-yellow-500/40 text-yellow-300 text-[9px] uppercase tracking-widest">Register Sprite</button>
+                    </div>
+                    <div className="divide-y divide-zinc-900">
+                      {SPRITE_ASSET_REGISTRY.map((asset) => (
+                        <div key={asset.name} className="grid grid-cols-12 px-4 py-3 text-[10px] uppercase tracking-wider">
+                          <div className="col-span-5 text-zinc-200">{asset.name}</div>
+                          <div className="col-span-2 text-yellow-300">{asset.type}</div>
+                          <div className="col-span-2 text-zinc-500">{asset.frames} Frames</div>
+                          <div className="col-span-3 text-zinc-500">{asset.size}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                    <section className="xl:col-span-6 glass-panel border border-yellow-700/30">
+                      <div className="p-4 border-b border-zinc-900">
+                        <h2 className="text-yellow-300 text-2xl font-black tracking-[0.16em] uppercase">Universal Builder V7</h2>
+                        <p className="text-zinc-600 text-[9px] uppercase tracking-[0.2em] mt-1">Allocate Custom Clusters</p>
+                      </div>
+                      <div className="p-4 space-y-4">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="border border-zinc-800 bg-black px-3 py-2">
+                            <div className="text-zinc-600 text-[8px] uppercase">OS Clusters</div>
+                            <div className="text-zinc-100 text-sm uppercase tracking-wider mt-1">Fish Shooting</div>
+                          </div>
+                          <div className="border border-yellow-600/30 bg-yellow-900/10 px-3 py-2">
+                            <div className="text-zinc-600 text-[8px] uppercase">Units</div>
+                            <div className="text-yellow-300 text-sm uppercase tracking-wider mt-1">1</div>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="border border-zinc-800 bg-black px-3 py-2">
+                            <div className="text-zinc-600 text-[8px] uppercase">Generation Mode</div>
+                            <div className="text-zinc-100 text-sm uppercase tracking-wider mt-1">Fast Render</div>
+                          </div>
+                          <div className="border border-yellow-600/30 bg-yellow-900/10 px-3 py-2">
+                            <div className="text-zinc-600 text-[8px] uppercase">Night Shift</div>
+                            <div className="text-yellow-300 text-sm uppercase tracking-wider mt-1">Batch Queue</div>
+                          </div>
+                        </div>
+                        <button className="w-full py-2 border border-yellow-500 bg-yellow-800/30 text-yellow-200 uppercase text-[10px] tracking-[0.2em] font-black">Forge OS Container</button>
+                      </div>
+                    </section>
+                    <section className="xl:col-span-6 glass-panel border border-yellow-700/30 overflow-hidden">
+                      <div className="p-4 border-b border-zinc-900">
+                        <h3 className="text-yellow-300 uppercase tracking-[0.2em] text-[11px] font-black">Build Architecture Ledger</h3>
+                      </div>
+                      <div className="max-h-[420px] overflow-y-auto divide-y divide-zinc-900">
+                        {BUILD_ARCHITECTURE_LEDGER.map((entry) => (
+                          <div key={entry.id} className="grid grid-cols-12 px-4 py-2 text-[10px] uppercase tracking-wider">
+                            <div className="col-span-6 text-zinc-300">{entry.id}</div>
+                            <div className="col-span-4 text-zinc-100">{entry.project}</div>
+                            <div className="col-span-2 text-cyan-300">{entry.className.replace('_', ' ')}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {activeMode === 'VAULT' && (
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 animate-in fade-in duration-500">
+                <section className="xl:col-span-4 glass-panel border border-red-700/30 p-4 space-y-4">
+                  <h2 className="text-red-400 uppercase tracking-[0.2em] text-[11px] font-black">Certification Scan</h2>
+                  <div className="space-y-3 text-[10px] uppercase tracking-wider">
+                    <div className="border border-zinc-800 px-3 py-2">
+                      <div className="text-zinc-600">Target Project</div>
+                      <div className="text-zinc-100 mt-1">Neon Fish Hunt</div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button className="border border-red-500/40 py-2 text-red-300">GLI</button>
+                      <button className="border border-zinc-700 py-2 text-zinc-500">MGA</button>
+                    </div>
+                    <button className="w-full border border-red-600 bg-red-900/30 text-red-200 py-2 font-black tracking-[0.2em]">Run Certification Scan</button>
+                  </div>
+                </section>
+                <section className="xl:col-span-8 glass-panel border border-red-700/30 overflow-hidden">
+                  <div className="p-4 border-b border-zinc-900">
+                    <h3 className="text-red-400 uppercase tracking-[0.2em] text-[11px] font-black">Compliance Reports</h3>
+                  </div>
+                  <div className="max-h-[420px] overflow-y-auto divide-y divide-zinc-900">
+                    {VAULT_COMPLIANCE_REPORTS.map((report) => (
+                      <div key={report.id} className="px-4 py-3">
+                        <div className="flex justify-between items-center text-[10px] uppercase tracking-wider">
+                          <span className="text-zinc-100">{report.id} {report.target}</span>
+                          <span className={`${report.status === 'PASS' ? 'text-emerald-400' : report.status === 'CONDITIONAL' ? 'text-yellow-300' : 'text-red-400'}`}>{report.status}</span>
+                        </div>
+                        <div className="text-zinc-500 text-[9px] uppercase tracking-widest mt-1">Checks: {report.checks}</div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {activeMode === 'EMPIRE_1' && (
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 animate-in fade-in duration-500">
+                <aside className="xl:col-span-3 glass-panel border border-indigo-700/30 p-4">
+                  <h2 className="text-indigo-300 uppercase tracking-[0.2em] text-[11px] font-black mb-3">Boss Roster (3)</h2>
+                  <div className="space-y-2">
+                    {EMPIRE_BOSS_ROSTER.map((boss) => (
+                      <div key={boss.name} className="border border-zinc-800 p-2">
+                        <div className="text-zinc-100 text-[10px] uppercase">{boss.name}</div>
+                        <div className="text-indigo-300 text-[9px] uppercase">{boss.tier} · HP {boss.hp}</div>
+                      </div>
+                    ))}
+                  </div>
+                </aside>
+                <section className="xl:col-span-9 glass-panel border border-indigo-700/30 p-4 space-y-4">
+                  <h3 className="text-white text-4xl font-black tracking-[0.12em] uppercase">Xochipilli Scathed</h3>
+                  <p className="text-indigo-300 text-[11px] uppercase tracking-[0.2em]">Sun Priest of the Burning Codex · 850,000 HP</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[10px] uppercase tracking-wider">
+                    <div className="border border-zinc-800 p-3"><p className="text-zinc-600 mb-2">Attack Kit</p><p className="text-zinc-100">Solar Flare Staff</p><p className="text-zinc-100">Calendra Shield Bash</p></div>
+                    <div className="border border-zinc-800 p-3"><p className="text-zinc-600 mb-2">Weakness</p><p className="text-cyan-300">Water / Ice</p><p className="text-yellow-300">Aztec / Mesoamerican</p></div>
+                    <div className="border border-zinc-800 p-3"><p className="text-zinc-600 mb-2">Credit Values</p><p className="text-yellow-300 text-lg">3500 / 2400</p><p className="text-zinc-500">RTP 94.2%</p></div>
+                  </div>
+                </section>
+              </div>
+            )}
+
             {/* TAB: UNIVERSAL BUILDER */}
-            {activeTab === 'Universal_Builder' && (
+            {!hasDedicatedModeSurface && activeTab === 'Universal_Builder' && (
               <div className="space-y-8 animate-in fade-in duration-500">
                 <div className="flex justify-between items-center border-b border-zinc-900 pb-4">
                   <h2 className="text-cyan-400 text-xs tracking-widest uppercase flex items-center gap-2">
@@ -411,7 +629,7 @@ export default function Sla113Home() {
             )}
 
             {/* TAB: SPRITE CUTTER */}
-            {activeTab === 'Sprite_Cutter' && (
+            {!hasDedicatedModeSurface && activeTab === 'Sprite_Cutter' && (
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in fade-in duration-500">
                 <aside className="lg:col-span-3 space-y-6">
                   <div className="glass-panel p-4 border border-zinc-900">
@@ -465,7 +683,7 @@ export default function Sla113Home() {
             )}
 
             {/* TAB: SOUTHERN FOUNDRY */}
-            {activeTab === 'Southern_Foundry' && ( auditState && (
+            {!hasDedicatedModeSurface && activeTab === 'Southern_Foundry' && ( auditState && (
               <div className="space-y-8 animate-in fade-in duration-500">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                   <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-6">
