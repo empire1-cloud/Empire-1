@@ -52,6 +52,7 @@ const STYLES = `
 `;
 
 type OsKey = 'AAA_FISH_SLOT' | 'GTA5_TYPE' | 'COD_WARFARE' | 'FANTASY_RPG' | 'BPO_PANO';
+type UniverseKey = 'SLA113' | 'LYRICA3' | 'CULTURA' | 'SOUTHERN' | 'EMPIREONE' | 'OMNI_AGENT';
 
 const ENGINE_PRESETS: Record<OsKey, { title: string, desc: string, base: string }> = {
   AAA_FISH_SLOT: { title: "Arcade Pipeline", desc: "Lounge // Fish // Slots", base: "industrial casino grade, luxury obsidian textures, neon gold filigree" },
@@ -61,12 +62,22 @@ const ENGINE_PRESETS: Record<OsKey, { title: string, desc: string, base: string 
   BPO_PANO: { title: "Paño Arte", desc: "Paño // Chicano", base: "authentic chicano paño arte, blue ballpoint pen ink on white handkerchief cloth" }
 };
 
+const UNIVERSE_SWITCHER: Array<{ key: UniverseKey; label: string; defaultTab: string }> = [
+  { key: 'SLA113', label: 'SLA113', defaultTab: 'Universal_Builder' },
+  { key: 'LYRICA3', label: 'LYRICA3', defaultTab: 'Sprite_Cutter' },
+  { key: 'CULTURA', label: 'CULTURA', defaultTab: 'Universal_Builder' },
+  { key: 'SOUTHERN', label: 'SOUTHERN', defaultTab: 'Southern_Foundry' },
+  { key: 'EMPIREONE', label: 'EMPIREONE', defaultTab: 'Ledger_Sync' },
+  { key: 'OMNI_AGENT', label: 'OMNI_AGENT', defaultTab: 'Universal_Builder' },
+];
+
 /**
  * SLA113 // OPERATOR_CONSOLE
  * Admin dashboard for sla113.southernlifestyle.org
  */
 export default function Sla113Home() {
   const [activeTab, setActiveTab] = useState('Universal_Builder');
+  const [activeUniverse, setActiveUniverse] = useState<UniverseKey>('SLA113');
   const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "AIzaSyBvWiHFNhdicOrYhq3xsmJ0LBqylNWnSR0"; 
   
   // --- Universal Builder State ---
@@ -96,6 +107,13 @@ export default function Sla113Home() {
         .then(d => setAuditState(d));
     }
   }, [activeTab]);
+
+  useEffect(() => {
+    const targetTab = UNIVERSE_SWITCHER.find((universe) => universe.key === activeUniverse)?.defaultTab;
+    if (targetTab) {
+      setActiveTab(targetTab);
+    }
+  }, [activeUniverse]);
 
   const handleUniversalRender = async () => {
     setIsGeneratingNexus(true);
@@ -196,8 +214,25 @@ export default function Sla113Home() {
               <div className="text-white font-bold tracking-widest uppercase">Operator_Environment_v2.0.4</div>
               <div className="text-zinc-600">ID: <span className="text-zinc-400">ADMIN_OVERRIDE</span></div>
             </div>
-            <div className="text-[#50fa7b] font-bold flex items-center gap-2 uppercase">
-              <Activity size={12} /> System_Stable
+            <div className="flex items-center gap-5">
+              <div className="hidden xl:flex items-center gap-1 rounded-sm border border-zinc-800 bg-black/70 p-1">
+                {UNIVERSE_SWITCHER.map((universe) => (
+                  <button
+                    key={universe.key}
+                    onClick={() => setActiveUniverse(universe.key)}
+                    className={`px-2 py-1 text-[8px] uppercase tracking-widest border ${
+                      activeUniverse === universe.key
+                        ? 'border-cyan-600 text-cyan-300 bg-cyan-900/20'
+                        : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                    }`}
+                  >
+                    {universe.label}
+                  </button>
+                ))}
+              </div>
+              <div className="text-[#50fa7b] font-bold flex items-center gap-2 uppercase">
+                <Activity size={12} /> {activeUniverse}_Stable
+              </div>
             </div>
           </header>
 
