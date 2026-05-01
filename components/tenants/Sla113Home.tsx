@@ -52,7 +52,7 @@ const STYLES = `
 `;
 
 type OsKey = 'AAA_FISH_SLOT' | 'GTA5_TYPE' | 'COD_WARFARE' | 'FANTASY_RPG' | 'BPO_PANO';
-type UniverseKey = 'SLA113' | 'LYRICA3' | 'CULTURA' | 'SOUTHERN' | 'EMPIREONE' | 'OMNI_AGENT';
+type SlaModeKey = 'FACTORY' | 'EMPIRE_1' | 'FOUNDRY' | 'VAULT' | 'TECH' | 'HUMAN';
 
 const ENGINE_PRESETS: Record<OsKey, { title: string, desc: string, base: string }> = {
   AAA_FISH_SLOT: { title: "Arcade Pipeline", desc: "Lounge // Fish // Slots", base: "industrial casino grade, luxury obsidian textures, neon gold filigree" },
@@ -62,14 +62,42 @@ const ENGINE_PRESETS: Record<OsKey, { title: string, desc: string, base: string 
   BPO_PANO: { title: "Paño Arte", desc: "Paño // Chicano", base: "authentic chicano paño arte, blue ballpoint pen ink on white handkerchief cloth" }
 };
 
-const UNIVERSE_SWITCHER: Array<{ key: UniverseKey; label: string; defaultTab: string }> = [
-  { key: 'SLA113', label: 'SLA113', defaultTab: 'Universal_Builder' },
-  { key: 'LYRICA3', label: 'LYRICA3', defaultTab: 'Sprite_Cutter' },
-  { key: 'CULTURA', label: 'CULTURA', defaultTab: 'Universal_Builder' },
-  { key: 'SOUTHERN', label: 'SOUTHERN', defaultTab: 'Southern_Foundry' },
-  { key: 'EMPIREONE', label: 'EMPIREONE', defaultTab: 'Ledger_Sync' },
-  { key: 'OMNI_AGENT', label: 'OMNI_AGENT', defaultTab: 'Universal_Builder' },
+const MODE_SWITCHER: Array<{ key: SlaModeKey; label: string; defaultTab: string; nav: string[] }> = [
+  { key: 'FACTORY', label: 'FACTORY', defaultTab: 'Universal_Builder', nav: ['FRONTLINE', 'WHITE_LABEL_MINT', 'DEPLOY_CENTER', 'UNIVERSES', 'FISH_ARENA'] },
+  { key: 'EMPIRE_1', label: 'EMPIRE 1', defaultTab: 'Sprite_Cutter', nav: ['MINT_LEDGER', 'REVENUE_PIPELINES', 'BESTIARY', 'SLOT_SYMBOLS'] },
+  { key: 'FOUNDRY', label: 'FOUNDRY', defaultTab: 'Southern_Foundry', nav: ['PREBUILD_AUDIT', 'ASSET_SYNC', 'COMMIT_PIPELINE', 'REGEN_QUEUE'] },
+  { key: 'VAULT', label: 'VAULT', defaultTab: 'Ledger_Sync', nav: ['KEY_RING', 'ASSET_REGISTRY', 'EVIDENCE_LOG', 'RECEIPTS'] },
+  { key: 'TECH', label: 'TECH', defaultTab: 'Universal_Builder', nav: ['ROUTER_GRID', 'KERNEL_HEALTH', 'DRIFT_WATCH', 'TELEMETRY'] },
+  { key: 'HUMAN', label: 'HUMAN', defaultTab: 'Sprite_Cutter', nav: ['OPERATOR_NOTES', 'CREATIVE_BRIEF', 'TONE_ENFORCER', 'SUPPORT_QUEUE'] },
 ];
+
+const MODE_NAV_TO_TAB: Record<string, string> = {
+  FRONTLINE: 'Universal_Builder',
+  WHITE_LABEL_MINT: 'Universal_Builder',
+  DEPLOY_CENTER: 'Ledger_Sync',
+  UNIVERSES: 'Universal_Builder',
+  FISH_ARENA: 'Sprite_Cutter',
+  MINT_LEDGER: 'Ledger_Sync',
+  REVENUE_PIPELINES: 'Ledger_Sync',
+  BESTIARY: 'Sprite_Cutter',
+  SLOT_SYMBOLS: 'Sprite_Cutter',
+  PREBUILD_AUDIT: 'Southern_Foundry',
+  ASSET_SYNC: 'Southern_Foundry',
+  COMMIT_PIPELINE: 'Southern_Foundry',
+  REGEN_QUEUE: 'Southern_Foundry',
+  KEY_RING: 'Ledger_Sync',
+  ASSET_REGISTRY: 'Ledger_Sync',
+  EVIDENCE_LOG: 'Ledger_Sync',
+  RECEIPTS: 'Ledger_Sync',
+  ROUTER_GRID: 'Universal_Builder',
+  KERNEL_HEALTH: 'Universal_Builder',
+  DRIFT_WATCH: 'Southern_Foundry',
+  TELEMETRY: 'Universal_Builder',
+  OPERATOR_NOTES: 'Sprite_Cutter',
+  CREATIVE_BRIEF: 'Sprite_Cutter',
+  TONE_ENFORCER: 'Universal_Builder',
+  SUPPORT_QUEUE: 'Sprite_Cutter',
+};
 
 /**
  * SLA113 // OPERATOR_CONSOLE
@@ -77,7 +105,8 @@ const UNIVERSE_SWITCHER: Array<{ key: UniverseKey; label: string; defaultTab: st
  */
 export default function Sla113Home() {
   const [activeTab, setActiveTab] = useState('Universal_Builder');
-  const [activeUniverse, setActiveUniverse] = useState<UniverseKey>('SLA113');
+  const [activeMode, setActiveMode] = useState<SlaModeKey>('FACTORY');
+  const [activeModeNav, setActiveModeNav] = useState('FRONTLINE');
   const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "AIzaSyBvWiHFNhdicOrYhq3xsmJ0LBqylNWnSR0"; 
   
   // --- Universal Builder State ---
@@ -109,11 +138,15 @@ export default function Sla113Home() {
   }, [activeTab]);
 
   useEffect(() => {
-    const targetTab = UNIVERSE_SWITCHER.find((universe) => universe.key === activeUniverse)?.defaultTab;
+    const mode = MODE_SWITCHER.find((entry) => entry.key === activeMode);
+    const targetTab = mode?.defaultTab;
     if (targetTab) {
       setActiveTab(targetTab);
     }
-  }, [activeUniverse]);
+    if (mode?.nav?.[0]) {
+      setActiveModeNav(mode.nav[0]);
+    }
+  }, [activeMode]);
 
   const handleUniversalRender = async () => {
     setIsGeneratingNexus(true);
@@ -173,6 +206,29 @@ export default function Sla113Home() {
             <h1 className="liquid-chrome text-xl tracking-tight text-white italic font-black">SLA113</h1>
             <p className="text-[9px] text-zinc-500 uppercase tracking-widest mt-1 font-bold">Admin_Control_Vault</p>
           </div>
+
+          <div className="p-3 border-b border-zinc-900 bg-black/70">
+            <p className="text-[8px] text-zinc-600 uppercase tracking-[0.18em] mb-2">Mode_Navigation</p>
+            <div className="space-y-1">
+              {(MODE_SWITCHER.find((entry) => entry.key === activeMode)?.nav || []).map((item) => (
+                <button
+                  key={item}
+                  onClick={() => {
+                    setActiveModeNav(item);
+                    const nextTab = MODE_NAV_TO_TAB[item];
+                    if (nextTab) setActiveTab(nextTab);
+                  }}
+                  className={`w-full text-left px-3 py-2 rounded-sm text-[9px] uppercase tracking-[0.16em] border ${
+                    activeModeNav === item
+                      ? 'border-cyan-500 text-cyan-300 bg-cyan-900/20'
+                      : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/50'
+                  }`}
+                >
+                  {item.replace(/_/g, ' ')}
+                </button>
+              ))}
+            </div>
+          </div>
           
           <nav className="flex-1 py-6 space-y-1 px-3 overflow-y-auto">
             {TABS.map((item) => (
@@ -216,22 +272,23 @@ export default function Sla113Home() {
             </div>
             <div className="flex items-center gap-5">
               <div className="hidden xl:flex items-center gap-1 rounded-sm border border-zinc-800 bg-black/70 p-1">
-                {UNIVERSE_SWITCHER.map((universe) => (
+                {MODE_SWITCHER.map((mode) => (
                   <button
-                    key={universe.key}
-                    onClick={() => setActiveUniverse(universe.key)}
+                    key={mode.key}
+                    onClick={() => setActiveMode(mode.key)}
                     className={`px-2 py-1 text-[8px] uppercase tracking-widest border ${
-                      activeUniverse === universe.key
+                      activeMode === mode.key
                         ? 'border-cyan-600 text-cyan-300 bg-cyan-900/20'
                         : 'border-transparent text-zinc-500 hover:text-zinc-300'
                     }`}
                   >
-                    {universe.label}
+                    {mode.label}
                   </button>
                 ))}
               </div>
+              <div className="text-zinc-600 uppercase tracking-widest text-[8px] hidden lg:block">Auto_Discovery_Active</div>
               <div className="text-[#50fa7b] font-bold flex items-center gap-2 uppercase">
-                <Activity size={12} /> {activeUniverse}_Stable
+                <Activity size={12} /> {activeMode.replace('_', ' ')}_Stable
               </div>
             </div>
           </header>
