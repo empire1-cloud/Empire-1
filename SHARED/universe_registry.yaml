@@ -1,6 +1,6 @@
-version: 2
+version: 3
 registry_name: sla113_universe_registry
-last_updated_utc: "2026-05-01T07:03:00Z"
+last_updated_utc: "2026-05-01T12:00:00Z"
 single_source_of_truth: true
 
 owners:
@@ -14,126 +14,155 @@ owners:
     display_name: Southern Lyfestyle
 
 universes:
-  - id: U0
-    key: SLA113
-    name: "SLA113 Parent Runtime"
-    layer: "control_plane"
-    owner: "sla113"
-    role: "routing, policy, orchestration, identity firewall"
+  factory:
+    id: U0
+    name: SLA113
+    role: control_plane
+    layer: control_plane
+    owner: sla113
+    router: sla113_router.py
     domains:
-      - "sla113.southernlifestyle.org"
+      - sla113.southernlifestyle.org
     services:
-      - "empire1-backend"
+      - empire1-backend
     depends_on: []
-    status: "active"
+    status: active
 
-  - id: U1
-    key: LYRICA3
-    name: "Lyrica 3 Pro — Sonance / SL Universal"
-    layer: "product_surface"
-    owner: "lyrica"
-    role: "one unified music/voice creation business — studio (Sonance Pro), radio (SL Universal), generative (Lyria 3)"
-    note: "Sonance Pro, SL Universal, and Lyrica 3 are one business, one frontend shell, one tenant"
+  foundry:
+    id: U1
+    name: Lyrica3
+    role: creative_intelligence
+    layer: product_surface
+    owner: lyrica
+    router: lyrica_router.py
     domains:
-      - "lyrica3.com"
-      - "www.lyrica3.com"
-      - "api.lyrica3.com"
-      - "sluniversal.lyrica3.com"   # alias → same app, /universal mode
-    routes:
-      - path: "/"          mode: "sonance"       # Sonance Pro studio (default)
-      - path: "/universal" mode: "universal"     # SL Universal Pulse Stream
-      - path: "/orchestrator" mode: "orchestrator" # Lyria 3 Pro generative
+      - lyrica3.com
+      - www.lyrica3.com
+      - api.lyrica3.com
+      - sluniversal.lyrica3.com
     services:
-      - "lyrica3-frontend"
-      - "lyrica3-backend"
+      - lyrica3-frontend
+      - lyrica3-backend
     depends_on:
-      - "U0"
-    status: "active"
+      - U0
+    status: active
+    sub_universes:
+      - id: U7
+        key: SL_UNIVERSAL
+        name: SL Universal
+        role: streaming_radio
+        note: "Alias → same app, /universal mode"
+        route: /universal
+      - id: U8
+        key: SONANCE_PRO
+        name: Sonance Pro
+        role: pro_studio
+        note: "Alias → same app, default mode"
+        route: /
 
-  - id: U2
-    key: CULTURA_VIBE_FORGE
-    name: "Cultura Vibe Forge"
-    layer: "cultural_os"
-    owner: "sla113"
-    role: "dialect, authenticity, guardrails"
+  cultura:
+    id: U2
+    name: Cultura Vibe Forge
+    role: cultural_os
+    layer: cultural_os
+    owner: sla113
+    router: cultura_router.py
     domains: []
     services: []
     depends_on:
-      - "U0"
-    status: "active"
+      - U0
+    status: active
+    products:
+      - id: U6
+        key: EL_ARQUITECTO_AI
+        name: El Arquitecto AI
+        role: cultura_product
+        router: el_arquitecto_router.py
+        services:
+          - arquitecto-frontend
+          - arquitecto-backend
+        depends_on:
+          - U0
+          - U2
+        status: active
 
-  - id: U3
-    key: SOUTHERN
-    name: "Southern Lyfestyle Experience Factory"
-    layer: "product_surface"
-    owner: "southern"
-    role: "arcade + themed experiences"
+  southern:
+    id: U3
+    name: Southern Lifestyle
+    role: aaa_os_factory
+    layer: product_surface
+    owner: southern
+    router: southern_router.py
     domains:
-      - "southernlifestyle.org"
-      - "www.southernlifestyle.org"
-      - "arcade.southernlifestyle.org"
+      - southernlifestyle.org
+      - www.southernlifestyle.org
+      - arcade.southernlifestyle.org
     services:
-      - "empire1-frontend"
+      - empire1-frontend
     depends_on:
-      - "U0"
-    status: "active"
+      - U0
+    status: active
 
-  - id: U4
-    key: EMPIREONE
-    name: "Empire One Enterprise SaaS"
-    layer: "product_surface"
-    owner: "empire1"
-    role: "enterprise SaaS, billing, auth, ops"
+  empire:
+    id: U4
+    name: EmpireOne
+    role: enterprise_saas
+    layer: product_surface
+    owner: empire1
+    router: empireone_router.py
     domains:
-      - "empire1.cloud"
-      - "api.empire1.cloud"
+      - empire1.cloud
+      - api.empire1.cloud
     services:
-      - "empire1-frontend"
-      - "empire1-backend"
+      - empire1-frontend
+      - empire1-backend
     depends_on:
-      - "U0"
-    status: "active"
+      - U0
+    status: active
 
-  - id: U5
-    key: OMNI_AGENT
-    name: "Omni Agent Operator OS"
-    layer: "operator_behavior"
-    owner: "sla113"
-    role: "persona runtime, triage, execution control"
+  omni:
+    id: U5
+    name: Omni Agent
+    role: operator_os
+    layer: operator_behavior
+    owner: sla113
+    router: omni_router.py
     domains: []
     services:
-      - "empire1-backend"
+      - empire1-backend
     depends_on:
-      - "U0"
-    status: "active"
+      - U0
+    status: active
 
-  - id: U6
-    key: EL_ARQUITECTO_AI
-    name: "El Arquitecto AI"
-    layer: "cultural_product"
-    owner: "sla113"
-    role: "cultural AI product — frontend, backend, cultural filter, PRD-driven build"
-    note: "Nested under U2 CULTURA_VIBE_FORGE as a product. Powered by U2 authenticity/guardrail engine."
+  arquitecto:
+    id: U6
+    name: El Arquitecto AI
+    role: cultura_product
+    layer: cultural_product
+    owner: sla113
+    router: el_arquitecto_router.py
     domains: []
     services:
-      - "arquitecto-frontend"
-      - "arquitecto-backend"
+      - arquitecto-frontend
+      - arquitecto-backend
     depends_on:
-      - "U0"
-      - "U2"
-    status: "active"
+      - U0
+      - U2
+    status: active
+    note: "Nested product of U2 Cultura Vibe Forge. Also listed under cultura.products for hierarchy reference."
 
-  - id: U10
-    key: BLACK_BOX_REGISTRY
-    name: "Black Box Registry Engine Vault"
-    layer: "vault"
-    owner: "sla113"
-    role: "engine versioning and controlled runtime access"
+  vault:
+    id: U10
+    name: Black Box Registry
+    role: engine_vault
+    layer: vault
+    owner: sla113
+    router: vault_router.py
     domains: []
     services: []
     depends_on:
-      - "U0"
-    status: "active"
+      - U0
+    status: active
 
 contracts:
   api_base_contract:
@@ -141,8 +170,8 @@ contracts:
     lyrica: "https://api.lyrica3.com"
 
   routing_rules:
-    unknown_host_fallback: "EMPIREONE"
-    arcade_external_redirect_env: "ARCADE_EXTERNAL_URL"
+    unknown_host_fallback: empire
+    arcade_external_redirect_env: ARCADE_EXTERNAL_URL
 
 governance:
   requires_adrs_for_boundary_changes: true
