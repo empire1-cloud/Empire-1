@@ -1,0 +1,66 @@
+{
+  "release_id": "XCB_001",
+  "proof_mode": true,
+  "track_metadata": {
+    "title": "Xochitl's Concrete Bloom",
+    "core_genre": "SGV Cumbia-Soul Lullaby",
+    "s2_mutation": "Traditional son jarocho harp textures woven into a slow, cruising cumbia bassline with Dilla-inspired, late-pocket drums.",
+    "dna_tag_preview": "trk_alpha_f9a2e1_empire1"
+  },
+  "creative_intent_trace": {
+    "cultural_justification": "The name 'Xochitl' (Nahuatl for 'flower') is the core of this piece. The metaphor 'wildflowers grow through concrete' is a profound statement of Chicana resilience and survival, perfect for the SGV context. Calling her 'Azteca Goddess' elevates this from a simple birthday song to an anthem of heritage and strength. The cumbia-soul fusion is a direct nod to backyard party and family gathering soundscapes.",
+    "poetic_divergence": "A generic AI would create a simple, rhyming 'happy birthday' song. I have intentionally avoided this. The lyrics are a poetic blessing, a declaration of the mother's salvation through her daughter. The structure is more like a prayer or a dedication you'd hear on Art Laboe, focusing on the emotional impact ('You reminded your mama...') rather than a childish rhyme scheme."
+  },
+  "epd_vocal_blueprint": {
+    "vulnerability_level": 0.99,
+    "biometric_artifacts": [
+      "<emotional_crack>",
+      "<adaptive_inhale>",
+      "<chest_resonance>",
+      "<vocal_fry>"
+    ],
+    "phonation": "A raw, close-mic delivery. Starts as a near-whisper, builds to a strained, heartfelt belt, simulating a voice thick with emotion."
+  },
+  "acoustic_primitives": {
+    "groove": "70bpm_heavy_late-pocket_cumbia_swing",
+    "texture": "Simulates recording in a warm, wood-paneled room. The mix has tape saturation and a subtle vinyl crackle to give it a timeless, 'oldie' feel. The harp is mixed to feel like it's in the room with you."
+  },
+  "lyrics_payload": [
+    {
+      "line": "Dos años...",
+      "artifact_trigger": "<chest_resonance> <vocal_fry>"
+    },
+    {
+      "line": "Mi Xochitl... my little flower...",
+      "artifact_trigger": "<adaptive_inhale>"
+    },
+    {
+      "line": "You reminded your mama...",
+      "artifact_trigger": null
+    },
+    {
+      "line": "that wildflowers can grow through concrete.",
+      "artifact_trigger": "<emotional_crack>"
+    },
+    {
+      "line": "And I was so lost in that concrete jungle, mija.",
+      "artifact_trigger": "<adaptive_inhale>"
+    },
+    {
+      "line": "Then you bloomed.",
+      "artifact_trigger": null
+    },
+    {
+      "line": "My Azteca goddess, showing me the sun again.",
+      "artifact_trigger": "<chest_resonance>"
+    },
+    {
+      "line": "This one's for you, mi vida.",
+      "artifact_trigger": "<vocal_fry>"
+    }
+  ],
+  "canon_bindings": {
+    "pair_lore": "Luna + Xolotl bonded pair",
+    "sigil_id": "sla113_primary_sigil"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "release_id": "XCB_001",
+  "track_id": "trk_alpha_f9a2e1_empire1",
+  "title": "Xochitl's Concrete Bloom",
+  "status": "proof_of_possibility",
+  "purpose": "Demonstrate end-to-end Soulfire release architecture before final mastered audio is attached.",
+  "operator": {
+    "tenant": "EMPIRE1",
+    "scope": "SLA113_manufacture_for_southern"
+  },
+  "pipeline": {
+    "s2_multi_modal_weaver": "complete",
+    "epd_vocal_blueprint": "complete",
+    "mma_midi_sequence": "complete",
+    "pda_texture_profile": "complete",
+    "dope_stem_export": "planned",
+    "vics_ledger_embedding": "planned"
+  },
+  "artifacts": {
+    "intent_file": "releases/XCB_001/intent.json",
+    "render_spec_file": "releases/XCB_001/render_spec.json",
+    "checksum_manifest_file": "releases/XCB_001/checksum_manifest.json"
+  },
+  "distribution": {
+    "approved": false,
+    "blocked_reason": "Final audio assets and cover art are not attached yet.",
+    "required_to_ship": [
+      "XCB_Full_MASTER.wav",
+      "XCB_Lullaby_MASTER.wav",
+      "XCB_Acapella_MASTER.wav",
+      "XCB_Full_STREAM.mp3",
+      "XCB_Lullaby_STREAM.mp3",
+      "XCB_Acapella_STREAM.mp3",
+      "vox_XCB_70bpm.wav",
+      "drums_XCB_70bpm.wav",
+      "bass_XCB_70bpm.wav",
+      "harp_XCB_70bpm.wav",
+      "fx_XCB_70bpm.wav",
+      "cover_art"
+    ]
+  },
+  "created_at_utc": "2026-04-30T13:54:00Z"
+}

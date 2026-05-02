@@ -2,7 +2,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg build-essential && rm -rf /var/lib/apt/lists/*
+# libsndfile1: required by soundfile; ffmpeg: demucs / audio tooling; build-essential: some wheels compile extensions
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libsndfile1 \
+    ffmpeg \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt

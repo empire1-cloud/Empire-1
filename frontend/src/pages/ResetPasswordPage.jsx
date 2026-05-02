@@ -7,8 +7,9 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRouteBase } from '../lib/routeBase';
+import { getApiBase } from '../lib/apiBase';
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${getApiBase()}/api`;
 
 const ResetPasswordPage = () => {
   const [searchParams] = useSearchParams();

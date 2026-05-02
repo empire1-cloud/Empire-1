@@ -202,7 +202,9 @@ export default function SonanceProStemDeck() {
               SONANCE <span className="text-amber-500">PRO</span>
               <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full font-medium">STEM DECK</span>
             </h1>
-            <p className="text-xs text-neutral-500 uppercase mt-1">S2 Disruption Engine // MSGO {renderTier} // Lyrica 3 Pro</p>
+            <p className="text-xs text-neutral-500 uppercase mt-1">
+              S2 Disruption Engine {'//'} MSGO {renderTier} {'//'} Lyrica 3 Pro
+            </p>
           </div>
 
           {/* Live Royalty Counter */}

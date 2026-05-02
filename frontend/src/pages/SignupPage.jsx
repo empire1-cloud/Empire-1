@@ -9,8 +9,9 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { useRouteBase } from '../lib/routeBase';
+import { getApiBase } from '../lib/apiBase';
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${getApiBase()}/api`;
 
 const SignupPage = () => {
   const [searchParams] = useSearchParams();

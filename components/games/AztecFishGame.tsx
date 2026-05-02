@@ -100,7 +100,9 @@ export default function AztecFishGame({ gameId, themeColor, godName }: AztecFish
       <div ref={containerRef} className="w-full h-full rounded-2xl overflow-hidden border border-zinc-800" />
       <div className="absolute top-4 left-4 flex items-center space-x-2 bg-black/80 p-2 rounded-lg border border-zinc-700">
         <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: themeColor }} />
-        <span className="text-[10px] text-zinc-400 font-bold tracking-widest">{gameId.toUpperCase()} // PREDATOR_MODE</span>
+        <span className="text-[10px] text-zinc-400 font-bold tracking-widest">
+          {gameId.toUpperCase()} {'//'} PREDATOR_MODE
+        </span>
       </div>
     </div>
   );

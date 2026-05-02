@@ -4,6 +4,11 @@ Empire remains fully live, but now sits as a routed universe under the SLA113 pa
 
 Multi-model AI pipeline system with GPT-5.2, Claude Sonnet 4.5, and Gemini 3 Flash.
 
+## Licensing
+
+This repository is published publicly for collaboration and transparency, but source code rights are reserved by default.
+See `LICENSE` and `NOTICE` for legal terms and permitted use.
+
 ## Quick Start
 
 ```bash
@@ -17,6 +22,13 @@ cd frontend
 yarn install
 yarn start
 ```
+
+### Next.js API proxy env vars
+
+Set these in local/dev/prod so routing is explicit:
+
+- `BACKEND_URL`: Hybrid API base (default route for `/api/:path*`), e.g. `http://localhost:8001`
+- `SLA113_BACKEND_URL`: SLA113 API base used for foundry calls (`/api/foundry/:path*`), e.g. `http://localhost:8000`
 
 ## Features
 - 19 specialized AI engines

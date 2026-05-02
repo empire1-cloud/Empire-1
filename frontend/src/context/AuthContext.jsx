@@ -5,8 +5,9 @@
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { getApiBase } from '../lib/apiBase';
 
-const API = process.env.REACT_APP_BACKEND_URL;
+const API = getApiBase();
 
 const AuthContext = createContext(null);
 
