@@ -3,9 +3,10 @@
 ## Domain -> Service -> Universe
 | Domain | Cloud Run Service | Universe | Purpose | Owner |
 |---|---|---|---|---|
-| lyrica3.com | lyrica3-frontend | LYRICA3 (U1) | Public Lyrica home | lyrica |
-| www.lyrica3.com | lyrica3-frontend | LYRICA3 (U1) | Public Lyrica alias | lyrica |
-| api.lyrica3.com | lyrica3-backend (or empire1-backend if intentionally unified) | LYRICA3 (U1) | Lyrica API/Auth | sla113 |
+| lyrica3.com | lyrica3-frontend | LYRICA3 (U1) | Sonance Pro studio (default mode) | lyrica |
+| www.lyrica3.com | lyrica3-frontend | LYRICA3 (U1) | Lyrica alias | lyrica |
+| sluniversal.lyrica3.com | lyrica3-frontend | LYRICA3 (U1) | SL Universal Pulse Stream — same app, /universal mode | lyrica |
+| api.lyrica3.com | lyrica3-backend | LYRICA3 (U1) | Lyrica API/Auth | sla113 |
 | empire1.cloud | empire1-frontend | EMPIREONE (U4) | Empire public app | empire1 |
 | api.empire1.cloud | empire1-backend | EMPIREONE (U4) | Empire API | empire1 |
 | southernlifestyle.org | empire1-frontend | SOUTHERN (U3) | Southern public home | southern |

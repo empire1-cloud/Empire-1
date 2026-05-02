@@ -29,22 +29,25 @@ universes:
 
   - id: U1
     key: LYRICA3
-    name: "Lyrica 3 Creative Intelligence"
+    name: "Lyrica 3 Pro — Sonance / SL Universal"
     layer: "product_surface"
     owner: "lyrica"
-    role: "music/voice creation runtime"
+    role: "one unified music/voice creation business — studio (Sonance Pro), radio (SL Universal), generative (Lyria 3)"
+    note: "Sonance Pro, SL Universal, and Lyrica 3 are one business, one frontend shell, one tenant"
     domains:
       - "lyrica3.com"
       - "www.lyrica3.com"
       - "api.lyrica3.com"
+      - "sluniversal.lyrica3.com"   # alias → same app, /universal mode
+    routes:
+      - path: "/"          mode: "sonance"       # Sonance Pro studio (default)
+      - path: "/universal" mode: "universal"     # SL Universal Pulse Stream
+      - path: "/orchestrator" mode: "orchestrator" # Lyria 3 Pro generative
     services:
       - "lyrica3-frontend"
       - "lyrica3-backend"
     depends_on:
       - "U0"
-    sub_universes:
-      - "SL_UNIVERSAL"
-      - "SONANCE_PRO"
     status: "active"
 
   - id: U2
