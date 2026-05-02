@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
@@ -19,3 +20,20 @@ const nextConfig = {
 };
 
 export default nextConfig;
+=======
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "standalone",
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.BACKEND_URL || 'http://localhost:8000'}/:path*`,
+      },
+    ];
+  },
+
+};
+
+export default nextConfig;
+>>>>>>> Stashed changes

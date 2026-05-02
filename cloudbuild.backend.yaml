@@ -14,5 +14,7 @@ steps:
       - --region
       - us-central1
       - --allow-unauthenticated
+      - --set-secrets
+      - JWT_SECRET=sla113-jwt-secret:latest
 images:
   - 'gcr.io/$PROJECT_ID/empire1-backend'
