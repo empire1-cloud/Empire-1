@@ -1,0 +1,134 @@
+version: 2
+registry_name: sla113_universe_registry
+last_updated_utc: "2026-05-01T07:03:00Z"
+single_source_of_truth: true
+
+owners:
+  - id: sla113
+    display_name: SLA113 Operator Core
+  - id: empire1
+    display_name: Empire One
+  - id: lyrica
+    display_name: Lyrica 3
+  - id: southern
+    display_name: Southern Lyfestyle
+
+universes:
+  - id: U0
+    key: SLA113
+    name: "SLA113 Parent Runtime"
+    layer: "control_plane"
+    owner: "sla113"
+    role: "routing, policy, orchestration, identity firewall"
+    domains:
+      - "sla113.southernlifestyle.org"
+    services:
+      - "empire1-backend"
+    depends_on: []
+    status: "active"
+
+  - id: U1
+    key: LYRICA3
+    name: "Lyrica 3 Pro — Sonance / SL Universal"
+    layer: "product_surface"
+    owner: "lyrica"
+    role: "one unified music/voice creation business — studio (Sonance Pro), radio (SL Universal), generative (Lyria 3)"
+    note: "Sonance Pro, SL Universal, and Lyrica 3 are one business, one frontend shell, one tenant"
+    domains:
+      - "lyrica3.com"
+      - "www.lyrica3.com"
+      - "api.lyrica3.com"
+      - "sluniversal.lyrica3.com"   # alias → same app, /universal mode
+    routes:
+      - path: "/"          mode: "sonance"       # Sonance Pro studio (default)
+      - path: "/universal" mode: "universal"     # SL Universal Pulse Stream
+      - path: "/orchestrator" mode: "orchestrator" # Lyria 3 Pro generative
+    services:
+      - "lyrica3-frontend"
+      - "lyrica3-backend"
+    depends_on:
+      - "U0"
+    status: "active"
+
+  - id: U2
+    key: CULTURA_VIBE_FORGE
+    name: "Cultura Vibe Forge"
+    layer: "cultural_os"
+    owner: "sla113"
+    role: "dialect, authenticity, guardrails"
+    domains: []
+    services: []
+    depends_on:
+      - "U0"
+    status: "active"
+
+  - id: U3
+    key: SOUTHERN
+    name: "Southern Lyfestyle Experience Factory"
+    layer: "product_surface"
+    owner: "southern"
+    role: "arcade + themed experiences"
+    domains:
+      - "southernlifestyle.org"
+      - "www.southernlifestyle.org"
+      - "arcade.southernlifestyle.org"
+    services:
+      - "empire1-frontend"
+    depends_on:
+      - "U0"
+    status: "active"
+
+  - id: U4
+    key: EMPIREONE
+    name: "Empire One Enterprise SaaS"
+    layer: "product_surface"
+    owner: "empire1"
+    role: "enterprise SaaS, billing, auth, ops"
+    domains:
+      - "empire1.cloud"
+      - "api.empire1.cloud"
+    services:
+      - "empire1-frontend"
+      - "empire1-backend"
+    depends_on:
+      - "U0"
+    status: "active"
+
+  - id: U5
+    key: OMNI_AGENT
+    name: "Omni Agent Operator OS"
+    layer: "operator_behavior"
+    owner: "sla113"
+    role: "persona runtime, triage, execution control"
+    domains: []
+    services:
+      - "empire1-backend"
+    depends_on:
+      - "U0"
+    status: "active"
+
+  - id: U10
+    key: BLACK_BOX_REGISTRY
+    name: "Black Box Registry Engine Vault"
+    layer: "vault"
+    owner: "sla113"
+    role: "engine versioning and controlled runtime access"
+    domains: []
+    services: []
+    depends_on:
+      - "U0"
+    status: "active"
+
+contracts:
+  api_base_contract:
+    empire: "https://api.empire1.cloud"
+    lyrica: "https://api.lyrica3.com"
+
+  routing_rules:
+    unknown_host_fallback: "EMPIREONE"
+    arcade_external_redirect_env: "ARCADE_EXTERNAL_URL"
+
+governance:
+  requires_adrs_for_boundary_changes: true
+  requires_pr_for_domain_mapping_changes: true
+  requires_release_receipt_for_track_ship: true

@@ -8,6 +8,14 @@ hostRules:
       - arcade.southernlifestyle.org
       - sla113.southernlifestyle.org
     pathMatcher: empire1-matcher
+  - hosts:
+      - lyrica3.com
+      - www.lyrica3.com
+      - sluniversal.lyrica3.com
+    pathMatcher: lyrica3-matcher
+  - hosts:
+      - api.lyrica3.com
+    pathMatcher: lyrica3-api-matcher
 pathMatchers:
   - name: empire1-matcher
     defaultService: projects/PROJECT_ID/global/backendServices/empire1-frontend-backend
@@ -16,3 +24,12 @@ pathMatchers:
           - /api
           - /api/*
         service: projects/PROJECT_ID/global/backendServices/empire1-api-backend
+  - name: lyrica3-matcher
+    defaultService: projects/PROJECT_ID/global/backendServices/lyrica3-frontend-backend
+    pathRules:
+      - paths:
+          - /api
+          - /api/*
+        service: projects/PROJECT_ID/global/backendServices/lyrica3-api-backend
+  - name: lyrica3-api-matcher
+    defaultService: projects/PROJECT_ID/global/backendServices/lyrica3-api-backend

@@ -8,7 +8,8 @@ SERVICE="empire1-frontend"
 gcloud run services update "$SERVICE" \
   --project "$PROJECT_ID" \
   --region "$REGION" \
-  --set-env-vars BACKEND_URL="https://empire1-backend-339698334666.us-central1.run.app"
+  --set-env-vars BACKEND_URL="https://empire1-backend-339698334666.us-central1.run.app" \
+  --set-env-vars SLA113_BACKEND_URL="https://sla113-backend-339698334666.us-central1.run.app"
 
 echo "Frontend environment update completed."
 echo ""

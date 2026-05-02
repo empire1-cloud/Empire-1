@@ -1,0 +1,68 @@
+{
+  "id": "XCB_001_RENDER_SPEC",
+  "track_id": "XCB_001",
+  "title": "Xochitl's Concrete Bloom",
+  "dna_tag": "trk_alpha_f9a2e1_empire1",
+  "sample_rate_hz": 48000,
+  "bit_depth": 24,
+  "bpm": 70,
+  "groove_profile": "heavy_late-pocket_cumbia_swing",
+  "mix_texture_profile": "vintage_oldie_warm_room",
+  "vocal_overlay": {
+    "spoken_tag": "For Xochitl, mi wildflower.",
+    "placement_seconds": 0.0,
+    "pre_roll_silence_seconds": 1.5
+  },
+  "variants": [
+    {
+      "id": "V1_FULL",
+      "name": "Full Mix",
+      "render_chain": [
+        "EPD_vocal_master",
+        "MMA_midi_lock",
+        "PDA_texture_profile",
+        "DOPE_final_assembly"
+      ],
+      "output_files": [
+        "XCB_Full_MASTER.wav",
+        "XCB_Full_STREAM.mp3"
+      ]
+    },
+    {
+      "id": "V2_LULLABY",
+      "name": "Lullaby Mix",
+      "modifications": {
+        "drum_transient_db": -6,
+        "harp_reverb_decay_seconds": 2.8,
+        "vocal_high_shelf_db": 2
+      },
+      "output_files": [
+        "XCB_Lullaby_MASTER.wav",
+        "XCB_Lullaby_STREAM.mp3"
+      ]
+    },
+    {
+      "id": "V3_ACAPELLA",
+      "name": "Acapella Blessing Intro",
+      "notes": "Isolated intro/blessing with extended tail.",
+      "output_files": [
+        "XCB_Acapella_MASTER.wav",
+        "XCB_Acapella_STREAM.mp3"
+      ]
+    }
+  ],
+  "stem_exports": [
+    "vox_XCB_70bpm.wav",
+    "drums_XCB_70bpm.wav",
+    "bass_XCB_70bpm.wav",
+    "harp_XCB_70bpm.wav",
+    "fx_XCB_70bpm.wav"
+  ],
+  "quality_gates": [
+    "all_variant_outputs_present",
+    "all_stems_present",
+    "metadata_locked",
+    "dna_hash_attached"
+  ],
+  "status": "spec_ready"
+}

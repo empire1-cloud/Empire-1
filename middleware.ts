@@ -23,12 +23,20 @@ function detectTenant(host: string): string {
     return 'southern_lyfestyle'
   }
   
+  // Lyrica 3 Pro — Sonance Pro + SL Universal + Lyria orchestrator are ONE business
+  if (cleanHost === 'lyrica3.com' || 
+      cleanHost === 'www.lyrica3.com' ||
+      cleanHost === 'sluniversal.lyrica3.com') {
+    return 'lyrica3'
+  }
+
   if (cleanHost.includes('empire1.cloud')) {
     return 'empire1'
   }
   
   if (cleanHost.startsWith('sla113-')) return 'sla113'
   if (cleanHost.startsWith('arcade-')) return 'southern_lyfestyle_arcade'
+  if (cleanHost.startsWith('lyrica3-')) return 'lyrica3'
 
   return 'empire1'
 }
@@ -50,6 +58,11 @@ export function middleware(request: NextRequest) {
   
   // In local/dev, allow direct SLA113 console work without DNS host mapping.
   const tenant = isDev && isSla113Path ? 'sla113' : detectTenant(host)
+
+  // Lyrica 3: sluniversal subdomain → /universal mode
+  if (tenant === 'lyrica3' && host.split(':')[0].toLowerCase() === 'sluniversal.lyrica3.com' && pathname === '/') {
+    return NextResponse.redirect(new URL('/universal', request.url))
+  }
 
   if (tenant === 'sla113' && pathname === '/') {
     const targetPath = token || isDev ? '/admin' : '/admin/login'
@@ -74,6 +87,13 @@ export function middleware(request: NextRequest) {
     }
   }
   
+  // Lyrica 3 Routes - only serve on lyrica3.com / sluniversal.lyrica3.com
+  if (pathname.startsWith('/universal') || pathname.startsWith('/orchestrator') || pathname.startsWith('/sonance')) {
+    if (tenant !== 'lyrica3') {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+  }
+
   // Southern Routes - only allow on southernlifestyle.org
   if (pathname.startsWith('/southern')) {
     if (tenant !== 'southern_lyfestyle') {

@@ -5,6 +5,20 @@
 
 export const AZTEC_GAMES = [
   {
+    id: 'luna_xolotl_duo',
+    name: "Luna & Xolotl",
+    god: "Bonded Pair",
+    element: "Moon/Fire",
+    color: "#D4AF37",
+    description: "Sovereign bonded hunt: Luna marks, Xolotl executes. Twin Sigil Resonance active.",
+    config: {
+      bulletSpeed: 1450,
+      spawnRate: 1400,
+      bossHp: 900,
+      multiplier: 4.2
+    }
+  },
+  {
     id: 'tlaloc_tide',
     name: "Tlaloc's Tide",
     god: "Tlaloc",
