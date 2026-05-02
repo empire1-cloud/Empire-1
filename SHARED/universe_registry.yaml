@@ -107,6 +107,22 @@ universes:
       - "U0"
     status: "active"
 
+  - id: U6
+    key: EL_ARQUITECTO_AI
+    name: "El Arquitecto AI"
+    layer: "cultural_product"
+    owner: "sla113"
+    role: "cultural AI product — frontend, backend, cultural filter, PRD-driven build"
+    note: "Nested under U2 CULTURA_VIBE_FORGE as a product. Powered by U2 authenticity/guardrail engine."
+    domains: []
+    services:
+      - "arquitecto-frontend"
+      - "arquitecto-backend"
+    depends_on:
+      - "U0"
+      - "U2"
+    status: "active"
+
   - id: U10
     key: BLACK_BOX_REGISTRY
     name: "Black Box Registry Engine Vault"
