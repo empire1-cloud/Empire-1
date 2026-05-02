@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Sla113Home from '@/components/tenants/Sla113Home';
+import dynamic from 'next/dynamic';
+
+// Full SLA113 standalone admin console — lazy loaded to avoid SSR issues
+const SLA113Page = dynamic(() => import('./SLA113Page'), { ssr: false });
 
 const BOOT_LINES = [
   'SLA113 // SECURITY CORE ONLINE',
@@ -33,7 +36,7 @@ export default function Sla113ConsoleEntry() {
   }, [stage]);
 
   if (stage === 'console') {
-    return <Sla113Home />;
+    return <SLA113Page />;
   }
 
   return (
