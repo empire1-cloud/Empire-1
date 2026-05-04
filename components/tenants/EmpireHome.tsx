@@ -165,24 +165,25 @@ const EmpireHome = () => {
               Empire One // U4 — Enterprise SaaS
             </p>
             <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#0f172a] leading-[0.92] mb-8">
-              REAL PRODUCTS<br />
-              YOUR AUDIENCE<br />
+              SOVEREIGNTY<br />
+              BEGINS<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-[#ffffff80]">
-                WANTS.
+                HERE.
               </span>
             </h1>
-            <p className="font-sans text-sm text-slate-600 leading-relaxed max-w-lg border-l-2 border-sky-300 pl-5 mb-10">
-              50+ pipeline engines. AI music products. White-label game products. Creator-owned royalties.
-              Public-ready experiences under your brand, with operations handled for you.
+            <p className="font-sans text-sm text-slate-600 leading-relaxed max-w-xl border-l-2 border-sky-300 pl-5 mb-10">
+              Build the world you were never handed - where creators, families, and communities don't have to fight the system to be seen, heard, or paid.
+              A sovereign creative ecosystem where music, culture, games, automation, and identity all connect.
+              One architecture. Every tool you need to own your platform, your IP, and your future.
             </p>
 
             {/* Traction signals */}
             <div className="flex flex-wrap gap-4 mb-10">
               {[
-                { value: '50+', label: 'Pipeline Engines' },
-                { value: '70/30', label: 'Creator Split' },
-                { value: '3', label: 'Product Surfaces' },
-                { value: '$2M', label: 'Seed Round' },
+                { value: '50+', label: 'Engines' },
+                { value: '7', label: 'Universes' },
+                { value: '1', label: 'Ecosystem' },
+                { value: 'SLA-113', label: 'Federal Plane' },
               ].map((s) => (
                 <div key={s.label} className="border border-slate-200 px-4 py-3 bg-white">
                   <p className="font-sans text-lg font-black text-[#0ea5e9]">{s.value}</p>
