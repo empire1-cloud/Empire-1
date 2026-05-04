@@ -42,13 +42,17 @@ const EmpireHome = () => {
     setIsChatLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/api/frontline/uplink`, {
+      const res = await fetch(`${API_BASE}/api/core/execute`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMsg, tenant_id: 'empire1' }),
+        body: JSON.stringify({
+          prompt: `Empire One visitor question: ${userMsg}`,
+          task_type: 'general',
+          context: 'Public website operator uplink',
+        }),
       });
       const data = await res.json().catch(() => ({}));
-      const text = data.reply || data.content || data.message;
+      const text = data?.data?.summary || data?.message || data?.error?.message;
       setChatMessages((prev) => [...prev, { role: 'system', text: text || fallbackReply(userMsg) }]);
     } catch {
       setChatMessages((prev) => [...prev, { role: 'system', text: fallbackReply(userMsg) }]);
