@@ -258,6 +258,7 @@ const EmpireHome = () => {
                 url: 'https://lyrica3.com',
                 cta: 'lyrica3.com',
                 color: 'from-[#00e5ff]/10',
+                art: '/brand/southern-logo.png',
               },
               {
                 icon: Gamepad2,
@@ -268,6 +269,7 @@ const EmpireHome = () => {
                 url: 'https://southernlifestyle.org',
                 cta: 'southernlifestyle.org',
                 color: 'from-[#a855f7]/10',
+                art: '/brand/southern-logo.png',
               },
               {
                 icon: Cpu,
@@ -278,6 +280,7 @@ const EmpireHome = () => {
                 url: null,
                 cta: 'Request access',
                 color: 'from-[#f59e0b]/10',
+                art: '/brand/southern-logo.png',
               },
             ].map((card) => {
               const Icon = card.icon;
@@ -286,6 +289,14 @@ const EmpireHome = () => {
                   <div className="flex items-start justify-between">
                     <Icon size={20} className="text-[#0ea5e9]" />
                     <span className="font-sans text-[8px] text-slate-500 uppercase tracking-widest">{card.tag}</span>
+                  </div>
+                  <div className="rounded-lg overflow-hidden border border-slate-200 bg-slate-50 mb-1">
+                    <img
+                      src={card.art}
+                      alt={`${card.title} universe art`}
+                      className="w-full h-24 object-contain bg-gradient-to-br from-slate-50 to-sky-50"
+                      loading="lazy"
+                    />
                   </div>
                   <div>
                     <h3 className="text-xl font-black uppercase text-[#0f172a] tracking-tight mb-1">{card.title}</h3>
