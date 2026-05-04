@@ -139,20 +139,20 @@ const EmpireHome = () => {
 
       {/* Top telemetry strip */}
       <div className="fixed top-0 w-full bg-black border-b border-[#00e5ff]/20 z-[100] py-1 overflow-hidden">
-        <div className="inline-block animate-[scrollTicker_35s_linear_infinite] whitespace-nowrap font-mono text-[9px] text-[#00e5ff] uppercase tracking-widest">
-          [SYS: EMPIRE ONE] <span className="mx-5 text-white/20">|</span>
-          [ENGINES: 20 ACTIVE] <span className="mx-5 text-white/20">|</span>
-          [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-white/20">|</span>
-          [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-white/20">|</span>
-          [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-white/20">|</span>
-          [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-white/20">|</span>
-          [CREATOR EQUITY: 70/30 SPLIT] <span className="mx-5 text-white/20">|</span>
-          [SYS: EMPIRE ONE] <span className="mx-5 text-white/20">|</span>
-          [ENGINES: 20 ACTIVE] <span className="mx-5 text-white/20">|</span>
-          [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-white/20">|</span>
-          [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-white/20">|</span>
-          [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-white/20">|</span>
-          [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-white/20">|</span>
+        <div className="inline-block animate-[scrollTicker_35s_linear_infinite] whitespace-nowrap font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">
+          [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [ENGINES: 20 ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [CREATOR EQUITY: 70/30 SPLIT] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [ENGINES: 20 ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [CREATOR EQUITY: 70/30 SPLIT]
         </div>
       </div>
@@ -160,41 +160,41 @@ const EmpireHome = () => {
       <div className="pt-10">
 
         {/* ── NAV ── */}
-        <nav className="flex items-center justify-between px-6 md:px-12 py-4 border-b border-white/5">
+        <nav className="flex items-center justify-between px-6 md:px-12 py-4 border-b border-slate-200/80">
           <div>
-            <span className="font-mono text-[10px] text-[#00e5ff] tracking-widest">EMPIRE ONE</span>
-            <p className="font-mono text-[8px] text-white/30 tracking-widest">GOVERNED BY SLA-113</p>
+            <span className="font-sans text-[10px] text-[#0ea5e9] tracking-widest">EMPIRE ONE</span>
+            <p className="font-sans text-[8px] text-[#0f172a]/30 tracking-widest">GOVERNED BY SLA-113</p>
           </div>
-          <div className="hidden md:flex items-center gap-6 font-mono text-[10px] text-white/50 uppercase tracking-widest">
-            <a href="#what-we-build" className="hover:text-[#00e5ff] transition-colors">What We Build</a>
-            <a href="#products" className="hover:text-[#00e5ff] transition-colors">Products</a>
-            <a href="#how-it-works" className="hover:text-[#00e5ff] transition-colors">How It Works</a>
-            <a href="#plans" className="hover:text-[#00e5ff] transition-colors">Plans</a>
+          <div className="hidden md:flex items-center gap-6 font-sans text-[10px] text-[#0f172a]/50 uppercase tracking-widest">
+            <a href="#what-we-build" className="hover:text-[#0ea5e9] transition-colors">What We Build</a>
+            <a href="#products" className="hover:text-[#0ea5e9] transition-colors">Products</a>
+            <a href="#how-it-works" className="hover:text-[#0ea5e9] transition-colors">How It Works</a>
+            <a href="#plans" className="hover:text-[#0ea5e9] transition-colors">Plans</a>
           </div>
           <Link
             href="/admin/login"
-            className="border border-[#00e5ff]/40 px-4 py-2 font-mono text-[9px] text-[#00e5ff] uppercase tracking-widest hover:bg-[#00e5ff]/10 transition-colors"
+            className="border border-[#00e5ff]/40 px-4 py-2 font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest hover:bg-[#00e5ff]/10 transition-colors"
           >
             Operator Login →
           </Link>
         </nav>
 
         {/* ── HERO ── */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[85vh] border-b border-white/5">
+        <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[85vh] border-b border-slate-200/80">
 
           {/* Left — copy */}
-          <div className="flex flex-col justify-center px-6 md:px-12 py-16 border-r border-white/5">
-            <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-6">
+          <div className="flex flex-col justify-center px-6 md:px-12 py-16 border-r border-slate-200/80">
+            <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-6">
               Empire One // U4 — Enterprise SaaS
             </p>
-            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-[0.92] mb-8">
+            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#0f172a] leading-[0.92] mb-8">
               THE PLATFORM<br />
               YOUR BUSINESS<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-[#ffffff80]">
                 RUNS ON.
               </span>
             </h1>
-            <p className="font-mono text-sm text-white/60 leading-relaxed max-w-lg border-l-2 border-[#00e5ff]/40 pl-5 mb-10">
+            <p className="font-sans text-sm text-[#0f172a]/60 leading-relaxed max-w-lg border-l-2 border-[#00e5ff]/40 pl-5 mb-10">
               20 AI engines. AI music production. White-label game OS. Creator-owned royalties.
               Enterprise SaaS infrastructure. One stack — your brand, your revenue.
             </p>
@@ -207,9 +207,9 @@ const EmpireHome = () => {
                 { value: '3', label: 'Product Surfaces' },
                 { value: '$2M', label: 'Seed Round' },
               ].map((s) => (
-                <div key={s.label} className="border border-white/10 px-4 py-3 bg-black/40">
-                  <p className="font-mono text-lg font-black text-[#00e5ff]">{s.value}</p>
-                  <p className="font-mono text-[9px] text-white/40 uppercase tracking-widest">{s.label}</p>
+                <div key={s.label} className="border border-slate-200 px-4 py-3 bg-white">
+                  <p className="font-sans text-lg font-black text-[#0ea5e9]">{s.value}</p>
+                  <p className="font-sans text-[9px] text-[#0f172a]/40 uppercase tracking-widest">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -217,13 +217,13 @@ const EmpireHome = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => setIsChatOpen(true)}
-                className="flex-1 bg-[#00e5ff] text-black font-mono font-black text-[11px] uppercase tracking-[3px] py-4 hover:bg-white transition-colors"
+                className="flex-1 bg-[#00e5ff] text-black font-sans font-black text-[11px] uppercase tracking-[3px] py-4 hover:bg-white transition-colors"
               >
                 Talk to Us →
               </button>
               <a
                 href="#what-we-build"
-                className="flex-1 border border-[#00e5ff]/30 text-[#00e5ff] font-mono text-[11px] uppercase tracking-[3px] py-4 text-center hover:bg-[#00e5ff]/10 transition-colors"
+                className="flex-1 border border-[#00e5ff]/30 text-[#0ea5e9] font-sans text-[11px] uppercase tracking-[3px] py-4 text-center hover:bg-[#00e5ff]/10 transition-colors"
               >
                 See What We Build
               </a>
@@ -234,20 +234,20 @@ const EmpireHome = () => {
           <div className="relative bg-black min-h-[40vh] lg:min-h-0">
             <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-[#00e5ff] animate-pulse rounded-full" />
-              <span className="font-mono text-[9px] text-[#00e5ff] uppercase tracking-widest">Live Network</span>
+              <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Live Network</span>
             </div>
             <canvas id="empire-canvas" className="w-full h-full" />
           </div>
         </section>
 
         {/* ── WHAT WE BUILD ── */}
-        <section id="what-we-build" className="px-6 md:px-12 py-20 border-b border-white/5">
-          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">What We Build</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-14">
+        <section id="what-we-build" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
+          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">What We Build</p>
+          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-14">
             Three product lines.<br />One revenue engine.
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white">
             {[
               {
                 icon: Music,
@@ -284,22 +284,22 @@ const EmpireHome = () => {
               return (
                 <div key={card.tag} className={`bg-black p-8 md:p-10 flex flex-col gap-6 hover:bg-white/[0.02] transition-colors`}>
                   <div className="flex items-start justify-between">
-                    <Icon size={20} className="text-[#00e5ff]" />
-                    <span className="font-mono text-[8px] text-white/30 uppercase tracking-widest">{card.tag}</span>
+                    <Icon size={20} className="text-[#0ea5e9]" />
+                    <span className="font-sans text-[8px] text-[#0f172a]/30 uppercase tracking-widest">{card.tag}</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-black uppercase text-white tracking-tight mb-1">{card.title}</h3>
-                    <p className="font-mono text-[10px] text-[#00e5ff]/70">{card.sub}</p>
+                    <h3 className="text-xl font-black uppercase text-[#0f172a] tracking-tight mb-1">{card.title}</h3>
+                    <p className="font-sans text-[10px] text-[#0ea5e9]/70">{card.sub}</p>
                   </div>
-                  <p className="font-mono text-[11px] text-white/55 leading-relaxed flex-grow">{card.body}</p>
+                  <p className="font-sans text-[11px] text-[#0f172a]/55 leading-relaxed flex-grow">{card.body}</p>
                   {card.url ? (
                     <a href={card.url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 font-mono text-[10px] text-[#00e5ff] hover:text-white transition-colors">
+                      className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] hover:text-[#0f172a] transition-colors">
                       {card.cta} <ChevronRight size={12} />
                     </a>
                   ) : (
                     <button onClick={() => setIsChatOpen(true)}
-                      className="inline-flex items-center gap-2 font-mono text-[10px] text-[#00e5ff] hover:text-white transition-colors text-left">
+                      className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] hover:text-[#0f172a] transition-colors text-left">
                       {card.cta} <ChevronRight size={12} />
                     </button>
                   )}
@@ -310,16 +310,16 @@ const EmpireHome = () => {
         </section>
 
         {/* ── ENGINE GRID ── */}
-        <section id="products" className="px-6 md:px-12 py-20 border-b border-white/5">
-          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">Product Engine Suite</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-4">
+        <section id="products" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
+          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Product Engine Suite</p>
+          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-4">
             50+ pipeline engines.<br />Built for products.
           </h2>
-          <p className="font-mono text-sm text-white/50 max-w-xl mb-14">
+          <p className="font-sans text-sm text-[#0f172a]/50 max-w-xl mb-14">
             Every engine is production-grade. Every output is tracked. Every dollar earned by a creator is recorded on the ledger.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-px bg-white/5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-px bg-white">
             {[
               {
                 icon: Cpu,
@@ -346,13 +346,13 @@ const EmpireHome = () => {
               return (
                 <div key={group.label} className="bg-black p-8 hover:bg-white/[0.02] transition-colors">
                   <div className="flex items-center gap-3 mb-6">
-                    <Icon size={16} className="text-[#00e5ff]" />
-                    <span className="font-mono text-[10px] text-white uppercase tracking-widest">{group.label}</span>
+                    <Icon size={16} className="text-[#0ea5e9]" />
+                    <span className="font-sans text-[10px] text-[#0f172a] uppercase tracking-widest">{group.label}</span>
                   </div>
                   <ul className="space-y-3">
                     {group.engines.map((e) => (
-                      <li key={e} className="flex items-center gap-2 font-mono text-[11px] text-white/50">
-                        <span className="text-[#00e5ff] text-xs">›</span> {e}
+                      <li key={e} className="flex items-center gap-2 font-sans text-[11px] text-[#0f172a]/50">
+                        <span className="text-[#0ea5e9] text-xs">›</span> {e}
                       </li>
                     ))}
                   </ul>
@@ -363,18 +363,18 @@ const EmpireHome = () => {
         </section>
 
         {/* ── CREATOR EQUITY ── */}
-        <section className="px-6 md:px-12 py-20 border-b border-white/5 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <section className="px-6 md:px-12 py-20 border-b border-slate-200/80 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">Creator Equity</p>
-            <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-6">
+            <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Creator Equity</p>
+            <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-6">
               Creators keep<br />
-              <span className="text-[#00e5ff]">what they build.</span>
+              <span className="text-[#0ea5e9]">what they build.</span>
             </h2>
-            <p className="font-mono text-sm text-white/55 leading-relaxed max-w-md">
+            <p className="font-sans text-sm text-[#0f172a]/55 leading-relaxed max-w-md">
               100% IP ownership. 70/30 revenue split — creator keeps 70. Every stem, every remix, every derivative tracked by DNA tagging. Micro-royalties distributed automatically. No label. No middleman.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-px bg-white/5">
+          <div className="grid grid-cols-2 gap-px bg-white">
             {[
               { icon: Lock, label: '100% IP Ownership', desc: 'Blockchain-verified DNA tag on every file' },
               { icon: DollarSign, label: '70/30 Split', desc: 'Creator keeps 70% of all revenue' },
@@ -384,9 +384,9 @@ const EmpireHome = () => {
               const Icon = item.icon;
               return (
                 <div key={item.label} className="bg-black p-6 hover:bg-white/[0.02] transition-colors">
-                  <Icon size={16} className="text-[#00e5ff] mb-4" />
-                  <p className="font-mono text-[11px] text-white font-bold mb-1">{item.label}</p>
-                  <p className="font-mono text-[10px] text-white/40 leading-relaxed">{item.desc}</p>
+                  <Icon size={16} className="text-[#0ea5e9] mb-4" />
+                  <p className="font-sans text-[11px] text-[#0f172a] font-bold mb-1">{item.label}</p>
+                  <p className="font-sans text-[10px] text-[#0f172a]/40 leading-relaxed">{item.desc}</p>
                 </div>
               );
             })}
@@ -395,39 +395,39 @@ const EmpireHome = () => {
 
 
         {/* ── CULTURA VIBE // LIVE ON THE STACK ── */}
-        <section className="px-6 md:px-12 py-20 border-b border-white/5">
-          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">Live on the Stack</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-4">
+        <section className="px-6 md:px-12 py-20 border-b border-slate-200/80">
+          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Live on the Stack</p>
+          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-4">
             Platform in<br />
-            <span className="text-[#00e5ff]">production.</span>
+            <span className="text-[#0ea5e9]">production.</span>
           </h2>
-          <p className="font-mono text-sm text-white/50 max-w-xl mb-14">
+          <p className="font-sans text-sm text-[#0f172a]/50 max-w-xl mb-14">
             Cultura Vibe is built on Empire One — a real product, live users, real Stripe billing. This is what Empire One ships to market.
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white">
             {/* Left — product info */}
             <div className="bg-black p-8 md:p-10 flex flex-col gap-6">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[9px] text-white/30 uppercase tracking-widest">U2 // CULTURA VIBE</span>
+                <span className="font-sans text-[9px] text-[#0f172a]/30 uppercase tracking-widest">U2 // CULTURA VIBE</span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse" />
-                  <span className="font-mono text-[8px] text-[#00e5ff] uppercase tracking-widest">Live</span>
+                  <span className="font-sans text-[8px] text-[#0ea5e9] uppercase tracking-widest">Live</span>
                 </span>
               </div>
               <div>
-                <h3 className="text-2xl font-black uppercase text-white tracking-tight mb-1">Cultura Vibe</h3>
-                <p className="font-mono text-[10px] text-[#00e5ff]/70">Cyber-Chicano · AI Vibe-Code Forge</p>
+                <h3 className="text-2xl font-black uppercase text-[#0f172a] tracking-tight mb-1">Cultura Vibe</h3>
+                <p className="font-sans text-[10px] text-[#0ea5e9]/70">Cyber-Chicano · AI Vibe-Code Forge</p>
               </div>
-              <p className="font-mono text-[11px] text-white/55 leading-relaxed">
-                Type your vision. Pick a category. Hit <span className="text-white font-bold">Forge Con Ganas</span>. The Cultural Engine injects Soulfire Guardrails — 48kHz audio, Emotional Math, Creator Equity DNA — before shipping production-ready boilerplate. Built entirely on the Empire One stack.
+              <p className="font-sans text-[11px] text-[#0f172a]/55 leading-relaxed">
+                Type your vision. Pick a category. Hit <span className="text-[#0f172a] font-bold">Forge Con Ganas</span>. The Cultural Engine injects Soulfire Guardrails — 48kHz audio, Emotional Math, Creator Equity DNA — before shipping production-ready boilerplate. Built entirely on the Empire One stack.
               </p>
 
               {/* Stripe billing proof */}
-              <div className="border border-white/10 p-5">
+              <div className="border border-slate-200 p-5">
                 <div className="flex items-center gap-2 mb-4">
-                  <DollarSign size={12} className="text-[#00e5ff]" />
-                  <span className="font-mono text-[9px] text-[#00e5ff] uppercase tracking-widest">Stripe Billing // 3 Tiers // Live</span>
+                  <DollarSign size={12} className="text-[#0ea5e9]" />
+                  <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Stripe Billing // 3 Tiers // Live</span>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {[
@@ -437,14 +437,14 @@ const EmpireHome = () => {
                   ].map((tier) => (
                     <div
                       key={tier.name}
-                      className={`p-3 border ${tier.locked ? 'border-[#00e5ff]/30 bg-[#00e5ff]/[0.03]' : 'border-white/10'}`}
+                      className={`p-3 border ${tier.locked ? 'border-[#00e5ff]/30 bg-[#00e5ff]/[0.03]' : 'border-slate-200'}`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono text-[8px] text-white/40 uppercase tracking-widest">{tier.name}</span>
-                        {tier.locked && <Lock size={8} className="text-[#00e5ff]/60" />}
+                        <span className="font-sans text-[8px] text-[#0f172a]/40 uppercase tracking-widest">{tier.name}</span>
+                        {tier.locked && <Lock size={8} className="text-[#0ea5e9]/60" />}
                       </div>
-                      <p className="font-mono text-sm font-black text-[#00e5ff]">{tier.price}</p>
-                      <p className="font-mono text-[8px] text-white/30 mt-1 leading-relaxed">{tier.sub}</p>
+                      <p className="font-sans text-sm font-black text-[#0ea5e9]">{tier.price}</p>
+                      <p className="font-sans text-[8px] text-[#0f172a]/30 mt-1 leading-relaxed">{tier.sub}</p>
                     </div>
                   ))}
                 </div>
@@ -454,7 +454,7 @@ const EmpireHome = () => {
                 href="https://aicatalyst.empire1.cloud"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-mono text-[10px] text-[#00e5ff] border border-[#00e5ff]/30 px-5 py-3 hover:bg-[#00e5ff]/10 transition-colors w-fit"
+                className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] border border-[#00e5ff]/30 px-5 py-3 hover:bg-[#00e5ff]/10 transition-colors w-fit"
               >
                 aicatalyst.empire1.cloud <ChevronRight size={12} />
               </a>
@@ -462,27 +462,27 @@ const EmpireHome = () => {
 
             {/* Right — terminal mockup */}
             <div className="bg-black p-8 md:p-10 flex flex-col justify-center">
-              <div className="relative bg-[#050505] border border-white/10 rounded-sm p-6 font-mono text-[11px] shadow-2xl">
+              <div className="relative bg-[#050505] border border-slate-200 rounded-sm p-6 font-sans text-[11px] shadow-2xl">
                 <div className="flex items-center gap-1.5 mb-5">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#c8102e]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                  <span className="ml-3 text-[9px] uppercase tracking-[0.3em] text-white/30">el-terminal // cultura vibe</span>
+                  <span className="h-2.5 w-2.5 rounded-full bg-slate-50" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-slate-50" />
+                  <span className="ml-3 text-[9px] uppercase tracking-[0.3em] text-[#0f172a]/30">el-terminal // cultura vibe</span>
                 </div>
-                <div className="space-y-2 text-white/50">
-                  <div className="text-white/70">&gt; arquitecto init --soulfire --category=music</div>
-                  <div>[planning-agent] <span className="text-white/60">Setting the foundation...</span></div>
+                <div className="space-y-2 text-[#0f172a]/50">
+                  <div className="text-[#0f172a]/70">&gt; arquitecto init --soulfire --category=music</div>
+                  <div>[planning-agent] <span className="text-[#0f172a]/60">Setting the foundation...</span></div>
                   <div>[cultural-filter] <span className="text-[#c8102e]">Injecting Soulfire Guardrails</span></div>
-                  <div>[frontend-agent] <span className="text-white/60">Connecting the wires...</span></div>
-                  <div>[billing-agent] <span className="text-[#00e5ff]">Stripe checkout: configured</span></div>
-                  <div>[equity-agent] <span className="text-white/60">DNA tag: 70/30 split locked</span></div>
-                  <div className="pt-2 text-[#00e5ff] flex items-center gap-1">
+                  <div>[frontend-agent] <span className="text-[#0f172a]/60">Connecting the wires...</span></div>
+                  <div>[billing-agent] <span className="text-[#0ea5e9]">Stripe checkout: configured</span></div>
+                  <div>[equity-agent] <span className="text-[#0f172a]/60">DNA tag: 70/30 split locked</span></div>
+                  <div className="pt-2 text-[#0ea5e9] flex items-center gap-1">
                     [forge] <span className="font-bold">Artifact ready. Con Ganas.</span>
                     <span className="inline-block w-1.5 h-3.5 bg-[#00e5ff] animate-pulse ml-1" />
                   </div>
                 </div>
               </div>
-              <div className="mt-6 grid grid-cols-2 gap-px bg-white/5">
+              <div className="mt-6 grid grid-cols-2 gap-px bg-white">
                 {[
                   { v: '48kHz', l: 'Audio Standard' },
                   { v: '70/30', l: 'Creator Split' },
@@ -490,8 +490,8 @@ const EmpireHome = () => {
                   { v: 'Live', l: 'Production Status' },
                 ].map((s) => (
                   <div key={s.l} className="bg-black px-4 py-3">
-                    <p className="font-mono text-sm font-black text-[#00e5ff]">{s.v}</p>
-                    <p className="font-mono text-[8px] text-white/30 uppercase tracking-widest">{s.l}</p>
+                    <p className="font-sans text-sm font-black text-[#0ea5e9]">{s.v}</p>
+                    <p className="font-sans text-[8px] text-[#0f172a]/30 uppercase tracking-widest">{s.l}</p>
                   </div>
                 ))}
               </div>
@@ -500,12 +500,12 @@ const EmpireHome = () => {
         </section>
 
         {/* ── HOW IT WORKS ── */}
-        <section id="how-it-works" className="px-6 md:px-12 py-20 border-b border-white/5">
-          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">How It Works</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-14">
+        <section id="how-it-works" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
+          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">How It Works</p>
+          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-14">
             From conversation<br />to live platform.
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white">
             {[
               {
                 step: '01',
@@ -524,21 +524,21 @@ const EmpireHome = () => {
               },
             ].map((row) => (
               <div key={row.step} className="bg-black p-8 md:p-10 hover:bg-white/[0.02] transition-colors">
-                <p className="font-mono text-5xl font-black text-white/5 mb-6">{row.step}</p>
-                <h3 className="text-lg font-black uppercase text-white tracking-tight mb-4">{row.title}</h3>
-                <p className="font-mono text-[11px] text-white/50 leading-relaxed">{row.body}</p>
+                <p className="font-sans text-5xl font-black text-[#0f172a]/5 mb-6">{row.step}</p>
+                <h3 className="text-lg font-black uppercase text-[#0f172a] tracking-tight mb-4">{row.title}</h3>
+                <p className="font-sans text-[11px] text-[#0f172a]/50 leading-relaxed">{row.body}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* ── PLANS ── */}
-        <section id="plans" className="px-6 md:px-12 py-20 border-b border-white/5">
-          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">Plans</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-14">
+        <section id="plans" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
+          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Plans</p>
+          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-14">
             Pick your surface.
           </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-white/5">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-white">
             {[
               {
                 node: 'ALPHA',
@@ -596,30 +596,30 @@ const EmpireHome = () => {
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00e5ff] to-transparent" />
                 )}
                 {plan.active && (
-                  <span className="absolute top-4 right-4 font-mono text-[8px] text-[#00e5ff] border border-[#00e5ff]/30 px-2 py-1 uppercase tracking-widest">
+                  <span className="absolute top-4 right-4 font-sans text-[8px] text-[#0ea5e9] border border-[#00e5ff]/30 px-2 py-1 uppercase tracking-widest">
                     Most Popular
                   </span>
                 )}
-                <p className="font-mono text-[9px] text-white/30 uppercase tracking-widest mb-2">Node: {plan.node}</p>
-                <p className="font-mono text-[10px] text-[#00e5ff] mb-6">{plan.target}</p>
+                <p className="font-sans text-[9px] text-[#0f172a]/30 uppercase tracking-widest mb-2">Node: {plan.node}</p>
+                <p className="font-sans text-[10px] text-[#0ea5e9] mb-6">{plan.target}</p>
                 <div className="mb-2">
-                  <span className="text-4xl font-black text-white">{plan.price}</span>
-                  <span className="font-mono text-[11px] text-white/40">{plan.period}</span>
+                  <span className="text-4xl font-black text-[#0f172a]">{plan.price}</span>
+                  <span className="font-sans text-[11px] text-[#0f172a]/40">{plan.period}</span>
                 </div>
-                <p className="font-mono text-[11px] text-white/40 mb-8 leading-relaxed">{plan.desc}</p>
+                <p className="font-sans text-[11px] text-[#0f172a]/40 mb-8 leading-relaxed">{plan.desc}</p>
                 <ul className="space-y-3 flex-grow mb-10">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 font-mono text-[11px] text-white/60">
-                      <span className="text-[#00e5ff] mt-[1px]">+</span> {f}
+                    <li key={f} className="flex items-start gap-2 font-sans text-[11px] text-[#0f172a]/60">
+                      <span className="text-[#0ea5e9] mt-[1px]">+</span> {f}
                     </li>
                   ))}
                 </ul>
                 <button
                   onClick={() => setIsChatOpen(true)}
-                  className={`w-full py-3 font-mono text-[10px] uppercase tracking-[2px] border transition-colors ${
+                  className={`w-full py-3 font-sans text-[10px] uppercase tracking-[2px] border transition-colors ${
                     plan.active
                       ? 'bg-[#00e5ff] border-[#00e5ff] text-black hover:bg-white hover:border-white'
-                      : 'border-white/20 text-white hover:border-[#00e5ff] hover:text-[#00e5ff]'
+                      : 'border-white/20 text-[#0f172a] hover:border-[#00e5ff] hover:text-[#0ea5e9]'
                   }`}
                 >
                   Get Started →
@@ -627,13 +627,13 @@ const EmpireHome = () => {
               </div>
             ))}
           </div>
-          <div className="mt-px bg-black border-t border-white/5 p-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <p className="font-mono text-[11px] text-white/40">
+          <div className="mt-px bg-black border-t border-slate-200/80 p-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <p className="font-sans text-[11px] text-[#0f172a]/40">
               Custom scope available — $2,500–$6,500+ for bespoke builds. Tell us your workload.
             </p>
             <button
               onClick={() => setIsChatOpen(true)}
-              className="font-mono text-[10px] text-[#00e5ff] border border-[#00e5ff]/30 px-5 py-2 hover:bg-[#00e5ff]/10 transition-colors"
+              className="font-sans text-[10px] text-[#0ea5e9] border border-[#00e5ff]/30 px-5 py-2 hover:bg-[#00e5ff]/10 transition-colors"
             >
               Inquire Custom Build →
             </button>
@@ -641,24 +641,24 @@ const EmpireHome = () => {
         </section>
 
         {/* ── INVESTOR / TRACTION ── */}
-        <section className="px-6 md:px-12 py-20 border-b border-white/5 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <section className="px-6 md:px-12 py-20 border-b border-slate-200/80 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">Traction</p>
-            <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-6">
+            <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Traction</p>
+            <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-6">
               Building the<br />
-              <span className="text-[#00e5ff]">Creator-Owned<br />AI Music category.</span>
+              <span className="text-[#0ea5e9]">Creator-Owned<br />AI Music category.</span>
             </h2>
-            <p className="font-mono text-sm text-white/55 leading-relaxed max-w-md mb-8">
+            <p className="font-sans text-sm text-[#0f172a]/55 leading-relaxed max-w-md mb-8">
               Lyrica 3 Pro is the first AI music platform where creators own their IP and earn passive income on every derivative work. We're raising a $2M seed round to reach $5M ARR and 100k MAU in Year 1.
             </p>
             <button
               onClick={() => setIsChatOpen(true)}
-              className="font-mono text-[11px] text-[#00e5ff] border border-[#00e5ff]/30 px-6 py-3 hover:bg-[#00e5ff]/10 transition-colors uppercase tracking-widest"
+              className="font-sans text-[11px] text-[#0ea5e9] border border-[#00e5ff]/30 px-6 py-3 hover:bg-[#00e5ff]/10 transition-colors uppercase tracking-widest"
             >
               Talk to the team →
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-px bg-white/5">
+          <div className="grid grid-cols-2 gap-px bg-white">
             {[
               { value: '$5M', label: 'Year 1 Revenue Target' },
               { value: '100k', label: 'Year 1 MAU Target' },
@@ -666,35 +666,35 @@ const EmpireHome = () => {
               { value: '$2M', label: 'Seed Round' },
             ].map((s) => (
               <div key={s.label} className="bg-black p-8 hover:bg-white/[0.02] transition-colors">
-                <p className="text-4xl font-black text-[#00e5ff] mb-2">{s.value}</p>
-                <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest leading-relaxed">{s.label}</p>
+                <p className="text-4xl font-black text-[#0ea5e9] mb-2">{s.value}</p>
+                <p className="font-sans text-[10px] text-[#0f172a]/40 uppercase tracking-widest leading-relaxed">{s.label}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* ── FOOTER CTA ── */}
-        <section className="px-6 md:px-12 py-24 text-center border-b border-white/5">
-          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-6">Ready?</p>
-          <h2 className="text-4xl md:text-6xl font-black uppercase text-white tracking-tight mb-8">
+        <section className="px-6 md:px-12 py-24 text-center border-b border-slate-200/80">
+          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-6">Ready?</p>
+          <h2 className="text-4xl md:text-6xl font-black uppercase text-[#0f172a] tracking-tight mb-8">
             Let's build<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-[#ffffff60]">
               your platform.
             </span>
           </h2>
-          <p className="font-mono text-sm text-white/50 max-w-lg mx-auto mb-10">
+          <p className="font-sans text-sm text-[#0f172a]/50 max-w-lg mx-auto mb-10">
             Operator, creator, enterprise, or investor — if you're serious about launching revenue products, let's talk.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => setIsChatOpen(true)}
-              className="bg-[#00e5ff] text-black font-mono font-black text-[11px] uppercase tracking-[3px] px-10 py-4 hover:bg-white transition-colors"
+              className="bg-[#00e5ff] text-black font-sans font-black text-[11px] uppercase tracking-[3px] px-10 py-4 hover:bg-white transition-colors"
             >
               Start the conversation →
             </button>
             <Link
               href="/admin/login"
-              className="border border-white/20 text-white font-mono text-[11px] uppercase tracking-[3px] px-10 py-4 hover:border-[#00e5ff] hover:text-[#00e5ff] transition-colors text-center"
+              className="border border-white/20 text-[#0f172a] font-sans text-[11px] uppercase tracking-[3px] px-10 py-4 hover:border-[#00e5ff] hover:text-[#0ea5e9] transition-colors text-center"
             >
               Operator Login →
             </Link>
@@ -704,13 +704,13 @@ const EmpireHome = () => {
         {/* ── FOOTER ── */}
         <footer className="px-6 md:px-12 py-10 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
           <div>
-            <p className="font-mono text-[10px] text-white/30 uppercase tracking-widest">Empire One</p>
-            <p className="font-mono text-[9px] text-white/20 mt-1">Governed by SLA-113 · All rights reserved</p>
+            <p className="font-sans text-[10px] text-[#0f172a]/30 uppercase tracking-widest">Empire One</p>
+            <p className="font-sans text-[9px] text-[#0f172a]/20 mt-1">Governed by SLA-113 · All rights reserved</p>
           </div>
-          <div className="flex flex-wrap gap-6 font-mono text-[9px] text-white/30 uppercase tracking-widest">
-            <a href="https://lyrica3.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#00e5ff] transition-colors">Lyrica 3 Pro</a>
-            <a href="https://southernlifestyle.org" target="_blank" rel="noopener noreferrer" className="hover:text-[#00e5ff] transition-colors">Southern Arcade</a>
-            <Link href="/admin/login" className="hover:text-[#00e5ff] transition-colors">Operator Console</Link>
+          <div className="flex flex-wrap gap-6 font-sans text-[9px] text-[#0f172a]/30 uppercase tracking-widest">
+            <a href="https://lyrica3.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#0ea5e9] transition-colors">Lyrica 3 Pro</a>
+            <a href="https://southernlifestyle.org" target="_blank" rel="noopener noreferrer" className="hover:text-[#0ea5e9] transition-colors">Southern Arcade</a>
+            <Link href="/admin/login" className="hover:text-[#0ea5e9] transition-colors">Operator Console</Link>
           </div>
         </footer>
 
@@ -722,9 +722,9 @@ const EmpireHome = () => {
           <div className="h-10 bg-[#00e5ff]/10 border-b border-[#00e5ff]/20 flex justify-between items-center px-4">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-[#00e5ff] rounded-full animate-pulse" />
-              <span className="font-mono text-[9px] text-[#00e5ff] uppercase tracking-widest">Empire One // Uplink</span>
+              <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Empire One // Uplink</span>
             </div>
-            <button onClick={() => setIsChatOpen(false)} className="text-[#00e5ff]/40 hover:text-[#00e5ff] transition-colors">
+            <button onClick={() => setIsChatOpen(false)} className="text-[#0ea5e9]/40 hover:text-[#0ea5e9] transition-colors">
               <X size={14} />
             </button>
           </div>
@@ -732,10 +732,10 @@ const EmpireHome = () => {
           <div className="flex-grow overflow-y-auto p-4 flex flex-col gap-4 bg-black/60 custom-scrollbar">
             {chatMessages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[88%] p-3 font-mono text-[10px] border ${
+                <div className={`max-w-[88%] p-3 font-sans text-[10px] border ${
                   msg.role === 'user'
-                    ? 'bg-white/5 border-white/15 text-white'
-                    : 'bg-[#00e5ff]/5 border-[#00e5ff]/25 text-[#00e5ff]'
+                    ? 'bg-white border-white/15 text-[#0f172a]'
+                    : 'bg-[#00e5ff]/5 border-[#00e5ff]/25 text-[#0ea5e9]'
                 }`}>
                   <span className="block text-[7px] opacity-40 mb-1.5 uppercase tracking-widest">
                     {msg.role === 'user' ? 'You' : 'Empire One'}
@@ -746,7 +746,7 @@ const EmpireHome = () => {
             ))}
             {isChatLoading && (
               <div className="flex justify-start">
-                <div className="p-3 border bg-[#00e5ff]/5 border-[#00e5ff]/25 font-mono text-[10px] text-[#00e5ff] animate-pulse">
+                <div className="p-3 border bg-[#00e5ff]/5 border-[#00e5ff]/25 font-sans text-[10px] text-[#0ea5e9] animate-pulse">
                   Thinking…
                 </div>
               </div>
@@ -761,12 +761,12 @@ const EmpireHome = () => {
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 placeholder="What are you building?"
-                className="flex-grow bg-black border border-white/10 px-3 py-2 font-mono text-[10px] text-white placeholder:text-white/20 focus:outline-none focus:border-[#00e5ff]/50 transition-colors"
+                className="flex-grow bg-black border border-slate-200 px-3 py-2 font-sans text-[10px] text-[#0f172a] placeholder:text-[#0f172a]/20 focus:outline-none focus:border-[#00e5ff]/50 transition-colors"
               />
               <button
                 type="submit"
                 disabled={isChatLoading || !chatInput.trim()}
-                className="w-10 h-9 bg-[#00e5ff]/20 border border-[#00e5ff]/40 text-[#00e5ff] flex items-center justify-center hover:bg-[#00e5ff] hover:text-black transition-colors disabled:opacity-40"
+                className="w-10 h-9 bg-[#00e5ff]/20 border border-[#00e5ff]/40 text-[#0ea5e9] flex items-center justify-center hover:bg-[#00e5ff] hover:text-black transition-colors disabled:opacity-40"
               >
                 <Send size={13} />
               </button>
@@ -778,10 +778,10 @@ const EmpireHome = () => {
       {/* Floating chat toggle */}
       <button
         onClick={() => setIsChatOpen(true)}
-        className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 bg-black border border-[#00e5ff]/40 text-[#00e5ff] px-4 py-3 flex items-center gap-2 hover:bg-[#00e5ff]/10 transition-all duration-300 ${isChatOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
+        className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 bg-black border border-[#00e5ff]/40 text-[#0ea5e9] px-4 py-3 flex items-center gap-2 hover:bg-[#00e5ff]/10 transition-all duration-300 ${isChatOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
       >
         <Terminal size={14} />
-        <span className="font-mono text-[9px] uppercase tracking-[2px]">Talk to us</span>
+        <span className="font-sans text-[9px] uppercase tracking-[2px]">Talk to us</span>
       </button>
 
       <style dangerouslySetInnerHTML={{ __html: `
