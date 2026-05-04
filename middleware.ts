@@ -65,8 +65,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (tenant === 'sla113' && pathname === '/') {
-    const targetPath = token || isDev ? '/admin' : '/admin/login'
-    return NextResponse.redirect(new URL(targetPath, request.url))
+    return NextResponse.redirect(new URL('/sla113', request.url))
   }
 
   // Empire1 Routes - only allow on empire1.cloud
