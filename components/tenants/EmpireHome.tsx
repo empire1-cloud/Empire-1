@@ -173,7 +173,7 @@ const EmpireHome = () => {
           </div>
           <Link
             href="/admin/login"
-            className="border border-[#00e5ff]/40 px-4 py-2 font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest hover:bg-[#00e5ff]/10 transition-colors"
+            className="border border-sky-300 px-4 py-2 font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest hover:bg-[#00e5ff]/10 transition-colors"
           >
             Operator Login →
           </Link>
@@ -194,7 +194,7 @@ const EmpireHome = () => {
                 WANTS.
               </span>
             </h1>
-            <p className="font-sans text-sm text-slate-600 leading-relaxed max-w-lg border-l-2 border-[#00e5ff]/40 pl-5 mb-10">
+            <p className="font-sans text-sm text-slate-600 leading-relaxed max-w-lg border-l-2 border-sky-300 pl-5 mb-10">
               50+ pipeline engines. AI music products. White-label game products. Creator-owned royalties.
               Public-ready experiences under your brand, with operations handled for you.
             </p>
@@ -217,13 +217,13 @@ const EmpireHome = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => setIsChatOpen(true)}
-                className="flex-1 bg-[#00e5ff] text-black font-sans font-black text-[11px] uppercase tracking-[3px] py-4 hover:bg-white transition-colors"
+                className="flex-1 bg-[#00e5ff] text-[#0f172a] font-sans font-black text-[11px] uppercase tracking-[3px] py-4 hover:bg-white transition-colors"
               >
                 Talk to Us →
               </button>
               <a
                 href="#what-we-build"
-                className="flex-1 border border-[#00e5ff]/30 text-[#0ea5e9] font-sans text-[11px] uppercase tracking-[3px] py-4 text-center hover:bg-[#00e5ff]/10 transition-colors"
+                className="flex-1 border border-sky-200 text-[#0ea5e9] font-sans text-[11px] uppercase tracking-[3px] py-4 text-center hover:bg-[#00e5ff]/10 transition-colors"
               >
                 See What We Build
               </a>
@@ -231,7 +231,7 @@ const EmpireHome = () => {
           </div>
 
           {/* Right — canvas */}
-          <div className="relative bg-black min-h-[40vh] lg:min-h-0">
+          <div className="relative bg-white min-h-[40vh] lg:min-h-0">
             <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-[#00e5ff] animate-pulse rounded-full" />
               <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Live Network</span>
@@ -282,7 +282,7 @@ const EmpireHome = () => {
             ].map((card) => {
               const Icon = card.icon;
               return (
-                <div key={card.tag} className={`bg-white p-8 md:p-10 flex flex-col gap-6 hover:bg-white/[0.02] transition-colors`}>
+                <div key={card.tag} className={`bg-white p-8 md:p-10 flex flex-col gap-6 hover:bg-slate-50 transition-colors`}>
                   <div className="flex items-start justify-between">
                     <Icon size={20} className="text-[#0ea5e9]" />
                     <span className="font-sans text-[8px] text-slate-500 uppercase tracking-widest">{card.tag}</span>
@@ -344,7 +344,7 @@ const EmpireHome = () => {
             ].map((group) => {
               const Icon = group.icon;
               return (
-                <div key={group.label} className="bg-black p-8 hover:bg-white/[0.02] transition-colors">
+                <div key={group.label} className="bg-white p-8 hover:bg-slate-50 transition-colors">
                   <div className="flex items-center gap-3 mb-6">
                     <Icon size={16} className="text-[#0ea5e9]" />
                     <span className="font-sans text-[10px] text-[#0f172a] uppercase tracking-widest">{group.label}</span>
@@ -383,7 +383,7 @@ const EmpireHome = () => {
             ].map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.label} className="bg-black p-6 hover:bg-white/[0.02] transition-colors">
+                <div key={item.label} className="bg-white p-6 hover:bg-slate-50 transition-colors">
                   <Icon size={16} className="text-[#0ea5e9] mb-4" />
                   <p className="font-sans text-[11px] text-[#0f172a] font-bold mb-1">{item.label}</p>
                   <p className="font-sans text-[10px] text-[#0f172a]/40 leading-relaxed">{item.desc}</p>
@@ -437,7 +437,7 @@ const EmpireHome = () => {
                   ].map((tier) => (
                     <div
                       key={tier.name}
-                      className={`p-3 border ${tier.locked ? 'border-[#00e5ff]/30 bg-[#00e5ff]/[0.03]' : 'border-slate-200'}`}
+                      className={`p-3 border ${tier.locked ? 'border-sky-200 bg-[#00e5ff]/[0.03]' : 'border-slate-200'}`}
                     >
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-sans text-[8px] text-[#0f172a]/40 uppercase tracking-widest">{tier.name}</span>
@@ -454,7 +454,7 @@ const EmpireHome = () => {
                 href="https://aicatalyst.empire1.cloud"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] border border-[#00e5ff]/30 px-5 py-3 hover:bg-[#00e5ff]/10 transition-colors w-fit"
+                className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] border border-sky-200 px-5 py-3 hover:bg-[#00e5ff]/10 transition-colors w-fit"
               >
                 aicatalyst.empire1.cloud <ChevronRight size={12} />
               </a>
@@ -489,7 +489,7 @@ const EmpireHome = () => {
                   { v: '3 Tiers', l: 'Stripe Billing' },
                   { v: 'Live', l: 'Production Status' },
                 ].map((s) => (
-                  <div key={s.l} className="bg-black px-4 py-3">
+                  <div key={s.l} className="bg-white px-4 py-3">
                     <p className="font-sans text-sm font-black text-[#0ea5e9]">{s.v}</p>
                     <p className="font-sans text-[8px] text-slate-500 uppercase tracking-widest">{s.l}</p>
                   </div>
@@ -523,7 +523,7 @@ const EmpireHome = () => {
                 body: 'Your domain. Your name. Your revenue. The infrastructure is Empire One\'s. The product is yours.',
               },
             ].map((row) => (
-              <div key={row.step} className="bg-black p-8 md:p-10 hover:bg-white/[0.02] transition-colors">
+              <div key={row.step} className="bg-white p-8 md:p-10 hover:bg-slate-50 transition-colors">
                 <p className="font-sans text-5xl font-black text-[#0f172a]/5 mb-6">{row.step}</p>
                 <h3 className="text-lg font-black uppercase text-[#0f172a] tracking-tight mb-4">{row.title}</h3>
                 <p className="font-sans text-[11px] text-slate-600 leading-relaxed">{row.body}</p>
@@ -590,13 +590,13 @@ const EmpireHome = () => {
             ].map((plan) => (
               <div
                 key={plan.node}
-                className={`bg-black p-8 md:p-10 flex flex-col relative ${plan.active ? 'ring-1 ring-[#00e5ff]/40' : ''}`}
+                className={`bg-white p-8 md:p-10 flex flex-col relative ${plan.active ? 'ring-1 ring-[#38bdf8]/40' : ''}`}
               >
                 {plan.active && (
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00e5ff] to-transparent" />
                 )}
                 {plan.active && (
-                  <span className="absolute top-4 right-4 font-sans text-[8px] text-[#0ea5e9] border border-[#00e5ff]/30 px-2 py-1 uppercase tracking-widest">
+                  <span className="absolute top-4 right-4 font-sans text-[8px] text-[#0ea5e9] border border-sky-200 px-2 py-1 uppercase tracking-widest">
                     Most Popular
                   </span>
                 )}
@@ -618,7 +618,7 @@ const EmpireHome = () => {
                   onClick={() => setIsChatOpen(true)}
                   className={`w-full py-3 font-sans text-[10px] uppercase tracking-[2px] border transition-colors ${
                     plan.active
-                      ? 'bg-[#00e5ff] border-[#00e5ff] text-black hover:bg-white hover:border-white'
+                      ? 'bg-[#00e5ff] border-[#00e5ff] text-[#0f172a] hover:bg-white hover:border-white'
                       : 'border-slate-300 text-[#0f172a] hover:border-[#00e5ff] hover:text-[#0ea5e9]'
                   }`}
                 >
@@ -633,7 +633,7 @@ const EmpireHome = () => {
             </p>
             <button
               onClick={() => setIsChatOpen(true)}
-              className="font-sans text-[10px] text-[#0ea5e9] border border-[#00e5ff]/30 px-5 py-2 hover:bg-[#00e5ff]/10 transition-colors"
+              className="font-sans text-[10px] text-[#0ea5e9] border border-sky-200 px-5 py-2 hover:bg-[#00e5ff]/10 transition-colors"
             >
               Inquire Custom Build →
             </button>
@@ -653,7 +653,7 @@ const EmpireHome = () => {
             </p>
             <button
               onClick={() => setIsChatOpen(true)}
-              className="font-sans text-[11px] text-[#0ea5e9] border border-[#00e5ff]/30 px-6 py-3 hover:bg-[#00e5ff]/10 transition-colors uppercase tracking-widest"
+              className="font-sans text-[11px] text-[#0ea5e9] border border-sky-200 px-6 py-3 hover:bg-[#00e5ff]/10 transition-colors uppercase tracking-widest"
             >
               Talk to the team →
             </button>
@@ -665,7 +665,7 @@ const EmpireHome = () => {
               { value: '$75M', label: 'Year 3 Revenue Projection' },
               { value: '$2M', label: 'Seed Round' },
             ].map((s) => (
-              <div key={s.label} className="bg-black p-8 hover:bg-white/[0.02] transition-colors">
+              <div key={s.label} className="bg-white p-8 hover:bg-slate-50 transition-colors">
                 <p className="text-4xl font-black text-[#0ea5e9] mb-2">{s.value}</p>
                 <p className="font-sans text-[10px] text-[#0f172a]/40 uppercase tracking-widest leading-relaxed">{s.label}</p>
               </div>
@@ -688,7 +688,7 @@ const EmpireHome = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => setIsChatOpen(true)}
-              className="bg-[#00e5ff] text-black font-sans font-black text-[11px] uppercase tracking-[3px] px-10 py-4 hover:bg-white transition-colors"
+              className="bg-[#00e5ff] text-[#0f172a] font-sans font-black text-[11px] uppercase tracking-[3px] px-10 py-4 hover:bg-white transition-colors"
             >
               Start the conversation →
             </button>
@@ -718,8 +718,8 @@ const EmpireHome = () => {
 
       {/* ── COM LINK CHAT ── */}
       <div className={`fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 transition-all duration-300 ${isChatOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}`}>
-        <div className="w-[340px] md:w-[420px] h-[500px] bg-[#f5f7fb] border border-[#00e5ff]/30 shadow-[0_0_40px_rgba(0,229,255,0.08)] flex flex-col">
-          <div className="h-10 bg-[#00e5ff]/10 border-b border-[#00e5ff]/20 flex justify-between items-center px-4">
+        <div className="w-[340px] md:w-[420px] h-[500px] bg-[#f5f7fb] border border-sky-200 shadow-[0_0_40px_rgba(0,229,255,0.08)] flex flex-col">
+          <div className="h-10 bg-[#00e5ff]/10 border-b border-sky-200 flex justify-between items-center px-4">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-[#00e5ff] rounded-full animate-pulse" />
               <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Empire One // Uplink</span>
@@ -754,19 +754,19 @@ const EmpireHome = () => {
             <div ref={chatEndRef} />
           </div>
 
-          <div className="p-3 border-t border-[#00e5ff]/20 bg-black">
+          <div className="p-3 border-t border-sky-200 bg-white">
             <form onSubmit={sendChatMessage} className="flex gap-2">
               <input
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 placeholder="What are you building?"
-                className="flex-grow bg-black border border-slate-200 px-3 py-2 font-sans text-[10px] text-[#0f172a] placeholder:text-[#0f172a]/20 focus:outline-none focus:border-[#00e5ff]/50 transition-colors"
+                className="flex-grow bg-white border border-slate-200 px-3 py-2 font-sans text-[10px] text-[#0f172a] placeholder:text-[#0f172a]/20 focus:outline-none focus:border-[#00e5ff]/50 transition-colors"
               />
               <button
                 type="submit"
                 disabled={isChatLoading || !chatInput.trim()}
-                className="w-10 h-9 bg-[#00e5ff]/20 border border-[#00e5ff]/40 text-[#0ea5e9] flex items-center justify-center hover:bg-[#00e5ff] hover:text-black transition-colors disabled:opacity-40"
+                className="w-10 h-9 bg-[#00e5ff]/20 border border-sky-300 text-[#0ea5e9] flex items-center justify-center hover:bg-[#00e5ff] hover:text-[#0f172a] transition-colors disabled:opacity-40"
               >
                 <Send size={13} />
               </button>
@@ -778,7 +778,7 @@ const EmpireHome = () => {
       {/* Floating chat toggle */}
       <button
         onClick={() => setIsChatOpen(true)}
-        className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 bg-black border border-[#00e5ff]/40 text-[#0ea5e9] px-4 py-3 flex items-center gap-2 hover:bg-[#00e5ff]/10 transition-all duration-300 ${isChatOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
+        className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 bg-white border border-sky-300 text-[#0ea5e9] px-4 py-3 flex items-center gap-2 hover:bg-[#00e5ff]/10 transition-all duration-300 ${isChatOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
       >
         <Terminal size={14} />
         <span className="font-sans text-[9px] uppercase tracking-[2px]">Talk to us</span>
