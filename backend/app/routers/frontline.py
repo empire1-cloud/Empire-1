@@ -169,3 +169,19 @@ async def get_session_info():
         "rtp_avg": round(random.uniform(92, 98), 2),
         "timestamp": datetime.utcnow().isoformat()
     }
+
+
+@router.post("/uplink")
+async def uplink_chat(payload: UplinkMessage):
+    """Empire public site chat uplink with Gemini + safe fallback."""
+    from ..services.gemini_service import gemini_service
+
+    tenant = "southern_lyfestyle" if (payload.tenant_id or "").lower().startswith("southern") else "empire1"
+    try:
+        beat = await gemini_service.generate_beat(tenant)
+        core = beat.get("content") if isinstance(beat, dict) else None
+        if not core:
+            core = "Signal received. Operator uplink stable."
+        return {"reply": f"{core}\n\nYou asked: {payload.message}"}
+    except Exception:
+        return {"reply": f"Signal received. Operator uplink stable.\n\nYou asked: {payload.message}"}
