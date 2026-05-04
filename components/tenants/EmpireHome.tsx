@@ -393,6 +393,112 @@ const EmpireHome = () => {
           </div>
         </section>
 
+
+        {/* ── CULTURA VIBE // LIVE ON THE STACK ── */}
+        <section className="px-6 md:px-12 py-20 border-b border-white/5">
+          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">Live on the Stack</p>
+          <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-4">
+            Platform in<br />
+            <span className="text-[#00e5ff]">production.</span>
+          </h2>
+          <p className="font-mono text-sm text-white/50 max-w-xl mb-14">
+            Cultura Vibe is built on Empire One — a real product, live users, real Stripe billing. This is what the stack ships.
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/5">
+            {/* Left — product info */}
+            <div className="bg-black p-8 md:p-10 flex flex-col gap-6">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[9px] text-white/30 uppercase tracking-widest">U2 // CULTURA VIBE</span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse" />
+                  <span className="font-mono text-[8px] text-[#00e5ff] uppercase tracking-widest">Live</span>
+                </span>
+              </div>
+              <div>
+                <h3 className="text-2xl font-black uppercase text-white tracking-tight mb-1">Cultura Vibe</h3>
+                <p className="font-mono text-[10px] text-[#00e5ff]/70">Cyber-Chicano · AI Vibe-Code Forge</p>
+              </div>
+              <p className="font-mono text-[11px] text-white/55 leading-relaxed">
+                Type your vision. Pick a category. Hit <span className="text-white font-bold">Forge Con Ganas</span>. The Cultural Engine injects Soulfire Guardrails — 48kHz audio, Emotional Math, Creator Equity DNA — before shipping production-ready boilerplate. Built entirely on the Empire One stack.
+              </p>
+
+              {/* Stripe billing proof */}
+              <div className="border border-white/10 p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <DollarSign size={12} className="text-[#00e5ff]" />
+                  <span className="font-mono text-[9px] text-[#00e5ff] uppercase tracking-widest">Stripe Billing // 3 Tiers // Live</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { name: 'Aprendiz', price: 'Free', sub: '5 forges/hr · 20/day', locked: false },
+                    { name: 'Maestro Elite', price: '$40/mo', sub: '10 forges + $10 overage', locked: true },
+                    { name: 'Maestro Master', price: '$149/mo', sub: '50 forges + $7 overage', locked: true },
+                  ].map((tier) => (
+                    <div
+                      key={tier.name}
+                      className={`p-3 border ${tier.locked ? 'border-[#00e5ff]/30 bg-[#00e5ff]/[0.03]' : 'border-white/10'}`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-[8px] text-white/40 uppercase tracking-widest">{tier.name}</span>
+                        {tier.locked && <Lock size={8} className="text-[#00e5ff]/60" />}
+                      </div>
+                      <p className="font-mono text-sm font-black text-[#00e5ff]">{tier.price}</p>
+                      <p className="font-mono text-[8px] text-white/30 mt-1 leading-relaxed">{tier.sub}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <a
+                href="https://aicatalyst.empire1.cloud"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-mono text-[10px] text-[#00e5ff] border border-[#00e5ff]/30 px-5 py-3 hover:bg-[#00e5ff]/10 transition-colors w-fit"
+              >
+                aicatalyst.empire1.cloud <ChevronRight size={12} />
+              </a>
+            </div>
+
+            {/* Right — terminal mockup */}
+            <div className="bg-black p-8 md:p-10 flex flex-col justify-center">
+              <div className="relative bg-[#050505] border border-white/10 rounded-sm p-6 font-mono text-[11px] shadow-2xl">
+                <div className="flex items-center gap-1.5 mb-5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#c8102e]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                  <span className="ml-3 text-[9px] uppercase tracking-[0.3em] text-white/30">el-terminal // cultura vibe</span>
+                </div>
+                <div className="space-y-2 text-white/50">
+                  <div className="text-white/70">&gt; arquitecto init --soulfire --category=music</div>
+                  <div>[planning-agent] <span className="text-white/60">Setting the foundation...</span></div>
+                  <div>[cultural-filter] <span className="text-[#c8102e]">Injecting Soulfire Guardrails</span></div>
+                  <div>[frontend-agent] <span className="text-white/60">Connecting the wires...</span></div>
+                  <div>[billing-agent] <span className="text-[#00e5ff]">Stripe checkout: configured</span></div>
+                  <div>[equity-agent] <span className="text-white/60">DNA tag: 70/30 split locked</span></div>
+                  <div className="pt-2 text-[#00e5ff] flex items-center gap-1">
+                    [forge] <span className="font-bold">Artifact ready. Con Ganas.</span>
+                    <span className="inline-block w-1.5 h-3.5 bg-[#00e5ff] animate-pulse ml-1" />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6 grid grid-cols-2 gap-px bg-white/5">
+                {[
+                  { v: '48kHz', l: 'Audio Standard' },
+                  { v: '70/30', l: 'Creator Split' },
+                  { v: '3 Tiers', l: 'Stripe Billing' },
+                  { v: 'Live', l: 'Production Status' },
+                ].map((s) => (
+                  <div key={s.l} className="bg-black px-4 py-3">
+                    <p className="font-mono text-sm font-black text-[#00e5ff]">{s.v}</p>
+                    <p className="font-mono text-[8px] text-white/30 uppercase tracking-widest">{s.l}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ── HOW IT WORKS ── */}
         <section id="how-it-works" className="px-6 md:px-12 py-20 border-b border-white/5">
           <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">How It Works</p>
