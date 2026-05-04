@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from threading import Lock
 import asyncio
 
-LOG_FILE = "/app/backend/execution_logs.json"
+LOG_FILE = "/tmp/execution_logs.json"
 MAX_LOGS = 1000  # Keep last 1000 logs in memory
 
 
