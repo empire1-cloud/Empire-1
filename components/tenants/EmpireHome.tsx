@@ -32,7 +32,7 @@ const EmpireHome = () => {
   }, [chatMessages, isChatOpen]);
 
   const fallbackReply = (msg: string) =>
-    `[EMPIRE ONE // OFFLINE]\nReceived: "${msg}"\n\nEmpire One powers AI music platforms, white-label game OS, and enterprise SaaS — all on one stack.\n\nCapabilities: 20 AI engines, Lyrica 3 Pro (music/voice), Sonance Pro studio, SL Universal radio, Southern Arcade, SLA113 operator console, DNA royalty tagging, biometric vocal synthesis.\n\nTo talk to a human: reach out via the form below or email your operator for a pilot slot.\n\nFor live AI responses, set NEXT_PUBLIC_GOOGLE_API_KEY.`;
+    `[EMPIRE ONE // OFFLINE]\nReceived: "${msg}"\n\nEmpire One powers AI music platforms, white-label game OS, and enterprise SaaS — as real products under one brand.\n\nCapabilities: 50+ pipeline engines, Lyrica 3 Pro (music/voice), Sonance Pro studio, SL Universal radio, Southern Arcade, SLA113 operator console, DNA royalty tagging, biometric vocal synthesis.\n\nTo talk to a human: reach out via the form below or email your operator for a pilot slot.\n\nFor live AI responses, set NEXT_PUBLIC_GOOGLE_API_KEY.`;
 
   const sendChatMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ const EmpireHome = () => {
             contents: formattedHistory,
             systemInstruction: {
               parts: [{
-                text: `You are the Empire One platform assistant at empire1.cloud. Empire One is an AI-powered operating system that lets operators, agencies, creators, and enterprises launch products built on: 20 AI engines (strategy, voice, analytics, music, vision), Lyrica 3 Pro (Sonance Pro studio + SL Universal radio + Lyria 3 generative — one music business), Southern Arcade (white-label game OS), SLA113 operator console, DNA-tagged micro-royalties, and biometric vocal synthesis. SLA-113 is the parent control plane. Empire One is the enterprise SaaS product surface. Be direct, knowledgeable, and helpful. Don't be robotic — be sharp. Help them figure out if and how Empire One fits their business.`,
+                text: `You are the Empire One platform assistant at empire1.cloud. Empire One is an AI-powered operating system that lets operators, agencies, creators, and enterprises launch products powered by: 50+ pipeline engines (strategy, voice, analytics, music, vision, pricing, ops), Lyrica 3 Pro (Sonance Pro studio + SL Universal radio + Lyria 3 generative — one music business), Southern Arcade (white-label game OS), SLA113 operator console, DNA-tagged micro-royalties, and biometric vocal synthesis. SLA-113 is the parent control plane. Empire One is the enterprise SaaS product surface. Be direct, knowledgeable, and helpful. Don't be robotic — be sharp. Help them figure out if and how Empire One fits their business.`,
               }],
             },
           }),
@@ -244,7 +244,7 @@ const EmpireHome = () => {
         <section id="what-we-build" className="px-6 md:px-12 py-20 border-b border-white/5">
           <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">What We Build</p>
           <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-14">
-            Three platforms.<br />One operating system.
+            Three product lines.<br />One revenue engine.
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
@@ -273,7 +273,7 @@ const EmpireHome = () => {
                 icon: Cpu,
                 tag: 'U4 // EMPIRE ONE',
                 title: 'Enterprise SaaS',
-                sub: '20 AI engines + operator console',
+                sub: '50+ pipeline engines + operator console',
                 body: 'Strategy, analysis, pipeline, voice, vision, pricing, persona, blueprint engines — exposed through a unified API. Multi-tenant auth, billing, real-time analytics, and the SLA113 operator console for full control.',
                 url: null,
                 cta: 'Request access',
@@ -311,9 +311,9 @@ const EmpireHome = () => {
 
         {/* ── ENGINE GRID ── */}
         <section id="products" className="px-6 md:px-12 py-20 border-b border-white/5">
-          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">The Stack</p>
+          <p className="font-mono text-[10px] text-[#00e5ff] uppercase tracking-[0.4em] mb-4">Product Engine Suite</p>
           <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-4">
-            20 engines.<br />One API surface.
+            50+ pipeline engines.<br />Built for products.
           </h2>
           <p className="font-mono text-sm text-white/50 max-w-xl mb-14">
             Every engine is production-grade. Every output is tracked. Every dollar earned by a creator is recorded on the ledger.
@@ -402,7 +402,7 @@ const EmpireHome = () => {
             <span className="text-[#00e5ff]">production.</span>
           </h2>
           <p className="font-mono text-sm text-white/50 max-w-xl mb-14">
-            Cultura Vibe is built on Empire One — a real product, live users, real Stripe billing. This is what the stack ships.
+            Cultura Vibe is built on Empire One — a real product, live users, real Stripe billing. This is what Empire One ships to market.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/5">
@@ -514,8 +514,8 @@ const EmpireHome = () => {
               },
               {
                 step: '02',
-                title: 'We configure the stack',
-                body: 'Multi-tenant routing, auth, billing, AI engines, domain mapping — all scoped to your use case. SLA113 control plane governs the whole thing.',
+                title: 'We configure your product line',
+                body: 'We configure routing, auth, billing, AI engines, and domain mapping for your exact use case. SLA113 governs operations behind the scenes.',
               },
               {
                 step: '03',
@@ -563,7 +563,7 @@ const EmpireHome = () => {
                 desc: 'Multi-tenant, white-label core, full API access. The workhorse.',
                 features: [
                   'Multi-tenant / multiple domains',
-                  '20 AI engines',
+                  '50+ pipeline engines',
                   'White-label routing + RBAC',
                   'Lyrica 3 + Arcade + SaaS',
                   'SLA113 operator console',
@@ -683,7 +683,7 @@ const EmpireHome = () => {
             </span>
           </h2>
           <p className="font-mono text-sm text-white/50 max-w-lg mx-auto mb-10">
-            Operator, creator, enterprise, or investor — if you're serious about building on the stack, let's talk.
+            Operator, creator, enterprise, or investor — if you're serious about launching revenue products, let's talk.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
