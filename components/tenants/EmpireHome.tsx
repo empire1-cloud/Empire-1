@@ -7,8 +7,7 @@ import {
   Layers, Zap, DollarSign, Globe, Lock, ChevronRight, Radio, Mic2
 } from 'lucide-react';
 
-const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-const HAS_GEMINI = Boolean(GOOGLE_API_KEY);
+const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "https://empire1-backend-e2q5oemapa-uc.a.run.app";
 
 /**
  * EMPIRE ONE // Public Landing
@@ -42,39 +41,17 @@ const EmpireHome = () => {
     setChatMessages((prev) => [...prev, { role: 'user', text: userMsg }]);
     setIsChatLoading(true);
 
-    if (!HAS_GEMINI) {
-      await new Promise((r) => setTimeout(r, 350));
-      setChatMessages((prev) => [...prev, { role: 'system', text: fallbackReply(userMsg) }]);
-      setIsChatLoading(false);
-      return;
-    }
-
     try {
-      const history = [...chatMessages, { role: 'user', text: userMsg }];
-      const formattedHistory = history.map((m) => ({
-        role: m.role === 'user' ? 'user' : 'model',
-        parts: [{ text: m.text }],
-      }));
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GOOGLE_API_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: formattedHistory,
-            systemInstruction: {
-              parts: [{
-                text: `You are the Empire One platform assistant at empire1.cloud. Empire One is an AI-powered operating system that lets operators, agencies, creators, and enterprises launch products powered by: 50+ pipeline engines (strategy, voice, analytics, music, vision, pricing, ops), Lyrica 3 Pro (Sonance Pro studio + SL Universal radio + Lyria 3 generative — one music business), Southern Arcade (white-label game OS), SLA113 operator console, DNA-tagged micro-royalties, and biometric vocal synthesis. SLA-113 is the parent control plane. Empire One is the enterprise SaaS product surface. Be direct, knowledgeable, and helpful. Don't be robotic — be sharp. Help them figure out if and how Empire One fits their business.`,
-              }],
-            },
-          }),
-        }
-      );
-      const data = await res.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      setChatMessages((prev) => [...prev, { role: 'system', text: text || 'ERR_NO_RESPONSE' }]);
+      const res = await fetch(`${API_BASE}/api/frontline/uplink`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMsg, tenant_id: 'empire1' }),
+      });
+      const data = await res.json().catch(() => ({}));
+      const text = data.reply || data.content || data.message;
+      setChatMessages((prev) => [...prev, { role: 'system', text: text || fallbackReply(userMsg) }]);
     } catch {
-      setChatMessages((prev) => [...prev, { role: 'system', text: 'ERR_TRANSMISSION_FAILED — try again.' }]);
+      setChatMessages((prev) => [...prev, { role: 'system', text: fallbackReply(userMsg) }]);
     } finally {
       setIsChatLoading(false);
     }
