@@ -131,24 +131,24 @@ const EmpireHome = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#e0e0e0] font-sans overflow-x-hidden selection:bg-[#00e5ff] selection:text-black">
+    <div className="min-h-screen bg-[#f5f7fb] text-[#0f172a] font-sans overflow-x-hidden selection:bg-[#bae6fd] selection:text-[#0f172a]">
 
       {/* Film grain overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.018] z-[9999]"
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
 
       {/* Top telemetry strip */}
-      <div className="fixed top-0 w-full bg-black border-b border-[#00e5ff]/20 z-[100] py-1 overflow-hidden">
+      <div className="fixed top-0 w-full bg-white/90 border-b border-slate-200 z-[100] py-1 overflow-hidden">
         <div className="inline-block animate-[scrollTicker_35s_linear_infinite] whitespace-nowrap font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">
           [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [ENGINES: 20 ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [ENGINES: 50+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [CREATOR EQUITY: 70/30 SPLIT] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [ENGINES: 20 ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [ENGINES: 50+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
@@ -163,9 +163,9 @@ const EmpireHome = () => {
         <nav className="flex items-center justify-between px-6 md:px-12 py-4 border-b border-slate-200/80">
           <div>
             <span className="font-sans text-[10px] text-[#0ea5e9] tracking-widest">EMPIRE ONE</span>
-            <p className="font-sans text-[8px] text-[#0f172a]/30 tracking-widest">GOVERNED BY SLA-113</p>
+            <p className="font-sans text-[8px] text-slate-500 tracking-widest">GOVERNED BY SLA-113</p>
           </div>
-          <div className="hidden md:flex items-center gap-6 font-sans text-[10px] text-[#0f172a]/50 uppercase tracking-widest">
+          <div className="hidden md:flex items-center gap-6 font-sans text-[10px] text-slate-600 uppercase tracking-widest">
             <a href="#what-we-build" className="hover:text-[#0ea5e9] transition-colors">What We Build</a>
             <a href="#products" className="hover:text-[#0ea5e9] transition-colors">Products</a>
             <a href="#how-it-works" className="hover:text-[#0ea5e9] transition-colors">How It Works</a>
@@ -188,21 +188,21 @@ const EmpireHome = () => {
               Empire One // U4 — Enterprise SaaS
             </p>
             <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#0f172a] leading-[0.92] mb-8">
-              THE PLATFORM<br />
-              YOUR BUSINESS<br />
+              REAL PRODUCTS<br />
+              YOUR AUDIENCE<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-[#ffffff80]">
-                RUNS ON.
+                WANTS.
               </span>
             </h1>
-            <p className="font-sans text-sm text-[#0f172a]/60 leading-relaxed max-w-lg border-l-2 border-[#00e5ff]/40 pl-5 mb-10">
-              20 AI engines. AI music production. White-label game OS. Creator-owned royalties.
-              Enterprise SaaS infrastructure. One stack — your brand, your revenue.
+            <p className="font-sans text-sm text-slate-600 leading-relaxed max-w-lg border-l-2 border-[#00e5ff]/40 pl-5 mb-10">
+              50+ pipeline engines. AI music products. White-label game products. Creator-owned royalties.
+              Public-ready experiences under your brand, with operations handled for you.
             </p>
 
             {/* Traction signals */}
             <div className="flex flex-wrap gap-4 mb-10">
               {[
-                { value: '20', label: 'AI Engines' },
+                { value: '50+', label: 'Pipeline Engines' },
                 { value: '70/30', label: 'Creator Split' },
                 { value: '3', label: 'Product Surfaces' },
                 { value: '$2M', label: 'Seed Round' },
@@ -282,10 +282,10 @@ const EmpireHome = () => {
             ].map((card) => {
               const Icon = card.icon;
               return (
-                <div key={card.tag} className={`bg-black p-8 md:p-10 flex flex-col gap-6 hover:bg-white/[0.02] transition-colors`}>
+                <div key={card.tag} className={`bg-white p-8 md:p-10 flex flex-col gap-6 hover:bg-white/[0.02] transition-colors`}>
                   <div className="flex items-start justify-between">
                     <Icon size={20} className="text-[#0ea5e9]" />
-                    <span className="font-sans text-[8px] text-[#0f172a]/30 uppercase tracking-widest">{card.tag}</span>
+                    <span className="font-sans text-[8px] text-slate-500 uppercase tracking-widest">{card.tag}</span>
                   </div>
                   <div>
                     <h3 className="text-xl font-black uppercase text-[#0f172a] tracking-tight mb-1">{card.title}</h3>
@@ -315,7 +315,7 @@ const EmpireHome = () => {
           <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-4">
             50+ pipeline engines.<br />Built for products.
           </h2>
-          <p className="font-sans text-sm text-[#0f172a]/50 max-w-xl mb-14">
+          <p className="font-sans text-sm text-slate-600 max-w-xl mb-14">
             Every engine is production-grade. Every output is tracked. Every dollar earned by a creator is recorded on the ledger.
           </p>
 
@@ -351,7 +351,7 @@ const EmpireHome = () => {
                   </div>
                   <ul className="space-y-3">
                     {group.engines.map((e) => (
-                      <li key={e} className="flex items-center gap-2 font-sans text-[11px] text-[#0f172a]/50">
+                      <li key={e} className="flex items-center gap-2 font-sans text-[11px] text-slate-600">
                         <span className="text-[#0ea5e9] text-xs">›</span> {e}
                       </li>
                     ))}
@@ -396,20 +396,20 @@ const EmpireHome = () => {
 
         {/* ── CULTURA VIBE // LIVE ON THE STACK ── */}
         <section className="px-6 md:px-12 py-20 border-b border-slate-200/80">
-          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Live on the Stack</p>
+          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Live Product Showcase</p>
           <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-4">
-            Platform in<br />
+            Product in<br />
             <span className="text-[#0ea5e9]">production.</span>
           </h2>
-          <p className="font-sans text-sm text-[#0f172a]/50 max-w-xl mb-14">
+          <p className="font-sans text-sm text-slate-600 max-w-xl mb-14">
             Cultura Vibe is built on Empire One — a real product, live users, real Stripe billing. This is what Empire One ships to market.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white">
             {/* Left — product info */}
-            <div className="bg-black p-8 md:p-10 flex flex-col gap-6">
+            <div className="bg-white p-8 md:p-10 flex flex-col gap-6">
               <div className="flex items-center justify-between">
-                <span className="font-sans text-[9px] text-[#0f172a]/30 uppercase tracking-widest">U2 // CULTURA VIBE</span>
+                <span className="font-sans text-[9px] text-slate-500 uppercase tracking-widest">U2 // CULTURA VIBE</span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse" />
                   <span className="font-sans text-[8px] text-[#0ea5e9] uppercase tracking-widest">Live</span>
@@ -420,7 +420,7 @@ const EmpireHome = () => {
                 <p className="font-sans text-[10px] text-[#0ea5e9]/70">Cyber-Chicano · AI Vibe-Code Forge</p>
               </div>
               <p className="font-sans text-[11px] text-[#0f172a]/55 leading-relaxed">
-                Type your vision. Pick a category. Hit <span className="text-[#0f172a] font-bold">Forge Con Ganas</span>. The Cultural Engine injects Soulfire Guardrails — 48kHz audio, Emotional Math, Creator Equity DNA — before shipping production-ready boilerplate. Built entirely on the Empire One stack.
+                Type your vision. Pick a category. Hit <span className="text-[#0f172a] font-bold">Forge Con Ganas</span>. The Cultural Engine injects Soulfire Guardrails — 48kHz audio, Emotional Math, Creator Equity DNA — before shipping production-ready boilerplate. Built and shipped by Empire One for real-world users.
               </p>
 
               {/* Stripe billing proof */}
@@ -444,7 +444,7 @@ const EmpireHome = () => {
                         {tier.locked && <Lock size={8} className="text-[#0ea5e9]/60" />}
                       </div>
                       <p className="font-sans text-sm font-black text-[#0ea5e9]">{tier.price}</p>
-                      <p className="font-sans text-[8px] text-[#0f172a]/30 mt-1 leading-relaxed">{tier.sub}</p>
+                      <p className="font-sans text-[8px] text-slate-500 mt-1 leading-relaxed">{tier.sub}</p>
                     </div>
                   ))}
                 </div>
@@ -460,24 +460,24 @@ const EmpireHome = () => {
               </a>
             </div>
 
-            {/* Right — terminal mockup */}
-            <div className="bg-black p-8 md:p-10 flex flex-col justify-center">
-              <div className="relative bg-[#050505] border border-slate-200 rounded-sm p-6 font-sans text-[11px] shadow-2xl">
+            {/* Right — product activity feed */}
+            <div className="bg-slate-50 p-8 md:p-10 flex flex-col justify-center">
+              <div className="relative bg-white border border-slate-200 rounded-sm p-6 font-sans text-[11px] shadow-2xl">
                 <div className="flex items-center gap-1.5 mb-5">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#c8102e]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-slate-50" />
                   <span className="h-2.5 w-2.5 rounded-full bg-slate-50" />
-                  <span className="ml-3 text-[9px] uppercase tracking-[0.3em] text-[#0f172a]/30">el-terminal // cultura vibe</span>
+                  <span className="ml-3 text-[9px] uppercase tracking-[0.3em] text-slate-500">cultura activity // live</span>
                 </div>
-                <div className="space-y-2 text-[#0f172a]/50">
-                  <div className="text-[#0f172a]/70">&gt; arquitecto init --soulfire --category=music</div>
-                  <div>[planning-agent] <span className="text-[#0f172a]/60">Setting the foundation...</span></div>
-                  <div>[cultural-filter] <span className="text-[#c8102e]">Injecting Soulfire Guardrails</span></div>
-                  <div>[frontend-agent] <span className="text-[#0f172a]/60">Connecting the wires...</span></div>
-                  <div>[billing-agent] <span className="text-[#0ea5e9]">Stripe checkout: configured</span></div>
-                  <div>[equity-agent] <span className="text-[#0f172a]/60">DNA tag: 70/30 split locked</span></div>
+                <div className="space-y-2 text-slate-600">
+                  <div className="text-slate-700">New creator session started</div>
+                  <div>[planning] <span className="text-slate-600">Setting the foundation...</span></div>
+                  <div>[cultural-ai] <span className="text-[#c8102e]">Injecting Soulfire Guardrails</span></div>
+                  <div>[experience] <span className="text-slate-600">Connecting the wires...</span></div>
+                  <div>[billing] <span className="text-[#0ea5e9]">Stripe checkout: configured</span></div>
+                  <div>[equity] <span className="text-slate-600">DNA tag: 70/30 split locked</span></div>
                   <div className="pt-2 text-[#0ea5e9] flex items-center gap-1">
-                    [forge] <span className="font-bold">Artifact ready. Con Ganas.</span>
+                    [launch] <span className="font-bold">Artifact ready. Con Ganas.</span>
                     <span className="inline-block w-1.5 h-3.5 bg-[#00e5ff] animate-pulse ml-1" />
                   </div>
                 </div>
@@ -491,7 +491,7 @@ const EmpireHome = () => {
                 ].map((s) => (
                   <div key={s.l} className="bg-black px-4 py-3">
                     <p className="font-sans text-sm font-black text-[#0ea5e9]">{s.v}</p>
-                    <p className="font-sans text-[8px] text-[#0f172a]/30 uppercase tracking-widest">{s.l}</p>
+                    <p className="font-sans text-[8px] text-slate-500 uppercase tracking-widest">{s.l}</p>
                   </div>
                 ))}
               </div>
@@ -526,7 +526,7 @@ const EmpireHome = () => {
               <div key={row.step} className="bg-black p-8 md:p-10 hover:bg-white/[0.02] transition-colors">
                 <p className="font-sans text-5xl font-black text-[#0f172a]/5 mb-6">{row.step}</p>
                 <h3 className="text-lg font-black uppercase text-[#0f172a] tracking-tight mb-4">{row.title}</h3>
-                <p className="font-sans text-[11px] text-[#0f172a]/50 leading-relaxed">{row.body}</p>
+                <p className="font-sans text-[11px] text-slate-600 leading-relaxed">{row.body}</p>
               </div>
             ))}
           </div>
@@ -600,7 +600,7 @@ const EmpireHome = () => {
                     Most Popular
                   </span>
                 )}
-                <p className="font-sans text-[9px] text-[#0f172a]/30 uppercase tracking-widest mb-2">Node: {plan.node}</p>
+                <p className="font-sans text-[9px] text-slate-500 uppercase tracking-widest mb-2">Node: {plan.node}</p>
                 <p className="font-sans text-[10px] text-[#0ea5e9] mb-6">{plan.target}</p>
                 <div className="mb-2">
                   <span className="text-4xl font-black text-[#0f172a]">{plan.price}</span>
@@ -609,7 +609,7 @@ const EmpireHome = () => {
                 <p className="font-sans text-[11px] text-[#0f172a]/40 mb-8 leading-relaxed">{plan.desc}</p>
                 <ul className="space-y-3 flex-grow mb-10">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 font-sans text-[11px] text-[#0f172a]/60">
+                    <li key={f} className="flex items-start gap-2 font-sans text-[11px] text-slate-600">
                       <span className="text-[#0ea5e9] mt-[1px]">+</span> {f}
                     </li>
                   ))}
@@ -619,7 +619,7 @@ const EmpireHome = () => {
                   className={`w-full py-3 font-sans text-[10px] uppercase tracking-[2px] border transition-colors ${
                     plan.active
                       ? 'bg-[#00e5ff] border-[#00e5ff] text-black hover:bg-white hover:border-white'
-                      : 'border-white/20 text-[#0f172a] hover:border-[#00e5ff] hover:text-[#0ea5e9]'
+                      : 'border-slate-300 text-[#0f172a] hover:border-[#00e5ff] hover:text-[#0ea5e9]'
                   }`}
                 >
                   Get Started →
@@ -627,7 +627,7 @@ const EmpireHome = () => {
               </div>
             ))}
           </div>
-          <div className="mt-px bg-black border-t border-slate-200/80 p-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <div className="mt-px bg-white border-t border-slate-200/80 p-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
             <p className="font-sans text-[11px] text-[#0f172a]/40">
               Custom scope available — $2,500–$6,500+ for bespoke builds. Tell us your workload.
             </p>
@@ -682,7 +682,7 @@ const EmpireHome = () => {
               your platform.
             </span>
           </h2>
-          <p className="font-sans text-sm text-[#0f172a]/50 max-w-lg mx-auto mb-10">
+          <p className="font-sans text-sm text-slate-600 max-w-lg mx-auto mb-10">
             Operator, creator, enterprise, or investor — if you're serious about launching revenue products, let's talk.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -694,7 +694,7 @@ const EmpireHome = () => {
             </button>
             <Link
               href="/admin/login"
-              className="border border-white/20 text-[#0f172a] font-sans text-[11px] uppercase tracking-[3px] px-10 py-4 hover:border-[#00e5ff] hover:text-[#0ea5e9] transition-colors text-center"
+              className="border border-slate-300 text-[#0f172a] font-sans text-[11px] uppercase tracking-[3px] px-10 py-4 hover:border-[#00e5ff] hover:text-[#0ea5e9] transition-colors text-center"
             >
               Operator Login →
             </Link>
@@ -704,10 +704,10 @@ const EmpireHome = () => {
         {/* ── FOOTER ── */}
         <footer className="px-6 md:px-12 py-10 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
           <div>
-            <p className="font-sans text-[10px] text-[#0f172a]/30 uppercase tracking-widest">Empire One</p>
+            <p className="font-sans text-[10px] text-slate-500 uppercase tracking-widest">Empire One</p>
             <p className="font-sans text-[9px] text-[#0f172a]/20 mt-1">Governed by SLA-113 · All rights reserved</p>
           </div>
-          <div className="flex flex-wrap gap-6 font-sans text-[9px] text-[#0f172a]/30 uppercase tracking-widest">
+          <div className="flex flex-wrap gap-6 font-sans text-[9px] text-slate-500 uppercase tracking-widest">
             <a href="https://lyrica3.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#0ea5e9] transition-colors">Lyrica 3 Pro</a>
             <a href="https://southernlifestyle.org" target="_blank" rel="noopener noreferrer" className="hover:text-[#0ea5e9] transition-colors">Southern Arcade</a>
             <Link href="/admin/login" className="hover:text-[#0ea5e9] transition-colors">Operator Console</Link>
@@ -718,7 +718,7 @@ const EmpireHome = () => {
 
       {/* ── COM LINK CHAT ── */}
       <div className={`fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 transition-all duration-300 ${isChatOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}`}>
-        <div className="w-[340px] md:w-[420px] h-[500px] bg-[#02040a] border border-[#00e5ff]/30 shadow-[0_0_40px_rgba(0,229,255,0.08)] flex flex-col">
+        <div className="w-[340px] md:w-[420px] h-[500px] bg-[#f5f7fb] border border-[#00e5ff]/30 shadow-[0_0_40px_rgba(0,229,255,0.08)] flex flex-col">
           <div className="h-10 bg-[#00e5ff]/10 border-b border-[#00e5ff]/20 flex justify-between items-center px-4">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-[#00e5ff] rounded-full animate-pulse" />
@@ -729,12 +729,12 @@ const EmpireHome = () => {
             </button>
           </div>
 
-          <div className="flex-grow overflow-y-auto p-4 flex flex-col gap-4 bg-black/60 custom-scrollbar">
+          <div className="flex-grow overflow-y-auto p-4 flex flex-col gap-4 bg-slate-50 custom-scrollbar">
             {chatMessages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[88%] p-3 font-sans text-[10px] border ${
                   msg.role === 'user'
-                    ? 'bg-white border-white/15 text-[#0f172a]'
+                    ? 'bg-sky-50 border-sky-200 text-[#0f172a]'
                     : 'bg-[#00e5ff]/5 border-[#00e5ff]/25 text-[#0ea5e9]'
                 }`}>
                   <span className="block text-[7px] opacity-40 mb-1.5 uppercase tracking-widest">
