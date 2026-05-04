@@ -151,10 +151,13 @@ class LlmChat:
         if not project:
             return None
 
-        preferred = self.model_name if (self.model_name or "").startswith("gemini-") else None
+        preferred = os.getenv("VERTEX_TEXT_MODEL")
+        if not preferred and (self.model_name or "").startswith("gemini-"):
+            preferred = self.model_name
         model_candidates = [
             preferred,
-            os.getenv("VERTEX_TEXT_MODEL"),
+            "gemini-2.5-flash",
+            "gemini-2.5-pro",
             "gemini-1.5-pro",
             "gemini-1.5-flash",
         ]

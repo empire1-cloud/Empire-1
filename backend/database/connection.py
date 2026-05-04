@@ -6,6 +6,7 @@ Production-ready with connection pooling and error handling.
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import IndexModel, ASCENDING, DESCENDING
+from pymongo.errors import DuplicateKeyError
 from typing import Optional
 import logging
 
@@ -93,14 +94,19 @@ def get_database():
 async def create_indexes():
     """Create all required database indexes."""
     db = get_database()
+
+    try:
+        await db.users.update_many({"email": None}, {"$unset": {"email": ""}})
+    except Exception:
+        logger.exception("Failed to normalize null emails before index creation")
     
     # Users collection indexes
     await db.users.create_indexes([
-        IndexModel([("email", ASCENDING)], unique=True),
         IndexModel([("system_role", ASCENDING)]),
         IndexModel([("is_active", ASCENDING)]),
         IndexModel([("created_at", DESCENDING)]),
     ])
+    await _ensure_user_email_index(db)
     
     # Teams collection indexes
     await db.teams.create_indexes([
@@ -172,6 +178,18 @@ async def create_indexes():
     ])
     
     logger.info("Database indexes created successfully")
+
+
+async def _ensure_user_email_index(db):
+    try:
+        await db.users.create_index(
+            [("email", ASCENDING)],
+            unique=True,
+            sparse=True,
+            name="email_1",
+        )
+    except DuplicateKeyError:
+        logger.warning("Skipping email_1 index creation due to duplicate user emails")
 
 
 # Collection accessors for type hints
