@@ -1,0 +1,52 @@
+"""SLA113 Game Template Library - lightweight PixiJS templates."""
+import json
+
+
+def get_game_template(game_type, game_name, game_config, asset_manifest):
+    """Return a genre-aware PixiJS starter script."""
+    cfg = json.dumps(game_config, default=str)
+    assets = json.dumps(asset_manifest, default=str)
+
+    return (
+        f"// SLA113 Game Engine - {game_name}\\n"
+        f"// Template: {game_type}\\n"
+        f"const GAME_CONFIG = {cfg};\\n"
+        f"const ASSET_MANIFEST = {assets};\\n"
+        "(async () => {\\n"
+        "  const app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, backgroundColor: 0x0a0a0a, antialias: true });\\n"
+        "  document.body.appendChild(app.view);\\n"
+        "  const W = () => app.screen.width; const H = () => app.screen.height;\\n"
+        "  window.addEventListener('resize', () => app.renderer.resize(window.innerWidth, window.innerHeight));\\n"
+        "  let score = 0;\\n"
+        "  const bg = new PIXI.Graphics();\\n"
+        "  bg.beginFill(0x05070d).drawRect(0, 0, W(), H()).endFill();\\n"
+        "  app.stage.addChild(bg);\\n"
+        "  const title = new PIXI.Text(GAME_CONFIG.name || 'SLA113 Build', { fontFamily: 'monospace', fontSize: 20, fill: 0xd4af37, fontWeight: 'bold' });\\n"
+        "  title.anchor.set(0.5); title.x = W() / 2; title.y = 40; app.stage.addChild(title);\\n"
+        "  const scoreText = new PIXI.Text('SCORE: 0', { fontFamily: 'monospace', fontSize: 14, fill: 0x00c8ff });\\n"
+        "  scoreText.x = 16; scoreText.y = 16; app.stage.addChild(scoreText);\\n"
+        "  const entities = [];\\n"
+        "  const palette = [0x00c8ff, 0xd4af37, 0xff4444, 0x44ff44, 0x9966ff, 0xff8800];\\n"
+        "  function spawnEntity(x, y, i) {\\n"
+        "    const g = new PIXI.Graphics();\\n"
+        "    const s = 18 + Math.random() * 24;\\n"
+        "    const c = palette[i % palette.length];\\n"
+        "    g.beginFill(c, 0.9).drawRoundedRect(-s/2, -s/2, s, s, 5).endFill();\\n"
+        "    g.lineStyle(1, 0xffffff, 0.15).drawRoundedRect(-s/2, -s/2, s, s, 5);\\n"
+        "    g.x = x; g.y = y; g.vx = (Math.random() - 0.5) * 2.2; g.vy = (Math.random() - 0.5) * 2.2;\\n"
+        "    g.interactive = true; g.cursor = 'pointer';\\n"
+        "    g.on('pointerdown', () => { score += 100; scoreText.text = `SCORE: ${score}`; g.alpha = 0.35; setTimeout(() => { g.alpha = 0.9; }, 120); });\\n"
+        "    app.stage.addChild(g); entities.push(g);\\n"
+        "  }\\n"
+        "  const n = Math.max(10, Math.min(40, (ASSET_MANIFEST || []).length || 16));\\n"
+        "  for (let i = 0; i < n; i++) spawnEntity(Math.random() * W() * 0.7 + W() * 0.15, Math.random() * H() * 0.65 + H() * 0.2, i);\\n"
+        "  app.ticker.add(() => {\\n"
+        "    entities.forEach((e) => {\\n"
+        "      e.x += e.vx; e.y += e.vy;\\n"
+        "      if (e.x < 20 || e.x > W() - 20) e.vx *= -1;\\n"
+        "      if (e.y < 70 || e.y > H() - 20) e.vy *= -1;\\n"
+        "      e.rotation += 0.0045;\\n"
+        "    });\\n"
+        "  });\\n"
+        "})();\\n"
+    )
