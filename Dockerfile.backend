@@ -1,18 +1,21 @@
 FROM python:3.11-slim
 
-WORKDIR /app
+WORKIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     build-essential \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-COPY backend/requirements.txt /app/requirements.txt
+RUN git clone --depth 1 --branch sla113 https://github.com/shiestybizz113-cell/Empire-1.git /tmp/repo
+
+COPY /tmp/repo/backend/requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY backend/ /app/
+COPY /tmp/repo/backend/ /app/
 
 ENV ENV=production
 ENV PORT=8000
