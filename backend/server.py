@@ -55,8 +55,14 @@ from routers.profile import router as profile_router
 from routers.invites import router as invites_router
 from routers.billing import router as billing_router
 from routers.api_keys import router as api_keys_router
-from routers.admin import router as admin_router
 from routers.system import router as system_router
+
+# SLA113 Admin Router (evolved build - using SLA113/ directory structure)
+try:
+    from SLA113.admin.visualizers import router as sla113_admin_router
+    SLA113_ADMIN_AVAILABLE = True
+except ImportError:
+    SLA113_ADMIN_AVAILABLE = False
 
 # Import and include all engine routers
 from routers.engines import (
@@ -92,8 +98,11 @@ api_router.include_router(profile_router)
 api_router.include_router(invites_router)  # Public invite endpoints
 api_router.include_router(billing_router)  # Billing endpoints
 api_router.include_router(api_keys_router)  # API key management
-api_router.include_router(admin_router)  # Admin endpoints (system admin only)
 api_router.include_router(system_router)  # System status endpoints
+
+# SLA113 Admin Router (evolved build - SLA113/ directory)
+if SLA113_ADMIN_AVAILABLE:
+    api_router.include_router(sla113_admin_router)  # SLA113 admin endpoints
 
 # Include protected routers (require auth)
 api_router.include_router(history_protected_router)  # /api/history (protected)
