@@ -331,6 +331,13 @@ async def sla113_status():
     }
 
 
+@router.get("/admin/engines")
+async def list_all_engines():
+    """List ALL engines (39) from engine_namespace."""
+    from app.core.engine_namespace import ALL_ENGINES
+    return {"success": True, "engines": ALL_ENGINES}
+
+
 @router.get("/nexus/pipelines")
 async def get_arttech_pipelines():
     return {
