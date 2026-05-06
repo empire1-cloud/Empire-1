@@ -83,6 +83,7 @@ from routers.engines import (
 from routers.engines.history_protected import router as history_protected_router
 from routers.engines.lyrica.agents import router as lyrica_router
 from routers.pipelines import router as pipelines_router
+from routers.sla113 import router as sla113_router
 
 # Include auth and team routers first (higher priority)
 api_router.include_router(auth_router)
@@ -97,6 +98,7 @@ api_router.include_router(system_router)  # System status endpoints
 # Include protected routers (require auth)
 api_router.include_router(history_protected_router)  # /api/history (protected)
 api_router.include_router(pipelines_router)  # /api/pipelines (protected)
+api_router.include_router(sla113_router)  # /api/sla113
 
 # Include all engine routers (currently public for backward compatibility)
 api_router.include_router(core_router)

@@ -117,8 +117,8 @@ async def get_usage_logs(
 @router.get("/engines")
 async def list_engines(admin: dict = Depends(require_sla113_admin)):
     """List all engines available to SLA113."""
-    from ..core.engine_namespace import ENGINES
-    return {"success": True, "engines": ENGINES}
+    from ..core.engine_namespace import ALL_ENGINES
+    return {"success": True, "engines": ALL_ENGINES}
 
 
 @router.get("/engine/{engine_id}")
