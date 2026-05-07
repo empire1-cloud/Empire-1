@@ -1399,3 +1399,18 @@ def calculate_southern_pipeline_cost(pipeline_id: str) -> int:
     if not pipeline:
         return 0
     return pipeline.get("credit_cost", 0)
+
+# ========================================================
+# VOX/VOXCPM ENGINE (Voice Synthesis)
+# ========================================================
+    "voxcpm": EngineMetadata(
+        name="VoxCPM",
+        service="app.services.voxcpm_service",
+        router="app.routers.engines.voxcpm",
+        credit_cost=15,
+        enabled_for=["EMPIRE1", "SLA113", "Southern", "lyrica3", "universal"],
+        description="Voice synthesis via VoxCPM2 (OpenBMB) for hybrid AI stack",
+        status="active",
+        canon_lock=False,
+        engine_type="revenue",
+    ),
