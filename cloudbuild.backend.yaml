@@ -1,6 +1,4 @@
 steps:
-  - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/shiestybizz113-cell/Empire-1.git', '--branch=sla113', '--single-branch', '.']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/empire1-backend', '-f', 'Dockerfile.backend', '.']
   - name: 'gcr.io/cloud-builders/docker'
