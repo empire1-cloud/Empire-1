@@ -164,6 +164,22 @@ universes:
       - U0
     status: active
 
+  tribute:
+    id: U9
+    name: Tribute Worlds
+    role: themed_experience
+    layer: product_surface
+    owner: southern
+    router: tribute_router.py
+    domains:
+      - tribute.southernlifestyle.org
+    services:
+      - empire1-frontend
+    depends_on:
+      - U0
+      - U3
+    status: active
+
 contracts:
   api_base_contract:
     empire: "https://api.empire1.cloud"
