@@ -7,14 +7,6 @@ steps:
     args: ['push', 'gcr.io/$PROJECT_ID/empire1-backend']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    args:
-      - run'
-      - deploy'
-      - empire1-backend'
-      - '--image'
-      - gcr.io/$PROJECT_ID/empire1-backend'
-      - '--region'
-      - us-central1'
-      - '--allow-unauthenticated'
+    args: ['run', 'deploy', 'empire1-backend', '--image', 'gcr.io/$PROJECT_ID/empire1-backend', '--region', 'us-central1', '--allow-unauthenticated']
 images:
   - 'gcr.io/$PROJECT_ID/empire1-backend'
