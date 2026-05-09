@@ -8,7 +8,10 @@ from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from pydantic import BaseModel, Field
 from typing import Optional, List
 import uuid
+import logging
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 from app.services.audio_fx_pipeline import AudioFXPipeline, EFFECT_PRESETS
 from app.core.config import get_settings
@@ -17,7 +20,10 @@ settings = get_settings()
 router = APIRouter(prefix="/audio-fx", tags=["AudioFX"])
 
 UPLOAD_DIR = Path(settings.VOXCPM_AUDIO_DIR) / "fx_uploads"
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+except OSError as e:
+    logger.warning(f"Could not create directory {UPLOAD_DIR}: {e}")
 
 
 class EffectSpec(BaseModel):

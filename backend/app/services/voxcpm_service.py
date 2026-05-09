@@ -51,7 +51,10 @@ VOICE_MAP = {
 
 def _ensure_audio_dir() -> Path:
     audio_dir = Path(settings.VOXCPM_AUDIO_DIR)
-    audio_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        audio_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        logger.warning(f"Could not create directory {audio_dir}: {e}")
     return audio_dir
 
 
@@ -82,9 +85,15 @@ class VoxCPMService:
         self.mode = settings.VOXCPM_MODE
         self.audio_dir = _ensure_audio_dir()
         self.voices_dir = self.audio_dir / "voices"
-        self.voices_dir.mkdir(exist_ok=True)
+        try:
+            self.voices_dir.mkdir(exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {self.voices_dir}: {e}")
         self.clones_dir = self.audio_dir / "clones"
-        self.clones_dir.mkdir(exist_ok=True)
+        try:
+            self.clones_dir.mkdir(exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {self.clones_dir}: {e}")
 
     async def generate_speech(
         self,

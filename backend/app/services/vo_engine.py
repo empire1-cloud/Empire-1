@@ -1,7 +1,10 @@
 import uuid
+import logging
 from pathlib import Path
 from sqlalchemy.ext.asyncio import AsyncSession
 
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------
 # INTERNAL ENGINE (stub)
@@ -11,7 +14,10 @@ class VOEngineCore:
     async def generate_video(self, prompt: str, duration: int, resolution: str) -> str:
         job_id = str(uuid.uuid4())
         output_dir = Path("/var/sla/video/outputs")
-        output_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            output_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {output_dir}: {e}")
 
         video_path = output_dir / f"{job_id}.mp4"
         video_path.touch()  # placeholder file
@@ -45,8 +51,14 @@ class VOEngine:
         self.engine = VOEngineCore()
 
         # Ensure canonical directories exist
-        Path("/var/sla/video/outputs").mkdir(parents=True, exist_ok=True)
-        Path("/var/sla/video/frames").mkdir(parents=True, exist_ok=True)
+        try:
+            Path("/var/sla/video/outputs").mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory /var/sla/video/outputs: {e}")
+        try:
+            Path("/var/sla/video/frames").mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory /var/sla/video/frames: {e}")
 
     # -----------------------------------------------------
     # GENERATE VIDEO

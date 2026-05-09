@@ -77,7 +77,10 @@ class SoulfireSynapsePayload:
 
     def __init__(self):
         self.payload_dir = Path("/var/sla/audio/lyrica/payloads")
-        self.payload_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            self.payload_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {self.payload_dir}: {e}")
 
     def assemble(
         self,

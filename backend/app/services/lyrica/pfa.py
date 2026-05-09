@@ -130,7 +130,10 @@ class PFAAgent:
 
     def __init__(self):
         self.audio_dir = Path("/var/sla/audio/lyrica/pfa")
-        self.audio_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            self.audio_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {self.audio_dir}: {e}")
 
     def process(
         self,

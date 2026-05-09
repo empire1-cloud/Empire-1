@@ -23,9 +23,16 @@ router = APIRouter(prefix="/audio-fx", tags=["AudioFX"])
 import os
 VOXCPM_AUDIO_DIR = os.getenv("VOXCPM_AUDIO_DIR", "/var/sla/audio/voxcpm")
 FX_DIR = Path(VOXCPM_AUDIO_DIR, "fx")
-FX_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    FX_DIR.mkdir(parents=True, exist_ok=True)
+except OSError as e:
+    logger.warning(f"Could not create directory {FX_DIR}: {e}")
+
 UPLOAD_DIR = Path(VOXCPM_AUDIO_DIR, "fx_uploads")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+except OSError as e:
+    logger.warning(f"Could not create directory {UPLOAD_DIR}: {e}")
 
 
 class EffectSpec(BaseModel):

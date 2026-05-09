@@ -1,11 +1,13 @@
 import uuid
 import httpx
+import logging
 from pathlib import Path
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..core.config import get_settings
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
 
 
 def _azure_client():
@@ -38,7 +40,10 @@ class VisionSmithCore:
 
         # Download and persist locally
         output_dir = Path("static/images")
-        output_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            output_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {output_dir}: {e}")
         output_path = output_dir / f"{image_id}.png"
 
         async with httpx.AsyncClient() as http:
@@ -63,7 +68,10 @@ class VisionSmithCore:
         """
         upscaled_id = str(uuid.uuid4())
         output_dir = Path("static/images/upscaled")
-        output_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            output_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {output_dir}: {e}")
 
         client = _azure_client()
         response = client.images.generate(
@@ -106,8 +114,14 @@ class VisionSmith:
     def __init__(self, db: AsyncSession):
         self.db = db
         self.engine = VisionSmithCore()
-        Path("static/images").mkdir(parents=True, exist_ok=True)
-        Path("static/images/upscaled").mkdir(parents=True, exist_ok=True)
+        try:
+            Path("static/images").mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory static/images: {e}")
+        try:
+            Path("static/images/upscaled").mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory static/images/upscaled: {e}")
 
     async def generate(self, prompt: str, size: str = "1024x1024", quality: str = "hd") -> dict:
         return await self.engine.generate(prompt, size, quality)

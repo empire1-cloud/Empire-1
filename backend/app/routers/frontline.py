@@ -2,7 +2,7 @@
 FRONTLINE Module - Live Player Feed + Owner Intelligence Override
 """
 from fastapi import APIRouter, Header, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import datetime
 import random
@@ -28,6 +28,10 @@ class CinematicState(BaseModel):
     state: str
     intensity: float
     color: str
+
+class UplinkMessage(BaseModel):
+    message: str = Field(..., min_length=1, max_length=1000)
+    tenant_id: Optional[str] = None
 
 class FrontlineState:
     cinematic: CinematicState = CinematicState(state="idle", intensity=0.1, color="#333333")

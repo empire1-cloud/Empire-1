@@ -26,7 +26,10 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 AUDIO_FX_DIR = Path(settings.VOXCPM_AUDIO_DIR) / "fx"
-AUDIO_FX_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    AUDIO_FX_DIR.mkdir(parents=True, exist_ok=True)
+except OSError as e:
+    logger.warning(f"Could not create directory {AUDIO_FX_DIR}: {e}")
 
 EFFECT_PRESETS = {
     "southern_radio": {

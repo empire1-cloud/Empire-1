@@ -106,7 +106,10 @@ async def clone_voice(
     try:
         temp_id = str(uuid.uuid4())
         ref_dir = Path("/var/sla/audio/voxcpm/references")
-        ref_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            ref_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {ref_dir}: {e}")
         ref_path = ref_dir / f"{temp_id}_ref.wav"
 
         content = await reference_audio.read()

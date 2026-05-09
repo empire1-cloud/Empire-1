@@ -169,7 +169,10 @@ class PDAAgent:
 
     def __init__(self):
         self.audio_dir = Path("/var/sla/audio/lyrica/pda")
-        self.audio_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            self.audio_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {self.audio_dir}: {e}")
 
     def process(self, input_path: str, texture: str = "vocal_bus") -> dict:
         import soundfile as sf

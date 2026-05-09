@@ -52,7 +52,10 @@ VOICE_MAP = {
 
 def _ensure_dirs():
     for sub in ["", "voices", "clones", "references"]:
-        Path(VOXCPM_AUDIO_DIR, sub).mkdir(parents=True, exist_ok=True)
+        try:
+            Path(VOXCPM_AUDIO_DIR, sub).mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.warning(f"Could not create directory {Path(VOXCPM_AUDIO_DIR, sub)}: {e}")
 
 
 _ensure_dirs()
