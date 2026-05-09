@@ -2,7 +2,7 @@ const normalizeBase = (value) => (value || "").trim().replace(/\/+$/, "");
 
 const getHostRoutedApiBase = (host) => {
   if (host === "lyrica3.com" || host === "www.lyrica3.com") {
-    return "https://api.lyrica3.com";
+    return "https://api.lyrica.com";
   }
 
   if (host === "empire1.cloud" || host === "www.empire1.cloud") {
