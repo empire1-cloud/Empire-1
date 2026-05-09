@@ -16,6 +16,7 @@ load_dotenv(ROOT_DIR / '.env')
 
 # Import database connection
 from database import connect_to_database, close_database_connection, get_database
+from app.core.config import get_settings
 
 DATABASE_CONNECTED = False
 
@@ -192,7 +193,7 @@ async def root_health_check():
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=["https://www.lyrica3.com"],
     allow_methods=["*"],
     allow_headers=["*"],
 )

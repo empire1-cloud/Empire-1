@@ -32,16 +32,14 @@ from app.routers.sla113_dashboard_context import router as sla113_dashboard_cont
 from app.routers.sla113_regulatory import router as sla113_regulatory_router
 from app.routers.sla113_foundry import router as sla113_foundry_router
 from app.routers.sla113.factory import router as sla113_factory_router
-from app.routers.sla113_factory import router as sla113_factory_heartbeat_router
+from app.routers.sla113.factory import router as sla113_factory_heartbeat_router
 from app.routers.frontline import router as frontline_router
 from app.routers.billing import router as billing_router
 from app.routers.arcade import router as arcade_router
-try:
-    from app.routers.my_vertex_universe import router as my_vertex_universe_router
-except ImportError:
-    my_vertex_universe_router = None
+from app.routers.my_vertex_universe import router as my_vertex_universe_router
 from app.routers.voxcpm import router as voxcpm_router
 from app.routers.audio_fx import router as audio_fx_router
+from routers.engines.lyrica.agents import router as lyrica_router
 
 settings = get_settings()
 
