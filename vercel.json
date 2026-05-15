@@ -4,9 +4,5 @@
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "installCommand": "npm install",
-  "env": {
-    "REACT_APP_BACKEND_URL": "@empire1_backend_url",
-    "NEXT_PUBLIC_API_URL": "@empire1_backend_url"
-  }
+  "installCommand": "npm install"
 }
