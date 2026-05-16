@@ -257,7 +257,7 @@ const EmpireHome = () => {
                 icon: Cpu,
                 tag: 'U4 // EMPIRE ONE',
                 title: 'Enterprise SaaS',
-                sub: '50+ pipeline engines + operator console',
+                sub: '245+ pipeline engines + operator console',
                 body: 'Strategy, analysis, pipeline, voice, vision, pricing, persona, blueprint engines — exposed through a unified API. Multi-tenant auth, billing, real-time analytics, and the SLA113 operator console for full control.',
                 url: null,
                 cta: 'Request access',
