@@ -31,7 +31,7 @@ const EmpireHome = () => {
   }, [chatMessages, isChatOpen]);
 
   const fallbackReply = (msg: string) =>
-    `[EMPIRE ONE // OFFLINE]\nReceived: "${msg}"\n\nEmpire One powers AI music platforms, white-label game OS, and enterprise SaaS — as real products under one brand.\n\nCapabilities: 50+ pipeline engines, Lyrica 3 Pro (AI music with Soulfire engine, includes Sonance Pro studio + SL Universal radio), Southern Lifestyle (AAA game factory OS), SLA113 operator console, DNA royalty tagging, biometric vocal synthesis.\n\nTo talk to a human: reach out via the form below or email your operator for a pilot slot.\n\nFor live AI responses, set NEXT_PUBLIC_GOOGLE_API_KEY.`;
+    `[EMPIRE ONE // OFFLINE]\nReceived: "${msg}"\n\nEmpire One powers AI music platforms, white-label game OS, and enterprise SaaS — as real products under one brand.\n\nCapabilities: 245+ pipeline engines, Lyrica 3 Pro (AI music with Soulfire engine, includes Sonance Pro studio + SL Universal radio), Southern Lifestyle (AAA game factory OS), SLA113 operator console, DNA royalty tagging, biometric vocal synthesis.\n\nTo talk to a human: reach out via the form below or email your operator for a pilot slot.\n\nFor live AI responses, set NEXT_PUBLIC_GOOGLE_API_KEY.`;
 
   const sendChatMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,14 +122,14 @@ const EmpireHome = () => {
       <div className="fixed top-0 w-full bg-white/90 border-b border-slate-200 z-[100] py-1 overflow-hidden">
         <div className="inline-block animate-[scrollTicker_35s_linear_infinite] whitespace-nowrap font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">
           [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [ENGINES: 50+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [ENGINES: 245+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [CREATOR EQUITY: 70/30 SPLIT] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [ENGINES: 50+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
+          [ENGINES: 245+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
           [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
@@ -184,7 +184,7 @@ const EmpireHome = () => {
             {/* Traction signals */}
             <div className="flex flex-wrap gap-4 mb-10">
               {[
-                { value: '50+', label: 'Engines' },
+                { value: '245+', label: 'Engines' },
                 { value: '7', label: 'Universes' },
                 { value: '1', label: 'Ecosystem' },
                 { value: 'SLA-113', label: 'Federal Plane' },
@@ -306,7 +306,7 @@ const EmpireHome = () => {
         <section id="products" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
           <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Product Engine Suite</p>
           <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-4">
-            50+ pipeline engines.<br />Built for products.
+            245+ pipeline engines.<br />Built for products.
           </h2>
           <p className="font-sans text-sm text-slate-600 max-w-xl mb-14">
             Every engine is production-grade. Every output is tracked. Every dollar earned by a creator is recorded on the ledger.
@@ -556,7 +556,7 @@ const EmpireHome = () => {
                 desc: 'Multi-tenant, white-label core, full API access. The workhorse.',
                 features: [
                   'Multi-tenant / multiple domains',
-                  '50+ pipeline engines',
+                  '245+ pipeline engines',
                   'White-label routing + RBAC',
                   'Lyrica 3 + Arcade + SaaS',
                   'SLA113 operator console',
