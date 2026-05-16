@@ -31,7 +31,7 @@ const EmpireHome = () => {
   }, [chatMessages, isChatOpen]);
 
   const fallbackReply = (msg: string) =>
-    `[EMPIRE ONE // OFFLINE]\nReceived: "${msg}"\n\nEmpire One powers AI music platforms, white-label game OS, and enterprise SaaS — as real products under one brand.\n\nCapabilities: 50+ pipeline engines, Lyrica 3 Pro (music/voice), Sonance Pro studio, SL Universal radio, Southern Arcade, SLA113 operator console, DNA royalty tagging, biometric vocal synthesis.\n\nTo talk to a human: reach out via the form below or email your operator for a pilot slot.\n\nFor live AI responses, set NEXT_PUBLIC_GOOGLE_API_KEY.`;
+    `[EMPIRE ONE // OFFLINE]\nReceived: "${msg}"\n\nEmpire One powers AI music platforms, white-label game OS, and enterprise SaaS — as real products under one brand.\n\nCapabilities: 50+ pipeline engines, Lyrica 3 Pro (AI music with Soulfire engine, includes Sonance Pro studio + SL Universal radio), Southern Lifestyle (AAA game factory OS), SLA113 operator console, DNA royalty tagging, biometric vocal synthesis.\n\nTo talk to a human: reach out via the form below or email your operator for a pilot slot.\n\nFor live AI responses, set NEXT_PUBLIC_GOOGLE_API_KEY.`;
 
   const sendChatMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -235,8 +235,8 @@ const EmpireHome = () => {
                 icon: Music,
                 tag: 'U1 // LYRICA3',
                 title: 'AI Music Platform',
-                sub: 'Lyrica 3 Pro — Sonance Pro + SL Universal',
-                body: 'Creator-owned AI music production. Soulfire engine translates emotion into audio — vocal fry, late-pocket drums, bruised subtext. DNA-tagged stems. 70/30 royalty split. Every remix earns the original creator.',
+                sub: 'Lyrica 3 Pro — Creative Intelligence Universe',
+                body: 'Creator-owned AI music production. Soulfire engine translates emotion into audio — vocal fry, late-pocket drums, bruised subtext. DNA-tagged stems. 70/30 royalty split. Every remix earns the original creator. Includes Sonance Pro studio (default) and SL Universal radio modes.',
                 url: 'https://lyrica3.com',
                 cta: 'lyrica3.com',
                 color: 'from-[#00e5ff]/10',
@@ -246,8 +246,8 @@ const EmpireHome = () => {
                 icon: Gamepad2,
                 tag: 'U3 // SOUTHERN',
                 title: 'White-Label Game OS',
-                sub: 'Southern Lyfestyle Arcade',
-                body: 'Full white-label game operating system. Multi-tenant arcade frameworks, tournament logic, branded reward systems, cultural overlays. Ship a game platform under your own brand without building infrastructure.',
+                sub: 'Southern Lifestyle — AAA Game Factory',
+                body: 'Full white-label game operating system for licensing. Multi-tenant arcade frameworks, tournament logic, branded reward systems, cultural overlays. Ship a game platform under your own brand. Live reference: Southern Arcade (arcade.southernlifestyle.org) — personal sweepstakes with Firekirin-style fish shooting, Juwa-style Chicano slots, Aztec mythology.',
                 url: 'https://southernlifestyle.org',
                 cta: 'southernlifestyle.org',
                 color: 'from-[#a855f7]/10',
