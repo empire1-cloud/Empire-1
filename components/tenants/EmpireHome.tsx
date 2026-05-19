@@ -1,789 +1,566 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import {
-  Terminal, Send, X, Cpu, Music, Gamepad2, Shield, BarChart3,
-  Layers, Zap, DollarSign, Globe, Lock, ChevronRight, Radio, Mic2
-} from 'lucide-react';
+import React, { useEffect } from 'react';
 
-const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "https://empire1-backend-e2q5oemapa-uc.a.run.app";
+const LANDING_STYLES = `
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',system-ui,sans-serif;background:#050508;color:#e0e0e0;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
 
-/**
- * EMPIRE ONE // Public Landing
- * empire1.cloud — operator + creator + investor audience
- * SLA-113 hierarchy: U4 product surface, governed by U0 (SLA113 control plane)
- */
-const EmpireHome = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatInput, setChatInput] = useState('');
-  const [chatMessages, setChatMessages] = useState([
-    {
-      role: 'system',
-      text: 'EMPIRE ONE // OPERATOR UPLINK\n> What are you trying to build or launch?\n> Ask about pricing, capabilities, or getting started.',
-    },
-  ]);
-  const [isChatLoading, setIsChatLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
+:root{
+  --pink:#ff1493;
+  --pink-glow:rgba(255,20,147,.12);
+  --pink-border:rgba(255,20,147,.25);
+  --cyan:#00ffd5;
+  --cyan-glow:rgba(0,255,213,.08);
+  --gold:#ffd700;
+  --purple:#a855f7;
+  --green:#22c55e;
+  --bg:#050508;
+  --card:#0c0c10;
+  --card-hover:#111118;
+  --card-border:rgba(255,255,255,.06);
+  --text:#e0e0e0;
+  --text-dim:#777;
+  --mono:'JetBrains Mono',monospace;
+}
 
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+.section{padding:100px 0}
+.section-label{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--pink);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--pink)}
+.section-title{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.12;margin-bottom:20px;color:#fff}
+.section-desc{font-size:17px;color:var(--text-dim);max-width:600px;line-height:1.7}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0;backdrop-filter:blur(24px);background:rgba(5,5,8,.85);border-bottom:1px solid var(--card-border)}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:700;font-size:15px;color:#fff;letter-spacing:1px}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--pink)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13px;color:var(--text-dim);transition:color .2s}
+.nav-links a:hover{color:var(--pink)}
+.nav-cta{font-family:var(--mono);font-size:12px;padding:10px 24px;border:1px solid var(--pink);color:var(--pink);border-radius:6px;transition:all .2s;letter-spacing:1px}
+.nav-cta:hover{background:var(--pink);color:#000}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding-top:80px}
+.hero::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse 700px 500px at 50% 25%,rgba(255,20,147,.06),transparent 70%),
+  radial-gradient(ellipse 500px 500px at 80% 70%,rgba(0,255,213,.03),transparent 60%);pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:700px}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow .pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--green)}50%{opacity:.3}}
+.hero h1{font-size:clamp(36px,5.5vw,62px);font-weight:900;line-height:1.06;color:#fff;margin-bottom:24px;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--text-dim);line-height:1.7;margin-bottom:36px;max-width:540px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{font-family:var(--mono);font-size:13px;padding:14px 32px;background:linear-gradient(135deg,var(--pink),#d000a0);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;letter-spacing:1px;transition:all .25s;text-transform:uppercase;display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,20,147,.25)}
+.btn-secondary{font-family:var(--mono);font-size:13px;padding:14px 32px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;letter-spacing:1px;transition:all .25s;display:inline-block}
+.btn-secondary:hover{border-color:var(--pink);color:var(--pink)}
+
+/* LIVE STATS BAR */
+.stats-bar{display:flex;gap:48px;margin-top:56px;padding-top:36px;border-top:1px solid var(--card-border)}
+.stat-item .stat-num{font-family:var(--mono);font-size:32px;font-weight:700;color:#fff}
+.stat-item .stat-num span{color:var(--cyan)}
+.stat-item .stat-label{font-size:12px;color:var(--text-dim);margin-top:2px;letter-spacing:.5px}
+
+/* PROOF BAR */
+.proof-bar{padding:48px 0;border-bottom:1px solid var(--card-border)}
+.proof-bar .container{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.proof-chip{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--text-dim);white-space:nowrap}
+.proof-chip .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* FEATURE MEGA CARDS */
+.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.mega-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:40px;position:relative;overflow:hidden;transition:all .3s}
+.mega-card:hover{border-color:var(--pink-border);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.mega-card.full{grid-column:span 2}
+.mega-card .card-badge{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;display:inline-block;margin-bottom:20px}
+.badge-live{color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)}
+.badge-core{color:var(--cyan);background:var(--cyan-glow);border:1px solid rgba(0,255,213,.2)}
+.badge-revenue{color:var(--gold);background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2)}
+.badge-api{color:var(--purple);background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2)}
+.mega-card h3{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px}
+.mega-card p{font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:20px}
+.mega-card ul{list-style:none}
+.mega-card ul li{font-size:13px;color:var(--text-dim);padding:5px 0;display:flex;align-items:flex-start;gap:8px}
+.mega-card ul li::before{content:'→';color:var(--pink);font-family:var(--mono);flex-shrink:0}
+.card-visual{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.engine-tag{font-family:var(--mono);font-size:11px;padding:6px 14px;background:rgba(255,255,255,.04);border:1px solid var(--card-border);border-radius:6px;color:var(--text-dim);transition:all .2s}
+.engine-tag:hover{border-color:var(--pink-border);color:var(--pink)}
+
+/* CODE BLOCK */
+.code-block{background:#0a0a0e;border:1px solid var(--card-border);border-radius:10px;padding:20px 24px;margin-top:20px;font-family:var(--mono);font-size:12px;line-height:1.8;overflow-x:auto;color:var(--text-dim)}
+.code-block .comment{color:#555}
+.code-block .key{color:var(--cyan)}
+.code-block .str{color:var(--pink)}
+.code-block .method{color:var(--gold)}
+
+/* UNIVERSE MAP */
+.universe-row{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:48px;border-radius:14px;overflow:hidden}
+.u-cell{background:var(--card);padding:28px 16px;text-align:center;transition:all .3s;position:relative}
+.u-cell:hover{background:var(--card-hover);transform:scale(1.03);z-index:2}
+.u-cell .u-id{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px}
+.u-cell .u-name{font-weight:700;font-size:14px;color:#fff;margin-bottom:4px}
+.u-cell .u-role{font-size:11px;color:var(--text-dim)}
+.u-cell .u-bar{width:32px;height:3px;border-radius:2px;margin:10px auto 0}
+
+/* REVENUE PREVIEW */
+.revenue-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.rev-card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:24px;text-align:center}
+.rev-card .rev-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px}
+.rev-card .rev-num{font-family:var(--mono);font-size:28px;font-weight:700;color:#fff}
+.rev-card .rev-sub{font-size:12px;color:var(--green);margin-top:4px}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:48px;counter-reset:step}
+.step{position:relative}
+.step::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:var(--mono);font-size:44px;font-weight:700;color:rgba(255,20,147,.12);line-height:1;margin-bottom:14px;display:block}
+.step h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.step p{font-size:13px;color:var(--text-dim);line-height:1.7}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.price-card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:32px;transition:all .3s;position:relative}
+.price-card.pop{border-color:var(--pink-border);box-shadow:0 0 50px rgba(255,20,147,.06)}
+.price-card.pop::before{content:'MOST POPULAR';position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:2px;padding:4px 14px;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border-radius:4px;font-weight:700}
+.price-card .tier-name{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
+.price-card .price{font-size:40px;font-weight:900;color:#fff;line-height:1}
+.price-card .price small{font-size:14px;font-weight:400;color:var(--text-dim)}
+.price-card .price-desc{font-size:13px;color:var(--text-dim);margin:14px 0 20px;line-height:1.5}
+.price-card ul{list-style:none;margin-bottom:24px}
+.price-card ul li{font-size:12px;padding:5px 0;color:var(--text-dim);display:flex;align-items:center;gap:6px}
+.price-card ul li::before{content:'✓';color:var(--cyan);font-size:11px;font-weight:700}
+.price-card .btn-primary{width:100%;text-align:center;font-size:12px;padding:12px}
+
+/* ENGINE WALL */
+.engine-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-top:48px}
+.engine-pill{font-family:var(--mono);font-size:10px;padding:10px 14px;background:var(--card);border:1px solid var(--card-border);border-radius:6px;color:var(--text-dim);transition:all .2s;display:flex;align-items:center;gap:7px}
+.engine-pill:hover{border-color:var(--pink-border);color:var(--pink)}
+.engine-pill .ed{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+
+/* CTA */
+.final-cta{text-align:center;padding:120px 0}
+.final-cta h2{font-size:clamp(32px,5vw,52px);font-weight:900;color:#fff;margin-bottom:20px;line-height:1.1}
+.final-cta p{font-size:17px;color:var(--text-dim);margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto}
+.final-cta .hero-ctas{justify-content:center}
+
+/* FOOTER */
+footer{padding:36px 0;border-top:1px solid var(--card-border);text-align:center}
+footer p{font-family:var(--mono);font-size:11px;color:#444;letter-spacing:1px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .mega-grid{grid-template-columns:1fr}
+  .mega-card.full{grid-column:span 1}
+  .pricing-grid{grid-template-columns:1fr 1fr}
+  .revenue-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .universe-row{grid-template-columns:1fr 1fr}
+  .universe-row .u-cell:last-child{grid-column:span 2}
+}
+@media(max-width:600px){
+  .stats-bar{flex-direction:column;gap:16px}
+  .nav-links{display:none}
+  .pricing-grid{grid-template-columns:1fr}
+  .revenue-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  .section{padding:60px 0}
+}
+`;
+
+const LANDING_HTML = `
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="nav-brand"><span class="nav-dot"></span>EMPIRE-1</div>
+    <div class="nav-links">
+      <a href="#platform">Platform</a>
+      <a href="#universes">Universes</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#engines">Engines</a>
+      <a href="https://empire1.cloud" class="nav-cta">OPEN CONSOLE →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="pulse"></span> ALL SYSTEMS HEALTHY · 19 ENGINES ONLINE</div>
+      <h1>Build, chain, and monetize <em>AI engines</em></h1>
+      <p class="hero-sub">Empire-1 is an AI engine-as-a-service platform. 19 production engines, 3 LLMs, a pipeline composer, and a revenue dashboard — all accessible through API keys you generate in 30 seconds.</p>
+      <div class="hero-ctas">
+        <a href="https://empire1.cloud" class="btn-primary">Create API Key →</a>
+        <a href="#platform" class="btn-secondary">See what's inside</a>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-item"><div class="stat-num">19</div><div class="stat-label">Active engines</div></div>
+        <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">LLM models</div></div>
+        <div class="stat-item"><div class="stat-num"><span>$78K</span></div><div class="stat-label">Operator MRR</div></div>
+        <div class="stat-item"><div class="stat-num">69</div><div class="stat-label">Active operators</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF BAR -->
+<div class="proof-bar">
+  <div class="container">
+    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>GPT-5.2</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Claude Sonnet 4.5</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Gemini 3 Flash</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>245+ total engines</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>8 live domains</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>100% creator equity</div>
+  </div>
+</div>
+
+<!-- REVENUE COMMAND PREVIEW -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Revenue Command</div>
+    <h2 class="section-title">Real revenue. Real operators. Real-time.</h2>
+    <p class="section-desc">Empire-1's Revenue Command tracks MRR across every universe. Every operator, every pipeline, every dollar — visible at a glance.</p>
+    <div class="revenue-grid">
+      <div class="rev-card"><div class="rev-label">Total MRR</div><div class="rev-num" style="color:var(--cyan)">$78K</div><div class="rev-sub">+10% MoM</div></div>
+      <div class="rev-card"><div class="rev-label">Operators</div><div class="rev-num">69</div><div class="rev-sub">Active this month</div></div>
+      <div class="rev-card"><div class="rev-label">ARR Run Rate</div><div class="rev-num">$936K</div><div class="rev-sub">Annualized MRR</div></div>
+      <div class="rev-card"><div class="rev-label">Avg Rev / Op</div><div class="rev-num">$1.1K</div><div class="rev-sub">Per operator MRR</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM FEATURES -->
+<section class="section" id="platform" style="padding-top:40px">
+  <div class="container">
+    <div class="section-label">The Platform</div>
+    <h2 class="section-title">Everything a sovereign AI business needs</h2>
+    <p class="section-desc">Not another wrapper. Not another API proxy. A full operating system for AI-native businesses with engines, pipelines, billing, analytics, and cultural intelligence built in.</p>
+
+    <div class="mega-grid">
+      <!-- ENGINE DASHBOARD -->
+      <div class="mega-card">
+        <span class="card-badge badge-core">19 Engines Live</span>
+        <h3>Engine Dashboard</h3>
+        <p>Browse, test, and deploy 19 production AI engines. Each one has its own API endpoint, test interface, and execution tracking.</p>
+        <ul>
+          <li>Strategy, Analysis, Plan Builder engines</li>
+          <li>Persona, Anime Character/Lore/Story engines</li>
+          <li>Art Direction, Money Pipeline, Pricing engines</li>
+          <li>One-click test interface with JSON payloads</li>
+        </ul>
+        <div class="card-visual">
+          <span class="engine-tag">POST /strategy</span>
+          <span class="engine-tag">POST /analyze</span>
+          <span class="engine-tag">POST /persona</span>
+          <span class="engine-tag">POST /pricing</span>
+          <span class="engine-tag">POST /blueprint</span>
+        </div>
+      </div>
+
+      <!-- PIPELINE COMPOSER -->
+      <div class="mega-card">
+        <span class="card-badge badge-live">Pipeline Composer</span>
+        <h3>Chain engines into workflows</h3>
+        <p>Drag-and-drop engine chaining. Build complex multi-step AI workflows by composing engines together. Save presets for repeat use.</p>
+        <ul>
+          <li>Visual pipeline builder — click to add engines</li>
+          <li>Initial input → engine chain → composed output</li>
+          <li>Save & load pipeline presets</li>
+          <li>POST /pipeline/compose for programmatic access</li>
+        </ul>
+        <div class="card-visual">
+          <span class="engine-tag">Strategy → Plan Builder → Blueprint</span>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div class="mega-card">
+        <span class="card-badge badge-revenue">Monitoring & Analytics</span>
+        <h3>Real-time performance intelligence</h3>
+        <p>Live-polling analytics dashboard with execution tracking, latency monitoring per engine, AI quality & drift detection, and error rates.</p>
+        <ul>
+          <li>Requests per engine — live bar charts</li>
+          <li>Average response time (ms) per engine</li>
+          <li>Error rates with severity classification</li>
+          <li>AI Quality & Drift monitoring tab</li>
+          <li>System Health with real-time WebSocket polling</li>
+        </ul>
+      </div>
+
+      <!-- API ACCESS -->
+      <div class="mega-card">
+        <span class="card-badge badge-api">Developer API</span>
+        <h3>API keys in 30 seconds</h3>
+        <p>Generate API keys with full access to all engines. Standard REST endpoints. Bearer token auth. Build anything on top of Empire-1.</p>
+        <div class="code-block">
+          <span class="comment"># Create your pipeline</span><br>
+          curl -X POST https://api.empire1.cloud/pipeline/compose \\<br>
+          &nbsp;&nbsp;-H "<span class="key">Authorization</span>: Bearer <span class="str">hic_your_api_key</span>" \\<br>
+          &nbsp;&nbsp;-d '{<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;"<span class="key">engines</span>": ["<span class="str">strategy</span>", "<span class="str">plan</span>", "<span class="str">blueprint</span>"],<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;"<span class="key">input</span>": "<span class="str">Build an AI music studio</span>"<br>
+          &nbsp;&nbsp;}'
+        </div>
+      </div>
+
+      <!-- REVENUE COMMAND - FULL WIDTH -->
+      <div class="mega-card full">
+        <span class="card-badge badge-revenue">Revenue Command</span>
+        <h3>Track revenue across every universe</h3>
+        <p>MRR by universe, operator growth trends, 6-month revenue charts, and per-operator analytics. See exactly how your multi-product AI business is performing.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px">
+          <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px">FEDERAL CONTROL PLANE</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--cyan)">$24.8K</div>
+            <div style="font-size:11px;color:var(--text-dim)">13 operators · 32%</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px">LYRICA 3 PRO</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--pink)">$17.4K</div>
+            <div style="font-size:11px;color:var(--text-dim)">21 operators · 22%</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px">FINANCIAL LAYER</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--gold)">$11.6K</div>
+            <div style="font-size:11px;color:var(--text-dim)">6 operators · 15%</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px">CULTURAL SAFETY</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#ff6b35">$9K</div>
+            <div style="font-size:11px;color:var(--text-dim)">10 operators · 12%</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px">SOUTHERN ARCADE</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--green)">$7K</div>
+            <div style="font-size:11px;color:var(--text-dim)">7 operators · 9%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNIVERSE MAP -->
+<section class="section" id="universes" style="padding-top:0">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">Five universes. One sovereign control plane.</h2>
+    <p class="section-desc">Every universe generates its own revenue. SLA-113 routes between them. Empire-1 federates them into one platform.</p>
+    <div class="universe-row">
+      <div class="u-cell">
+        <div class="u-id">U0</div>
+        <div class="u-name">SLA-113</div>
+        <div class="u-role">Control Plane</div>
+        <div class="u-bar" style="background:var(--purple)"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U1</div>
+        <div class="u-name">Lyrica 3</div>
+        <div class="u-role">AI Music Studio</div>
+        <div class="u-bar" style="background:var(--pink)"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U2</div>
+        <div class="u-name">Cultura Vibe</div>
+        <div class="u-role">Cultural OS</div>
+        <div class="u-bar" style="background:#ff6b35"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U3</div>
+        <div class="u-name">Southern</div>
+        <div class="u-role">World Engine</div>
+        <div class="u-bar" style="background:var(--gold)"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U4</div>
+        <div class="u-name">Empire-1</div>
+        <div class="u-role">Federal SaaS</div>
+        <div class="u-bar" style="background:var(--cyan)"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Get started</div>
+    <h2 class="section-title">From zero to sovereign in four steps</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Create your API key</h3>
+        <p>Sign up, generate a Bearer token, and authenticate against any engine in seconds.</p>
+      </div>
+      <div class="step">
+        <h3>Pick your engines</h3>
+        <p>Choose from 19 production engines — strategy, analysis, persona, art direction, money pipeline, and more.</p>
+      </div>
+      <div class="step">
+        <h3>Compose pipelines</h3>
+        <p>Chain engines together into workflows. Strategy → Plan → Blueprint. Save presets for repeat use.</p>
+      </div>
+      <div class="step">
+        <h3>Monitor & monetize</h3>
+        <p>Track every execution, monitor latency and drift, and watch your MRR grow in Revenue Command.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Pick your node. Build sovereign.</h2>
+    <p class="section-desc">Every tier includes full engine access, API keys, and analytics. Scale from solo builder to enterprise.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="tier-name">Developer</div>
+        <div class="price">$99<small>/mo</small></div>
+        <div class="price-desc">Solo builders and indie devs exploring the stack</div>
+        <ul>
+          <li>3 engine access</li>
+          <li>API key generation</li>
+          <li>1,000 API calls/mo</li>
+          <li>Basic analytics</li>
+          <li>Community support</li>
+        </ul>
+        <a href="https://empire1.cloud" class="btn-primary">Start Building</a>
+      </div>
+      <div class="price-card">
+        <div class="tier-name">Node Alpha</div>
+        <div class="price">$499<small>/mo</small></div>
+        <div class="price-desc">Studios and labels running a single product line</div>
+        <ul>
+          <li>All 19 engines</li>
+          <li>Pipeline Composer</li>
+          <li>10,000 API calls/mo</li>
+          <li>Revenue Command</li>
+          <li>Multi-tenant (50 users)</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="https://empire1.cloud" class="btn-primary">Launch Alpha</a>
+      </div>
+      <div class="price-card pop">
+        <div class="tier-name">Node Omega</div>
+        <div class="price">$1,499<small>/mo</small></div>
+        <div class="price-desc">Platforms running multiple products and universes</div>
+        <ul>
+          <li>All engines + Game OS</li>
+          <li>Unlimited pipelines</li>
+          <li>100,000 API calls/mo</li>
+          <li>Full analytics + drift</li>
+          <li>Multi-tenant (500 users)</li>
+          <li>Dedicated support</li>
+          <li>Micro-royalty distribution</li>
+        </ul>
+        <a href="https://empire1.cloud" class="btn-primary">Launch Omega</a>
+      </div>
+      <div class="price-card">
+        <div class="tier-name">Node Sovereign</div>
+        <div class="price">$4,999<small>/mo</small></div>
+        <div class="price-desc">Full multi-universe stack. White-label. Unlimited.</div>
+        <ul>
+          <li>All universes unlocked</li>
+          <li>White-label everything</li>
+          <li>Unlimited API calls</li>
+          <li>SLA-113 control plane</li>
+          <li>Custom engine development</li>
+          <li>Revenue share model</li>
+          <li>Direct engineering line</li>
+        </ul>
+        <a href="https://empire1.cloud" class="btn-primary">Go Sovereign</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINE WALL -->
+<section class="section" id="engines">
+  <div class="container">
+    <div class="section-label">Engine Registry</div>
+    <h2 class="section-title">19 production engines. 245+ in the vault.</h2>
+    <p class="section-desc">Every engine has its own API endpoint, test interface, and execution tracking. Browse the live registry.</p>
+    <div class="engine-wall">
+      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Hybrid Intelligence Core</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Routing Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Strategy Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Plan Builder</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Analysis Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Opportunity Mapper</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Evaluator Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Pricing Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--purple)"></span>Blueprint Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--purple)"></span>Persona Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:#ff6b35"></span>Anime Character</div>
+      <div class="engine-pill"><span class="ed" style="background:#ff6b35"></span>Anime Lore</div>
+      <div class="engine-pill"><span class="ed" style="background:#ff6b35"></span>Anime Story</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Art Direction</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--green)"></span>Money Pipeline</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--green)"></span>Pipeline Composer</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--text-dim)"></span>Canon Enforcer</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Drift Monitor</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--text-dim)"></span>Error Handler</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Soulfire Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Empire Lyric Master</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Acid Vocal Chain</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Omni Agent Runtime</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Identity Firewall</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Arcade Controller</div>
+      <div class="engine-pill"><span class="ed" style="background:#ff6b35"></span>Cultura Forge</div>
+      <div class="engine-pill"><span class="ed" style="background:#ff6b35"></span>Heritage Logic</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--purple)"></span>Black Box Vault</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Sovereignty<br>begins <span style="color:var(--pink)">here</span></h2>
+    <p>Stop renting someone else's platform. Build on infrastructure that respects creator equity by design.</p>
+    <div class="hero-ctas" style="justify-content:center">
+      <a href="https://empire1.cloud" class="btn-primary">Create Your API Key →</a>
+      <a href="mailto:manda@empire1.cloud" class="btn-secondary">Talk to the founder</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>EMPIRE-1 · SLA-113 MULTIVERSE · 5 UNIVERSES · 8 DOMAINS · 245+ ENGINES</p>
+    <p style="margin-top:6px;color:#333">Built in El Monte, CA · SGV since day one</p>
+  </div>
+</footer>
+
+`;
+
+export default function EmpireHome() {
   useEffect(() => {
-    if (chatEndRef.current) chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages, isChatOpen]);
-
-  const fallbackReply = (msg: string) =>
-    `[EMPIRE ONE // OFFLINE]\nReceived: "${msg}"\n\nEmpire One powers AI music platforms, white-label game OS, and enterprise SaaS — as real products under one brand.\n\nCapabilities: 245+ pipeline engines, Lyrica 3 Pro (AI music with Soulfire engine, includes Sonance Pro studio + SL Universal radio), Southern Lifestyle (AAA game factory OS), SLA113 operator console, DNA royalty tagging, biometric vocal synthesis.\n\nTo talk to a human: reach out via the form below or email your operator for a pilot slot.\n\nFor live AI responses, set NEXT_PUBLIC_GOOGLE_API_KEY.`;
-
-  const sendChatMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!chatInput.trim() || isChatLoading) return;
-    const userMsg = chatInput.trim();
-    setChatInput('');
-    setChatMessages((prev) => [...prev, { role: 'user', text: userMsg }]);
-    setIsChatLoading(true);
-
-    try {
-      const res = await fetch(`${API_BASE}/api/core/execute`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: `Empire One visitor question: ${userMsg}`,
-          task_type: 'general',
-          context: 'Public website operator uplink',
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      const text = data?.data?.summary || data?.message || data?.error?.message;
-      setChatMessages((prev) => [...prev, { role: 'system', text: text || fallbackReply(userMsg) }]);
-    } catch {
-      setChatMessages((prev) => [...prev, { role: 'system', text: fallbackReply(userMsg) }]);
-    } finally {
-      setIsChatLoading(false);
-    }
-  };
-
-  // Particle canvas
-  useEffect(() => {
-    const canvas = document.getElementById('empire-canvas') as HTMLCanvasElement;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    let width: number, height: number;
-    const resize = () => {
-      width = canvas.width = canvas.parentElement?.clientWidth || 800;
-      height = canvas.height = canvas.parentElement?.clientHeight || 500;
+    // Inject Google Fonts
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Alex+Brush&display=swap';
+    document.head.appendChild(link);
+    
+    return () => {
+      document.head.removeChild(link);
     };
-    window.addEventListener('resize', resize);
-    resize();
-    class P {
-      x = Math.random() * width; y = Math.random() * height;
-      vx = (Math.random() - 0.5) * 1.2; vy = (Math.random() - 0.5) * 1.2;
-      update() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
-      draw() {
-        if (!ctx) return;
-        ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0,229,255,0.7)'; ctx.fill();
-      }
-    }
-    const pts = Array.from({ length: 35 }, () => new P());
-    let raf: number;
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'rgba(0,229,255,0.04)'; ctx.lineWidth = 1;
-      for (let x = 0; x < width; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke(); }
-      for (let y = 0; y < height; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke(); }
-      pts.forEach((p, i) => {
-        p.update(); p.draw();
-        pts.slice(i + 1).forEach((q) => {
-          const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < 110) {
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(0,229,255,${0.15 - d / 800})`; ctx.stroke();
-          }
-        });
-      });
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb] text-[#0f172a] font-sans overflow-x-hidden selection:bg-[#bae6fd] selection:text-[#0f172a]">
-
-      {/* Film grain overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.018] z-[9999]"
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
-
-      {/* Top telemetry strip */}
-      <div className="fixed top-0 w-full bg-white/90 border-b border-slate-200 z-[100] py-1 overflow-hidden">
-        <div className="inline-block animate-[scrollTicker_35s_linear_infinite] whitespace-nowrap font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">
-          [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [ENGINES: 245+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [CREATOR EQUITY: 70/30 SPLIT] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [SYS: EMPIRE ONE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [ENGINES: 245+ LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [LYRICA 3 PRO // SOULFIRE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [DNA ROYALTY TAGGING: LIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [SOUTHERN ARCADE: ONLINE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [SLA113 CONTROL PLANE: ACTIVE] <span className="mx-5 text-[#0f172a]/20">|</span>
-          [CREATOR EQUITY: 70/30 SPLIT]
-        </div>
-      </div>
-
-      <div className="pt-10">
-
-        {/* ── NAV ── */}
-        <nav className="flex items-center justify-between px-6 md:px-12 py-4 border-b border-slate-200/80">
-          <div>
-            <span className="font-sans text-[10px] text-[#0ea5e9] tracking-widest">EMPIRE ONE</span>
-            <p className="font-sans text-[8px] text-slate-500 tracking-widest">GOVERNED BY SLA-113</p>
-          </div>
-          <div className="hidden md:flex items-center gap-6 font-sans text-[10px] text-slate-600 uppercase tracking-widest">
-            <a href="#what-we-build" className="hover:text-[#0ea5e9] transition-colors">What We Build</a>
-            <a href="#products" className="hover:text-[#0ea5e9] transition-colors">Products</a>
-            <a href="#how-it-works" className="hover:text-[#0ea5e9] transition-colors">How It Works</a>
-            <a href="#plans" className="hover:text-[#0ea5e9] transition-colors">Plans</a>
-          </div>
-          <Link
-            href="/admin/login"
-            className="border border-sky-300 px-4 py-2 font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest hover:bg-[#00e5ff]/10 transition-colors"
-          >
-            Operator Login →
-          </Link>
-        </nav>
-
-        {/* ── HERO ── */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[85vh] border-b border-slate-200/80">
-
-          {/* Left — copy */}
-          <div className="flex flex-col justify-center px-6 md:px-12 py-16 border-r border-slate-200/80">
-            <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-6">
-              Empire One // U4 — Enterprise SaaS
-            </p>
-            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#0f172a] leading-[0.92] mb-8">
-              SOVEREIGNTY<br />
-              BEGINS<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-[#ffffff80]">
-                HERE.
-              </span>
-            </h1>
-            <p className="font-sans text-sm text-slate-600 leading-relaxed max-w-xl border-l-2 border-sky-300 pl-5 mb-10">
-              Build the world you were never handed - where creators, families, and communities don't have to fight the system to be seen, heard, or paid.
-              A sovereign creative ecosystem where music, culture, games, automation, and identity all connect.
-              One architecture. Every tool you need to own your platform, your IP, and your future.
-            </p>
-
-            {/* Traction signals */}
-            <div className="flex flex-wrap gap-4 mb-10">
-              {[
-                { value: '245+', label: 'Engines' },
-                { value: '7', label: 'Universes' },
-                { value: '1', label: 'Ecosystem' },
-                { value: 'SLA-113', label: 'Federal Plane' },
-              ].map((s) => (
-                <div key={s.label} className="border border-slate-200 px-4 py-3 bg-white">
-                  <p className="font-sans text-lg font-black text-[#0ea5e9]">{s.value}</p>
-                  <p className="font-sans text-[9px] text-[#0f172a]/40 uppercase tracking-widest">{s.label}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => setIsChatOpen(true)}
-                className="flex-1 bg-[#00e5ff] text-[#0f172a] font-sans font-black text-[11px] uppercase tracking-[3px] py-4 hover:bg-white transition-colors"
-              >
-                Talk to Us →
-              </button>
-              <a
-                href="#what-we-build"
-                className="flex-1 border border-sky-200 text-[#0ea5e9] font-sans text-[11px] uppercase tracking-[3px] py-4 text-center hover:bg-[#00e5ff]/10 transition-colors"
-              >
-                See What We Build
-              </a>
-            </div>
-          </div>
-
-          {/* Right — canvas */}
-          <div className="relative bg-white min-h-[40vh] lg:min-h-0">
-            <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-[#00e5ff] animate-pulse rounded-full" />
-              <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Live Network</span>
-            </div>
-            <canvas id="empire-canvas" className="w-full h-full" />
-          </div>
-        </section>
-
-        {/* ── WHAT WE BUILD ── */}
-        <section id="what-we-build" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
-          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">What We Build</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-14">
-            Three product lines.<br />One revenue engine.
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white">
-            {[
-              {
-                icon: Music,
-                tag: 'U1 // LYRICA3',
-                title: 'AI Music Platform',
-                sub: 'Lyrica 3 Pro — Creative Intelligence Universe',
-                body: 'Creator-owned AI music production. Soulfire engine translates emotion into audio — vocal fry, late-pocket drums, bruised subtext. DNA-tagged stems. 70/30 royalty split. Every remix earns the original creator. Includes Sonance Pro studio (default) and SL Universal radio modes.',
-                url: 'https://lyrica3.com',
-                cta: 'lyrica3.com',
-                color: 'from-[#00e5ff]/10',
-                art: '/brand/southern-logo.png',
-              },
-              {
-                icon: Gamepad2,
-                tag: 'U3 // SOUTHERN',
-                title: 'White-Label Game OS',
-                sub: 'Southern Lifestyle — AAA Game Factory',
-                body: 'Full white-label game operating system for licensing. Multi-tenant arcade frameworks, tournament logic, branded reward systems, cultural overlays. Ship a game platform under your own brand. Live reference: Southern Arcade (arcade.southernlifestyle.org) — personal sweepstakes with Firekirin-style fish shooting, Juwa-style Chicano slots, Aztec mythology.',
-                url: 'https://southernlifestyle.org',
-                cta: 'southernlifestyle.org',
-                color: 'from-[#a855f7]/10',
-                art: '/brand/southern-logo.png',
-              },
-              {
-                icon: Cpu,
-                tag: 'U4 // EMPIRE ONE',
-                title: 'Enterprise SaaS',
-                sub: '245+ pipeline engines + operator console',
-                body: 'Strategy, analysis, pipeline, voice, vision, pricing, persona, blueprint engines — exposed through a unified API. Multi-tenant auth, billing, real-time analytics, and the SLA113 operator console for full control.',
-                url: null,
-                cta: 'Request access',
-                color: 'from-[#f59e0b]/10',
-                art: '/brand/southern-logo.png',
-              },
-            ].map((card) => {
-              const Icon = card.icon;
-              return (
-                <div key={card.tag} className={`bg-white p-8 md:p-10 flex flex-col gap-6 hover:bg-slate-50 transition-colors`}>
-                  <div className="flex items-start justify-between">
-                    <Icon size={20} className="text-[#0ea5e9]" />
-                    <span className="font-sans text-[8px] text-slate-500 uppercase tracking-widest">{card.tag}</span>
-                  </div>
-                  <div className="rounded-lg overflow-hidden border border-slate-200 bg-slate-50 mb-1">
-                    <img
-                      src={card.art}
-                      alt={`${card.title} universe art`}
-                      className="w-full h-24 object-contain bg-gradient-to-br from-slate-50 to-sky-50"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-black uppercase text-[#0f172a] tracking-tight mb-1">{card.title}</h3>
-                    <p className="font-sans text-[10px] text-[#0ea5e9]/70">{card.sub}</p>
-                  </div>
-                  <p className="font-sans text-[11px] text-[#0f172a]/55 leading-relaxed flex-grow">{card.body}</p>
-                  {card.url ? (
-                    <a href={card.url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] hover:text-[#0f172a] transition-colors">
-                      {card.cta} <ChevronRight size={12} />
-                    </a>
-                  ) : (
-                    <button onClick={() => setIsChatOpen(true)}
-                      className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] hover:text-[#0f172a] transition-colors text-left">
-                      {card.cta} <ChevronRight size={12} />
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ── ENGINE GRID ── */}
-        <section id="products" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
-          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Product Engine Suite</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-4">
-            245+ pipeline engines.<br />Built for products.
-          </h2>
-          <p className="font-sans text-sm text-slate-600 max-w-xl mb-14">
-            Every engine is production-grade. Every output is tracked. Every dollar earned by a creator is recorded on the ledger.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-px bg-white">
-            {[
-              {
-                icon: Cpu,
-                label: 'Intelligence',
-                engines: ['Strategy Engine', 'Blueprint Engine', 'Analysis Engine', 'Evaluator Engine', 'Routing Engine'],
-              },
-              {
-                icon: Music,
-                label: 'Music & Voice',
-                engines: ['Soulfire Engine', 'PFA (Vocal Biometrics)', 'MMA (Late-Pocket)', 'S2 Disruption', 'Ghostwriter Engine'],
-              },
-              {
-                icon: DollarSign,
-                label: 'Revenue',
-                engines: ['Money Pipeline Engine', 'Pricing Engine', 'Plan Builder', 'Micro-Royalty Ledger', 'DNA Tagger'],
-              },
-              {
-                icon: Layers,
-                label: 'Platform',
-                engines: ['Persona Engine', 'Art Direction Engine', 'Canon Enforcer', 'Drift Monitor', 'Omni Agent (Pipeline #20)'],
-              },
-            ].map((group) => {
-              const Icon = group.icon;
-              return (
-                <div key={group.label} className="bg-white p-8 hover:bg-slate-50 transition-colors">
-                  <div className="flex items-center gap-3 mb-6">
-                    <Icon size={16} className="text-[#0ea5e9]" />
-                    <span className="font-sans text-[10px] text-[#0f172a] uppercase tracking-widest">{group.label}</span>
-                  </div>
-                  <ul className="space-y-3">
-                    {group.engines.map((e) => (
-                      <li key={e} className="flex items-center gap-2 font-sans text-[11px] text-slate-600">
-                        <span className="text-[#0ea5e9] text-xs">›</span> {e}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ── CREATOR EQUITY ── */}
-        <section className="px-6 md:px-12 py-20 border-b border-slate-200/80 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Creator Equity</p>
-            <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-6">
-              Creators keep<br />
-              <span className="text-[#0ea5e9]">what they build.</span>
-            </h2>
-            <p className="font-sans text-sm text-[#0f172a]/55 leading-relaxed max-w-md">
-              100% IP ownership. 70/30 revenue split — creator keeps 70. Every stem, every remix, every derivative tracked by DNA tagging. Micro-royalties distributed automatically. No label. No middleman.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-px bg-white">
-            {[
-              { icon: Lock, label: '100% IP Ownership', desc: 'Blockchain-verified DNA tag on every file' },
-              { icon: DollarSign, label: '70/30 Split', desc: 'Creator keeps 70% of all revenue' },
-              { icon: Radio, label: 'Flip It', desc: 'Every fan remix earns the original producer' },
-              { icon: Zap, label: 'Instant Distribution', desc: 'Micro-royalties auto-distributed on stream' },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.label} className="bg-white p-6 hover:bg-slate-50 transition-colors">
-                  <Icon size={16} className="text-[#0ea5e9] mb-4" />
-                  <p className="font-sans text-[11px] text-[#0f172a] font-bold mb-1">{item.label}</p>
-                  <p className="font-sans text-[10px] text-[#0f172a]/40 leading-relaxed">{item.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-
-        {/* ── CULTURA VIBE // LIVE ON THE STACK ── */}
-        <section className="px-6 md:px-12 py-20 border-b border-slate-200/80">
-          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Live Product Showcase</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-4">
-            Product in<br />
-            <span className="text-[#0ea5e9]">production.</span>
-          </h2>
-          <p className="font-sans text-sm text-slate-600 max-w-xl mb-14">
-            Cultura Vibe is built on Empire One — a real product, live users, real Stripe billing. This is what Empire One ships to market.
-          </p>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white">
-            {/* Left — product info */}
-            <div className="bg-white p-8 md:p-10 flex flex-col gap-6">
-              <div className="flex items-center justify-between">
-                <span className="font-sans text-[9px] text-slate-500 uppercase tracking-widest">U2 // CULTURA VIBE</span>
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse" />
-                  <span className="font-sans text-[8px] text-[#0ea5e9] uppercase tracking-widest">Live</span>
-                </span>
-              </div>
-              <div>
-                <h3 className="text-2xl font-black uppercase text-[#0f172a] tracking-tight mb-1">Cultura Vibe</h3>
-                <p className="font-sans text-[10px] text-[#0ea5e9]/70">Cyber-Chicano · AI Vibe-Code Forge</p>
-              </div>
-              <p className="font-sans text-[11px] text-[#0f172a]/55 leading-relaxed">
-                Type your vision. Pick a category. Hit <span className="text-[#0f172a] font-bold">Forge Con Ganas</span>. The Cultural Engine injects Soulfire Guardrails — 48kHz audio, Emotional Math, Creator Equity DNA — before shipping production-ready boilerplate. Built and shipped by Empire One for real-world users.
-              </p>
-
-              {/* Stripe billing proof */}
-              <div className="border border-slate-200 p-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <DollarSign size={12} className="text-[#0ea5e9]" />
-                  <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Stripe Billing // 3 Tiers // Live</span>
-                </div>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { name: 'Aprendiz', price: 'Free', sub: '5 forges/hr · 20/day', locked: false },
-                    { name: 'Maestro Elite', price: '$40/mo', sub: '10 forges + $10 overage', locked: true },
-                    { name: 'Maestro Master', price: '$149/mo', sub: '50 forges + $7 overage', locked: true },
-                  ].map((tier) => (
-                    <div
-                      key={tier.name}
-                      className={`p-3 border ${tier.locked ? 'border-sky-200 bg-[#00e5ff]/[0.03]' : 'border-slate-200'}`}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-sans text-[8px] text-[#0f172a]/40 uppercase tracking-widest">{tier.name}</span>
-                        {tier.locked && <Lock size={8} className="text-[#0ea5e9]/60" />}
-                      </div>
-                      <p className="font-sans text-sm font-black text-[#0ea5e9]">{tier.price}</p>
-                      <p className="font-sans text-[8px] text-slate-500 mt-1 leading-relaxed">{tier.sub}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <a
-                href="https://aicatalyst.empire1.cloud"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-sans text-[10px] text-[#0ea5e9] border border-sky-200 px-5 py-3 hover:bg-[#00e5ff]/10 transition-colors w-fit"
-              >
-                aicatalyst.empire1.cloud <ChevronRight size={12} />
-              </a>
-            </div>
-
-            {/* Right — product activity feed */}
-            <div className="bg-slate-50 p-8 md:p-10 flex flex-col justify-center">
-              <div className="relative bg-white border border-slate-200 rounded-sm p-6 font-sans text-[11px] shadow-2xl">
-                <div className="flex items-center gap-1.5 mb-5">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#c8102e]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-slate-50" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-slate-50" />
-                  <span className="ml-3 text-[9px] uppercase tracking-[0.3em] text-slate-500">cultura activity // live</span>
-                </div>
-                <div className="space-y-2 text-slate-600">
-                  <div className="text-slate-700">New creator session started</div>
-                  <div>[planning] <span className="text-slate-600">Setting the foundation...</span></div>
-                  <div>[cultural-ai] <span className="text-[#c8102e]">Injecting Soulfire Guardrails</span></div>
-                  <div>[experience] <span className="text-slate-600">Connecting the wires...</span></div>
-                  <div>[billing] <span className="text-[#0ea5e9]">Stripe checkout: configured</span></div>
-                  <div>[equity] <span className="text-slate-600">DNA tag: 70/30 split locked</span></div>
-                  <div className="pt-2 text-[#0ea5e9] flex items-center gap-1">
-                    [launch] <span className="font-bold">Artifact ready. Con Ganas.</span>
-                    <span className="inline-block w-1.5 h-3.5 bg-[#00e5ff] animate-pulse ml-1" />
-                  </div>
-                </div>
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-px bg-white">
-                {[
-                  { v: '48kHz', l: 'Audio Standard' },
-                  { v: '70/30', l: 'Creator Split' },
-                  { v: '3 Tiers', l: 'Stripe Billing' },
-                  { v: 'Live', l: 'Production Status' },
-                ].map((s) => (
-                  <div key={s.l} className="bg-white px-4 py-3">
-                    <p className="font-sans text-sm font-black text-[#0ea5e9]">{s.v}</p>
-                    <p className="font-sans text-[8px] text-slate-500 uppercase tracking-widest">{s.l}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── HOW IT WORKS ── */}
-        <section id="how-it-works" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
-          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">How It Works</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-14">
-            From conversation<br />to live platform.
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white">
-            {[
-              {
-                step: '01',
-                title: 'Tell us what you\'re building',
-                body: 'Music platform? Game OS? Enterprise SaaS? White-label product? We map your requirements to the right surface and engine configuration.',
-              },
-              {
-                step: '02',
-                title: 'We configure your product line',
-                body: 'We configure routing, auth, billing, AI engines, and domain mapping for your exact use case. SLA113 governs operations behind the scenes.',
-              },
-              {
-                step: '03',
-                title: 'You launch under your brand',
-                body: 'Your domain. Your name. Your revenue. The infrastructure is Empire One\'s. The product is yours.',
-              },
-            ].map((row) => (
-              <div key={row.step} className="bg-white p-8 md:p-10 hover:bg-slate-50 transition-colors">
-                <p className="font-sans text-5xl font-black text-[#0f172a]/5 mb-6">{row.step}</p>
-                <h3 className="text-lg font-black uppercase text-[#0f172a] tracking-tight mb-4">{row.title}</h3>
-                <p className="font-sans text-[11px] text-slate-600 leading-relaxed">{row.body}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── PLANS ── */}
-        <section id="plans" className="px-6 md:px-12 py-20 border-b border-slate-200/80">
-          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Plans</p>
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-14">
-            Pick your surface.
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-white">
-            {[
-              {
-                node: 'ALPHA',
-                target: 'Solo operator',
-                price: '$499',
-                period: '/mo',
-                desc: 'One product surface, standard engine access, managed deployment.',
-                features: [
-                  'One tenant / domain',
-                  '5 AI engines',
-                  'Standard deployment',
-                  'Lyrica 3 or Arcade (choose one)',
-                  'Email support',
-                ],
-                active: false,
-              },
-              {
-                node: 'OMEGA',
-                target: 'Agency / scale',
-                price: '$1,499',
-                period: '/mo',
-                desc: 'Multi-tenant, white-label core, full API access. The workhorse.',
-                features: [
-                  'Multi-tenant / multiple domains',
-                  '245+ pipeline engines',
-                  'White-label routing + RBAC',
-                  'Lyrica 3 + Arcade + SaaS',
-                  'SLA113 operator console',
-                  'Priority support',
-                ],
-                active: true,
-              },
-              {
-                node: 'SOVEREIGN',
-                target: 'Enterprise',
-                price: '$4,999',
-                period: '/mo',
-                desc: 'Unlimited builds, dedicated engineering, SLA uptime guarantees.',
-                features: [
-                  'Unlimited tenants + domains',
-                  'All 20 engines + custom engines',
-                  'Dedicated infra + GPU allocation',
-                  'Full platform + all surfaces',
-                  'Dedicated engineering',
-                  '99.99% SLA uptime',
-                ],
-                active: false,
-              },
-            ].map((plan) => (
-              <div
-                key={plan.node}
-                className={`bg-white p-8 md:p-10 flex flex-col relative ${plan.active ? 'ring-1 ring-[#38bdf8]/40' : ''}`}
-              >
-                {plan.active && (
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00e5ff] to-transparent" />
-                )}
-                {plan.active && (
-                  <span className="absolute top-4 right-4 font-sans text-[8px] text-[#0ea5e9] border border-sky-200 px-2 py-1 uppercase tracking-widest">
-                    Most Popular
-                  </span>
-                )}
-                <p className="font-sans text-[9px] text-slate-500 uppercase tracking-widest mb-2">Node: {plan.node}</p>
-                <p className="font-sans text-[10px] text-[#0ea5e9] mb-6">{plan.target}</p>
-                <div className="mb-2">
-                  <span className="text-4xl font-black text-[#0f172a]">{plan.price}</span>
-                  <span className="font-sans text-[11px] text-[#0f172a]/40">{plan.period}</span>
-                </div>
-                <p className="font-sans text-[11px] text-[#0f172a]/40 mb-8 leading-relaxed">{plan.desc}</p>
-                <ul className="space-y-3 flex-grow mb-10">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 font-sans text-[11px] text-slate-600">
-                      <span className="text-[#0ea5e9] mt-[1px]">+</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => setIsChatOpen(true)}
-                  className={`w-full py-3 font-sans text-[10px] uppercase tracking-[2px] border transition-colors ${
-                    plan.active
-                      ? 'bg-[#00e5ff] border-[#00e5ff] text-[#0f172a] hover:bg-white hover:border-white'
-                      : 'border-slate-300 text-[#0f172a] hover:border-[#00e5ff] hover:text-[#0ea5e9]'
-                  }`}
-                >
-                  Get Started →
-                </button>
-              </div>
-            ))}
-          </div>
-          <div className="mt-px bg-white border-t border-slate-200/80 p-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <p className="font-sans text-[11px] text-[#0f172a]/40">
-              Custom scope available — $2,500–$6,500+ for bespoke builds. Tell us your workload.
-            </p>
-            <button
-              onClick={() => setIsChatOpen(true)}
-              className="font-sans text-[10px] text-[#0ea5e9] border border-sky-200 px-5 py-2 hover:bg-[#00e5ff]/10 transition-colors"
-            >
-              Inquire Custom Build →
-            </button>
-          </div>
-        </section>
-
-        {/* ── INVESTOR / TRACTION ── */}
-        <section className="px-6 md:px-12 py-20 border-b border-slate-200/80 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-4">Traction</p>
-            <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0f172a] tracking-tight mb-6">
-              Building the<br />
-              <span className="text-[#0ea5e9]">Creator-Owned<br />AI Music category.</span>
-            </h2>
-            <p className="font-sans text-sm text-[#0f172a]/55 leading-relaxed max-w-md mb-8">
-              Lyrica 3 Pro is the first AI music platform where creators own their IP and earn passive income on every derivative work. We're raising a $2M seed round to reach $5M ARR and 100k MAU in Year 1.
-            </p>
-            <button
-              onClick={() => setIsChatOpen(true)}
-              className="font-sans text-[11px] text-[#0ea5e9] border border-sky-200 px-6 py-3 hover:bg-[#00e5ff]/10 transition-colors uppercase tracking-widest"
-            >
-              Talk to the team →
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-px bg-white">
-            {[
-              { value: '$5M', label: 'Year 1 Revenue Target' },
-              { value: '100k', label: 'Year 1 MAU Target' },
-              { value: '$75M', label: 'Year 3 Revenue Projection' },
-              { value: '$2M', label: 'Seed Round' },
-            ].map((s) => (
-              <div key={s.label} className="bg-white p-8 hover:bg-slate-50 transition-colors">
-                <p className="text-4xl font-black text-[#0ea5e9] mb-2">{s.value}</p>
-                <p className="font-sans text-[10px] text-[#0f172a]/40 uppercase tracking-widest leading-relaxed">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── FOOTER CTA ── */}
-        <section className="px-6 md:px-12 py-24 text-center border-b border-slate-200/80">
-          <p className="font-sans text-[10px] text-[#0ea5e9] uppercase tracking-[0.2em] mb-6">Ready?</p>
-          <h2 className="text-4xl md:text-6xl font-black uppercase text-[#0f172a] tracking-tight mb-8">
-            Let's build<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5ff] to-[#ffffff60]">
-              your platform.
-            </span>
-          </h2>
-          <p className="font-sans text-sm text-slate-600 max-w-lg mx-auto mb-10">
-            Operator, creator, enterprise, or investor — if you're serious about launching revenue products, let's talk.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setIsChatOpen(true)}
-              className="bg-[#00e5ff] text-[#0f172a] font-sans font-black text-[11px] uppercase tracking-[3px] px-10 py-4 hover:bg-white transition-colors"
-            >
-              Start the conversation →
-            </button>
-            <Link
-              href="/admin/login"
-              className="border border-slate-300 text-[#0f172a] font-sans text-[11px] uppercase tracking-[3px] px-10 py-4 hover:border-[#00e5ff] hover:text-[#0ea5e9] transition-colors text-center"
-            >
-              Operator Login →
-            </Link>
-          </div>
-        </section>
-
-        {/* ── FOOTER ── */}
-        <footer className="px-6 md:px-12 py-10 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
-          <div>
-            <p className="font-sans text-[10px] text-slate-500 uppercase tracking-widest">Empire One</p>
-            <p className="font-sans text-[9px] text-[#0f172a]/20 mt-1">Governed by SLA-113 · All rights reserved</p>
-          </div>
-          <div className="flex flex-wrap gap-6 font-sans text-[9px] text-slate-500 uppercase tracking-widest">
-            <a href="https://lyrica3.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#0ea5e9] transition-colors">Lyrica 3 Pro</a>
-            <a href="https://southernlifestyle.org" target="_blank" rel="noopener noreferrer" className="hover:text-[#0ea5e9] transition-colors">Southern Arcade</a>
-            <Link href="/admin/login" className="hover:text-[#0ea5e9] transition-colors">Operator Console</Link>
-          </div>
-        </footer>
-
-      </div>
-
-      {/* ── COM LINK CHAT ── */}
-      <div className={`fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 transition-all duration-300 ${isChatOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}`}>
-        <div className="w-[340px] md:w-[420px] h-[500px] bg-[#f5f7fb] border border-sky-200 shadow-[0_0_40px_rgba(0,229,255,0.08)] flex flex-col">
-          <div className="h-10 bg-[#00e5ff]/10 border-b border-sky-200 flex justify-between items-center px-4">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-[#00e5ff] rounded-full animate-pulse" />
-              <span className="font-sans text-[9px] text-[#0ea5e9] uppercase tracking-widest">Empire One // Uplink</span>
-            </div>
-            <button onClick={() => setIsChatOpen(false)} className="text-[#0ea5e9]/40 hover:text-[#0ea5e9] transition-colors">
-              <X size={14} />
-            </button>
-          </div>
-
-          <div className="flex-grow overflow-y-auto p-4 flex flex-col gap-4 bg-slate-50 custom-scrollbar">
-            {chatMessages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[88%] p-3 font-sans text-[10px] border ${
-                  msg.role === 'user'
-                    ? 'bg-sky-50 border-sky-200 text-[#0f172a]'
-                    : 'bg-[#00e5ff]/5 border-[#00e5ff]/25 text-[#0ea5e9]'
-                }`}>
-                  <span className="block text-[7px] opacity-40 mb-1.5 uppercase tracking-widest">
-                    {msg.role === 'user' ? 'You' : 'Empire One'}
-                  </span>
-                  <div className="leading-relaxed whitespace-pre-wrap">{msg.text}</div>
-                </div>
-              </div>
-            ))}
-            {isChatLoading && (
-              <div className="flex justify-start">
-                <div className="p-3 border bg-[#00e5ff]/5 border-[#00e5ff]/25 font-sans text-[10px] text-[#0ea5e9] animate-pulse">
-                  Thinking…
-                </div>
-              </div>
-            )}
-            <div ref={chatEndRef} />
-          </div>
-
-          <div className="p-3 border-t border-sky-200 bg-white">
-            <form onSubmit={sendChatMessage} className="flex gap-2">
-              <input
-                type="text"
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                placeholder="What are you building?"
-                className="flex-grow bg-white border border-slate-200 px-3 py-2 font-sans text-[10px] text-[#0f172a] placeholder:text-[#0f172a]/20 focus:outline-none focus:border-[#00e5ff]/50 transition-colors"
-              />
-              <button
-                type="submit"
-                disabled={isChatLoading || !chatInput.trim()}
-                className="w-10 h-9 bg-[#00e5ff]/20 border border-sky-300 text-[#0ea5e9] flex items-center justify-center hover:bg-[#00e5ff] hover:text-[#0f172a] transition-colors disabled:opacity-40"
-              >
-                <Send size={13} />
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating chat toggle */}
-      <button
-        onClick={() => setIsChatOpen(true)}
-        className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 bg-white border border-sky-300 text-[#0ea5e9] px-4 py-3 flex items-center gap-2 hover:bg-[#00e5ff]/10 transition-all duration-300 ${isChatOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
-      >
-        <Terminal size={14} />
-        <span className="font-sans text-[9px] uppercase tracking-[2px]">Talk to us</span>
-      </button>
-
-      <style dangerouslySetInnerHTML={{ __html: `
-        .custom-scrollbar::-webkit-scrollbar { width: 2px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #00e5ff; }
-        @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-      ` }} />
-    </div>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: LANDING_STYLES }} />
+      <div dangerouslySetInnerHTML={{ __html: LANDING_HTML }} />
+    </>
   );
-};
-
-export default EmpireHome;
+}
