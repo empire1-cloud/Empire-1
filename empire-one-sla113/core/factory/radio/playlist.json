@@ -3,21 +3,21 @@
   "broadcast_standard": "SGV_OLDIE_NOIR",
   "tracks": [
     {
-      "id": "SUNO-001",
+      "id": "LYRICA3-001",
       "title": "Midnight on Valley Blvd",
       "style": "Chicano Soul / Lowrider Funk",
       "bpm": 88,
       "admin_only": true
     },
     {
-      "id": "SUNO-002",
+      "id": "LYRICA3-002",
       "title": "Aztec Chrome Dreams",
       "style": "G-Funk / Industrial Percussion",
       "bpm": 92,
       "admin_only": true
     },
     {
-      "id": "SUNO-003",
+      "id": "LYRICA3-003",
       "title": "Wildflowers & Concrete",
       "style": "Smooth Oldies / Ambient Noir",
       "bpm": 76,
