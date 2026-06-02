@@ -24,7 +24,7 @@ This repo is the federal layer of the empire.
 | ID | Key | Name | Layer | Owner | Role |
 |---|---|---|---|---|---|
 | U0 | SLA113 | Parent Runtime | control_plane | sla113 | routing, policy, identity firewall |
-| U1 | LYRICA3 | Creative Intelligence | product_surface | lyrica | music/voice creation — Sonance Pro + SL Universal + Lyria 3 (one business) |
+| U1 | LYRICA3 | Creative Intelligence | product_surface | lyrica | music/voice creation — Sonance Pro + SL Universal + Lyrica 3 Soulfire (one business) |
 | U2 | CULTURA | Cultural OS | cultural_os | sla113 | dialect, authenticity, heritage logic |
 | U3 | SOUTHERN | Experience Factory | product_surface | southern | arcade + themed experiences + white-label game OS |
 | U4 | EMPIREONE | Enterprise SaaS | product_surface | empire1 | billing, auth, automation, 20 pipelines |
@@ -61,7 +61,7 @@ Domain → Service → Universe mapping: [`DEPLOY_MAP.md`](DEPLOY_MAP.md)
 - Control plane
 
 ### LYRICA3 (U1) — Creative Intelligence
-**Sonance Pro / SL Universal / Lyria 3 are one business, one frontend shell, three modes.**
+**Sonance Pro / SL Universal / Lyrica 3 Soulfire are one business, one frontend shell, three modes.**
 
 - Soulfire Core Engine
 - Biometric Realism
@@ -74,7 +74,7 @@ Domain → Service → Universe mapping: [`DEPLOY_MAP.md`](DEPLOY_MAP.md)
 - Overtone Engine
 - DAW Bridge
 
-Modes: `sonance` (studio) · `universal` (Pulse Stream radio) · `orchestrator` (Lyria 3 generative)
+Modes: `sonance` (studio) · `universal` (Pulse Stream radio) · `orchestrator` (Lyrica 3 Soulfire generative)
 
 ### CULTURA_VIBE_FORGE (U2) — Cultural OS
 - Emotional dialects
