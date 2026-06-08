@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: proj-live-20260608-003438
+  version: 1.0.0
+paths:
+  /api/proj-live-20260608-003438/health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
