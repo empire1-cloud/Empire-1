@@ -161,13 +161,14 @@ footer p{font-family:var(--mono);font-size:11px;color:#444;letter-spacing:1px}
   .pricing-grid{grid-template-columns:1fr 1fr}
   .revenue-grid{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}
-  .universe-row{grid-template-columns:1fr 1fr}
-  .universe-row .u-cell:last-child{grid-column:span 2}
+  .universe-row{grid-template-columns:1fr 1fr 1fr}
+  .universe-row .u-cell:last-child{grid-column:span 1}
 }
 @media(max-width:600px){
   .stats-bar{flex-direction:column;gap:16px}
   .nav-links{display:none}
   .pricing-grid{grid-template-columns:1fr}
+  .universe-row{grid-template-columns:1fr 1fr}
   .revenue-grid{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr}
   .section{padding:60px 0}
@@ -179,7 +180,7 @@ const LANDING_HTML = `
 <!-- NAV -->
 <nav>
   <div class="container">
-    <div class="nav-brand"><span class="nav-dot"></span>EMPIRE-1</div>
+    <div class="nav-brand"><span class="nav-dot"></span>HIC · EMPIRE-1</div>
     <div class="nav-links">
       <a href="#platform">Platform</a>
       <a href="#universes">Universes</a>
@@ -194,15 +195,15 @@ const LANDING_HTML = `
 <section class="hero">
   <div class="container">
     <div class="hero-content">
-      <div class="hero-eyebrow"><span class="pulse"></span> ALL SYSTEMS HEALTHY · 19 ENGINES ONLINE</div>
-      <h1>Build, chain, and monetize <em>AI engines</em></h1>
-      <p class="hero-sub">Empire-1 is an AI engine-as-a-service platform. 19 production engines, 3 LLMs, a pipeline composer, and a revenue dashboard — all accessible through API keys you generate in 30 seconds.</p>
+      <div class="hero-eyebrow"><span class="pulse"></span> ALL SYSTEMS HEALTHY · 20 ENGINES ONLINE</div>
+      <h1>Hybrid Intelligence <em>Core</em></h1>
+      <p class="hero-sub">Empire-1 is the Hybrid Intelligence Core — 20 production engines across 6 universes. One control plane. Full-stack AI sovereignty with pipeline composer, revenue command, and cultural intelligence built in.</p>
       <div class="hero-ctas">
-        <a href="https://empire1.cloud" class="btn-primary">Create API Key →</a>
-        <a href="#platform" class="btn-secondary">See what's inside</a>
+        <a href="https://empire1.cloud" class="btn-primary">Open Console →</a>
+        <a href="#universes" class="btn-secondary">Explore Universes</a>
       </div>
       <div class="stats-bar">
-        <div class="stat-item"><div class="stat-num">19</div><div class="stat-label">Active engines</div></div>
+        <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Active engines</div></div>
         <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">LLM models</div></div>
         <div class="stat-item"><div class="stat-num"><span>$78K</span></div><div class="stat-label">Operator MRR</div></div>
         <div class="stat-item"><div class="stat-num">69</div><div class="stat-label">Active operators</div></div>
@@ -217,8 +218,8 @@ const LANDING_HTML = `
     <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>GPT-5.2</div>
     <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Claude Sonnet 4.5</div>
     <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Gemini 3 Flash</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>245+ total engines</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>8 live domains</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>265+ total engines</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>7 live universes</div>
     <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>100% creator equity</div>
   </div>
 </div>
@@ -243,14 +244,14 @@ const LANDING_HTML = `
   <div class="container">
     <div class="section-label">The Platform</div>
     <h2 class="section-title">Everything a sovereign AI business needs</h2>
-    <p class="section-desc">Not another wrapper. Not another API proxy. A full operating system for AI-native businesses with engines, pipelines, billing, analytics, and cultural intelligence built in.</p>
+    <p class="section-desc">The Hybrid Intelligence Core. 20 engines, 6 universes, federated revenue. Not another wrapper — a full sovereign AI operating system.</p>
 
     <div class="mega-grid">
       <!-- ENGINE DASHBOARD -->
       <div class="mega-card">
-        <span class="card-badge badge-core">19 Engines Live</span>
+        <span class="card-badge badge-core">20 Engines Live</span>
         <h3>Engine Dashboard</h3>
-        <p>Browse, test, and deploy 19 production AI engines. Each one has its own API endpoint, test interface, and execution tracking.</p>
+        <p>Browse, test, and deploy 20 production AI engines. Each one has its own API endpoint, test interface, and execution tracking.</p>
         <ul>
           <li>Strategy, Analysis, Plan Builder engines</li>
           <li>Persona, Anime Character/Lore/Story engines</li>
@@ -352,40 +353,52 @@ const LANDING_HTML = `
 <!-- UNIVERSE MAP -->
 <section class="section" id="universes" style="padding-top:0">
   <div class="container">
-    <div class="section-label">Architecture</div>
-    <h2 class="section-title">Five universes. One sovereign control plane.</h2>
-    <p class="section-desc">Every universe generates its own revenue. SLA-113 routes between them. Empire-1 federates them into one platform.</p>
+    <div class="section-label">The Multiverse</div>
+    <h2 class="section-title">Six universes. One Hybrid Intelligence Core.</h2>
+    <p class="section-desc">Each universe is a sovereign app with its own domain, revenue stream, and intelligence. Empire-1 federates them all.</p>
     <div class="universe-row">
-      <div class="u-cell">
+      <a href="https://empire-1.vercel.app" class="u-cell" style="text-decoration:none">
+        <div class="u-id">HIC</div>
+        <div class="u-name">Empire-1</div>
+        <div class="u-role">Hybrid Intelligence Core</div>
+        <div class="u-bar" style="background:var(--cyan)"></div>
+      </a>
+      <a href="https://sla113.vercel.app" class="u-cell" style="text-decoration:none">
         <div class="u-id">U0</div>
         <div class="u-name">SLA-113</div>
-        <div class="u-role">Control Plane</div>
+        <div class="u-role">Admin Console</div>
         <div class="u-bar" style="background:var(--purple)"></div>
-      </div>
-      <div class="u-cell">
+      </a>
+      <a href="https://lyrica3-pro.vercel.app" class="u-cell" style="text-decoration:none">
         <div class="u-id">U1</div>
         <div class="u-name">Lyrica 3</div>
         <div class="u-role">AI Music Studio</div>
         <div class="u-bar" style="background:var(--pink)"></div>
-      </div>
-      <div class="u-cell">
+      </a>
+      <a href="https://cultura-vibe-forge.vercel.app" class="u-cell" style="text-decoration:none">
         <div class="u-id">U2</div>
         <div class="u-name">Cultura Vibe</div>
         <div class="u-role">Cultural OS</div>
         <div class="u-bar" style="background:#ff6b35"></div>
-      </div>
-      <div class="u-cell">
+      </a>
+      <a href="https://southernlifestyle.org" class="u-cell" style="text-decoration:none">
         <div class="u-id">U3</div>
         <div class="u-name">Southern</div>
-        <div class="u-role">World Engine</div>
+        <div class="u-role">Lifestyle Engine</div>
         <div class="u-bar" style="background:var(--gold)"></div>
-      </div>
-      <div class="u-cell">
+      </a>
+      <a href="https://soulfire-ecosystem.vercel.app" class="u-cell" style="text-decoration:none">
         <div class="u-id">U4</div>
-        <div class="u-name">Empire-1</div>
-        <div class="u-role">Federal SaaS</div>
-        <div class="u-bar" style="background:var(--cyan)"></div>
-      </div>
+        <div class="u-name">Soulfire</div>
+        <div class="u-role">Ecosystem OS</div>
+        <div class="u-bar" style="background:var(--pink)"></div>
+      </a>
+      <a href="https://archisynapse.vercel.app" class="u-cell" style="text-decoration:none">
+        <div class="u-id">U5</div>
+        <div class="u-name">Archisynapse</div>
+        <div class="u-role">Payment Ledger</div>
+        <div class="u-bar" style="background:var(--gold)"></div>
+      </a>
     </div>
   </div>
 </section>
@@ -402,7 +415,7 @@ const LANDING_HTML = `
       </div>
       <div class="step">
         <h3>Pick your engines</h3>
-        <p>Choose from 19 production engines — strategy, analysis, persona, art direction, money pipeline, and more.</p>
+        <p>Choose from 20 production engines — strategy, analysis, persona, art direction, money pipeline, execution, and more.</p>
       </div>
       <div class="step">
         <h3>Compose pipelines</h3>
@@ -441,7 +454,7 @@ const LANDING_HTML = `
         <div class="price">$499<small>/mo</small></div>
         <div class="price-desc">Studios and labels running a single product line</div>
         <ul>
-          <li>All 19 engines</li>
+          <li>All 20 engines</li>
           <li>Pipeline Composer</li>
           <li>10,000 API calls/mo</li>
           <li>Revenue Command</li>
@@ -488,7 +501,7 @@ const LANDING_HTML = `
 <section class="section" id="engines">
   <div class="container">
     <div class="section-label">Engine Registry</div>
-    <h2 class="section-title">19 production engines. 245+ in the vault.</h2>
+    <h2 class="section-title">20 production engines. 245+ in the vault.</h2>
     <p class="section-desc">Every engine has its own API endpoint, test interface, and execution tracking. Browse the live registry.</p>
     <div class="engine-wall">
       <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Hybrid Intelligence Core</div>
@@ -510,6 +523,7 @@ const LANDING_HTML = `
       <div class="engine-pill"><span class="ed" style="background:var(--text-dim)"></span>Canon Enforcer</div>
       <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Drift Monitor</div>
       <div class="engine-pill"><span class="ed" style="background:var(--text-dim)"></span>Error Handler</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Execution Engine</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Soulfire Engine</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Empire Lyric Master</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Acid Vocal Chain</div>
@@ -537,7 +551,7 @@ const LANDING_HTML = `
 
 <footer>
   <div class="container">
-    <p>EMPIRE-1 · SLA-113 MULTIVERSE · 5 UNIVERSES · 8 DOMAINS · 245+ ENGINES</p>
+    <p>EMPIRE-1 · HYBRID INTELLIGENCE CORE · 6 UNIVERSES · 20 ENGINES · 265+ IN VAULT</p>
     <p style="margin-top:6px;color:#333">Built in El Monte, CA · SGV since day one</p>
   </div>
 </footer>
