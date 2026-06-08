@@ -363,12 +363,12 @@ const LANDING_HTML = `
         <div class="u-role">Hybrid Intelligence Core</div>
         <div class="u-bar" style="background:var(--cyan)"></div>
       </a>
-      <a href="https://sla113.vercel.app" class="u-cell" style="text-decoration:none">
+      <div class="u-cell" style="opacity:0.5;pointer-events:none">
         <div class="u-id">U0</div>
         <div class="u-name">SLA-113</div>
-        <div class="u-role">Admin Console</div>
+        <div class="u-role">Control Plane · Private</div>
         <div class="u-bar" style="background:var(--purple)"></div>
-      </a>
+      </div>
       <a href="https://lyrica3-pro.vercel.app" class="u-cell" style="text-decoration:none">
         <div class="u-id">U1</div>
         <div class="u-name">Lyrica 3</div>
