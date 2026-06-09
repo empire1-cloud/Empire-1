@@ -12,14 +12,15 @@ a{color:inherit;text-decoration:none}
   --pink:#ff1493;
   --pink-glow:rgba(255,20,147,.12);
   --pink-border:rgba(255,20,147,.25);
-  --cyan:#00ffd5;
-  --cyan-glow:rgba(0,255,213,.08);
+  --obsidian:#111827;
+  --obsidian-hover:#1a2744;
+  --obsidian-border:rgba(17,24,39,.4);
   --gold:#ffd700;
   --purple:#a855f7;
   --green:#22c55e;
   --bg:#050508;
-  --card:#0c0c10;
-  --card-hover:#111118;
+  --card:var(--obsidian);
+  --card-hover:var(--obsidian-hover);
   --card-border:rgba(255,255,255,.06);
   --text:#e0e0e0;
   --text-dim:#777;
@@ -49,9 +50,9 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;padding-top:80px}
 .hero::before{content:'';position:absolute;inset:0;background:
   radial-gradient(ellipse 700px 500px at 50% 25%,rgba(255,20,147,.06),transparent 70%),
-  radial-gradient(ellipse 500px 500px at 80% 70%,rgba(0,255,213,.03),transparent 60%);pointer-events:none}
+  radial-gradient(ellipse 500px 500px at 80% 70%,rgba(255,20,147,.03),transparent 60%);pointer-events:none}
 .hero-content{position:relative;z-index:2;max-width:700px}
-.hero-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink);margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .hero-eyebrow .pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--green)}50%{opacity:.3}}
 .hero h1{font-size:clamp(36px,5.5vw,62px);font-weight:900;line-height:1.06;color:#fff;margin-bottom:24px;letter-spacing:-.02em}
@@ -66,7 +67,7 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 /* LIVE STATS BAR */
 .stats-bar{display:flex;gap:48px;margin-top:56px;padding-top:36px;border-top:1px solid var(--card-border)}
 .stat-item .stat-num{font-family:var(--mono);font-size:32px;font-weight:700;color:#fff}
-.stat-item .stat-num span{color:var(--cyan)}
+.stat-item .stat-num span{color:var(--pink)}
 .stat-item .stat-label{font-size:12px;color:var(--text-dim);margin-top:2px;letter-spacing:.5px}
 
 /* PROOF BAR */
@@ -82,7 +83,7 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 .mega-card.full{grid-column:span 2}
 .mega-card .card-badge{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;display:inline-block;margin-bottom:20px}
 .badge-live{color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)}
-.badge-core{color:var(--cyan);background:var(--cyan-glow);border:1px solid rgba(0,255,213,.2)}
+.badge-core{color:var(--pink);background:var(--pink-glow);border:1px solid var(--pink-border)}
 .badge-revenue{color:var(--gold);background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2)}
 .badge-api{color:var(--purple);background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2)}
 .mega-card h3{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px}
@@ -97,7 +98,7 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 /* CODE BLOCK */
 .code-block{background:#0a0a0e;border:1px solid var(--card-border);border-radius:10px;padding:20px 24px;margin-top:20px;font-family:var(--mono);font-size:12px;line-height:1.8;overflow-x:auto;color:var(--text-dim)}
 .code-block .comment{color:#555}
-.code-block .key{color:var(--cyan)}
+.code-block .key{color:var(--pink)}
 .code-block .str{color:var(--pink)}
 .code-block .method{color:var(--gold)}
 
@@ -135,7 +136,7 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 .price-card .price-desc{font-size:13px;color:var(--text-dim);margin:14px 0 20px;line-height:1.5}
 .price-card ul{list-style:none;margin-bottom:24px}
 .price-card ul li{font-size:12px;padding:5px 0;color:var(--text-dim);display:flex;align-items:center;gap:6px}
-.price-card ul li::before{content:'✓';color:var(--cyan);font-size:11px;font-weight:700}
+.price-card ul li::before{content:'✓';color:var(--pink);font-size:11px;font-weight:700}
 .price-card .btn-primary{width:100%;text-align:center;font-size:12px;padding:12px}
 
 /* ENGINE WALL */
@@ -180,13 +181,13 @@ const LANDING_HTML = `
 <!-- NAV -->
 <nav>
   <div class="container">
-    <div class="nav-brand"><span class="nav-dot"></span>HIC · EMPIRE-1</div>
+    <div class="nav-brand"><span class="nav-dot"></span>HYBRID‑AI‑CORE</div>
     <div class="nav-links">
-      <a href="#platform">Platform</a>
-      <a href="#universes">Universes</a>
+      <a href="#principles">Principles</a>
+      <a href="#proof">Proof</a>
       <a href="#pricing">Pricing</a>
       <a href="#engines">Engines</a>
-      <a href="https://empire1.cloud" class="nav-cta">OPEN CONSOLE →</a>
+      <a href="mailto:manda@empire1.cloud" class="nav-cta">TALK TO THE ARCHITECT →</a>
     </div>
   </div>
 </nav>
@@ -195,16 +196,16 @@ const LANDING_HTML = `
 <section class="hero">
   <div class="container">
     <div class="hero-content">
-      <div class="hero-eyebrow"><span class="pulse"></span> ALL SYSTEMS HEALTHY · 20 ENGINES ONLINE</div>
-      <h1>Hybrid Intelligence <em>Core</em></h1>
-      <p class="hero-sub">Empire-1 is the Hybrid Intelligence Core — 20 production engines across 6 universes. One control plane. Full-stack AI sovereignty with pipeline composer, revenue command, and cultural intelligence built in.</p>
+      <div class="hero-eyebrow"><span class="pulse"></span> EMERGENT DNA · REFERENCE IMPLEMENTATION</div>
+      <h1>The Reference Implementation of<br><em>Emergent Architecture</em>.</h1>
+      <p class="hero-sub">Hybrid Intelligence Core is a working, revenue-generating system built with the Emergent DNA methodology. 20 engines, 6 federated universes, $78K MRR — every design decision grounded in a principle you can fork, study, and extend.</p>
       <div class="hero-ctas">
-        <a href="https://empire1.cloud" class="btn-primary">Open Console →</a>
-        <a href="#universes" class="btn-secondary">Explore Universes</a>
+        <a href="#principles" class="btn-primary">Study the DNA →</a>
+        <a href="#proof" class="btn-secondary">See the Proof</a>
       </div>
       <div class="stats-bar">
-        <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Active engines</div></div>
-        <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">LLM models</div></div>
+        <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Production engines</div></div>
+        <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Live universes</div></div>
         <div class="stat-item"><div class="stat-num"><span>$78K</span></div><div class="stat-label">Operator MRR</div></div>
         <div class="stat-item"><div class="stat-num">69</div><div class="stat-label">Active operators</div></div>
       </div>
@@ -218,36 +219,217 @@ const LANDING_HTML = `
     <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>GPT-5.2</div>
     <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Claude Sonnet 4.5</div>
     <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Gemini 3 Flash</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>265+ total engines</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--cyan)"></span>7 live universes</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>19 specialized engines</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>6 sovereign universes</div>
     <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>100% creator equity</div>
   </div>
 </div>
 
-<!-- REVENUE COMMAND PREVIEW -->
-<section class="section">
+<!-- DNA SCORE -->
+<section class="section" id="dna-score">
   <div class="container">
-    <div class="section-label">Revenue Command</div>
-    <h2 class="section-title">Real revenue. Real operators. Real-time.</h2>
-    <p class="section-desc">Empire-1's Revenue Command tracks MRR across every universe. Every operator, every pipeline, every dollar — visible at a glance.</p>
+    <div class="section-label">The DNA Score</div>
+    <h2 class="section-title">Quality function validation.</h2>
+    <p class="section-desc">Every decision in HIC is measured against 5 dimensions. This is not abstract theory — this is a living scorecard.</p>
+    <div class="mega-grid" style="margin-top:48px">
+      <div class="mega-card full">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px">
+          <div style="background:rgba(255,255,255,.03);border-radius:10px;padding:20px;text-align:center">
+            <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--pink)">9/10</div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin:8px 0 4px">SCALABILITY</div>
+            <div style="font-size:12px;color:var(--text-dim)">Microservices; routes work to appropriate engines by task complexity</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:10px;padding:20px;text-align:center">
+            <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--gold)">8/10</div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin:8px 0 4px">MONETIZABILITY</div>
+            <div style="font-size:12px;color:var(--text-dim)">Multi-tenant billing; token counting; premium engine access</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:10px;padding:20px;text-align:center">
+            <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--pink)">9/10</div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin:8px 0 4px">SELF-CONSISTENCY</div>
+            <div style="font-size:12px;color:var(--text-dim)">Unified data model; consistent error handling; tenant isolation</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:10px;padding:20px;text-align:center">
+            <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--pink)">9/10</div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin:8px 0 4px">EMOTIONAL RESONANCE</div>
+            <div style="font-size:12px;color:var(--text-dim)">Anime engines map to character psychology; persona captures intent</div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border-radius:10px;padding:20px;text-align:center">
+            <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--pink)">9/10</div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin:8px 0 4px">EXECUTION FEASIBILITY</div>
+            <div style="font-size:12px;color:var(--text-dim)">19 modular engines; no monolithic bloat; CI/CD ready</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 PRINCIPLES -->
+<section class="section" id="principles">
+  <div class="container">
+    <div class="section-label">The Five Core Principles</div>
+    <h2 class="section-title">Emergent DNA in production code.</h2>
+    <p class="section-desc">Not abstract theory. Every principle maps to actual files, actual engines, actual architectural decisions in Hybrid Intelligence Core.</p>
+    <div class="mega-grid">
+      <div class="mega-card">
+        <span class="card-badge badge-core">PRINCIPLE 1</span>
+        <h3>Multi-Layered Decomposition</h3>
+        <p>Break complex problems into clean, orchestrated layers where changing one layer doesn't break others. 19 engines = 19 specialized layers.</p>
+        <div class="code-block">
+          <span class="comment"># Each engine solves ONE problem</span><br>
+          engines/<span class="method">blueprint_engine</span>.py  <span class="comment"># design/architecture</span><br>
+          engines/<span class="method">evaluator_engine</span>.py   <span class="comment"># judgment/scoring</span><br>
+          engines/<span class="method">persona_engine</span>.py      <span class="comment"># character/role</span>
+        </div>
+      </div>
+      <div class="mega-card">
+        <span class="card-badge badge-core">PRINCIPLE 2</span>
+        <h3>Dual-Market Strategy</h3>
+        <p>Two offerings — pro power users and mass-market consumers — sharing the same core engine. Different UIs on top of the same architecture.</p>
+        <div class="code-block">
+          teams/<span class="method">public_api</span>.py      <span class="comment"># consumer tier</span><br>
+          routers/<span class="method">persona_router</span>.py   <span class="comment"># pro tier</span>
+        </div>
+      </div>
+      <div class="mega-card">
+        <span class="card-badge badge-core">PRINCIPLE 3</span>
+        <h3>Emotional Intelligence</h3>
+        <p>Systems that understand and respect human emotion, culture, and intent — not just functional outcomes. The persona engine maps user intent, anime engines honor character psychology.</p>
+        <div class="code-block">
+          engines/<span class="method">anime_character_engine</span>.py  <span class="comment"># character psychology</span><br>
+          models/<span class="method">persona</span>.py                    <span class="comment"># user intent mapping</span>
+        </div>
+      </div>
+      <div class="mega-card">
+        <span class="card-badge badge-core">PRINCIPLE 4</span>
+        <h3>Fast-Launch OS</h3>
+        <p>Ship complete features without rewriting core. The pipeline composer chains engines into workflows. Composition, not customization.</p>
+        <div class="code-block">
+          engines/<span class="method">pipeline_composer</span>.py  <span class="comment"># chain engines</span><br>
+          services/                          <span class="comment"># shared abstraction layer</span>
+        </div>
+      </div>
+      <div class="mega-card">
+        <span class="card-badge badge-core">PRINCIPLE 5</span>
+        <h3>Multi-AI Orchestration</h3>
+        <p>AI models as pluggable components. Route tasks to the best model — GPT-4 for creativity, Claude for reasoning, local for latency-sensitive.</p>
+        <div class="code-block">
+          services/<span class="method">ai_router</span>.py  <span class="comment"># route by task type</span>
+        </div>
+      </div>
+      <div class="mega-card full" style="background:linear-gradient(135deg,var(--obsidian),#0d0d1a);border-color:var(--pink-border)">
+        <h3 style="font-size:24px;text-align:center;color:var(--pink)">"Not just here's what good architecture looks like — here's the exact code, here's why each decision was made, here's how you'd extend it."</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="section" id="tiers">
+  <div class="container">
+    <div class="section-label">How to work with us</div>
+    <h2 class="section-title">Four ways to adopt the DNA</h2>
+    <p class="section-desc">From learning the methodology to licensing the full platform. Pick your entry point.</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:48px;border-radius:14px;overflow:hidden">
+      <div style="background:var(--card);padding:36px 24px;text-align:center">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--pink);margin-bottom:10px">TIER 1</div>
+        <div style="font-size:28px;font-weight:900;color:#fff">$5-25K</div>
+        <div style="font-size:11px;color:var(--text-dim);margin:6px 0 16px">/year</div>
+        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Methodology License</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6">Video course, workbooks, templates, decision trees. Your team learns to think architecturally.</div>
+      </div>
+      <div style="background:var(--card);padding:36px 24px;text-align:center">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--pink);margin-bottom:10px">TIER 2</div>
+        <div style="font-size:28px;font-weight:900;color:#fff">$5-15K</div>
+        <div style="font-size:11px;color:var(--text-dim);margin:6px 0 16px">/project</div>
+        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Architecture Consulting</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6">3-week engagement. Discovery → Blueprint → Implementation guide. We map the DNA to your stack.</div>
+      </div>
+      <div style="background:var(--card);padding:36px 24px;text-align:center">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:10px">TIER 3</div>
+        <div style="font-size:28px;font-weight:900;color:#fff">$50-250K</div>
+        <div style="font-size:11px;color:var(--text-dim);margin:6px 0 16px">/engagement</div>
+        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Done-for-You Systems</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6">8-12 weeks. We design, spec, and launch your entire platform. MVP in a quarter.</div>
+      </div>
+      <div style="background:var(--card);padding:36px 24px;text-align:center">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--purple);margin-bottom:10px">TIER 4</div>
+        <div style="font-size:28px;font-weight:900;color:#fff">25%</div>
+        <div style="font-size:11px;color:var(--text-dim);margin:6px 0 16px">revenue share</div>
+        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Platform Licensing</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6">White-label the HIC. Your brand, your domain, our architecture. 25% of revenue. Passive income, infinite scale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROOF: HIC -->
+<section class="section" id="proof" style="padding-top:0">
+  <div class="container">
+    <div class="section-label">The Proof</div>
+    <h2 class="section-title">Hybrid Intelligence Core — reference implementation</h2>
+    <p class="section-desc">20 engines, 6 universes, $78K MRR. This is what the DNA builds. Empire-1 is the living blueprint.</p>
     <div class="revenue-grid">
-      <div class="rev-card"><div class="rev-label">Total MRR</div><div class="rev-num" style="color:var(--cyan)">$78K</div><div class="rev-sub">+10% MoM</div></div>
-      <div class="rev-card"><div class="rev-label">Operators</div><div class="rev-num">69</div><div class="rev-sub">Active this month</div></div>
+      <div class="rev-card"><div class="rev-label">Total MRR</div><div class="rev-num" style="color:var(--pink)">$78K</div><div class="rev-sub">+10% MoM</div></div>
+      <div class="rev-card"><div class="rev-label">Active Operators</div><div class="rev-num">69</div><div class="rev-sub">This month</div></div>
       <div class="rev-card"><div class="rev-label">ARR Run Rate</div><div class="rev-num">$936K</div><div class="rev-sub">Annualized MRR</div></div>
-      <div class="rev-card"><div class="rev-label">Avg Rev / Op</div><div class="rev-num">$1.1K</div><div class="rev-sub">Per operator MRR</div></div>
+      <div class="rev-card"><div class="rev-label">Engines Deployed</div><div class="rev-num">20</div><div class="rev-sub">Production ready</div></div>
+    </div>
+    <div class="universe-row" style="margin-top:36px">
+      <div class="u-cell">
+        <div class="u-id">HIC</div>
+        <div class="u-name">Empire-1</div>
+        <div class="u-role">Hybrid Intelligence Core</div>
+        <div class="u-bar" style="background:var(--pink)"></div>
+      </div>
+      <div class="u-cell" style="opacity:0.4">
+        <div class="u-id">U0</div>
+        <div class="u-name">SLA-113</div>
+        <div class="u-role">Control Plane · Private</div>
+        <div class="u-bar" style="background:var(--purple)"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U1</div>
+        <div class="u-name">Lyrica 3</div>
+        <div class="u-role">AI Music Studio</div>
+        <div class="u-bar" style="background:var(--pink)"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U2</div>
+        <div class="u-name">Cultura Vibe</div>
+        <div class="u-role">Cultural OS</div>
+        <div class="u-bar" style="background:#ff6b35"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U3</div>
+        <div class="u-name">Southern</div>
+        <div class="u-role">Lifestyle Engine</div>
+        <div class="u-bar" style="background:var(--gold)"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U4</div>
+        <div class="u-name">Soulfire</div>
+        <div class="u-role">Ecosystem OS</div>
+        <div class="u-bar" style="background:var(--pink)"></div>
+      </div>
+      <div class="u-cell">
+        <div class="u-id">U5</div>
+        <div class="u-name">Archisynapse</div>
+        <div class="u-role">Payment Ledger</div>
+        <div class="u-bar" style="background:var(--gold)"></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- PLATFORM FEATURES -->
-<section class="section" id="platform" style="padding-top:40px">
+<section class="section" id="platform" style="padding-top:0">
   <div class="container">
     <div class="section-label">The Platform</div>
     <h2 class="section-title">Everything a sovereign AI business needs</h2>
-    <p class="section-desc">The Hybrid Intelligence Core. 20 engines, 6 universes, federated revenue. Not another wrapper — a full sovereign AI operating system.</p>
-
+    <p class="section-desc">20 engines, pipeline composer, revenue command, multi-tenant auth, and a control plane. All built with Emergent DNA.</p>
     <div class="mega-grid">
-      <!-- ENGINE DASHBOARD -->
       <div class="mega-card">
         <span class="card-badge badge-core">20 Engines Live</span>
         <h3>Engine Dashboard</h3>
@@ -256,72 +438,47 @@ const LANDING_HTML = `
           <li>Strategy, Analysis, Plan Builder engines</li>
           <li>Persona, Anime Character/Lore/Story engines</li>
           <li>Art Direction, Money Pipeline, Pricing engines</li>
-          <li>One-click test interface with JSON payloads</li>
+          <li>Execution Engine — routes pipelines across universes</li>
         </ul>
         <div class="card-visual">
           <span class="engine-tag">POST /strategy</span>
           <span class="engine-tag">POST /analyze</span>
-          <span class="engine-tag">POST /persona</span>
-          <span class="engine-tag">POST /pricing</span>
-          <span class="engine-tag">POST /blueprint</span>
+          <span class="engine-tag">POST /execute</span>
+          <span class="engine-tag">POST /pipeline/compose</span>
         </div>
       </div>
-
-      <!-- PIPELINE COMPOSER -->
       <div class="mega-card">
         <span class="card-badge badge-live">Pipeline Composer</span>
         <h3>Chain engines into workflows</h3>
-        <p>Drag-and-drop engine chaining. Build complex multi-step AI workflows by composing engines together. Save presets for repeat use.</p>
+        <p>Drag-and-drop engine chaining. Build multi-step AI workflows. The Execution Engine routes pipelines to the right universe.</p>
         <ul>
           <li>Visual pipeline builder — click to add engines</li>
           <li>Initial input → engine chain → composed output</li>
           <li>Save & load pipeline presets</li>
-          <li>POST /pipeline/compose for programmatic access</li>
+          <li>Cross-universe routing via Execution Engine</li>
         </ul>
         <div class="card-visual">
-          <span class="engine-tag">Strategy → Plan Builder → Blueprint</span>
+          <span class="engine-tag">Strategy → Plan → Execution → Lyrica3</span>
         </div>
       </div>
-
-      <!-- ANALYTICS -->
       <div class="mega-card">
-        <span class="card-badge badge-revenue">Monitoring & Analytics</span>
-        <h3>Real-time performance intelligence</h3>
-        <p>Live-polling analytics dashboard with execution tracking, latency monitoring per engine, AI quality & drift detection, and error rates.</p>
+        <span class="card-badge badge-revenue">Revenue Command</span>
+        <h3>Real MRR. Real operators. Real-time.</h3>
+        <p>Live revenue tracking across all 6 universes. Per-operator analytics. The architecture pays for itself.</p>
         <ul>
-          <li>Requests per engine — live bar charts</li>
-          <li>Average response time (ms) per engine</li>
-          <li>Error rates with severity classification</li>
-          <li>AI Quality & Drift monitoring tab</li>
-          <li>System Health with real-time WebSocket polling</li>
+          <li>MRR by universe — live dashboards</li>
+          <li>Operator growth & cohort tracking</li>
+          <li>6-month revenue projections</li>
+          <li>Per-universe profitability</li>
         </ul>
       </div>
-
-      <!-- API ACCESS -->
-      <div class="mega-card">
-        <span class="card-badge badge-api">Developer API</span>
-        <h3>API keys in 30 seconds</h3>
-        <p>Generate API keys with full access to all engines. Standard REST endpoints. Bearer token auth. Build anything on top of Empire-1.</p>
-        <div class="code-block">
-          <span class="comment"># Create your pipeline</span><br>
-          curl -X POST https://api.empire1.cloud/pipeline/compose \\<br>
-          &nbsp;&nbsp;-H "<span class="key">Authorization</span>: Bearer <span class="str">hic_your_api_key</span>" \\<br>
-          &nbsp;&nbsp;-d '{<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;"<span class="key">engines</span>": ["<span class="str">strategy</span>", "<span class="str">plan</span>", "<span class="str">blueprint</span>"],<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;"<span class="key">input</span>": "<span class="str">Build an AI music studio</span>"<br>
-          &nbsp;&nbsp;}'
-        </div>
-      </div>
-
-      <!-- REVENUE COMMAND - FULL WIDTH -->
       <div class="mega-card full">
-        <span class="card-badge badge-revenue">Revenue Command</span>
-        <h3>Track revenue across every universe</h3>
-        <p>MRR by universe, operator growth trends, 6-month revenue charts, and per-operator analytics. See exactly how your multi-product AI business is performing.</p>
+        <span class="card-badge badge-api">Revenue Breakdown</span>
+        <h3>$78K MRR across 6 universes</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px">
           <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px">
             <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px">FEDERAL CONTROL PLANE</div>
-            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--cyan)">$24.8K</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--pink)">$24.8K</div>
             <div style="font-size:11px;color:var(--text-dim)">13 operators · 32%</div>
           </div>
           <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px">
@@ -350,162 +507,15 @@ const LANDING_HTML = `
   </div>
 </section>
 
-<!-- UNIVERSE MAP -->
-<section class="section" id="universes" style="padding-top:0">
-  <div class="container">
-    <div class="section-label">The Multiverse</div>
-    <h2 class="section-title">Six universes. One Hybrid Intelligence Core.</h2>
-    <p class="section-desc">Each universe is a sovereign app with its own domain, revenue stream, and intelligence. Empire-1 federates them all.</p>
-    <div class="universe-row">
-      <a href="https://empire-1.vercel.app" class="u-cell" style="text-decoration:none">
-        <div class="u-id">HIC</div>
-        <div class="u-name">Empire-1</div>
-        <div class="u-role">Hybrid Intelligence Core</div>
-        <div class="u-bar" style="background:var(--cyan)"></div>
-      </a>
-      <div class="u-cell" style="opacity:0.5;pointer-events:none">
-        <div class="u-id">U0</div>
-        <div class="u-name">SLA-113</div>
-        <div class="u-role">Control Plane · Private</div>
-        <div class="u-bar" style="background:var(--purple)"></div>
-      </div>
-      <a href="https://lyrica3-pro.vercel.app" class="u-cell" style="text-decoration:none">
-        <div class="u-id">U1</div>
-        <div class="u-name">Lyrica 3</div>
-        <div class="u-role">AI Music Studio</div>
-        <div class="u-bar" style="background:var(--pink)"></div>
-      </a>
-      <a href="https://cultura-vibe-forge.vercel.app" class="u-cell" style="text-decoration:none">
-        <div class="u-id">U2</div>
-        <div class="u-name">Cultura Vibe</div>
-        <div class="u-role">Cultural OS</div>
-        <div class="u-bar" style="background:#ff6b35"></div>
-      </a>
-      <a href="https://southernlifestyle.org" class="u-cell" style="text-decoration:none">
-        <div class="u-id">U3</div>
-        <div class="u-name">Southern</div>
-        <div class="u-role">Lifestyle Engine</div>
-        <div class="u-bar" style="background:var(--gold)"></div>
-      </a>
-      <a href="https://soulfire-ecosystem.vercel.app" class="u-cell" style="text-decoration:none">
-        <div class="u-id">U4</div>
-        <div class="u-name">Soulfire</div>
-        <div class="u-role">Ecosystem OS</div>
-        <div class="u-bar" style="background:var(--pink)"></div>
-      </a>
-      <a href="https://archisynapse.vercel.app" class="u-cell" style="text-decoration:none">
-        <div class="u-id">U5</div>
-        <div class="u-name">Archisynapse</div>
-        <div class="u-role">Payment Ledger</div>
-        <div class="u-bar" style="background:var(--gold)"></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section">
-  <div class="container">
-    <div class="section-label">Get started</div>
-    <h2 class="section-title">From zero to sovereign in four steps</h2>
-    <div class="steps">
-      <div class="step">
-        <h3>Create your API key</h3>
-        <p>Sign up, generate a Bearer token, and authenticate against any engine in seconds.</p>
-      </div>
-      <div class="step">
-        <h3>Pick your engines</h3>
-        <p>Choose from 20 production engines — strategy, analysis, persona, art direction, money pipeline, execution, and more.</p>
-      </div>
-      <div class="step">
-        <h3>Compose pipelines</h3>
-        <p>Chain engines together into workflows. Strategy → Plan → Blueprint. Save presets for repeat use.</p>
-      </div>
-      <div class="step">
-        <h3>Monitor & monetize</h3>
-        <p>Track every execution, monitor latency and drift, and watch your MRR grow in Revenue Command.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="section" id="pricing">
-  <div class="container">
-    <div class="section-label">Pricing</div>
-    <h2 class="section-title">Pick your node. Build sovereign.</h2>
-    <p class="section-desc">Every tier includes full engine access, API keys, and analytics. Scale from solo builder to enterprise.</p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="tier-name">Developer</div>
-        <div class="price">$99<small>/mo</small></div>
-        <div class="price-desc">Solo builders and indie devs exploring the stack</div>
-        <ul>
-          <li>3 engine access</li>
-          <li>API key generation</li>
-          <li>1,000 API calls/mo</li>
-          <li>Basic analytics</li>
-          <li>Community support</li>
-        </ul>
-        <a href="https://empire1.cloud" class="btn-primary">Start Building</a>
-      </div>
-      <div class="price-card">
-        <div class="tier-name">Node Alpha</div>
-        <div class="price">$499<small>/mo</small></div>
-        <div class="price-desc">Studios and labels running a single product line</div>
-        <ul>
-          <li>All 20 engines</li>
-          <li>Pipeline Composer</li>
-          <li>10,000 API calls/mo</li>
-          <li>Revenue Command</li>
-          <li>Multi-tenant (50 users)</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="https://empire1.cloud" class="btn-primary">Launch Alpha</a>
-      </div>
-      <div class="price-card pop">
-        <div class="tier-name">Node Omega</div>
-        <div class="price">$1,499<small>/mo</small></div>
-        <div class="price-desc">Platforms running multiple products and universes</div>
-        <ul>
-          <li>All engines + Game OS</li>
-          <li>Unlimited pipelines</li>
-          <li>100,000 API calls/mo</li>
-          <li>Full analytics + drift</li>
-          <li>Multi-tenant (500 users)</li>
-          <li>Dedicated support</li>
-          <li>Micro-royalty distribution</li>
-        </ul>
-        <a href="https://empire1.cloud" class="btn-primary">Launch Omega</a>
-      </div>
-      <div class="price-card">
-        <div class="tier-name">Node Sovereign</div>
-        <div class="price">$4,999<small>/mo</small></div>
-        <div class="price-desc">Full multi-universe stack. White-label. Unlimited.</div>
-        <ul>
-          <li>All universes unlocked</li>
-          <li>White-label everything</li>
-          <li>Unlimited API calls</li>
-          <li>SLA-113 control plane</li>
-          <li>Custom engine development</li>
-          <li>Revenue share model</li>
-          <li>Direct engineering line</li>
-        </ul>
-        <a href="https://empire1.cloud" class="btn-primary">Go Sovereign</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ENGINE WALL -->
 <section class="section" id="engines">
   <div class="container">
     <div class="section-label">Engine Registry</div>
-    <h2 class="section-title">20 production engines. 245+ in the vault.</h2>
-    <p class="section-desc">Every engine has its own API endpoint, test interface, and execution tracking. Browse the live registry.</p>
+    <h2 class="section-title">20 production engines. 265+ in the vault.</h2>
+    <p class="section-desc">Every engine is a capability in the Emergent DNA architecture. Browse the registry.</p>
     <div class="engine-wall">
-      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Hybrid Intelligence Core</div>
-      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Routing Engine</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Hybrid Intelligence Core</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Routing Engine</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Strategy Engine</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Plan Builder</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Analysis Engine</div>
@@ -527,8 +537,8 @@ const LANDING_HTML = `
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Soulfire Engine</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Empire Lyric Master</div>
       <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Acid Vocal Chain</div>
-      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Omni Agent Runtime</div>
-      <div class="engine-pill"><span class="ed" style="background:var(--cyan)"></span>Identity Firewall</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Omni Agent Runtime</div>
+      <div class="engine-pill"><span class="ed" style="background:var(--pink)"></span>Identity Firewall</div>
       <div class="engine-pill"><span class="ed" style="background:var(--gold)"></span>Arcade Controller</div>
       <div class="engine-pill"><span class="ed" style="background:#ff6b35"></span>Cultura Forge</div>
       <div class="engine-pill"><span class="ed" style="background:#ff6b35"></span>Heritage Logic</div>
@@ -537,21 +547,86 @@ const LANDING_HTML = `
   </div>
 </section>
 
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Adopt the DNA at any scale.</h2>
+    <p class="section-desc">From methodology license to platform licensing. Pick your entry point into architectural sovereignty.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="tier-name">Methodology</div>
+        <div class="price">$5K<small>/yr</small></div>
+        <div class="price-desc">Learn the 7-layer decomposition model. Templates, decision trees, quarterly office hours.</div>
+        <ul>
+          <li>Video course (4 hours)</li>
+          <li>Workbooks + templates</li>
+          <li>Decision tree framework</li>
+          <li>Quarterly office hours</li>
+          <li>Community access</li>
+        </ul>
+        <a href="mailto:manda@empire1.cloud" class="btn-primary">License the DNA</a>
+      </div>
+      <div class="price-card">
+        <div class="tier-name">Consulting</div>
+        <div class="price">$10K<small>/project</small></div>
+        <div class="price-desc">3-week engagement. We map the Emergent DNA to your specific problem and deliver a blueprint.</div>
+        <ul>
+          <li>Discovery week</li>
+          <li>Architecture blueprint</li>
+          <li>Implementation guide</li>
+          <li>Leverage point analysis</li>
+          <li>30-day follow-up</li>
+        </ul>
+        <a href="mailto:manda@empire1.cloud" class="btn-primary">Book a Call</a>
+      </div>
+      <div class="price-card pop">
+        <div class="tier-name">Done-for-You</div>
+        <div class="price">$100K<small>/engagement</small></div>
+        <div class="price-desc">8-12 weeks. We design, build, and launch your platform. MVP in a quarter.</div>
+        <ul>
+          <li>Full architecture design</li>
+          <li>System decomposition</li>
+          <li>MVP buildout</li>
+          <li>Engine development</li>
+          <li>Deployment + monitoring</li>
+          <li>Team knowledge transfer</li>
+        </ul>
+        <a href="mailto:manda@empire1.cloud" class="btn-primary">Build Your Empire</a>
+      </div>
+      <div class="price-card">
+        <div class="tier-name">Platform License</div>
+        <div class="price">25%<small> rev share</small></div>
+        <div class="price-desc">White-label the HIC. Your brand, your domain, your customers. We handle the architecture.</div>
+        <ul>
+          <li>Full HIC white-label</li>
+          <li>Custom engine configuration</li>
+          <li>Private SLA-113 control plane for your team</li>
+          <li>Unlimited scaling</li>
+          <li>Revenue share model</li>
+          <li>Direct engineering line</li>
+        </ul>
+        <a href="mailto:manda@empire1.cloud" class="btn-primary">License the Platform</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FINAL CTA -->
 <section class="final-cta">
   <div class="container">
-    <h2>Sovereignty<br>begins <span style="color:var(--pink)">here</span></h2>
-    <p>Stop renting someone else's platform. Build on infrastructure that respects creator equity by design.</p>
+    <h2>Why 99% of AI products fail.<br><span style="color:var(--pink)">Bad architecture.</span></h2>
+    <p>We don't build features. We architect empires. The DNA is your moat. Once you own it, you own the market for systems architecture at scale.</p>
     <div class="hero-ctas" style="justify-content:center">
-      <a href="https://empire1.cloud" class="btn-primary">Create Your API Key →</a>
-      <a href="mailto:manda@empire1.cloud" class="btn-secondary">Talk to the founder</a>
+      <a href="mailto:manda@empire1.cloud" class="btn-primary">Talk to the Architect →</a>
+      <a href="#engines" class="btn-secondary">See the Engine Registry</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <p>EMPIRE-1 · HYBRID INTELLIGENCE CORE · 6 UNIVERSES · 20 ENGINES · 265+ IN VAULT</p>
+    <p>EMERGENT DNA · HYBRID INTELLIGENCE CORE · 6 UNIVERSES · 20 ENGINES · $936K ARR</p>
     <p style="margin-top:6px;color:#333">Built in El Monte, CA · SGV since day one</p>
   </div>
 </footer>
