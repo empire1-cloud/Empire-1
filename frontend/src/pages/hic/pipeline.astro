@@ -1,0 +1,66 @@
+---
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+import { api } from '@/lib/api';
+
+let templates: Record<string, any> | null = null;
+let engines: Record<string, any> | null = null;
+let error: string | null = null;
+
+try {
+  [templates, engines] = await Promise.all([api.pipelineTemplates(), api.pipelineEngines()]);
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to connect';
+}
+---
+
+<DashboardLayout title="Pipeline Composer">
+  {
+    error ? (
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <p class="text-foreground-muted">{error}</p>
+      </div>
+    ) : (
+      <div class="space-y-6">
+        <div class="flex items-center gap-3">
+          <h2 class="text-xl font-semibold text-foreground">Pipeline Composer</h2>
+          <span class="rounded-full bg-brand-500/10 px-3 py-0.5 text-xs font-medium text-brand-400">Beta</span>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-2">
+          <!-- Available Engines -->
+          <div class="rounded-xl border border-border bg-card p-6">
+            <h2 class="mb-4 text-lg font-semibold text-foreground">Available Engines</h2>
+            {engines ? (
+              <div class="space-y-2">
+                {Object.entries(engines).map(([name, desc]) => (
+                  <div class="flex items-center justify-between rounded-lg border border-border bg-background-secondary/30 px-4 py-2.5 transition-all hover:border-brand-500/20">
+                    <span class="text-sm font-medium text-foreground">{name}</span>
+                    <span class="text-xs text-foreground-muted">{String(desc)}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="text-sm text-foreground-muted">No engine data available (endpoint may require authentication).</p>
+            )}
+          </div>
+
+          <!-- Pipeline Templates -->
+          <div class="rounded-xl border border-border bg-card p-6">
+            <h2 class="mb-4 text-lg font-semibold text-foreground">Pipeline Templates</h2>
+            {templates ? (
+              <div class="space-y-3">
+                {Object.entries(templates).map(([name, _config]) => (
+                  <div class="rounded-lg border border-border bg-background-secondary/30 px-4 py-3 transition-all hover:border-brand-500/30 hover:bg-brand-500/5">
+                    <h3 class="font-medium text-foreground">{name.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}</h3>
+                    <p class="mt-0.5 text-xs text-foreground-muted">{String(_config)}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="text-sm text-foreground-muted">No template data available.</p>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
+</DashboardLayout>

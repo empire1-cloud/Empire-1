@@ -1,0 +1,73 @@
+---
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+import { api } from '@/lib/api';
+
+let presets: Record<string, any> | null = null;
+let error: string | null = null;
+
+try {
+  presets = await api.evalPresets();
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to connect';
+}
+---
+
+<DashboardLayout title="Evaluator Engine">
+  {
+    error ? (
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <p class="text-foreground-muted">{error}</p>
+      </div>
+    ) : (
+      <div class="space-y-6">
+        <div class="flex items-center gap-3">
+          <h2 class="text-xl font-semibold text-foreground">Evaluator Engine</h2>
+          <span class="rounded-full bg-brand-500/10 px-3 py-0.5 text-xs font-medium text-brand-400">Pure Function</span>
+        </div>
+        <div class="rounded-xl border border-border bg-card p-6">
+          <h2 class="mb-4 text-lg font-semibold text-foreground">Evaluation Presets</h2>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {presets ? (
+              Object.entries(presets).map(([name, criteria]) => (
+                <div class="rounded-lg border border-border bg-background-secondary/30 p-4 transition-all hover:border-brand-500/20">
+                  <h3 class="mb-2 font-semibold text-foreground">{name.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}</h3>
+                  <ul class="space-y-1">
+                    {(criteria as string[]).map((c: string) => (
+                      <li class="flex items-center gap-2 text-sm text-foreground-muted">
+                        <span class="h-1.5 w-1.5 rounded-full bg-brand-400"></span>
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            ) : (
+              <p class="col-span-full text-sm text-foreground-muted">Loading...</p>
+            )}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border bg-card p-6">
+          <h2 class="mb-4 text-lg font-semibold text-foreground">Architecture</h2>
+          <p class="text-sm text-foreground-muted">
+            The Evaluator Engine scores outputs against quality dimensions using heuristic text analysis — no LLM calls, no side effects, fully testable.
+          </p>
+          <div class="mt-4 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-lg border border-brand-500/20 bg-brand-500/5 p-4 text-center">
+              <p class="text-lg font-bold text-brand-400">score_dimensions</p>
+              <p class="text-xs text-foreground-muted mt-1">Scores 1-10 per criterion</p>
+            </div>
+            <div class="rounded-lg border border-brand-500/20 bg-brand-500/5 p-4 text-center">
+              <p class="text-lg font-bold text-brand-400">aggregate_scores</p>
+              <p class="text-xs text-foreground-muted mt-1">Weighted average aggregation</p>
+            </div>
+            <div class="rounded-lg border border-brand-500/20 bg-brand-500/5 p-4 text-center">
+              <p class="text-lg font-bold text-brand-400">evaluate_async</p>
+              <p class="text-xs text-foreground-muted mt-1">LLM-powered deep evaluation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+</DashboardLayout>

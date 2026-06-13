@@ -3,6 +3,9 @@ Hybrid Intelligence Core
 
 The master orchestrator that coordinates, executes, and maintains
 the multi-model AI pipeline composed of specialized engines.
+
+Supports primary → fallback chain → graceful exit orchestration
+across the evolved model pool (GPT-4o mini, Mistral, Gemini 1.5 Pro, Claude 3.5 Sonnet).
 """
 
 from enum import Enum
@@ -100,12 +103,12 @@ class HybridIntelligenceCore:
         force_model: Optional[str] = None
     ) -> PipelineResult:
         """
-        Execute the full hybrid pipeline.
+        Execute the full hybrid pipeline with fallback orchestration.
         
         Pipeline Order:
         1. Task Classification (if not specified)
         2. Routing Engine
-        3. Engine Execution (Strategy/Plan/Analysis)
+        3. Engine Execution with Primary → Fallback Chain → Graceful Exit
         4. Canon Enforcer
         5. Drift Monitor
         6. Return Result (or Error Handler on failure)
@@ -121,23 +124,58 @@ class HybridIntelligenceCore:
             # Stage 2: Routing
             current_stage = PipelineStage.ROUTING
             routing_decision = RoutingEngine.route(prompt, force_model)
-            selected_model = routing_decision.model
+            primary_model = routing_decision.model
             
-            # Stage 3: Engine Execution
+            # Stage 3: Engine Execution with fallback orchestration
             current_stage = PipelineStage.STRATEGY
             
-            if task_type == TaskType.PLAN:
-                raw_output = await PlanBuilderEngine.build_plan_async(
-                    goal=prompt,
-                    context=context,
-                    model=selected_model
-                )
-            else:
-                raw_output = await StrategyEngine.generate_async(
-                    model=selected_model,
-                    goal=prompt,
-                    context=context,
-                    tone="direct"
+            # Build ordered deduplicated model list: primary + fallback chain
+            models_to_try = [primary_model] + routing_decision.fallback_chain
+            seen = set()
+            models_to_try = [m for m in models_to_try if not (m in seen or seen.add(m))]
+            
+            raw_output = None
+            last_error = None
+            model_used = None
+            
+            for model in models_to_try:
+                try:
+                    if task_type == TaskType.PLAN:
+                        raw_output = await PlanBuilderEngine.build_plan_async(
+                            goal=prompt,
+                            context=context,
+                            model=model
+                        )
+                    else:
+                        raw_output = await StrategyEngine.generate_async(
+                            model=model,
+                            goal=prompt,
+                            context=context,
+                            tone="direct"
+                        )
+                    model_used = model
+                    break
+                except Exception as e:
+                    last_error = e
+                    continue
+            
+            # Graceful exit — all models failed
+            if raw_output is None:
+                end_time = datetime.now(timezone.utc)
+                return PipelineResult(
+                    success=False,
+                    error={
+                        "type": "generation_error",
+                        "message": f"All models in fallback chain failed. Last error: {str(last_error)}",
+                        "stage": "strategy",
+                        "models_attempted": models_to_try
+                    },
+                    metadata={
+                        "task_type": task_type.value,
+                        "models_attempted": models_to_try,
+                        "latency_ms": int((end_time - start_time).total_seconds() * 1000),
+                        "timestamp": end_time.isoformat()
+                    }
                 )
             
             # Stage 4: Canon Enforcement
@@ -147,13 +185,14 @@ class HybridIntelligenceCore:
             
             # Stage 5: Drift Monitoring
             current_stage = PipelineStage.DRIFT
-            drift_report = DriftMonitor.check(cleaned_output, selected_model)
+            drift_report = DriftMonitor.check(cleaned_output, model_used)
             
             # Build metadata
             end_time = datetime.now(timezone.utc)
             metadata = {
                 "task_type": task_type.value,
-                "model_used": selected_model,
+                "model_used": model_used,
+                "primary_model": primary_model,
                 "routing_reason": routing_decision.reason,
                 "canon_compliant": canon_validation["is_compliant"],
                 "drift_status": drift_report.canon_compliance,
@@ -250,7 +289,7 @@ class HybridIntelligenceCore:
             prompt=analysis_prompt,
             task_type=TaskType.ANALYSIS,
             context=context,
-            force_model="claude-sonnet-4.5"  # Force Claude for analysis
+            force_model="claude-3.5-sonnet"  # Force Claude for analysis
         )
     
     def get_execution_log(self, limit: int = 100) -> List[Dict]:
@@ -271,9 +310,10 @@ class HybridIntelligenceCore:
                 "error_handler": "active"
             },
             "models": {
-                "gpt-5.2": "available",
-                "claude-sonnet-4.5": "available",
-                "gemini-3-flash": "available"
+                "gpt-4o-mini": "available",
+                "mistral": "available",
+                "gemini-1.5-pro": "available",
+                "claude-3.5-sonnet": "available"
             },
             "drift_report": DriftMonitor.get_drift_report("all"),
             "executions_logged": len(self.execution_log)

@@ -1,0 +1,110 @@
+---
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+import { api } from '@/lib/api';
+
+let coreStatus: Record<string, any> | null = null;
+let health: Record<string, any> | null = null;
+let error: string | null = null;
+
+try {
+  [coreStatus, health] = await Promise.all([api.coreStatus(), api.health()]);
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to connect to HIC backend';
+}
+---
+
+<DashboardLayout title="Hybrid Intelligence Core">
+  {
+    error ? (
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="mb-4 text-5xl opacity-50">&#9888;</div>
+        <h2 class="mb-2 text-xl font-semibold text-foreground">Backend Offline</h2>
+        <p class="max-w-md text-foreground-muted">{error}</p>
+      </div>
+    ) : (
+      <div class="space-y-6">
+
+        <!-- Status Cards -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="rounded-xl border border-border bg-gradient-to-br from-card to-background-secondary p-5">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-green-500"></span>
+              <p class="text-xs font-medium uppercase tracking-wider text-foreground-muted">System Status</p>
+            </div>
+            <p class="mt-2 text-2xl font-bold text-foreground capitalize">{coreStatus?.status ?? 'unknown'}</p>
+          </div>
+          <div class="rounded-xl border border-border bg-gradient-to-br from-card to-background-secondary p-5">
+            <div class="flex items-center gap-2">
+              <span class="text-brand-400 text-sm">&#9881;</span>
+              <p class="text-xs font-medium uppercase tracking-wider text-foreground-muted">Engines</p>
+            </div>
+            <p class="mt-2 text-2xl font-bold text-foreground">{Object.keys(coreStatus?.engines ?? {}).length}</p>
+          </div>
+          <div class="rounded-xl border border-border bg-gradient-to-br from-card to-background-secondary p-5">
+            <div class="flex items-center gap-2">
+              <span class="text-brand-400 text-sm">&#9733;</span>
+              <p class="text-xs font-medium uppercase tracking-wider text-foreground-muted">Models</p>
+            </div>
+            <p class="mt-2 text-2xl font-bold text-foreground">{Object.keys(coreStatus?.models ?? {}).length}</p>
+          </div>
+          <div class="rounded-xl border border-border bg-gradient-to-br from-card to-background-secondary p-5">
+            <div class="flex items-center gap-2">
+              <span class="text-brand-400 text-sm">&#9654;</span>
+              <p class="text-xs font-medium uppercase tracking-wider text-foreground-muted">Executions</p>
+            </div>
+            <p class="mt-2 text-2xl font-bold text-foreground">{coreStatus?.executions_logged ?? 0}</p>
+          </div>
+        </div>
+
+        <!-- Model Pool -->
+        <div class="rounded-xl border border-border bg-card p-6">
+          <h2 class="mb-4 text-lg font-semibold text-foreground">Model Pool</h2>
+          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {Object.entries(health?.models ?? {}).map(([model, status]) => (
+              <div class="flex items-center justify-between rounded-lg border border-border bg-background-secondary/50 px-4 py-3 transition-all hover:border-brand-500/20">
+                <span class="font-mono text-sm text-foreground">{model}</span>
+                <span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium text-green-400 bg-green-500/10">
+                  <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                  {status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Engine List -->
+        <div class="rounded-xl border border-border bg-card p-6">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-foreground">Registered Engines</h2>
+            <span class="rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-400">{health?.engines?.length ?? 0} total</span>
+          </div>
+          <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {(health?.engines ?? []).map((engine: string) => (
+              <div class="flex items-center gap-2 rounded-lg border border-border bg-background-secondary/30 px-3 py-2 text-sm text-foreground-muted transition-all hover:border-brand-500/20 hover:text-foreground">
+                <span class="h-2 w-2 rounded-full bg-brand-400"></span>
+                {engine}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Drift Report -->
+        <div class="rounded-xl border border-border bg-card p-6">
+          <h2 class="mb-4 text-lg font-semibold text-foreground">Drift Monitoring</h2>
+          {coreStatus?.drift_report ? (
+            <div class="space-y-2 text-sm text-foreground-muted">
+              <div class="flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full {coreStatus.drift_report.status === 'healthy' ? 'bg-green-500' : 'bg-amber-500'}"></span>
+                <span class="font-medium text-foreground">{coreStatus.drift_report.status}</span>
+              </div>
+              <p>Samples analyzed: <span class="text-foreground">{coreStatus.drift_report.sample_count}</span></p>
+              {coreStatus.drift_report.message && <p class="mt-2 text-foreground-muted">{coreStatus.drift_report.message}</p>}
+            </div>
+          ) : (
+            <p class="text-sm text-foreground-muted">No drift data available</p>
+          )}
+        </div>
+      </div>
+    )
+  }
+</DashboardLayout>

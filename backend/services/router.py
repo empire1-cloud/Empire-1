@@ -1,91 +1,140 @@
 from pydantic import BaseModel
 import re
 from enum import Enum
+from typing import Optional, List
 
-class TaskCategory(Enum):
-    CODE = "code"
-    ANALYSIS = "analysis"
-    QUICK = "quick"
-    STRATEGY = "strategy"
+
+class ComplexityLevel(Enum):
+    SIMPLE = "simple"
+    MEDIUM = "medium"
+    COMPLEX = "complex"
     GENERAL = "general"
+
 
 class RoutingDecision(BaseModel):
     model: str
     reason: str
+    complexity: str
+    fallback_chain: List[str]
+
 
 class RoutingEngine:
-    """Routes requests to optimal model based on task analysis."""
-    
+    MODEL_POOL = {
+        "gpt-4o-mini": {
+            "provider": "openai",
+            "strength": "fast, low cost, high throughput",
+            "tier": "simple",
+        },
+        "mistral": {
+            "provider": "mistral",
+            "strength": "fast, low cost, high throughput",
+            "tier": "simple",
+        },
+        "gemini-1.5-pro": {
+            "provider": "google",
+            "strength": "large context window, data integration",
+            "tier": "medium",
+        },
+        "claude-3.5-sonnet": {
+            "provider": "anthropic",
+            "strength": "deep reasoning and creative nuance",
+            "tier": "complex",
+        },
+    }
+
     PATTERNS = {
-        TaskCategory.CODE: [
-            r"\bcode\b", r"\bfunction\b", r"\bclass\b", r"\bapi\b",
-            r"\bdebug\b", r"\bfix\b", r"\brefactor\b", r"\bpython\b",
-            r"\bjavascript\b", r"\bsql\b", r"\bprogram\b", r"\bbuild\b"
+        ComplexityLevel.SIMPLE: [
+            r"\bwhat is\b", r"\bdefine\b", r"\blist\b", r"\bextract\b",
+            r"\btranslate\b", r"\bconvert\b", r"\bsummarize\b", r"\bquick\b",
+            r"\bsimple\b", r"\bqa\b", r"\bquestion\b", r"\banswer\b",
+            r"\bfind\b", r"\bsearch\b", r"\blookup\b",
         ],
-        TaskCategory.ANALYSIS: [
-            r"\banalyze\b", r"\breview\b", r"\bcompare\b",
-            r"\bevaluate\b", r"\bassess\b", r"\binterpret\b"
+        ComplexityLevel.MEDIUM: [
+            r"\bdraft\b", r"\bwrite\b", r"\bcompose\b", r"\bresearch\b",
+            r"\bexplain\b", r"\bdescribe\b", r"\boutline\b", r"\bgenerate\b",
+            r"\bcreate\b", r"\bplan\b", r"\bstrategy\b", r"\banalyze\b",
+            r"\breview\b", r"\bsummarize.*document\b",
         ],
-        TaskCategory.STRATEGY: [
-            r"\bstrategy\b", r"\bmonetize\b", r"\bplan\b", r"\bgrow\b",
-            r"\bscale\b", r"\blaunch\b", r"\bmarket\b", r"\bbusiness\b"
+        ComplexityLevel.COMPLEX: [
+            r"\breason\b", r"\bnuan[ck]e\b", r"\bdepth\b", r"\bcreative\b",
+            r"\bcomplex\b", r"\bdifficult\b", r"\bintricate\b", r"\bphilosophical\b",
+            r"\bethical\b", r"\bargue\b", r"\bdebate\b", r"\bcritique\b",
+            r"\bsynthesize\b", r"\bintegrate\b", r"\btheorem\b", r"\bproof\b",
         ],
-        TaskCategory.QUICK: [
-            r"\bquick\b", r"\bsimple\b", r"\bwhat is\b", r"\bdefine\b",
-            r"\btranslate\b", r"\bconvert\b", r"\blist\b", r"\bsummarize\b"
-        ]
     }
-    
-    CATEGORY_MODEL_MAP = {
-        TaskCategory.CODE: "gpt-5.2",
-        TaskCategory.ANALYSIS: "claude-sonnet-4.5",
-        TaskCategory.STRATEGY: "claude-sonnet-4.5",
-        TaskCategory.QUICK: "gemini-3-flash",
-        TaskCategory.GENERAL: "gpt-5.2"
+
+    COMPLEXITY_MODEL_MAP = {
+        ComplexityLevel.SIMPLE: "gpt-4o-mini",
+        ComplexityLevel.MEDIUM: "gemini-1.5-pro",
+        ComplexityLevel.COMPLEX: "claude-3.5-sonnet",
+        ComplexityLevel.GENERAL: "gemini-1.5-pro",
     }
-    
-    CATEGORY_REASONS = {
-        TaskCategory.CODE: "Complex reasoning and code generation task — routed to GPT-5.2",
-        TaskCategory.ANALYSIS: "Analysis and structured thinking task — routed to Claude",
-        TaskCategory.STRATEGY: "Strategy and planning task — routed to Claude",
-        TaskCategory.QUICK: "Fast, simple task — routed to Gemini Flash",
-        TaskCategory.GENERAL: "General task — routed to GPT-5.2 as default"
+
+    FALLBACK_CHAINS = {
+        "gpt-4o-mini": ["mistral", "gemini-1.5-pro", "claude-3.5-sonnet"],
+        "mistral": ["gpt-4o-mini", "gemini-1.5-pro", "claude-3.5-sonnet"],
+        "gemini-1.5-pro": ["claude-3.5-sonnet", "gpt-4o-mini"],
+        "claude-3.5-sonnet": ["gemini-1.5-pro", "gpt-4o-mini"],
     }
-    
+
+    COMPLEXITY_REASONS = {
+        ComplexityLevel.SIMPLE: "Simple Q&A/extraction task — routed to fast, low-cost model",
+        ComplexityLevel.MEDIUM: "Medium-complexity drafting/research task — routed to Gemini 1.5 Pro for large context",
+        ComplexityLevel.COMPLEX: "Complex reasoning/nuance task — routed to Claude 3.5 Sonnet for deep reasoning",
+        ComplexityLevel.GENERAL: "General task — routed to Gemini 1.5 Pro as default",
+    }
+
     @classmethod
     def _compile_patterns(cls):
         return {
-            category: [re.compile(p, re.IGNORECASE) for p in patterns]
-            for category, patterns in cls.PATTERNS.items()
+            level: [re.compile(p, re.IGNORECASE) for p in patterns]
+            for level, patterns in cls.PATTERNS.items()
         }
-    
+
     @classmethod
-    def _classify_task(cls, prompt: str) -> TaskCategory:
+    def _classify(cls, prompt: str) -> ComplexityLevel:
         compiled = cls._compile_patterns()
-        scores = {category: 0 for category in TaskCategory}
-        
-        for category, patterns in compiled.items():
+        scores = {level: 0 for level in ComplexityLevel}
+
+        for level, patterns in compiled.items():
             for pattern in patterns:
                 if pattern.search(prompt):
-                    scores[category] += 1
-        
-        max_category = max(scores, key=scores.get)
-        
-        if scores[max_category] == 0:
-            return TaskCategory.GENERAL
-        
-        return max_category
-    
+                    scores[level] += 1
+
+        # Complex match overrides if confidence is high
+        if scores[ComplexityLevel.COMPLEX] >= 2:
+            return ComplexityLevel.COMPLEX
+
+        max_level = max(scores, key=scores.get)
+
+        if scores[max_level] == 0:
+            return ComplexityLevel.GENERAL
+
+        return max_level
+
     @classmethod
-    def route(cls, goal: str, force_model: str = None) -> RoutingDecision:
+    def route(cls, goal: str, force_model: Optional[str] = None) -> RoutingDecision:
         if force_model:
+            fallback = cls.FALLBACK_CHAINS.get(force_model, ["gpt-4o-mini"])
             return RoutingDecision(
                 model=force_model,
-                reason=f"Model override specified — using {force_model}"
+                reason=f"Model override specified — using {force_model}",
+                complexity="override",
+                fallback_chain=fallback,
             )
-        
-        category = cls._classify_task(goal)
-        model = cls.CATEGORY_MODEL_MAP[category]
-        reason = cls.CATEGORY_REASONS[category]
-        
-        return RoutingDecision(model=model, reason=reason)
+
+        complexity = cls._classify(goal)
+        model = cls.COMPLEXITY_MODEL_MAP[complexity]
+        reason = cls.COMPLEXITY_REASONS[complexity]
+        fallback = cls.FALLBACK_CHAINS.get(model, ["gpt-4o-mini"])
+
+        return RoutingDecision(
+            model=model,
+            reason=reason,
+            complexity=complexity.value,
+            fallback_chain=fallback,
+        )
+
+    @classmethod
+    def get_available_models(cls) -> dict:
+        return cls.MODEL_POOL

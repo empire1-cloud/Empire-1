@@ -11,21 +11,21 @@ BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
 
 class TestHealthEndpoint:
-    """Test /api/health endpoint - should return all 18 engines"""
+    """Test /api/health endpoint - should return all 19 engines"""
     
     def test_health_returns_200(self):
         """Health endpoint should return 200 OK"""
         response = requests.get(f"{BASE_URL}/api/health")
         assert response.status_code == 200
     
-    def test_health_returns_all_18_engines(self):
-        """Health endpoint should list all 18 engines"""
+    def test_health_returns_all_19_engines(self):
+        """Health endpoint should list all 19 engines"""
         response = requests.get(f"{BASE_URL}/api/health")
         data = response.json()
         
         assert data["status"] == "healthy"
         assert "engines" in data
-        assert len(data["engines"]) == 18
+        assert len(data["engines"]) == 19
         
         # Verify key engines are present
         expected_engines = [
@@ -43,6 +43,7 @@ class TestHealthEndpoint:
             "anime_lore_engine",
             "anime_story_engine",
             "art_direction_engine",
+            "money_pipeline_engine",
             "pipeline_composer_engine",
             "canon_enforcer",
             "drift_monitor",
@@ -57,9 +58,10 @@ class TestHealthEndpoint:
         data = response.json()
         
         assert "models" in data
-        assert data["models"]["gpt-5.2"] == "available"
-        assert data["models"]["claude-sonnet-4.5"] == "available"
-        assert data["models"]["gemini-3-flash"] == "available"
+        assert data["models"]["gpt-4o-mini"] == "available"
+        assert data["models"]["mistral"] == "available"
+        assert data["models"]["gemini-1.5-pro"] == "available"
+        assert data["models"]["claude-3.5-sonnet"] == "available"
 
 
 class TestArtDirectionEndpoints:

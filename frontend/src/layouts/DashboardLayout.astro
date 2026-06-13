@@ -1,0 +1,60 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Dashboard', description } = Astro.props;
+const siteTitle = `Empire-1 HIC — ${title}`;
+---
+
+<BaseLayout title={siteTitle} description={description}>
+  <div class="flex min-h-screen">
+    <aside class="w-64 shrink-0 border-r border-border bg-background-secondary/50 p-6 hidden lg:block">
+      <nav class="space-y-1">
+        <a href="/" class="mb-6 flex items-center gap-2 text-lg font-bold text-foreground">
+          <span class="text-brand-500">&larr;</span> Empire-1
+        </a>
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-foreground-muted">Hybrid Core</p>
+        <a
+          href="/hic"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground"
+        >
+          Overview
+        </a>
+        <a
+          href="/hic/engines"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground"
+        >
+          Engines
+        </a>
+        <a
+          href="/hic/pipeline"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground"
+        >
+          Pipeline Composer
+        </a>
+        <a
+          href="/hic/evaluate"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground"
+        >
+          Evaluator
+        </a>
+      </nav>
+    </aside>
+
+    <div class="flex-1">
+      <header class="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur-md">
+        <div class="flex items-center justify-between px-6 py-4">
+          <h1 class="text-lg font-semibold text-foreground">{title}</h1>
+        </div>
+      </header>
+
+      <div class="p-6">
+        <slot />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

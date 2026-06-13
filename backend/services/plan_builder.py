@@ -30,13 +30,14 @@ class PlanBuilderEngine:
     """Converts goals/strategies into actionable execution plans."""
     
     MODEL_CONFIG = {
-        "gpt-5.2": ("openai", "gpt-5.2"),
-        "claude-sonnet-4.5": ("anthropic", "claude-sonnet-4-5-20250929"),
-        "gemini-3-flash": ("gemini", "gemini-3-flash-preview")
+        "gpt-4o-mini": ("openai", "gpt-4o-mini"),
+        "mistral": ("mistral", "mistral-latest"),
+        "gemini-1.5-pro": ("google", "gemini-1.5-pro"),
+        "claude-3.5-sonnet": ("anthropic", "claude-3-5-sonnet-20241022"),
     }
     
-    # Default to GPT-5.2 for planning (complex reasoning)
-    DEFAULT_MODEL = "gpt-5.2"
+    # Default to Claude 3.5 Sonnet for planning (deep reasoning)
+    DEFAULT_MODEL = "claude-3.5-sonnet"
     
     SYSTEM_PROMPT = """You are the Plan Builder Engine.
 

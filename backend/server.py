@@ -41,7 +41,7 @@ async def lifespan(app: FastAPI):
 # Create the main app with lifespan
 app = FastAPI(
     title="Hybrid AI Stack",
-    description="Multi-model AI pipeline with GPT-5.2, Claude Sonnet 4.5, and Gemini 3 Flash",
+    description="Multi-model AI pipeline with GPT-4o mini, Mistral, Gemini 1.5 Pro, and Claude 3.5 Sonnet",
     version="2.0.0",
     lifespan=lifespan,
 )
@@ -193,7 +193,13 @@ async def root_health_check():
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["https://www.lyrica3.com"],
+    allow_origins=[
+        "https://www.lyrica3.com",
+        "https://empire1.cloud",
+        "https://www.empire1.cloud",
+        "http://localhost:3000",
+        "http://localhost:4321",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

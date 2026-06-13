@@ -1,0 +1,9 @@
+/* =============================================================================
+   Empire-1 Design Tokens - Colors
+   =============================================================================
+   This file aggregates primitive color scales and the active theme.
+   To switch themes, change the theme import below.
+   ============================================================================= */
+
+@import './primitives.css';
+@import '../themes/obsidian.css';

@@ -1,0 +1,170 @@
+---
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+import { api } from '@/lib/api';
+
+let health: Record<string, any> | null = null;
+let error: string | null = null;
+
+try {
+  health = await api.health();
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to connect';
+}
+
+const engineCategories = [
+  {
+    name: 'Core',
+    description: 'Orchestration & system control',
+    color: 'text-pink-400',
+    bgColor: 'bg-pink-500/10',
+    borderColor: 'border-pink-500/20',
+    engines: ['core', 'strategy', 'pipeline', 'evaluator', 'drift'],
+  },
+  {
+    name: 'Intelligence',
+    description: 'Analysis, planning & opportunity detection',
+    color: 'text-blue-300',
+    bgColor: 'bg-blue-500/10',
+    borderColor: 'border-blue-500/20',
+    engines: ['analysis', 'plan', 'opportunity', 'pricing'],
+  },
+  {
+    name: 'Creative',
+    description: 'World-building, narrative & character generation',
+    color: 'text-purple-300',
+    bgColor: 'bg-purple-500/10',
+    borderColor: 'border-purple-500/20',
+    engines: ['anime_character', 'anime_lore', 'anime_story', 'art_direction', 'persona'],
+  },
+  {
+    name: 'Business',
+    description: 'Monetization, analytics & media optimization',
+    color: 'text-emerald-300',
+    bgColor: 'bg-emerald-500/10',
+    borderColor: 'border-emerald-500/20',
+    engines: ['money_pipeline', 'analytics', 'voxcpm', 'audio_fx'],
+  },
+  {
+    name: 'Infrastructure',
+    description: 'Blueprint, error handling & canonical enforcement',
+    color: 'text-amber-300',
+    bgColor: 'bg-amber-500/10',
+    borderColor: 'border-amber-500/20',
+    engines: ['blueprint', 'canon', 'error'],
+  },
+];
+
+function categorizeEngine(name: string): string {
+  for (const cat of engineCategories) {
+    if (cat.engines.some((e: string) => name.includes(e))) return cat.name;
+  }
+  return 'Other';
+}
+
+function getEngineDescription(engine: string): string {
+  const descs: Record<string, string> = {
+    core: 'System orchestrator & hybrid intelligence dispatcher',
+    strategy: 'Multi-model strategy formulation & planning',
+    pipeline: 'Composable pipeline builder for multi-step workflows',
+    evaluator: 'Pure-function scoring engine for quality assessment',
+    drift: 'Model drift detection & performance monitoring',
+    analysis: 'Deep content analysis across all model dimensions',
+    plan: 'Structured plan generation with timeline & milestones',
+    opportunity: 'Opportunity identification & ranking',
+    pricing: 'Dynamic pricing strategy & optimization',
+    anime_character: 'Character profile generation with lore integration',
+    anime_lore: 'World-building & mythology generation',
+    anime_story: 'Narrative arc & episode script generation',
+    art_direction: 'Visual style guides & artistic direction',
+    persona: 'Persona modeling & behavioral simulation',
+    money_pipeline: 'Revenue pipeline modeling & forecasting',
+    analytics: 'Cross-engine analytics & performance metrics',
+    voxcpm: 'Voice & CPM optimization engine',
+    audio_fx: 'Audio effects processing & sound design',
+    blueprint: 'Architectural blueprint generation',
+    canon: 'Canonical output enforcement & tone normalization',
+    error: 'Structured error handling & recovery strategies',
+  };
+  return descs[engine] ?? 'AI-powered engine module';
+}
+
+function engineIcon(engine: string): string {
+  if (engine.includes('core')) return '⚡';
+  if (engine.includes('strategy')) return '🧠';
+  if (engine.includes('pipeline')) return '🔗';
+  if (engine.includes('evaluator')) return '⭐';
+  if (engine.includes('drift')) return '📊';
+  if (engine.includes('analysis')) return '🔍';
+  if (engine.includes('plan')) return '📋';
+  if (engine.includes('opportunity')) return '🎯';
+  if (engine.includes('pricing')) return '💰';
+  if (engine.includes('anime_character')) return '👤';
+  if (engine.includes('anime_lore')) return '📜';
+  if (engine.includes('anime_story')) return '📖';
+  if (engine.includes('art_direction')) return '🎨';
+  if (engine.includes('persona')) return '🗣️';
+  if (engine.includes('money')) return '💵';
+  if (engine.includes('analytics')) return '📈';
+  if (engine.includes('voxcpm')) return '🎙️';
+  if (engine.includes('audio')) return '🔊';
+  if (engine.includes('blueprint')) return '🏗️';
+  if (engine.includes('canon')) return '⚖️';
+  if (engine.includes('error')) return '⚠️';
+  return '🤖';
+}
+---
+
+<DashboardLayout title="Engine Registry">
+  <div class="space-y-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-semibold text-foreground">All Engines</h2>
+        <p class="text-sm text-foreground-muted">{health?.engines?.length ?? 0} registered modules</p>
+      </div>
+      <div class="flex items-center gap-2 rounded-lg border border-border bg-background-secondary/50 px-4 py-2">
+        <span class="h-2 w-2 rounded-full bg-green-500"></span>
+        <span class="text-sm text-foreground-muted">{error ? 'Offline' : 'Online'}</span>
+      </div>
+    </div>
+
+    {
+      error ? (
+        <div class="flex flex-col items-center justify-center py-20 text-center">
+          <p class="text-foreground-muted">{error}</p>
+        </div>
+      ) : (
+        engineCategories.map((category) => {
+          const catEngines = (health?.engines ?? []).filter((e: string) =>
+            category.engines.some((ce: string) => e.includes(ce))
+          );
+          if (catEngines.length === 0) return null;
+          return (
+            <div class="rounded-xl border border-border bg-card p-6">
+              <div class="mb-4 flex items-center gap-3">
+                <div class={`rounded-lg px-3 py-1 text-xs font-semibold uppercase tracking-wider ${category.color} ${category.bgColor}`}>
+                  {category.name}
+                </div>
+                <span class="text-sm text-foreground-muted">{category.description}</span>
+              </div>
+              <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {catEngines.map((engine: string) => {
+                  const cleanName = engine.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+                  return (
+                    <div class={`group rounded-lg border ${category.borderColor} bg-background-secondary/30 p-4 transition-all hover:${category.borderColor.replace('/20', '/40')} hover:shadow-sm`}>
+                      <div class="mb-2 flex items-center gap-2">
+                        <span class="text-xl">{engineIcon(engine)}</span>
+                        <h3 class="font-semibold text-foreground">{cleanName}</h3>
+                      </div>
+                      <p class="text-xs text-foreground-muted leading-relaxed">{getEngineDescription(engine)}</p>
+                      <p class="mt-1.5 font-mono text-[10px] text-foreground-subtle">{engine}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })
+      )
+    }
+  </div>
+</DashboardLayout>

@@ -1,0 +1,123 @@
+---
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { Hero } from '@/components/hero';
+import Button from '@/components/ui/form/Button/Button.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+---
+
+<LandingLayout
+  title="Empire-1 — Hybrid Intelligence Core"
+  description="245+ AI engines across gaming, music production, payments, cultural intelligence, and creator economy."
+>
+  <Hero layout="split" size="lg" showGrid showBlob blobPosition="right">
+    <Badge slot="badge" pill pulse class="bg-brand-500/20 text-brand-400 border-brand-500/30">Full-Stack AI Ecosystem</Badge>
+
+    <h1 slot="title">
+      <span class="text-brand-400">Empire-1</span>
+      <br />
+      <span class="text-foreground">AI Ecosystem</span>
+    </h1>
+
+    <p slot="description" class="text-foreground-muted">
+      Full-stack AI ecosystem — gaming, music, payments, cultural intelligence, and creator IP ownership.
+    </p>
+
+    <Fragment slot="actions">
+      <Button size="lg" href="/hic" class="bg-brand-500 hover:bg-brand-600 text-white border-0">
+        Explore Ecosystem
+        <Icon name="arrow-right" size="sm" />
+      </Button>
+    </Fragment>
+
+    <div slot="aside" class="relative flex items-center justify-center overflow-hidden rounded-xl border border-brand-500/20 bg-gradient-to-br from-background-secondary via-background-secondary to-brand-500/5 p-8 text-center">
+      <div class="relative z-10">
+        <div class="text-5xl font-bold bg-gradient-to-br from-brand-400 to-brand-600 bg-clip-text text-transparent">245+</div>
+        <p class="text-sm text-foreground-muted mt-1">AI Engines</p>
+        <div class="mt-4 flex flex-wrap justify-center gap-2">
+          <span class="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-medium text-brand-400">Gaming</span>
+          <span class="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-medium text-brand-400">Music</span>
+          <span class="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-medium text-brand-400">Payments</span>
+          <span class="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-medium text-brand-400">Cultural</span>
+        </div>
+      </div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--brand-500)_0%,_transparent_70%)] opacity-[0.03]"></div>
+    </div>
+  </Hero>
+
+  <!-- Ecosystem Products -->
+  <section class="py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="text-center mb-16">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+          The Empire-1 <span class="text-brand-400">Ecosystem</span>
+        </h2>
+        <p class="text-lg text-foreground-muted max-w-2xl mx-auto">
+          245+ AI engines powering gaming, music, payments, and cultural intelligence — all built for creator ownership.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-xl border border-border bg-card p-6 hover:border-brand-500/20 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 mb-4">
+            <span class="text-xl">&#9835;</span>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">LYRICA 3 Soulfire</h3>
+          <p class="text-sm text-foreground-muted leading-relaxed">
+            AI music production engine — generate, mix, and master tracks. Real-time voice synthesis, beat making, and full music pipeline.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border bg-card p-6 hover:border-brand-500/20 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 mb-4">
+            <span class="text-xl">&#9824;</span>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Southern Arcade</h3>
+          <p class="text-sm text-foreground-muted leading-relaxed">
+            Gaming engine suite — fishing, slots, keno, payout settlement, and tenant management. RNG-secured arcade infrastructure.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border bg-card p-6 hover:border-brand-500/20 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 mb-4">
+            <span class="text-xl">&#9881;</span>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Archisynapse</h3>
+          <p class="text-sm text-foreground-muted leading-relaxed">
+            Architecture and studio platform — multi-agent orchestration, project lifecycle management, and creative pipeline automation.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border bg-card p-6 hover:border-brand-500/20 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 mb-4">
+            <span class="text-xl">&#9733;</span>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Soulfire Engine</h3>
+          <p class="text-sm text-foreground-muted leading-relaxed">
+            Full-stack creative engine — character generation, world-building, lore, narrative, and cross-media content production.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border bg-card p-6 hover:border-brand-500/20 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 mb-4">
+            <span class="text-xl">&#36;</span>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Money Pipeline</h3>
+          <p class="text-sm text-foreground-muted leading-relaxed">
+            Payments and monetization engine — billing, subscriptions, revenue sharing, and payout settlement for creators and tenants.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-border bg-card p-6 hover:border-brand-500/20 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 mb-4">
+            <span class="text-xl">&#9788;</span>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Cultural Intelligence</h3>
+          <p class="text-sm text-foreground-muted leading-relaxed">
+            Canon identity engines — cultural context, emotional intelligence, story lineage, and creator IP ownership preservation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</LandingLayout>

@@ -118,9 +118,10 @@ async def health_check():
         "status": "healthy",
         "pipeline": "hybrid-ai-stack",
         "models": {
-            "gpt-5.2": "available",
-            "claude-sonnet-4.5": "available",
-            "gemini-3-flash": "available"
+            "gpt-4o-mini": "available",
+            "mistral": "available",
+            "gemini-1.5-pro": "available",
+            "claude-3.5-sonnet": "available"
         },
         "engines": [
             "hybrid_intelligence_core",

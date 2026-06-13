@@ -10,9 +10,10 @@ class StrategyEngine:
     """Generates actionable strategies using the hybrid AI stack."""
     
     MODEL_CONFIG = {
-        "gpt-5.2": ("openai", "gpt-5.2"),
-        "claude-sonnet-4.5": ("anthropic", "claude-sonnet-4-5-20250929"),
-        "gemini-3-flash": ("gemini", "gemini-3-flash-preview")
+        "gpt-4o-mini": ("openai", "gpt-4o-mini"),
+        "mistral": ("mistral", "mistral-latest"),
+        "gemini-1.5-pro": ("google", "gemini-1.5-pro"),
+        "claude-3.5-sonnet": ("anthropic", "claude-3-5-sonnet-20241022"),
     }
     
     SYSTEM_PROMPT = """You are the Strategy Engine.
@@ -47,7 +48,7 @@ Return ONLY the JSON object. No other text."""
     @classmethod
     def _create_chat(cls, model: str) -> LlmChat:
         api_key = cls._get_api_key()
-        provider, model_name = cls.MODEL_CONFIG.get(model, ("openai", "gpt-5.2"))
+        provider, model_name = cls.MODEL_CONFIG.get(model, ("openai", "gpt-4o-mini"))
         
         chat = LlmChat(
             api_key=api_key,

@@ -28,9 +28,10 @@ class DriftMonitor:
     
     # In-memory storage for metrics history
     _history: Dict[str, deque] = {
-        "gpt-5.2": deque(maxlen=100),
-        "claude-sonnet-4.5": deque(maxlen=100),
-        "gemini-3-flash": deque(maxlen=100),
+        "gpt-4o-mini": deque(maxlen=100),
+        "mistral": deque(maxlen=100),
+        "gemini-1.5-pro": deque(maxlen=100),
+        "claude-3.5-sonnet": deque(maxlen=100),
         "all": deque(maxlen=100)
     }
     
