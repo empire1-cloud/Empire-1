@@ -12,6 +12,7 @@
     "@pixi/filter-drop-shadow": "^5.2.0",
     "@pixi/filter-glow": "^5.2.1",
     "@pixi/filter-motion-blur": "^5.1.1",
+    "@vercel/analytics": "^2.0.1",
     "axios": "^1.13.6",
     "canvas": "^3.2.1",
     "clsx": "^2.1.1",
