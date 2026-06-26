@@ -1,0 +1,78 @@
+{
+  "description": "Sample payloads for Empire Revenue OS demo and paid outreach",
+  "note": "All payloads use persona/segment descriptions only — no real people, emails, or companies.",
+  "payloads": [
+    {
+      "name": "Empire-1 Demo (AI Revenue OS)",
+      "description": "Use Empire-1 itself as the demo business to show the full revenue loop",
+      "payload": {
+        "business_name": "Empire-1",
+        "business_type": "AI revenue operating system",
+        "current_offer": "Revenue OS for founders, creators, agencies, and local businesses",
+        "target_customer": "founders and small agencies who need money now",
+        "current_price": "$299",
+        "revenue_goal": "$5,000 by Monday",
+        "links_or_notes": "Empire Revenue OS command center is live and ready for paid outreach",
+        "urgency_level": "high",
+        "desired_output_type": "command",
+        "preferred_sales_channel": "mixed",
+        "founder_context": "Building the full revenue operating system across Money Pipeline, Pipeline Composer, Omni, billing, analytics, CRM/GTM, and execution logs",
+        "assets_available": "Revenue OS, Money Pipeline, Pipeline Composer, billing, analytics, execution logger, payment links",
+        "constraints": "Must be sellable immediately without waiting for perfect SaaS deployment"
+      }
+    },
+    {
+      "name": "Agency Demo (Local Service Agency)",
+      "description": "Show how an agency selling AI websites/automation gets a full revenue system",
+      "payload": {
+        "business_name": "Test Founder Studio",
+        "business_type": "agency",
+        "current_offer": "AI website and automation setup",
+        "target_customer": "local service businesses",
+        "current_price": "$500",
+        "revenue_goal": "$5,000 by Monday",
+        "links_or_notes": "Needs a fast paid offer, buyer list, outreach plan, payment path, and delivery receipt",
+        "urgency_level": "high",
+        "desired_output_type": "command",
+        "preferred_sales_channel": "mixed",
+        "founder_context": "Solo founder with existing AI tools and ability to deliver manually",
+        "assets_available": "Landing page, GitHub repo, AI automation skills, Stripe/manual payment option",
+        "constraints": "Must be sellable immediately without waiting for perfect SaaS deployment"
+      }
+    },
+    {
+      "name": "Creator Demo (Newsletter/Content Creator)",
+      "description": "Show how a creator with an audience and newsletter gets a paid offer and revenue system",
+      "payload": {
+        "business_name": "Creator Weekly",
+        "business_type": "creator",
+        "current_offer": "Weekly newsletter and content bundle",
+        "target_customer": "aspiring creators and side hustlers",
+        "current_price": "$0",
+        "revenue_goal": "$2,000 by Monday",
+        "links_or_notes": "Has audience but no paid offer. Needs a fast revenue path without a product launch",
+        "urgency_level": "high",
+        "desired_output_type": "command",
+        "preferred_sales_channel": "instagram",
+        "founder_context": "Solo creator with existing audience on Instagram and email list",
+        "assets_available": "Email list (2K subs), Instagram (5K followers), Canva, basic video editing",
+        "constraints": "No SaaS product. Must sell a service or info product. No tech skills"
+      }
+    },
+    {
+      "name": "Quick Receipt Demo (Fast Artifact)",
+      "description": "Use the /revenue-receipt endpoint for a fast single artifact",
+      "payload": {
+        "business_name": "Quick Demo Business",
+        "business_type": "other",
+        "current_offer": "Consulting services",
+        "target_customer": "small business owners",
+        "current_price": "$97",
+        "revenue_goal": "$1,000 this week",
+        "desired_output_type": "quick",
+        "urgency_level": "normal"
+      },
+      "endpoint": "/api/revenue-receipts/run"
+    }
+  ]
+}

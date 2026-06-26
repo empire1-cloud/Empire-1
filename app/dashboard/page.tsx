@@ -126,7 +126,7 @@ export default function EmpireDashboard() {
               </div>
             </div>
             <p className="text-xs text-[#737373] leading-relaxed mb-6">
-              Generate a paid offer, buyer list, outreach campaign, payment path, and delivery receipt from one command center.
+              Empire Revenue OS turns a business, repo, creator brand, or landing page into a paid offer, buyer list, outreach campaign, payment path, and delivery receipt.
             </p>
             <span className="inline-flex items-center gap-2 text-[10px] text-[#c9a84c] font-bold uppercase tracking-[0.3em] group-hover:gap-3 transition-all">
               Launch Revenue OS <ArrowRight className="w-3 h-3" />

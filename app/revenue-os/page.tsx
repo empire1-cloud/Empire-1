@@ -421,6 +421,17 @@ function CheckoutDeskPanel({ output }: { output: any }) {
             <div style={{ background: checkoutResult.manual_payment_required ? '#fff3cd' : '#d4edda', padding: '0.5rem', borderRadius: 4, marginTop: '0.5rem', fontSize: '0.85rem' }}>
               {checkoutResult.message}
             </div>
+            {checkoutResult.manual_payment_required && (
+              <div style={{ background: '#fef3cd', border: '1px solid #e6c952', borderRadius: 4, padding: '0.6rem', marginTop: '0.5rem', fontSize: '0.85rem' }}>
+                <strong>Manual Payment Instructions</strong>
+                <ol style={{ margin: '0.4rem 0 0 1.2rem', padding: 0 }}>
+                  <li>Send the buyer an invoice via PayPal, CashApp, Venmo, or Stripe invoice link.</li>
+                  <li>Mark the lead as <strong>invoice_sent</strong> in Pipeline Composer.</li>
+                  <li>When payment arrives, update the lead status to <strong>paid</strong> and record the actual value.</li>
+                  <li>Come back to this panel and run the Delivery Receipt step to send the receipt.</li>
+                </ol>
+              </div>
+            )}
             <p style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}><strong>Next step:</strong> {checkoutResult.next_step}</p>
           </Section>
         </div>
@@ -466,7 +477,13 @@ function DeliveryReceiptPanel({ output }: { output: any }) {
         </div>
       ) : (
         <div style={{ border: '2px solid #000', borderRadius: 8, padding: '1rem' }}>
-          <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.2rem' }}>Delivery Receipt</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Delivery Receipt</h3>
+            <div style={{ display: 'flex', gap: '0.4rem' }}>
+              <button onClick={() => { const t = [`Receipt: ${dr.receipt_id}`, `Customer: ${dr.customer_name}`, `Purchased: ${dr.purchased_offer}`, `Delivered Assets: ${(dr.delivered_assets||[]).join(', ')}`, `Next 7 Days: ${(dr.next_7_days||[]).join(' | ')}`, dr.upsell_recommendation ? `Upsell: ${dr.upsell_recommendation}` : ''].filter(Boolean).join('\n'); navigator.clipboard.writeText(t); }} style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: '#000', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer' }} title="Copy to clipboard">Copy</button>
+              <button onClick={() => { const blob = new Blob([`=== DELIVERY RECEIPT ===\nReceipt ID: ${dr.receipt_id}\nCustomer: ${dr.customer_name}\nPurchased: ${dr.purchased_offer}\n\n--- Delivered Assets ---\n${(dr.delivered_assets||[]).join('\n')}\n\n--- Next 7 Days ---\n${(dr.next_7_days||[]).join('\n')}${dr.upsell_recommendation ? `\n\nUpsell: ${dr.upsell_recommendation}` : ''}\n\nGenerated: ${dr.timestamp ? new Date(dr.timestamp).toLocaleString() : ''}`], { type: 'text/plain' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `receipt-${dr.receipt_id || 'download'}.txt`; a.click(); URL.revokeObjectURL(a.href); }} style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: '#000', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer' }} title="Download as .txt">Download</button>
+            </div>
+          </div>
           <KV k="Receipt ID" v={dr.receipt_id} />
           <KV k="Customer" v={dr.customer_name} />
           <KV k="Purchased" v={dr.purchased_offer} />
