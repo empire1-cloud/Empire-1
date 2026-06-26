@@ -8,7 +8,7 @@ import { setSla113Session, type Sla113Role } from '@/lib/sla113Auth';
 const ROLE_OPTIONS: Array<{ value: Sla113Role; label: string }> = [
   { value: 'operator_standard', label: 'Operator Standard' },
   { value: 'operator_advanced', label: 'Operator Advanced' },
-  { value: 'executive', label: 'Executive' },
+  { value: 'operator_executive', label: 'Executive' },
   { value: 'engineer_platform', label: 'Engineer Platform' },
 ]
 

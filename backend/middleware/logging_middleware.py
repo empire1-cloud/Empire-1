@@ -84,7 +84,7 @@ class ExecutionLoggingMiddleware(BaseHTTPMiddleware):
         body = await request.body()
         try:
             input_data = json.loads(body) if body else {}
-        except:
+        except Exception:
             input_data = {"raw": body.decode()[:500] if body else ""}
         
         # Reconstruct request with body (since we consumed it)
@@ -111,7 +111,7 @@ class ExecutionLoggingMiddleware(BaseHTTPMiddleware):
                 error = response_body.decode()[:500]
             else:
                 output_data = json.loads(response_body)
-        except:
+        except Exception:
             if response.status_code >= 400:
                 error = "Failed to parse error response"
         

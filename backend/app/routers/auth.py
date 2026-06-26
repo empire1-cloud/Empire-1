@@ -2,6 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from passlib.context import CryptContext
+import jwt
+from datetime import datetime, timedelta, timezone
+import os
 
 from app.core.database import get_db
 from app.models.user import User
@@ -11,9 +14,10 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-# ---------------------------------------------------------
-# HELPERS
-# ---------------------------------------------------------
+def get_jwt_secret() -> str:
+    return os.environ.get("JWT_SECRET_KEY", "dev-secret-change-in-production")
+
+
 def verify_password(plain: str, hashed: str) -> bool:
     return pwd_context.verify(plain, hashed)
 
@@ -23,11 +27,12 @@ def hash_password(password: str) -> str:
 
 
 def create_token(user_id: str) -> str:
-    """
-    Placeholder for your JWT signer.
-    Replace with real JWT encode logic.
-    """
-    return f"token-{user_id}"
+    payload = {
+        "sub": user_id,
+        "iat": datetime.now(timezone.utc),
+        "exp": datetime.now(timezone.utc) + timedelta(days=7),
+    }
+    return jwt.encode(payload, get_jwt_secret(), algorithm="HS256")
 
 
 # ---------------------------------------------------------

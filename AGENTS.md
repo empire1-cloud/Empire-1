@@ -1,34 +1,23 @@
-# AGENTS.md
+# AGENTS.md — Empire-1
 
-## Cursor Cloud specific instructions
+This repo is part of the Empire1 ecosystem. See `~/projects/AGENTS.md` for full ecosystem context.
 
-### Architecture Overview
+## Agent Skills (Engineering Workflow)
 
-This is the **Empire Universe** codebase — a multi-tenant SaaS platform with a Hybrid Intelligence Core (19 AI engines). It has three runnable services:
+This project follows disciplined development workflows defined in `~/projects/agent-skills/skills/`. Key skills for this repo:
 
-| Service | Directory | Port | Command |
-|---------|-----------|------|---------|
-| FastAPI Backend | `backend/` | 8001 | `source backend/.venv/bin/activate && cd backend && uvicorn server:app --reload --port 8001` |
-| CRA Frontend (Dashboard) | `frontend/` | 3001 | `cd frontend && DISABLE_ESLINT_PLUGIN=true BROWSER=none yarn start` |
-| Next.js Root App | `/` (root) | 3000 | `npm run dev` |
+- `spec-driven-development` — Write PRD before coding
+- `incremental-implementation` — Thin vertical slices, test first
+- `api-and-interface-design` — Contract-first for all backend endpoints
+- `security-and-hardening` — OWASP Top 10 for all auth/billing routes
+- `code-review-and-quality` — Five-axis review for all PRs
 
-### Key Dev Environment Notes
+## Key Paths
 
-- **Backend runs in degraded mode without MongoDB.** The server starts successfully without a MongoDB connection. Set `MONGO_URL` and `DB_NAME` env vars for full database functionality.
-- **CRA frontend requires `DISABLE_ESLINT_PLUGIN=true`** when starting in dev mode. The root `.eslintrc.json` extends `next/core-web-vitals` which conflicts with the CRA ESLint config inherited via the parent directory. This env var is the standard CRA mechanism to bypass webpack eslint-plugin.
-- **Next.js dev server**: Clear `.next/` cache (`rm -rf .next`) if you see `__webpack_modules__[moduleId] is not a function` errors after dependency changes.
-- **Backend venv**: Python dependencies are installed in `backend/.venv`. Always activate with `source backend/.venv/bin/activate` before running backend commands.
-- **Backend tests** use `pytest` and hit the live server (not mocked). Set `REACT_APP_BACKEND_URL=http://localhost:8001` before running: `pytest backend/tests/ -v`.
-- **Pre-existing test failures**: Without MongoDB, expect ~30 failures and ~33 errors (auth/billing/identity tests need DB). With MongoDB but no auth tokens, 3 failures remain in `test_engine_endpoints.py`: engine count assertion (expects 18, server returns 19) and 2 pipeline endpoints return 401.
-- **CRA frontend may fail on first compile** with babel-metadata-plugin errors (`Cannot read properties of null`). A restart (`Ctrl-C` then re-run) typically resolves it; the visual-edits plugin's file cache initializes correctly on the second pass.
-- **Next.js build fails** due to a pre-existing lint error in `AztecFishGame.tsx` (`react/jsx-no-comment-textnodes`). Dev mode (`npm run dev`) works fine.
-- **Root lint**: `npx next lint` (requires `eslint-config-next@14.2.3` installed as devDependency).
-- **Native dependencies** for the `canvas` npm package: `libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev pkg-config`.
-
-### Environment Variables (Backend)
-
-The backend reads from `backend/.env` or environment variables. Key vars:
-- `MONGO_URL` / `MONGODB_ATLAS_EMPIRE_URI` — MongoDB connection string
-- `DB_NAME` / `MONGODB_ATLAS_EMPIRE_DB` — MongoDB database name
-- `SECRET_KEY` — JWT signing key (use any string for local dev)
-- `EMERGENT_LLM_KEY`, `OPENAI_API_KEY` — For AI engine invocations (optional; engines return errors without them but server runs)
+| Resource | Path |
+|----------|------|
+| Ecosystem source of truth | `~/projects/AGENTS.md` |
+| Skills (23 engineering workflows) | `~/projects/agent-skills/skills/` |
+| Skill agents/personas | `~/projects/agent-skills/agents/` |
+| Agent memory (MCP) | `mempalace` — installed via `uv tool install mempalace` |
+| Market research | `/last30days <topic>` — requires `npx skills add mvanhorn/last30days-skill -g` |

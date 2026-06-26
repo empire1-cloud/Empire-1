@@ -58,6 +58,9 @@ from routers.billing import router as billing_router
 from routers.api_keys import router as api_keys_router
 from routers.admin import router as admin_router
 from routers.system import router as system_router
+from app.routers.crm import router as crm_router
+from app.routers.business_analytics import router as business_analytics_router
+from app.routers.gtm import router as gtm_router
 
 # Import and include all engine routers
 from routers.engines import (
@@ -96,6 +99,9 @@ api_router.include_router(billing_router)  # Billing endpoints
 api_router.include_router(api_keys_router)  # API key management
 api_router.include_router(admin_router)  # Admin endpoints (system admin only)
 api_router.include_router(system_router)  # System status endpoints
+api_router.include_router(crm_router)  # Internal CRM (deal pipeline, lead tracking)
+api_router.include_router(business_analytics_router)  # Internal Business Analytics (MRR, usage, KPIs)
+api_router.include_router(gtm_router)  # Internal GTM (campaigns, outreach, launch checklists)
 
 # Include protected routers (require auth)
 api_router.include_router(history_protected_router)  # /api/history (protected)

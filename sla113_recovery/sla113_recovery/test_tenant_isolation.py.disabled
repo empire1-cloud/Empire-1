@@ -1,7 +1,0 @@
-# TEST DISABLED: Old SLA113 kernel removed
-
-        except Exception as e:
-            self.fail(f"Drift log test failed: {e}")
-
-if __name__ == "__main__":
-    unittest.main()

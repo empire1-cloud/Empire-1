@@ -182,7 +182,7 @@ class ExecutionLogger:
                 hours_ago = int((now - log_time).total_seconds() / 3600)
                 if hours_ago < 24:
                     recent[hours_ago] = recent.get(hours_ago, 0) + 1
-            except:
+            except Exception:
                 pass
         
         return {

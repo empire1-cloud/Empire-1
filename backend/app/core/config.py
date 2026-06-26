@@ -4,6 +4,8 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    model_config = {"env_file": None, "case_sensitive": True}
+
     # ---------------------------------------------------------
     # CORE APP SETTINGS
     # ---------------------------------------------------------
@@ -106,11 +108,6 @@ class Settings(BaseSettings):
         "api:write",
         "admin:manage"
     ]
-
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
-
 
 @lru_cache()
 def get_settings() -> Settings:

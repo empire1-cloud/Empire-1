@@ -2,11 +2,8 @@
 
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState, Suspense } from 'react';
-import nextDynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import { Shield, Box, Zap, CheckCircle2, XCircle, Clock, Database, Gem } from 'lucide-react';
-
-const BabylonScene = nextDynamic(() => import('@/components/BabylonScene'), { ssr: false });
 
 /**
  * SLA113 // SOVEREIGN_FOUNDRY_STAGE
@@ -66,14 +63,6 @@ export default function FoundryPage() {
     return (
         <div className="min-h-screen bg-[#050505] text-[#e5e5e5] font-sans selection:bg-[#c9a84c] selection:text-black flex flex-col relative overflow-hidden">
             
-            {/* Immersive 3D Background */}
-            <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-                <Suspense fallback={null}>
-                    <BabylonScene />
-                </Suspense>
-                <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]"></div>
-            </div>
-
             {/* Top Navigation HUD */}
             <nav className="relative z-50 h-16 px-12 flex items-center justify-between border-b border-white/5 bg-black/40 backdrop-blur-xl">
                 <div className="flex items-center gap-6">

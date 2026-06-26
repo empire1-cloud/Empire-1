@@ -64,10 +64,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/universal', request.url))
   }
 
-  if (tenant === 'sla113' && pathname === '/') {
-    return NextResponse.redirect(new URL('/sla113', request.url))
-  }
-
   // Empire1 Routes - only allow on empire1.cloud
   if (pathname.startsWith('/dashboard') || pathname.startsWith('/operator')) {
     if (tenant !== 'empire1') {

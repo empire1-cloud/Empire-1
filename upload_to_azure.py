@@ -1,9 +1,13 @@
+import os
 import requests
 import json
 
-# Azure endpoint and API key
-AZURE_ENDPOINT = "https://empire1-sla113-core-resource.services.ai.azure.com/api/projects/empire1-sla113-core"
-API_KEY = "1SiQ6xqqipqvbnOSWSOVndOzLRUYFgeaIwXVDC1EOtokCYPZ8jtcJQQJ99CCACMsfrFXJ3w3AAAAACOGY6po"
+# Azure endpoint and API key — use env vars, never hardcode secrets
+AZURE_ENDPOINT = os.environ.get(
+    "AZURE_ENDPOINT",
+    "https://empire1-sla113-core-resource.services.ai.azure.com/api/projects/empire1-sla113-core",
+)
+API_KEY = os.environ.get("AZURE_API_KEY", "")
 
 # File to upload
 CANON_FILE_PATH = "/root/Southern_Lifestyle_Canon.yaml"

@@ -1,7 +1,7 @@
 """
 Lyrica Micro-Royalty Ledger — VICS Protocol.
 
-Fractional USD routing with atomic MongoDB upserts.
+Fractional USD routing with ArchiSynapse transaction settlement.
 No middlemen. No labels. Direct creator-to-wallet.
 
 Territory multipliers:
@@ -14,11 +14,22 @@ are atomically guaranteed to parent contributors.
 """
 
 import uuid
+import json
 import logging
+import os
+import asyncio
+import urllib.request
+import urllib.error
 from datetime import datetime, timezone
 from typing import Optional
 
 logger = logging.getLogger(__name__)
+
+ARCHISYNAPSE_API_URL = os.getenv(
+    "ARCHISYNAPSE_API_URL",
+    "http://localhost:3000/api/v1",
+)
+ARCHISYNAPSE_API_KEY = os.getenv("ARCHISYNAPSE_API_KEY", "")
 
 BASE_RATE_USD = 0.004
 
@@ -81,8 +92,8 @@ def calculate_micro_royalty(
 
 async def commit_to_mongodb(ledger_result: dict, db) -> dict:
     """
-    Atomic upsert of royalty entries to MongoDB.
-    Uses $inc for accumulated_usd to support incremental stream updates.
+    Legacy MongoDB upsert for backward compatibility.
+    Prefer commit_and_settle() for real ArchiSynapse settlement.
     """
     committed = 0
     for entry in ledger_result["ledger_entries"]:
@@ -109,7 +120,7 @@ async def commit_to_mongodb(ledger_result: dict, db) -> dict:
         committed += 1
 
     logger.info(
-        "[VICS] Ledger committed: $%.2f across %d creators for %s",
+        "[VICS] MongoDB committed: $%.2f across %d creators for %s",
         ledger_result["gross_royalty_usd"],
         committed,
         ledger_result["track_id"],
@@ -119,6 +130,102 @@ async def commit_to_mongodb(ledger_result: dict, db) -> dict:
         "committed": committed,
         "track_id": ledger_result["track_id"],
         "gross_usd": ledger_result["gross_royalty_usd"],
+    }
+
+
+def _post_transaction(payload: dict) -> dict:
+    """Synchronous HTTP POST to ArchiSynapse (runs in executor)."""
+    data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        f"{ARCHISYNAPSE_API_URL}/transactions",
+        data=data,
+        headers={
+            "Content-Type": "application/json",
+            **({"Authorization": f"Bearer {ARCHISYNAPSE_API_KEY}"} if ARCHISYNAPSE_API_KEY else {}),
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+            return {"ok": True, "status": resp.status, "body": body}
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode("utf-8", errors="replace")[:200]
+        return {"ok": False, "status": e.code, "error": error_body}
+    except Exception as e:
+        return {"ok": False, "status": None, "error": str(e)}
+
+
+async def archisynapse_settle(ledger_result: dict) -> dict:
+    """
+    Post each contributor's royalty share as a real ArchiSynapse transaction.
+    Replaces the stub where amount_usd was logged as 0.0.
+    """
+    settled = {"transactions": [], "failed": []}
+    loop = asyncio.get_event_loop()
+
+    for entry in ledger_result["ledger_entries"]:
+        payload = {
+            "amount": entry["accumulated_usd"],
+            "currency": "USD",
+            "type": "stream_royalty",
+            "description": (
+                f"VICS micro-royalty: {entry['streams']} streams @ "
+                f"${entry['base_rate']}/stream ({entry['territory']}, "
+                f"x{entry['territory_multiplier']}) — track {entry['track_id']}"
+            ),
+            "customer": {
+                "id": entry["contributor_id"],
+                "email": f"{entry['contributor_id']}@vics.example.com",
+            },
+            "payment_method": {"type": "vics_ledger"},
+            "metadata": {
+                "track_id": entry["track_id"],
+                "streams": entry["streams"],
+                "territory": entry["territory"],
+                "territory_multiplier": entry["territory_multiplier"],
+                "fraction": entry["fraction"],
+                "base_rate": entry["base_rate"],
+                "entry_id": entry["entry_id"],
+                "source": "vics_ledger",
+            },
+        }
+
+        result = await loop.run_in_executor(None, _post_transaction, payload)
+
+        if result["ok"]:
+            txn = result["body"]
+            settled["transactions"].append({
+                "contributor_id": entry["contributor_id"],
+                "amount": entry["accumulated_usd"],
+                "transaction_id": txn.get("id"),
+            })
+            logger.info(
+                "[VICS] ArchiSynapse settled: %s → $%.4f for %s (txn=%s)",
+                entry["track_id"],
+                entry["accumulated_usd"],
+                entry["contributor_id"],
+                txn.get("id"),
+            )
+        else:
+            settled["failed"].append({
+                "contributor_id": entry["contributor_id"],
+                "amount": entry["accumulated_usd"],
+                "reason": result.get("error") or f"HTTP {result['status']}",
+            })
+            logger.error(
+                "[VICS] ArchiSynapse settle failed for %s / %s: %s",
+                entry["track_id"],
+                entry["contributor_id"],
+                result.get("error"),
+            )
+
+    return {
+        "settled": len(settled["transactions"]),
+        "failed": len(settled["failed"]),
+        "gross_usd": ledger_result["gross_royalty_usd"],
+        "track_id": ledger_result["track_id"],
+        "details": settled,
     }
 
 

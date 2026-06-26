@@ -1,0 +1,16 @@
+[
+  {
+    "id": "REC-A9BE269D",
+    "command_id": "CMD-DA48A641",
+    "business_name": "Empire-1",
+    "created_at": "2026-06-26T12:50:07.506673+00:00",
+    "output_type": "command"
+  },
+  {
+    "id": "REC-7C9758CB",
+    "command_id": "CMD-1C7D68E5",
+    "business_name": "Empire-1",
+    "created_at": "2026-06-26T13:18:10.780396+00:00",
+    "output_type": "command"
+  }
+]

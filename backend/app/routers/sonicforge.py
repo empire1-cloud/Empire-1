@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
-from app.services.sonic_forge import SonicForge
+from app.services.sonic_forge_module import SonicForge
 
 router = APIRouter(prefix="/sonicforge", tags=["SonicForge"])
 

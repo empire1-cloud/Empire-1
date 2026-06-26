@@ -347,6 +347,25 @@ async def royalty_calculate(request: RoyaltyRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.post("/royalty/commit")
+async def royalty_commit(request: RoyaltyRequest):
+    """Calculate AND settle micro-royalties through ArchiSynapse.
+    Replaces the stub where amount_usd was logged as 0.0."""
+    try:
+        from app.services.lyrica.royalty_ledger import calculate_micro_royalty, archisynapse_settle
+        calc = calculate_micro_royalty(request.track_id, request.streams, request.territory, request.splits)
+        settle = await archisynapse_settle(calc)
+        return {
+            "success": True,
+            "calculation": calc,
+            "settlement": settle,
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.post("/royalty/flip-it-validate")
 async def royalty_flip_it(request: FlipItRequest):
     """Validate Flip It protocol — ensure parent contributors get their cut."""

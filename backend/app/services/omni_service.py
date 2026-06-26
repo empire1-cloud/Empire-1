@@ -10,7 +10,12 @@ from fastapi import HTTPException
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-STATE_DIR = REPO_ROOT / "omni_agent" / "state"
+
+# Canonical Execution Engine: ~/projects/sla113/OMNI_AGENT/
+# State files are read from the canonical location when available,
+# falling back to local copy for backward compatibility.
+SLA113_EE = REPO_ROOT.parent / "sla113" / "OMNI_AGENT"
+STATE_DIR = SLA113_EE / "state" if SLA113_EE.exists() else REPO_ROOT / "omni_agent" / "state"
 DEFAULT_STATE_FILE = STATE_DIR / "tasks.json"
 
 UNIVERSE_ALIASES = {

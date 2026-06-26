@@ -515,7 +515,7 @@ export default function SLA113Page() {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: STYLES }} />
+      <style>{STYLES}</style>
       <div className="sla113-scope flex h-screen w-full bg-[#050505] text-zinc-300 font-mono text-sm overflow-hidden select-none" data-testid="sla113-page">
 
         {/* SIDEBAR */}

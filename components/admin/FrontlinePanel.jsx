@@ -7,6 +7,7 @@ const FrontlinePanel = ({ API, projects, stats }) => {
   const [connected, setConnected] = useState(false);
   const wsRef = useRef(null);
   const feedRef = useRef(null);
+  const feedIdRef = useRef(0);
 
   useEffect(() => {
     // Construct WS URL from API
@@ -38,7 +39,7 @@ const FrontlinePanel = ({ API, projects, stats }) => {
               if (data.metrics.total_revenue > prev.total_revenue) addFeedEntry('REVENUE', `Revenue pulse: +$${data.metrics.total_revenue - prev.total_revenue}`);
             }
           }
-        } catch (e) { /* ignore parse errors */ }
+        } catch (e) { console.warn("Frontline WS parse error:", e); }
       };
 
       ws.onclose = () => {
@@ -61,7 +62,8 @@ const FrontlinePanel = ({ API, projects, stats }) => {
 
   const addFeedEntry = (type, message) => {
     const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-    setFeed(prev => [...prev.slice(-50), { time, type, message }]);
+    const id = ++feedIdRef.current;
+    setFeed(prev => [...prev.slice(-50), { id, time, type, message }]);
   };
 
   // Keep a reference for the metrics closure in the ws callback
@@ -105,8 +107,8 @@ const FrontlinePanel = ({ API, projects, stats }) => {
             {feed.length === 0 && (
               <p className="text-zinc-700 italic">Awaiting real-time data stream...</p>
             )}
-            {feed.map((entry, i) => (
-              <p key={i} className={feedColors[entry.type] || 'text-zinc-400'}>
+            {feed.map((entry) => (
+              <p key={entry.id} className={feedColors[entry.type] || 'text-zinc-400'}>
                 <span className="text-zinc-600">[{entry.time}]</span>{' '}
                 <span className="text-zinc-500 font-bold">{entry.type}</span>{' '}
                 {entry.message}
