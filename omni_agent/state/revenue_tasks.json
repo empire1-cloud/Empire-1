@@ -1,0 +1,47 @@
+{
+  "revenue_tasks": [
+    {
+      "task_type": "follow_up_new_leads",
+      "description": "Check for leads with status 'new' older than 24 hours and prompt user to follow up",
+      "trigger": "daily",
+      "next_action": "List new leads and generate follow-up reminder",
+      "enabled": false
+    },
+    {
+      "task_type": "generate_daily_outreach",
+      "description": "Generate 5 new cold DMs/emails for active pipeline targets",
+      "trigger": "daily",
+      "next_action": "Generate fresh outreach copy for top-priority buyer segments",
+      "enabled": false
+    },
+    {
+      "task_type": "mark_paid_leads",
+      "description": "Check for leads that should be marked as paid and trigger delivery receipt generation",
+      "trigger": "on-demand",
+      "next_action": "Update lead status, generate delivery receipt, log revenue",
+      "enabled": false
+    },
+    {
+      "task_type": "generate_delivery_receipts",
+      "description": "For leads with status 'paid' that don't have a delivery receipt, generate one",
+      "trigger": "on-demand",
+      "next_action": "Call POST /api/revenue-os/delivery-receipt with lead data",
+      "enabled": false
+    },
+    {
+      "task_type": "summarize_revenue_pipeline",
+      "description": "Generate daily summary of pipeline status: total leads, pipeline value, conversions, revenue",
+      "trigger": "daily",
+      "next_action": "Call GET /api/revenue-os/analytics and format summary",
+      "enabled": false
+    },
+    {
+      "task_type": "identify_stale_pipeline",
+      "description": "Find leads in 'contacted' or 'replied' status with no update in 7+ days and flag for reactivation",
+      "trigger": "weekly",
+      "next_action": "Generate re-engagement message for stale leads",
+      "enabled": false
+    }
+  ],
+  "note": "MVP task template — wire into Omni Agent runtime for automated execution. Each task has 'enabled: false' by default. Set to true and implement the next_action endpoint to activate."
+}

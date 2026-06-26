@@ -36,9 +36,14 @@ from app.routers.sla113.factory import router as sla113_factory_heartbeat_router
 from app.routers.frontline import router as frontline_router
 from app.routers.billing import router as billing_router
 from app.routers.arcade import router as arcade_router
-from app.routers.my_vertex_universe import router as my_vertex_universe_router
+try:
+    from app.routers.my_vertex_universe import router as my_vertex_universe_router
+except ModuleNotFoundError:
+    my_vertex_universe_router = None
 from app.routers.voxcpm import router as voxcpm_router
 from app.routers.audio_fx import router as audio_fx_router
+from app.routers.revenue_receipts import router as revenue_receipts_router
+from app.routers.revenue_os import router as revenue_os_router
 from routers.engines.lyrica.agents import router as lyrica_router
 
 settings = get_settings()
@@ -96,6 +101,8 @@ if my_vertex_universe_router:
     app.include_router(my_vertex_universe_router)
 app.include_router(voxcpm_router)
 app.include_router(audio_fx_router)
+app.include_router(revenue_receipts_router)
+app.include_router(revenue_os_router)
 
 # ---------------------------------------------------------
 # STARTUP: CREATE TABLES
@@ -104,6 +111,12 @@ app.include_router(audio_fx_router)
 async def startup_event():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+    try:
+        from app.services.revenue_os_store import ensure_store
+        ensure_store()
+    except Exception:
+        pass
 
 
 # ---------------------------------------------------------

@@ -10,7 +10,9 @@ import {
   Zap,
   Globe,
   Clock,
-  ArrowRight
+  ArrowRight,
+  DollarSign,
+  Receipt
 } from 'lucide-react';
 import { getCustomerPortal, createCheckoutSession } from '@/lib/billingApi';
 
@@ -66,6 +68,14 @@ export default function EmpireDashboard() {
         </div>
         
         <div className="flex items-center gap-8">
+          <a href="/revenue-os" className="flex items-center gap-2 text-[10px] text-[#737373] hover:text-white transition-colors uppercase tracking-widest font-bold">
+            <DollarSign className="w-3.5 h-3.5" />
+            Revenue OS
+          </a>
+          <a href="/revenue-receipt" className="flex items-center gap-2 text-[10px] text-[#737373] hover:text-white transition-colors uppercase tracking-widest font-bold">
+            <Receipt className="w-3.5 h-3.5" />
+            Receipt
+          </a>
           <button 
             onClick={handlePortalRedirect}
             disabled={loading}
@@ -101,6 +111,45 @@ export default function EmpireDashboard() {
               <span className="text-[10px] tracking-[0.3em] uppercase text-[#555] font-bold">{stat.label}</span>
             </div>
           ))}
+        </div>
+
+        {/* Revenue OS CTA Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          <a href="/revenue-os" className="group block p-10 bg-black/40 border border-white/5 hover:border-[#c9a84c]/30 transition-all">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full border border-[#c9a84c]/20 flex items-center justify-center bg-[#c9a84c]/5">
+                <DollarSign className="w-6 h-6 text-[#c9a84c]" />
+              </div>
+              <div>
+                <h3 className="text-white text-lg font-light tracking-widest uppercase">Empire Revenue OS</h3>
+                <p className="text-[10px] text-[#555] uppercase tracking-widest">Full Revenue Command Center</p>
+              </div>
+            </div>
+            <p className="text-xs text-[#737373] leading-relaxed mb-6">
+              Generate a paid offer, buyer list, outreach campaign, payment path, and delivery receipt from one command center.
+            </p>
+            <span className="inline-flex items-center gap-2 text-[10px] text-[#c9a84c] font-bold uppercase tracking-[0.3em] group-hover:gap-3 transition-all">
+              Launch Revenue OS <ArrowRight className="w-3 h-3" />
+            </span>
+          </a>
+
+          <a href="/revenue-receipt" className="group block p-10 bg-black/40 border border-white/5 hover:border-white/20 transition-all">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center">
+                <Receipt className="w-6 h-6 text-white/60" />
+              </div>
+              <div>
+                <h3 className="text-white text-lg font-light tracking-widest uppercase">Revenue Receipt</h3>
+                <p className="text-[10px] text-[#555] uppercase tracking-widest">Fast Artifact Generator</p>
+              </div>
+            </div>
+            <p className="text-xs text-[#737373] leading-relaxed mb-6">
+              Need one fast artifact? Generate a Monday-ready revenue receipt with diagnosis, pricing ladder, and outreach kit.
+            </p>
+            <span className="inline-flex items-center gap-2 text-[10px] text-white/60 font-bold uppercase tracking-[0.3em] group-hover:gap-3 transition-all">
+              Generate Receipt <ArrowRight className="w-3 h-3" />
+            </span>
+          </a>
         </div>
 
         {/* Subscription & Plans (Stripe Integrated) */}

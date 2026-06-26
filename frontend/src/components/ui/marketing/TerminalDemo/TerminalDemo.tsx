@@ -22,7 +22,7 @@ interface ScriptLine {
   type: LineType;
 }
 
-// Empire-1 HIC terminal demo
+const script: ScriptLine[] = [
   { text: '$ curl https://empire1.cloud/api/health', delay: 1200, type: 'command' },
   { text: '┌  Empire-1 HIC', delay: 400, type: 'intro' },
   { text: '│', delay: 100, type: 'prompt-label' },

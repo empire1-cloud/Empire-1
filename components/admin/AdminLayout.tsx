@@ -13,13 +13,19 @@ import {
   Gamepad2,
   Sparkles,
   Music,
-  LogOut
+  LogOut,
+  ContactRound,
+  BarChart3,
+  Rocket,
 } from 'lucide-react';
 
 import { clearSla113Session, getSla113AdminRole, getSla113AdminToken } from '@/lib/sla113Auth';
 
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/admin', color: '#374151' },
+  { label: 'CRM', icon: ContactRound, href: '/admin/crm', color: '#374151' },
+  { label: 'Analytics', icon: BarChart3, href: '/admin/analytics', color: '#374151' },
+  { label: 'GTM', icon: Rocket, href: '/admin/gtm', color: '#374151' },
   { label: 'AI Studio', icon: Sparkles, href: '/admin/ai-studio', color: '#374151' },
   { label: 'Stem Deck', icon: Music, href: '/admin/stem-deck', color: '#374151' },
   { label: 'Machines', icon: Gamepad2, href: '/admin/machines', color: '#374151' },
@@ -40,7 +46,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const sessionRole = getSla113AdminRole();
 
     setHasSession(Boolean(token));
-    setRole(sessionRole.replace(/_/g, ' '));
+    setRole(sessionRole ? sessionRole.replace(/_/g, ' ') : '');
 
     if (!token) {
       router.replace('/admin/login');
