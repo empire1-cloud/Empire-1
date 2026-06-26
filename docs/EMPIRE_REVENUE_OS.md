@@ -195,3 +195,11 @@ Price points for prospects:
 8. Add Stripe webhook handling for automatic lead status updates
 9. Add revenue forecasting to analytics
 10. Add white-label option for agencies
+
+## Public Try Flow
+
+The Revenue OS has a public try route at `/try-revenue-os` — no login required.
+
+**Flow:** Homepage → Try Empire Revenue OS → Use Demo Payload or enter business → Generate → View result cards → Copy outreach → See checkout/manual payment → Save lead
+
+See `docs/PUBLIC_TRY_FLOW.md` for full documentation.

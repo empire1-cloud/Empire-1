@@ -183,10 +183,11 @@ const LANDING_HTML = `
   <div class="container">
     <div class="nav-brand"><span class="nav-dot"></span>HYBRID‑AI‑CORE</div>
     <div class="nav-links">
+      <a href="/try-revenue-os">Try Revenue OS</a>
+      <a href="/revenue-os">Revenue OS</a>
+      <a href="/revenue-receipt">Receipt</a>
       <a href="#principles">Principles</a>
-      <a href="#proof">Proof</a>
       <a href="#pricing">Pricing</a>
-      <a href="#engines">Engines</a>
       <a href="mailto:manda@empire1.cloud" class="nav-cta">TALK TO THE ARCHITECT →</a>
     </div>
   </div>
@@ -196,18 +197,18 @@ const LANDING_HTML = `
 <section class="hero">
   <div class="container">
     <div class="hero-content">
-      <div class="hero-eyebrow"><span class="pulse"></span> EMERGENT DNA · REFERENCE IMPLEMENTATION</div>
-      <h1>The Reference Implementation of<br><em>Emergent Architecture</em>.</h1>
-      <p class="hero-sub">Hybrid Intelligence Core is a working, revenue-generating system built with the Emergent DNA methodology. 20 engines, 6 federated universes, $78K MRR — every design decision grounded in a principle you can fork, study, and extend.</p>
+      <div class="hero-eyebrow"><span class="pulse"></span> EMPIRE REVENUE OS · PUBLIC DEMO</div>
+      <h1>Turn your business into a<br><em>revenue system by Monday.</em></h1>
+      <p class="hero-sub">Empire Revenue OS generates your paid offer, buyer list, outreach campaign, payment path, and delivery receipt from one prompt. Public demo available. No admin access required.</p>
       <div class="hero-ctas">
-        <a href="#principles" class="btn-primary">Study the DNA →</a>
-        <a href="#proof" class="btn-secondary">See the Proof</a>
+        <a href="/try-revenue-os" class="btn-primary">Try Empire Revenue OS →</a>
+        <a href="/revenue-receipt" class="btn-secondary">Generate Revenue Receipt</a>
       </div>
       <div class="stats-bar">
-        <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Production engines</div></div>
-        <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Live universes</div></div>
-        <div class="stat-item"><div class="stat-num"><span>$78K</span></div><div class="stat-label">Operator MRR</div></div>
-        <div class="stat-item"><div class="stat-num">69</div><div class="stat-label">Active operators</div></div>
+        <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Priced offers</div></div>
+        <div class="stat-item"><div class="stat-num">25</div><div class="stat-label">Buyer profiles</div></div>
+        <div class="stat-item"><div class="stat-num">✓</div><div class="stat-label">Cold DMs + emails</div></div>
+        <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">Sales pipeline stages</div></div>
       </div>
     </div>
   </div>
@@ -216,12 +217,12 @@ const LANDING_HTML = `
 <!-- PROOF BAR -->
 <div class="proof-bar">
   <div class="container">
-    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>GPT-5.2</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Claude Sonnet 4.5</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Gemini 3 Flash</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>19 specialized engines</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>6 sovereign universes</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>100% creator equity</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Try it now — no login</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Cold DMs + email copy</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>Checkout + manual payment</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>Delivery receipt</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>10-stage pipeline</div>
+    <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>Buyer profiles</div>
   </div>
 </div>
 
