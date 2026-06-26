@@ -1,0 +1,4 @@
+{
+  "description": "Buyer scoring outputs from Empire GTM Layer. Each entry is a scored buyer profile from a revenue OS run.",
+  "scoring_outputs": []
+}

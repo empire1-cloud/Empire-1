@@ -44,6 +44,7 @@ from app.routers.voxcpm import router as voxcpm_router
 from app.routers.audio_fx import router as audio_fx_router
 from app.routers.revenue_receipts import router as revenue_receipts_router
 from app.routers.revenue_os import router as revenue_os_router
+from app.routers.gtm_layer import router as gtm_layer_router
 from routers.engines.lyrica.agents import router as lyrica_router
 
 settings = get_settings()
@@ -103,6 +104,7 @@ app.include_router(voxcpm_router)
 app.include_router(audio_fx_router)
 app.include_router(revenue_receipts_router)
 app.include_router(revenue_os_router)
+app.include_router(gtm_layer_router)
 
 # ---------------------------------------------------------
 # STARTUP: CREATE TABLES

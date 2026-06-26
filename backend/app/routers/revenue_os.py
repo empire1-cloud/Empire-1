@@ -642,6 +642,13 @@ def run_revenue_os(body: RevenueOSRunRequest):
     }
 
     try:
+        from app.services.empire_gtm_layer import load_gtm_context, attach_gtm_to_revenue_os
+        gtm_context = load_gtm_context()
+        output = attach_gtm_to_revenue_os(output, data, gtm_context)
+    except Exception:
+        pass
+
+    try:
         from app.services.revenue_os_store import load_json_store, save_json_store
         cmds = load_json_store("commands")
         cmds.append({"id": command_id, "receipt_id": receipt_id, "business_name": data["business_name"], "created_at": output["generated_at"], "status": "complete"})

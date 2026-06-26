@@ -1,0 +1,15 @@
+{
+  "name": "Empire Revenue OS GTM Profile",
+  "description": "Go-to-market layer for Empire Revenue OS. Targets founders, operators, agencies, creators, and local businesses who need a revenue system now.",
+  "version": "1.0.0",
+  "gtm_approach": "Signal-driven, tier-based, sequence-automated. Detect who is ready, why now, what to send, and what comes next.",
+  "core_metrics": {
+    "target_icp_fit_weight": 70,
+    "signal_score_weight": 30,
+    "max_buyer_profiles": 25,
+    "max_campaigns_active": 5,
+    "weekly_update_cadence": "Every Monday",
+    "sequence_types": ["personalized", "signal_triggered", "automated_nurture", "monitor", "exclude"]
+  },
+  "attribution": "Inspired by / adapted from gtm-starter-kit structure (MIT license)."
+}

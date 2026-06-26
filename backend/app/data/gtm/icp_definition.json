@@ -1,0 +1,60 @@
+{
+  "description": "Ideal Customer Profile for Empire Revenue OS",
+  "icp_segments": [
+    {
+      "segment": "Solo Founder",
+      "fit_score": 95,
+      "description": "Solo founders with a product, service, or idea but no GTM motion. Need a revenue system to sell now.",
+      "signals": ["new founder launch", "repo/product built but no GTM motion", "website has only landing page/no trial"],
+      "best_channels": ["linkedin", "email"],
+      "typical_budget": "$97 - $999"
+    },
+    {
+      "segment": "Agency Owner",
+      "fit_score": 90,
+      "description": "Small agency owners selling custom services with no productized offer. Needs a repeatable revenue package.",
+      "signals": ["agency selling AI services but no productized offer", "messy offer but high activity"],
+      "best_channels": ["linkedin", "email", "phone"],
+      "typical_budget": "$299 - $2,500"
+    },
+    {
+      "segment": "Creator Operator",
+      "fit_score": 85,
+      "description": "Creators with audience but no monetization path beyond ads/sponsors. Needs a productized offer.",
+      "signals": ["creator with audience but no monetization path"],
+      "best_channels": ["instagram", "email"],
+      "typical_budget": "$97 - $299"
+    },
+    {
+      "segment": "Local Service Owner",
+      "fit_score": 80,
+      "description": "Local business owners who know they need more customers but don't know how to systematize sales.",
+      "signals": ["local business posting about slow leads"],
+      "best_channels": ["local", "instagram", "phone"],
+      "typical_budget": "$97 - $500"
+    },
+    {
+      "segment": "Indie Hacker",
+      "fit_score": 85,
+      "description": "Indie hackers who built something but can't sell it. Needs outreach and pricing help.",
+      "signals": ["new founder launch", "messy offer but high activity"],
+      "best_channels": ["email", "linkedin"],
+      "typical_budget": "$97 - $299"
+    },
+    {
+      "segment": "Music/Creator Business Operator",
+      "fit_score": 70,
+      "description": "Music and creative business operators who need to monetize their craft beyond gigs/streams.",
+      "signals": ["creator with audience but no monetization path"],
+      "best_channels": ["instagram", "email"],
+      "typical_budget": "$97 - $500"
+    }
+  ],
+  "anti_icp": [
+    "People wanting free consulting only — no purchase intent",
+    "No clear offer or service to sell",
+    "No buying authority or budget decision power",
+    "No urgency — 'someday' mindset",
+    "No capacity to deliver if sold"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "description": "Positioning framework for Empire Revenue OS GTM layer.",
+  "core_positioning": {
+    "value_proposition": "Turn any business, repo, creator brand, or landing page into a paid offer, buyer list, outreach campaign, payment path, and delivery receipt — by Monday.",
+    "target_audience": "Founders, solo operators, small agencies, creator brands, local service businesses, indie SaaS builders.",
+    "differentiator": "Not a tool. Not a course. A revenue operating system that generates the exact output needed to start selling in 48 hours.",
+    "objection_handling": {
+      "not_ready": "You don't need a perfect product. You need a sellable offer. We start with what you have.",
+      "no_time": "The system generates everything. You just execute the outreach.",
+      "too_early": "Revenue now funds product development later. Don't build in a vacuum.",
+      "done_before": "This isn't a template or course. It's a generated system specific to your business."
+    }
+  },
+  "messaging_pillars": [
+    {
+      "pillar": "Speed to Revenue",
+      "message": "From zero to paid offer in 24 hours. From offer to first sale in 72 hours.",
+      "proof_points": ["Receipt generated in minutes", "Outreach kit ready immediately", "Payment path configured same day"]
+    },
+    {
+      "pillar": "No Build Required",
+      "message": "Use what you have. We generate the system around your existing offer, skills, and audience.",
+      "proof_points": ["Works with any business type", "No technical setup needed", "Manual payment fallback if no Stripe"]
+    },
+    {
+      "pillar": "Full Revenue Stack",
+      "message": "Offer forge, buyer finder, outreach desk, pipeline tracker, checkout, delivery receipt — one system.",
+      "proof_points": ["3 priced offers", "25 buyer profiles", "10-stage pipeline", "Copy-ready outreach"]
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { runRevenueOS, createLead, listLeads, updateLead, createCheckout, generateDeliveryReceipt, getRevenueOSAnalytics, getRevenueOSDashboard } from '@/lib/revenueOsApi';
 
-type Tab = 'command' | 'receipt' | 'offers' | 'buyers' | 'outreach' | 'pipeline' | 'checkout' | 'delivery' | 'analytics';
+type Tab = 'command' | 'receipt' | 'offers' | 'buyers' | 'outreach' | 'pipeline' | 'checkout' | 'delivery' | 'analytics' | 'gtm';
 
 export default function RevenueOSPage() {
   const [tab, setTab] = useState<Tab>('command');
@@ -20,6 +20,7 @@ export default function RevenueOSPage() {
     { key: 'pipeline', label: 'Pipeline' },
     { key: 'checkout', label: 'Checkout' },
     { key: 'delivery', label: 'Delivery Receipt' },
+    { key: 'gtm', label: 'GTM Layer' },
     { key: 'analytics', label: 'Analytics' },
   ];
 
@@ -58,6 +59,7 @@ export default function RevenueOSPage() {
       {tab === 'pipeline' && <PipelinePanel />}
       {tab === 'checkout' && <CheckoutDeskPanel output={output} />}
       {tab === 'delivery' && <DeliveryReceiptPanel output={output} />}
+      {tab === 'gtm' && <GTMLayerPanel output={output} />}
       {tab === 'analytics' && <AnalyticsPanel />}
     </main>
   );
@@ -576,4 +578,78 @@ function KV({ k, v }: { k: string; v: any }) {
 
 function Empty({ msg }: { msg: string }) {
   return <p style={{ fontSize: '0.9rem', color: '#888', textAlign: 'center', padding: '2rem' }}>{msg}</p>;
+}
+
+// ---------------------------------------------------------
+// GTM LAYER PANEL
+// ---------------------------------------------------------
+function GTMLayerPanel({ output }: { output: any }) {
+  const gtm = output?.gtm_layer;
+  if (!gtm) return <Empty msg="Run a Revenue OS command first to see GTM intelligence." />;
+
+  const { gtm_signals, icp_scores, buyer_tiers, detected_signals, recommended_campaign, campaign_summary, sequence_plan, gtm_next_actions } = gtm;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Section title="GTM Intelligence Summary">
+        <KV k="Signal count" v={gtm_signals?.length ?? 0} />
+        <KV k="Buyer profiles scored" v={icp_scores?.length ?? 0} />
+        <KV k="Campaign" v={campaign_summary ?? '—'} />
+        <KV k="Next actions" v={gtm_next_actions?.length ?? 0} />
+      </Section>
+
+      {detected_signals && detected_signals.length > 0 && (
+        <Section title="Detected Signals">
+          {detected_signals.map((s: any, i: number) => (
+            <div key={i} style={{ background: '#f9f9f9', padding: '0.5rem 0.75rem', borderRadius: 4, marginBottom: '0.4rem' }}>
+              <KV k="Signal" v={s.signal} />
+              <KV k="Strength" v={s.strength} />
+              <KV k="Urgency" v={s.urgency} />
+              {s.description && <KV k="Why now" v={s.description} />}
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {icp_scores && icp_scores.length > 0 && (
+        <Section title="Buyer Scores & Tiers">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+            {icp_scores.map((b: any, i: number) => (
+              <div key={i} style={{ background: '#f9f9f9', padding: '0.5rem 0.75rem', borderRadius: 4 }}>
+                <KV k="Profile" v={b.profile_name || b.name || `Buyer ${i + 1}`} />
+                <KV k="Score" v={`${b.total_score ?? b.score ?? '—'}/100`} />
+                <KV k="Tier" v={b.tier || '—'} />
+                {b.buyer_fit !== undefined && <KV k="Buyer fit" v={`${b.buyer_fit}/25`} />}
+                {b.urgency_fit !== undefined && <KV k="Urgency fit" v={`${b.urgency_fit}/20`} />}
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {sequence_plan && (
+        <Section title="Recommended Sequence">
+          {Array.isArray(sequence_plan) ? sequence_plan.map((step: any, i: number) => (
+            <div key={i} style={{ background: '#f9f9f9', padding: '0.5rem 0.75rem', borderRadius: 4, marginBottom: '0.4rem' }}>
+              <KV k={`Step ${i + 1}`} v={step.channel || step.action || step.message || JSON.stringify(step)} />
+              {step.timing && <KV k="Timing" v={step.timing} />}
+              {step.message && step.channel && <KV k="Channel" v={step.channel} />}
+            </div>
+          )) : (
+            <p style={{ fontSize: '0.85rem' }}>{sequence_plan}</p>
+          )}
+        </Section>
+      )}
+
+      {gtm_next_actions && gtm_next_actions.length > 0 && (
+        <Section title="GTM Next Actions">
+          <ol style={{ margin: 0, paddingLeft: '1.2rem' }}>
+            {gtm_next_actions.map((a: string, i: number) => (
+              <li key={i} style={{ fontSize: '0.85rem', marginBottom: '0.3rem' }}>{a}</li>
+            ))}
+          </ol>
+        </Section>
+      )}
+    </div>
+  );
 }

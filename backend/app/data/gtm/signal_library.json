@@ -1,0 +1,85 @@
+{
+  "description": "Signal library for Empire Revenue OS GTM layer. Each signal maps to a persona type, sequence type, and priority.",
+  "signals": [
+    {
+      "id": "signal_new_founder",
+      "name": "New Founder Launch",
+      "description": "Founder recently launched a product, service, or brand. Needs GTM motion immediately.",
+      "persona_types": ["solo founder", "indie hacker"],
+      "priority": 90,
+      "sequence_type": "personalized",
+      "max_response_window_hours": 24,
+      "outreach_angle": "You just launched — the fastest way to revenue is a sellable offer + outreach kit. We built that."
+    },
+    {
+      "id": "signal_messy_offer",
+      "name": "Messy Offer But High Activity",
+      "description": "Business is active and engaged but offer is unclear or unpriced. Needs offer forge.",
+      "persona_types": ["solo founder", "agency owner", "indie hacker"],
+      "priority": 85,
+      "sequence_type": "personalized",
+      "max_response_window_hours": 48,
+      "outreach_angle": "I see you're active in [space]. The missing piece is a clear paid offer. We can build one in 24 hours."
+    },
+    {
+      "id": "signal_agency_no_product",
+      "name": "Agency Selling Services Without Productized Offer",
+      "description": "Agency selling custom services without a repeatable package. Missing the productized revenue lane.",
+      "persona_types": ["agency owner"],
+      "priority": 80,
+      "sequence_type": "personalized",
+      "max_response_window_hours": 48,
+      "outreach_angle": "Most agencies leave 60% of revenue on the table by not productizing. We fix that."
+    },
+    {
+      "id": "signal_creator_no_monetization",
+      "name": "Creator With Audience But No Monetization Path",
+      "description": "Creator has built an audience but monetizes only through ads or sponsorships. Needs a product.",
+      "persona_types": ["creator operator", "music/creator business operator"],
+      "priority": 75,
+      "sequence_type": "signal_triggered",
+      "max_response_window_hours": 72,
+      "outreach_angle": "You have the audience — now you need the offer. We turn followers into customers in 48 hours."
+    },
+    {
+      "id": "signal_local_slow_leads",
+      "name": "Local Business Posting About Slow Leads",
+      "description": "Local business openly discussing slow sales or needing more customers. High intent signal.",
+      "persona_types": ["local service owner"],
+      "priority": 70,
+      "sequence_type": "personalized",
+      "max_response_window_hours": 24,
+      "outreach_angle": "Saw you're looking for more leads. We build automated outreach systems for local businesses."
+    },
+    {
+      "id": "signal_no_gtm_motion",
+      "name": "Repo/Product Built But No GTM Motion",
+      "description": "Product exists in code but no go-to-market activity. Classic builder who can't sell.",
+      "persona_types": ["solo founder", "indie hacker"],
+      "priority": 85,
+      "sequence_type": "personalized",
+      "max_response_window_hours": 48,
+      "outreach_angle": "You built it — now let's sell it. We handle the GTM so you can keep building."
+    },
+    {
+      "id": "signal_landing_page_only",
+      "name": "Website Has Only Landing Page / No Trial",
+      "description": "Business website is a static landing page with no way for visitors to experience value. No trial, no demo.",
+      "persona_types": ["solo founder", "agency owner"],
+      "priority": 65,
+      "sequence_type": "signal_triggered",
+      "max_response_window_hours": 72,
+      "outreach_angle": "Your site looks great — but visitors can't experience value without a demo or trial. We fix that."
+    },
+    {
+      "id": "signal_recent_activity",
+      "name": "Recent Funding/Application/Pitch/Deck Activity",
+      "description": "Business recently sought funding, applied to a program, pitched, or created a deck. Momentum signal.",
+      "persona_types": ["solo founder", "indie hacker"],
+      "priority": 80,
+      "sequence_type": "personalized",
+      "max_response_window_hours": 24,
+      "outreach_angle": "Congrats on the recent momentum. Let's make sure your revenue system is ready for what comes next."
+    }
+  ]
+}

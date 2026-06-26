@@ -1,0 +1,35 @@
+{
+  "description": "Competitor radar for Empire Revenue OS. Used for positioning and objection handling.",
+  "competitors": [
+    {
+      "name": "Traditional Consulting",
+      "threat_level": "low",
+      "notes": "Expensive and slow. We generate output in minutes, not weeks.",
+      "our_advantage": "Speed, price, automated generation"
+    },
+    {
+      "name": "GTM套件 (GTM Suites)",
+      "threat_level": "medium",
+      "notes": "Generic templates and courses. Not specific to the user's business.",
+      "our_advantage": "Business-specific generation, not templates"
+    },
+    {
+      "name": "AI Sales Agents",
+      "threat_level": "medium",
+      "notes": "Focus on execution, not strategy. They assume you already have an offer.",
+      "our_advantage": "Full strategy + execution in one system"
+    },
+    {
+      "name": "Landing Page Builders",
+      "threat_level": "low",
+      "notes": "A page is not a revenue system. No outreach, pipeline, or delivery.",
+      "our_advantage": "End-to-end revenue system, not just a page"
+    },
+    {
+      "name": "CRM Platforms",
+      "threat_level": "low",
+      "notes": "CRMs track deals you already have. We help you create deals to track.",
+      "our_advantage": "Offer generation before pipeline management"
+    }
+  ]
+}

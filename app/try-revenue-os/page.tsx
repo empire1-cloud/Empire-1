@@ -276,6 +276,40 @@ export default function TryRevenueOSPage() {
         </Section>
       )}
 
+      {/* GTM Intelligence: Buyer Scores & Signals */}
+      {result?.gtm_layer && (
+        <Section title="GTM Intelligence">
+          {result.gtm_layer.buyer_tiers && result.gtm_layer.buyer_tiers.length > 0 && (
+            <div style={{ marginBottom: '0.5rem' }}>
+              <p style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Best buyers to target first:</p>
+              {result.gtm_layer.buyer_tiers.slice(0, 3).map((t: any, i: number) => (
+                <div key={i} style={{ fontSize: '0.85rem', marginBottom: '0.2rem' }}>
+                  <span style={{ fontWeight: 600 }}>{t.profile_name || t.name || `Tier ${i + 1}`}</span>
+                  <span style={{ color: '#090', marginLeft: '0.5rem' }}>{t.total_score ?? t.score}/100</span>
+                  <span style={{ background: t.tier === 'Tier 1' ? '#d4edda' : '#fff3cd', marginLeft: '0.5rem', padding: '0.1rem 0.4rem', borderRadius: 3, fontSize: '0.75rem' }}>{t.tier}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {result.gtm_layer.detected_signals && result.gtm_layer.detected_signals.length > 0 && (
+            <div style={{ marginBottom: '0.5rem' }}>
+              <p style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Why now:</p>
+              {result.gtm_layer.detected_signals.slice(0, 2).map((s: any, i: number) => (
+                <p key={i} style={{ fontSize: '0.85rem', color: '#555', margin: '0.15rem 0' }}>
+                  {s.signal || s.name} — <span style={{ color: s.strength === 'high' ? '#c00' : '#e67e22' }}>{s.strength}</span>
+                  {s.description ? `: ${s.description.slice(0, 120)}` : ''}
+                </p>
+              ))}
+            </div>
+          )}
+          {result.gtm_layer.campaign_summary && (
+            <p style={{ fontSize: '0.85rem', color: '#555' }}>
+              <strong>Recommended:</strong> {result.gtm_layer.campaign_summary}
+            </p>
+          )}
+        </Section>
+      )}
+
       {/* Section 5-6: Cold DMs + Email */}
       {oc.cold_dms && oc.cold_dms.length > 0 && (
         <Section title="Cold DMs">
@@ -376,7 +410,7 @@ export default function TryRevenueOSPage() {
       {/* Phase 7: Lead Capture */}
       {!leadSent ? (
         <Section title="Want the full Revenue OS output?">
-          <p style={{ fontSize: '0.85rem', color: '#555', marginBottom: '0.75rem' }}>Save your result and we'll send the complete Revenue OS output.</p>
+          <p style={{ fontSize: '0.85rem', color: '#555', marginBottom: '0.75rem' }}>Save your result and we&apos;ll send the complete Revenue OS output.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <input value={leadForm.name} onChange={e => setLeadForm({ ...leadForm, name: e.target.value })} placeholder="Your name *"
               style={{ width: '100%', padding: '0.6rem 0.75rem', border: '1px solid #ccc', borderRadius: 6, fontSize: '0.9rem' }} />
@@ -395,7 +429,7 @@ export default function TryRevenueOSPage() {
         </Section>
       ) : (
         <div style={{ background: '#d4edda', padding: '1rem', borderRadius: 6, textAlign: 'center', marginBottom: '1rem' }}>
-          <p style={{ fontSize: '1rem', fontWeight: 600, color: '#155724' }}>✓ Result saved! We'll be in touch.</p>
+          <p style={{ fontSize: '1rem', fontWeight: 600, color: '#155724' }}>✓ Result saved! We&apos;ll be in touch.</p>
         </div>
       )}
     </main>

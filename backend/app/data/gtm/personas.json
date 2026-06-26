@@ -1,0 +1,65 @@
+{
+  "description": "Buyer personas for Empire Revenue OS GTM layer.",
+  "personas": [
+    {
+      "type": "solo founder",
+      "title": "Solo Founder",
+      "description": "Single founder building a product or service. Technical or creative. Needs revenue system to sell what they build.",
+      "icp_fit": 95,
+      "typical_pain": "Can build but can't sell. No GTM motion.",
+      "best_channel": "linkedin",
+      "objections": ["not ready", "too early", "no time"],
+      "signal_ids": ["signal_new_founder", "signal_messy_offer", "signal_no_gtm_motion", "signal_recent_activity"]
+    },
+    {
+      "type": "agency owner",
+      "title": "Agency Owner",
+      "description": "Owns a small agency selling custom services. Needs productized offers to scale beyond trading time for money.",
+      "icp_fit": 90,
+      "typical_pain": "Selling custom work only. No repeatable offer. Revenue capped by time.",
+      "best_channel": "linkedin",
+      "objections": ["no time", "done_before"],
+      "signal_ids": ["signal_agency_no_product", "signal_messy_offer", "signal_landing_page_only"]
+    },
+    {
+      "type": "creator operator",
+      "title": "Creator Operator",
+      "description": "Content creator with audience but no productized offer. Needs a monetization path beyond ads.",
+      "icp_fit": 85,
+      "typical_pain": "Has audience, no product. Leaving money on the table.",
+      "best_channel": "instagram",
+      "objections": ["not_ready", "too_early"],
+      "signal_ids": ["signal_creator_no_monetization"]
+    },
+    {
+      "type": "local service owner",
+      "title": "Local Service Owner",
+      "description": "Runs a local service business. Knows they need more customers but doesn't know how to systematize sales.",
+      "icp_fit": 80,
+      "typical_pain": "Slow leads, no system, relying on word of mouth.",
+      "best_channel": "local",
+      "objections": ["no_time", "not_ready"],
+      "signal_ids": ["signal_local_slow_leads"]
+    },
+    {
+      "type": "indie hacker",
+      "title": "Indie Hacker",
+      "description": "Built a product but can't sell it. Technical skills, no GTM skills.",
+      "icp_fit": 85,
+      "typical_pain": "Product exists, no customers. Needs outreach and pricing.",
+      "best_channel": "email",
+      "objections": ["done_before", "no_time"],
+      "signal_ids": ["signal_new_founder", "signal_no_gtm_motion", "signal_recent_activity"]
+    },
+    {
+      "type": "music/creator business operator",
+      "title": "Music/Creator Business Operator",
+      "description": "Music professional or creative entrepreneur. Needs to monetize beyond gigs, streams, or commissions.",
+      "icp_fit": 70,
+      "typical_pain": "Irregular income, no productized offer for their craft.",
+      "best_channel": "instagram",
+      "objections": ["not_ready", "too_early"],
+      "signal_ids": ["signal_creator_no_monetization"]
+    }
+  ]
+}

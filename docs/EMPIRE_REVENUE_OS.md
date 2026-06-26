@@ -111,6 +111,15 @@ Marked as MVP. Replace with database when ready.
 - Revenue OS has its own lightweight lead management (create/list/update)
 - Pipeline stages match standard sales stages
 
+### GTM Layer Integration
+- **Every `/run` response** now includes a `gtm_layer` block with ICP scores, buyer tiers, detected signals, campaign plan, sequence plan, and next actions
+- GTM layer is a separate router at `/api/gtm` with 9 endpoints (see `docs/EMPIRE_GTM_LAYER.md`)
+- Uses JSON file persistence at `backend/app/data/gtm/` (mirrors Revenue OS store pattern)
+- Scoring model: 70-point ICP fit + 30-point signal score = 100 total, 5 tiers
+- Deterministic local logic — no external APIs for MVP
+- Public try flow shows simple GTM intelligence (best buyers, why now, what to send)
+- Full GTM panel available in Revenue OS cockpit under "GTM Layer" tab
+
 ### Omni Agent
 - Task template file at `omni_agent/state/revenue_tasks.json`
 - Task types: `follow_up_new_leads`, `generate_daily_outreach`, `mark_paid_leads`, `generate_delivery_receipts`, `summarize_revenue_pipeline`, `identify_stale_pipeline`
