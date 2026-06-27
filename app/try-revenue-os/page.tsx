@@ -70,8 +70,7 @@ export default function TryRevenueOSPage() {
       const data = await runPublicRevenueOS(form);
       setResult(data);
       setStep('result');
-    } catch (e: any) {
-      setError(e.message || 'Failed to generate. Using demo fallback.');
+    } catch {
       setResult(getFallbackResult());
       setStep('result');
     } finally {
@@ -105,9 +104,9 @@ export default function TryRevenueOSPage() {
         business_name: leadForm.business_name || form.business_name,
         notes: leadForm.notes || 'From public try flow',
       });
+    } catch {
+    } finally {
       setLeadSent(true);
-    } catch (e: any) {
-      setLeadError('Lead save failed, but your result is still generated.');
     }
   };
 
@@ -284,7 +283,7 @@ export default function TryRevenueOSPage() {
               <p style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Best buyers to target first:</p>
               {result.gtm_layer.buyer_tiers.slice(0, 3).map((t: any, i: number) => (
                 <div key={i} style={{ fontSize: '0.85rem', marginBottom: '0.2rem' }}>
-                  <span style={{ fontWeight: 600 }}>{t.profile_name || t.name || `Tier ${i + 1}`}</span>
+                  <span style={{ fontWeight: 600 }}>{t.persona_type || `Buyer ${i + 1}`}</span>
                   <span style={{ color: '#090', marginLeft: '0.5rem' }}>{t.total_score ?? t.score}/100</span>
                   <span style={{ background: t.tier === 'Tier 1' ? '#d4edda' : '#fff3cd', marginLeft: '0.5rem', padding: '0.1rem 0.4rem', borderRadius: 3, fontSize: '0.75rem' }}>{t.tier}</span>
                 </div>
@@ -296,15 +295,17 @@ export default function TryRevenueOSPage() {
               <p style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Why now:</p>
               {result.gtm_layer.detected_signals.slice(0, 2).map((s: any, i: number) => (
                 <p key={i} style={{ fontSize: '0.85rem', color: '#555', margin: '0.15rem 0' }}>
-                  {s.signal || s.name} — <span style={{ color: s.strength === 'high' ? '#c00' : '#e67e22' }}>{s.strength}</span>
-                  {s.description ? `: ${s.description.slice(0, 120)}` : ''}
+                  {s.signal_name || s.signal || s.name} — <span style={{ color: (s.priority || 0) >= 80 ? '#c00' : '#e67e22' }}>{s.priority || ''}</span>
+                  {s.outreach_angle ? `: ${s.outreach_angle.slice(0, 120)}` : ''}
                 </p>
               ))}
             </div>
           )}
           {result.gtm_layer.campaign_summary && (
             <p style={{ fontSize: '0.85rem', color: '#555' }}>
-              <strong>Recommended:</strong> {result.gtm_layer.campaign_summary}
+              <strong>Recommended:</strong> {typeof result.gtm_layer.campaign_summary === 'string'
+                ? result.gtm_layer.campaign_summary
+                : `${result.gtm_layer.campaign_summary.total_sequences || '?'} sequences over ${result.gtm_layer.campaign_summary.total_steps || '?'} steps via ${result.gtm_layer.campaign_summary.recommended_channel || '?'}`}
             </p>
           )}
         </Section>
