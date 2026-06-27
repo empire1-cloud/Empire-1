@@ -212,3 +212,30 @@ The Revenue OS has a public try route at `/try-revenue-os` — no login required
 **Flow:** Homepage → Try Empire Revenue OS → Use Demo Payload or enter business → Generate → View result cards → Copy outreach → See checkout/manual payment → Save lead
 
 See `docs/PUBLIC_TRY_FLOW.md` for full documentation.
+
+## Empire1.cloud Homepage Positioning
+
+The homepage at `empire1.cloud` (localhost:3000) is positioned as a **commercial product site for Empire Revenue OS**, powered by Hybrid Intelligence Core.
+
+### Homepage Section Order
+
+1. **Revenue OS Hero** — label, headline, subheadline, primary CTA to `/try-revenue-os`, secondary CTAs, stats chips (3 offers, 25 profiles, GTM signals, cold DMs, pipeline stages, checkout + delivery)
+2. **What Revenue OS Generates** — 6 cards covering offer ladder, buyer profiles, GTM intelligence, outreach copy, payment path, delivery receipt
+3. **Start Here Pricing** — Free Demo ($0), Revenue Receipt ($299, recommended), Revenue Sprint ($999)
+4. **How It Works** — 5 steps from entry to collection
+5. **Who It Is For** — solo founders, small agencies, creator brands, local service businesses, indie SaaS builders, operators without GTM
+6. **GTM Layer** — ICP scoring, buyer tiers, why-now signals, signal-to-sequence logic, scoring model (70pt ICP + 30pt signal = 100, 5 tiers)
+7. **Powered by Hybrid Intelligence Core** — 8 capabilities: routing, money pipeline, pipeline composer, GTM layer, execution logger, API/key infra, billing/checkout, revenue commands
+8. **Implementation & Enterprise Pricing** — Revenue OS Implementation ($5K+), HIC Core Adoption ($50K+), Platform/White-Label License (25% rev share)
+9. **Empire Ecosystem** — footer-level links to SLA113, Lyrica 3, Cultura, Southern, Soulfire, Archisynapse, HIC
+10. **Final CTA** — Try demo, Generate Receipt, Talk to Architect
+
+### Content Rules
+
+- Revenue OS is the front door. HIC powers the system. GTM Layer is the targeting brain.
+- Ecosystem content is in the footer / lower page only — not the main narrative.
+- No unverified MRR/ARR/operator claims are shown as real proof.
+- Pricing ladder starts at Free/$299/$999 — enterprise tiers ($5K+, $50K+, 25%) are secondary.
+- No anime engine examples, arcade references, or broad multiverse claims on the public homepage.
+- Primary CTA is "Try Empire Revenue OS →" pointing to `/try-revenue-os`.
+- "Talk to the Architect" is a secondary CTA, not the primary action.
