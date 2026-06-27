@@ -30,7 +30,7 @@ export default function RevenueOSPage() {
   };
 
   return (
-    <main style={{ maxWidth: 960, margin: '0 auto', padding: '1rem' }}>
+    <main style={{ maxWidth: 960, margin: '0 auto', padding: '1rem', background: '#fff', color: '#111' }}>
       <header style={{ marginBottom: '1.5rem' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>Empire Revenue OS</h1>
         <p style={{ color: '#666', margin: '0.25rem 0 1rem' }}>
@@ -593,8 +593,8 @@ function GTMLayerPanel({ output }: { output: any }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Section title="GTM Intelligence Summary">
         <KV k="Signal count" v={gtm_signals?.length ?? 0} />
-        <KV k="Buyer profiles scored" v={icp_scores?.length ?? 0} />
-        <KV k="Campaign" v={campaign_summary ?? '—'} />
+        <KV k="Buyer profiles scored" v={Array.isArray(buyer_tiers) ? buyer_tiers.length : 0} />
+        <KV k="Campaign" v={typeof campaign_summary === 'string' ? campaign_summary : `${campaign_summary?.total_sequences || '?'} sequences, ${campaign_summary?.total_steps || '?'} steps`} />
         <KV k="Next actions" v={gtm_next_actions?.length ?? 0} />
       </Section>
 
@@ -602,25 +602,23 @@ function GTMLayerPanel({ output }: { output: any }) {
         <Section title="Detected Signals">
           {detected_signals.map((s: any, i: number) => (
             <div key={i} style={{ background: '#f9f9f9', padding: '0.5rem 0.75rem', borderRadius: 4, marginBottom: '0.4rem' }}>
-              <KV k="Signal" v={s.signal} />
-              <KV k="Strength" v={s.strength} />
-              <KV k="Urgency" v={s.urgency} />
-              {s.description && <KV k="Why now" v={s.description} />}
+              <KV k="Signal" v={s.signal_name || s.signal} />
+              <KV k="Priority" v={s.priority || '—'} />
+              {s.outreach_angle && <KV k="Angle" v={s.outreach_angle} />}
             </div>
           ))}
         </Section>
       )}
 
-      {icp_scores && icp_scores.length > 0 && (
+      {Array.isArray(buyer_tiers) && buyer_tiers.length > 0 && (
         <Section title="Buyer Scores & Tiers">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-            {icp_scores.map((b: any, i: number) => (
+            {buyer_tiers.map((b: any, i: number) => (
               <div key={i} style={{ background: '#f9f9f9', padding: '0.5rem 0.75rem', borderRadius: 4 }}>
-                <KV k="Profile" v={b.profile_name || b.name || `Buyer ${i + 1}`} />
+                <KV k="Profile" v={b.persona_type || `Buyer ${i + 1}`} />
                 <KV k="Score" v={`${b.total_score ?? b.score ?? '—'}/100`} />
                 <KV k="Tier" v={b.tier || '—'} />
-                {b.buyer_fit !== undefined && <KV k="Buyer fit" v={`${b.buyer_fit}/25`} />}
-                {b.urgency_fit !== undefined && <KV k="Urgency fit" v={`${b.urgency_fit}/20`} />}
+                <KV k="Channel" v={b.best_channel || '—'} />
               </div>
             ))}
           </div>

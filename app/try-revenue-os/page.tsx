@@ -214,7 +214,7 @@ export default function TryRevenueOSPage() {
   }
 
   return (
-    <main style={{ maxWidth: 780, margin: '0 auto', padding: '2rem 1rem' }}>
+    <main style={{ maxWidth: 780, margin: '0 auto', padding: '2rem 1rem', background: '#fff', color: '#111' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>Your Revenue System</h2>

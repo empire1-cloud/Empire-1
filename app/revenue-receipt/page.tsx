@@ -53,7 +53,7 @@ export default function RevenueReceiptPage() {
   }
 
   return (
-    <main style={{ maxWidth: 720, margin: '0 auto', padding: '2rem 1rem' }}>
+    <main style={{ maxWidth: 720, margin: '0 auto', padding: '2rem 1rem', background: '#fff', color: '#111' }}>
       <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.25rem' }}>
         Empire Receipts Agent
       </h1>
@@ -181,7 +181,7 @@ function RevenueReceiptResult({ receipt, onBack }: { receipt: any; onBack: () =>
   );
 
   return (
-    <main style={{ maxWidth: 720, margin: '0 auto', padding: '2rem 1rem' }}>
+    <main style={{ maxWidth: 720, margin: '0 auto', padding: '2rem 1rem', background: '#fff', color: '#111' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>Revenue Receipt</h1>
         <button onClick={onBack} style={{ background: '#eee', border: 'none', padding: '0.5rem 1rem', borderRadius: 6, cursor: 'pointer', fontSize: '0.875rem' }}>
