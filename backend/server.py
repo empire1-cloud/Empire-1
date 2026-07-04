@@ -62,6 +62,9 @@ from app.routers.crm import router as crm_router
 from app.routers.business_analytics import router as business_analytics_router
 from app.routers.gtm import router as gtm_router
 from app.routers.empire_router import router as empire_router
+from app.routers.gtm_layer import router as gtm_layer_router
+from app.routers.revenue_os import router as revenue_os_router
+from app.routers.revenue_receipts import router as revenue_receipts_router
 
 # Import and include all engine routers
 from routers.engines import (
@@ -89,7 +92,7 @@ from routers.engines.history_protected import router as history_protected_router
 from routers.engines.lyrica.agents import router as lyrica_router
 from routers.pipelines import router as pipelines_router
 from routers.sla113 import router as sla113_router
-from app.routers.sla113_orchestration import router as sla113_orchestration_router
+# from app.routers.sla113_orchestration import router as sla113_orchestration_router  # engine deleted in game migration
 
 # Include auth and team routers first (higher priority)
 api_router.include_router(auth_router)
@@ -103,12 +106,15 @@ api_router.include_router(system_router)  # System status endpoints
 api_router.include_router(crm_router)  # Internal CRM (deal pipeline, lead tracking)
 api_router.include_router(business_analytics_router)  # Internal Business Analytics (MRR, usage, KPIs)
 api_router.include_router(gtm_router)  # Internal GTM (campaigns, outreach, launch checklists)
+api_router.include_router(gtm_layer_router)  # Empire GTM Layer (ICP scoring, signals, sequences)
+api_router.include_router(revenue_os_router)  # Empire Revenue OS (command center, receipt, offers, buyers, GTM)
+api_router.include_router(revenue_receipts_router)  # Legacy revenue receipts
 
 # Include protected routers (require auth)
 api_router.include_router(history_protected_router)  # /api/history (protected)
 api_router.include_router(pipelines_router)  # /api/pipelines (protected)
 api_router.include_router(sla113_router)  # /api/sla113
-api_router.include_router(sla113_orchestration_router)  # /api/sla113/orchestrate
+# api_router.include_router(sla113_orchestration_router)  # /api/sla113/orchestrate (engine deleted)
 
 # Include all engine routers (currently public for backward compatibility)
 api_router.include_router(core_router)

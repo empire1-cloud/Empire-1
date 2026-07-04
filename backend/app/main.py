@@ -46,6 +46,7 @@ from app.routers.audio_fx import router as audio_fx_router
 from app.routers.revenue_receipts import router as revenue_receipts_router
 from app.routers.revenue_os import router as revenue_os_router
 from app.routers.gtm_layer import router as gtm_layer_router
+from app.routers.empire_os_cofounder import router as empire_os_cofounder_router
 from routers.engines.lyrica.agents import router as lyrica_router
 
 settings = get_settings()
@@ -107,6 +108,7 @@ app.include_router(audio_fx_router)
 app.include_router(revenue_receipts_router)
 app.include_router(revenue_os_router)
 app.include_router(gtm_layer_router)
+app.include_router(empire_os_cofounder_router)
 
 # ---------------------------------------------------------
 # STARTUP: CREATE TABLES
@@ -119,6 +121,11 @@ async def startup_event():
     try:
         from app.services.revenue_os_store import ensure_store
         ensure_store()
+    except Exception:
+        pass
+    try:
+        from app.services.empire_os_cofounder.state import ensure_store as ensure_cofounder_store
+        ensure_cofounder_store()
     except Exception:
         pass
 

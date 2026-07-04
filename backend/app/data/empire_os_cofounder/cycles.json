@@ -1,0 +1,160 @@
+[
+  {
+    "cycle_id": "COF-FBA5DA47",
+    "generated_at": "2026-07-03T20:30:14.975452+00:00",
+    "universe": "empire",
+    "queue_result": {
+      "inserted": 8,
+      "updated": 0,
+      "count": 8
+    },
+    "artifact_path": "/home/shiestybizz113/projects/Empire-1/backend/app/data/empire_os_cofounder/latest_loop.md",
+    "top_mission": "Stabilize system health"
+  },
+  {
+    "cycle_id": "SURV-54C713B7",
+    "generated_at": "2026-07-03T20:37:02.383585+00:00",
+    "universe": "empire",
+    "queue_result": {
+      "inserted": 5,
+      "updated": 0,
+      "count": 13
+    },
+    "artifact_path": "/home/shiestybizz113/projects/Empire-1/backend/app/data/empire_os_cofounder/latest_survival.md",
+    "top_mission": "Create cash in the next 72 hours from services we can deliver fast.",
+    "mode": "survival_revenue"
+  },
+  {
+    "cycle_id": "COF-D8455F2E",
+    "generated_at": "2026-07-03T20:52:41.081324+00:00",
+    "universe": "empire",
+    "queue_result": {
+      "inserted": 5,
+      "updated": 3,
+      "count": 18,
+      "inserted_items": [
+        {
+          "id": "Q-859A7F13",
+          "agent": "strategy",
+          "lane": "strategy",
+          "type": "daily_goal",
+          "title": "Unblock autonomous execution",
+          "priority": "high",
+          "reason": "Reduce blocked omni tasks so the execution loop can keep moving. Current blocked count: 1.",
+          "suggested_step": "Resolve the top blocked omni task or tighten its task text and context.",
+          "handler": "refresh_business_snapshot",
+          "status": "open",
+          "created_at": "2026-07-03T20:52:41.071008+00:00",
+          "updated_at": "2026-07-03T20:52:41.071008+00:00",
+          "transitions": []
+        },
+        {
+          "id": "Q-01D62619",
+          "agent": "strategy",
+          "lane": "strategy",
+          "type": "daily_goal",
+          "title": "Move stale leads forward",
+          "priority": "medium",
+          "reason": "Stale leads are accumulating in CRM. Current estimate: 1.",
+          "suggested_step": "Review stale leads, update statuses, and schedule follow-up actions.",
+          "handler": "prepare_outreach_batch",
+          "status": "open",
+          "created_at": "2026-07-03T20:52:41.071034+00:00",
+          "updated_at": "2026-07-03T20:52:41.071034+00:00",
+          "transitions": []
+        },
+        {
+          "id": "Q-412F2ACB",
+          "agent": "ops",
+          "lane": "operations",
+          "type": "system_health",
+          "title": "Core services are degraded.",
+          "priority": "high",
+          "reason": "Core services are degraded.",
+          "suggested_step": "Stabilize degraded dependencies before pushing new work.",
+          "handler": "health_recheck",
+          "status": "open",
+          "created_at": "2026-07-03T20:52:41.076694+00:00",
+          "updated_at": "2026-07-03T20:52:41.076694+00:00",
+          "transitions": []
+        },
+        {
+          "id": "Q-F11C410A",
+          "agent": "ops",
+          "lane": "operations",
+          "type": "blocked_tasks",
+          "title": "1 omni task(s) are blocked.",
+          "priority": "medium",
+          "reason": "1 omni task(s) are blocked.",
+          "suggested_step": "Review blocked tasks and add missing context.",
+          "handler": "refresh_business_snapshot",
+          "status": "open",
+          "created_at": "2026-07-03T20:52:41.076715+00:00",
+          "updated_at": "2026-07-03T20:52:41.076715+00:00",
+          "transitions": []
+        },
+        {
+          "id": "Q-A604AEAF",
+          "agent": "ops",
+          "lane": "operations",
+          "type": "stale_leads",
+          "title": "1 CRM lead(s) look stale.",
+          "priority": "medium",
+          "reason": "1 CRM lead(s) look stale.",
+          "suggested_step": "Review stale lead follow-ups.",
+          "handler": "refresh_business_snapshot",
+          "status": "open",
+          "created_at": "2026-07-03T20:52:41.076729+00:00",
+          "updated_at": "2026-07-03T20:52:41.076729+00:00",
+          "transitions": []
+        }
+      ],
+      "updated_items": [
+        {
+          "id": "Q-5D8649C2",
+          "agent": "strategy",
+          "lane": "strategy",
+          "type": "daily_goal",
+          "title": "Stabilize system health",
+          "priority": "high",
+          "reason": "Review degraded or unhealthy components before shipping more work.",
+          "suggested_step": "Investigate the unhealthy component summary in the co-founder brief.",
+          "status": "open",
+          "created_at": "2026-07-03T20:30:14.970654+00:00",
+          "updated_at": "2026-07-03T20:52:41.070964+00:00",
+          "handler": "health_recheck"
+        },
+        {
+          "id": "Q-87610F8A",
+          "agent": "marketing",
+          "lane": "gtm",
+          "type": "campaign_activation",
+          "title": "Activate one GTM campaign",
+          "priority": "medium",
+          "reason": "Campaign structures exist but none are active.",
+          "suggested_step": "Promote the best-fit draft campaign into an active test this week.",
+          "status": "open",
+          "created_at": "2026-07-03T20:30:14.974501+00:00",
+          "updated_at": "2026-07-03T20:52:41.076607+00:00",
+          "handler": "prepare_campaign_draft"
+        },
+        {
+          "id": "Q-4F72FC0A",
+          "agent": "marketing",
+          "lane": "conversion",
+          "type": "conversion_push",
+          "title": "Push warmest lead toward payment",
+          "priority": "high",
+          "reason": "Leads exist but none have converted to paid yet.",
+          "suggested_step": "Prepare the strongest offer + outreach follow-up for the warmest lead.",
+          "status": "open",
+          "created_at": "2026-07-03T20:30:14.974544+00:00",
+          "updated_at": "2026-07-03T20:52:41.076651+00:00",
+          "handler": "prepare_outreach_batch"
+        }
+      ]
+    },
+    "artifact_path": "/home/shiestybizz113/projects/Empire-1/backend/app/data/empire_os_cofounder/latest_loop.md",
+    "top_mission": "Stabilize system health"
+  }
+]
