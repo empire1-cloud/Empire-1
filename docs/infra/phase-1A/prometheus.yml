@@ -1,0 +1,72 @@
+# Phase 1A — Prometheus Scrape Configuration (DEFERRED)
+# ⚠️ This config is for a FUTURE SELF-MANAGED NODE (VPS / Proxmox / dedicated server).
+# ⚠️ Do NOT deploy yet — see HOSTING_MAP.md for current hosting architecture.
+#
+# Part of the SLA113 Infrastructure Pack.
+# Scrapes: prometheus itself, node-exporter (host-level metrics).
+# No production endpoints scraped yet — Phase 1A is "watch the empire."
+# No auth — bind Prometheus to 127.0.0.1 only (set in docker-compose.phase1a.yml).
+
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: "sla113-infrastructure-pack"
+    phase: "1A"
+
+scrape_configs:
+
+  # ── Prometheus self-metrics ───────────────────────────────────────────
+  # Purpose: Monitor Prometheus itself (scrape duration, targets up/down).
+  # Port:    9090
+  - job_name: "prometheus"
+    scrape_interval: 15s
+    static_configs:
+      - targets: ["prometheus:9090"]
+        labels:
+          service: "prometheus"
+          universe: "sla113"
+
+  # ── Node Exporter ─────────────────────────────────────────────────────
+  # Purpose: Host-level metrics (CPU, memory, disk, network, load).
+  # Port:    9100
+  # Run one node-exporter per host. Add a targets entry per host.
+  - job_name: "node-exporter"
+    scrape_interval: 15s
+    static_configs:
+      - targets: ["node-exporter:9100"]
+        labels:
+          service: "node-exporter"
+          universe: "sla113"
+          host: "localhost"
+
+  # ── Phase 1B targets (commented — uncomment after Phase 1A is verified)
+  # Add more node-exporters as you add hosts:
+  # - targets: ["host2:9100"]
+  #   labels:
+  #     service: "node-exporter"
+  #     universe: "sla113"
+  #     host: "host2"
+
+  # ── Phase 2+ targets (noted for future reference)
+  # Application metrics will be added here as universes onboard:
+  # - job_name: "empire-1-backend"
+  #   static_configs:
+  #     - targets: ["api.empire1.cloud:8001"]
+  #       labels:
+  #         service: "empire-1-backend"
+  #         universe: "empire-1"
+  #
+  # - job_name: "lyrica-3-backend"
+  #   static_configs:
+  #     - targets: ["api.lyrica3.com:8000"]
+  #       labels:
+  #         service: "lyrica-3-backend"
+  #         universe: "lyrica-3"
+  #
+  # - job_name: "archisynapse-backend"
+  #   static_configs:
+  #     - targets: ["archisynapse-host:8000"]
+  #       labels:
+  #         service: "archisynapse-backend"
+  #         universe: "archisynapse"

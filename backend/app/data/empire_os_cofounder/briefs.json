@@ -1,0 +1,50 @@
+[
+  {
+    "generated_at": "2026-07-03T20:25:04.342404+00:00",
+    "universe": "empire",
+    "summary": "Execution loop pending=unknown, blocked=unknown. CRM leads=unknown. Active GTM campaigns=0. Paid Revenue OS leads=0. Top risk: System health is unknown. Next move: Investigate the unhealthy component summary in the co-founder brief.",
+    "next_action": {
+      "title": "Stabilize system health",
+      "reason": "Review degraded or unhealthy components before shipping more work.",
+      "suggested_step": "Investigate the unhealthy component summary in the co-founder brief."
+    },
+    "risk_count": 3,
+    "markdown_path": "/home/shiestybizz113/projects/Empire-1/backend/app/data/empire_os_cofounder/latest_brief.md"
+  },
+  {
+    "generated_at": "2026-07-03T20:25:14.362509+00:00",
+    "universe": "empire",
+    "summary": "Execution loop pending=unknown, blocked=unknown. CRM leads=unknown. Active GTM campaigns=0. Paid Revenue OS leads=0. Top risk: System health is unknown. Next move: Investigate the unhealthy component summary in the co-founder brief.",
+    "next_action": {
+      "title": "Stabilize system health",
+      "reason": "Review degraded or unhealthy components before shipping more work.",
+      "suggested_step": "Investigate the unhealthy component summary in the co-founder brief."
+    },
+    "risk_count": 3,
+    "markdown_path": "/home/shiestybizz113/projects/Empire-1/backend/app/data/empire_os_cofounder/latest_brief.md"
+  },
+  {
+    "generated_at": "2026-07-03T20:25:39.600562+00:00",
+    "universe": "empire",
+    "summary": "Execution loop pending=unknown, blocked=unknown. CRM leads=unknown. Active GTM campaigns=0. Paid Revenue OS leads=0. Top risk: System health is unknown. Next move: Investigate the unhealthy component summary in the co-founder brief.",
+    "next_action": {
+      "title": "Stabilize system health",
+      "reason": "Review degraded or unhealthy components before shipping more work.",
+      "suggested_step": "Investigate the unhealthy component summary in the co-founder brief."
+    },
+    "risk_count": 3,
+    "markdown_path": "/home/shiestybizz113/projects/Empire-1/backend/app/data/empire_os_cofounder/latest_brief.md"
+  },
+  {
+    "generated_at": "2026-07-03T20:37:02.381316+00:00",
+    "universe": "empire",
+    "summary": "Execution loop pending=unknown, blocked=unknown. CRM leads=unknown. Active GTM campaigns=0. Paid Revenue OS leads=0. Top risk: System health is unknown. Next move: Investigate the unhealthy component summary in the co-founder brief.",
+    "next_action": {
+      "title": "Stabilize system health",
+      "reason": "Review degraded or unhealthy components before shipping more work.",
+      "suggested_step": "Investigate the unhealthy component summary in the co-founder brief."
+    },
+    "risk_count": 3,
+    "markdown_path": "/home/shiestybizz113/projects/Empire-1/backend/app/data/empire_os_cofounder/latest_brief.md"
+  }
+]

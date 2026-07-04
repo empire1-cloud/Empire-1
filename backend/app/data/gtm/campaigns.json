@@ -166,6 +166,3824 @@
       ],
       "recommended_channel": "email",
       "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-A3359710",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T13:59:08.905954+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-4518B8F5",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T13:59:34.722463+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-552B5F5F",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T14:26:15.595389+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-877533EF",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T14:26:50.614043+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-5A4A06C6",
+      "business_name": "Test",
+      "offer_name": "test",
+      "created_at": "2026-06-26T14:29:02.184224+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-3EA605DE",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T14:35:44.330013+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-7D2BC64A",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T14:51:55.113228+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-8AB18FBF",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T14:53:23.105949+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-491B1E3E",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T14:58:24.987234+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-D38CCF29",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:00:12.784807+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-648AF7CC",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:02:10.885709+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-302FEE31",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:02:34.503393+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-EC1334B3",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:03:22.260215+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-19D20C24",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:18:15.770755+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-E70CBF42",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:18:42.187410+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-B37593CE",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:19:08.782110+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-9314FA38",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:28:14.691071+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-EFEB4A8C",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:34:12.975617+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-38CC91E7",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:40:37.973555+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-7DEC7DD4",
+      "business_name": "Test",
+      "offer_name": "test",
+      "created_at": "2026-06-26T15:41:28.436819+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-FB980B22",
+      "business_name": "Demo",
+      "offer_name": "AI website",
+      "created_at": "2026-06-26T15:41:43.799824+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-48A689DE",
+      "business_name": "Demo Founder Studio",
+      "offer_name": "AI website and automation setup",
+      "created_at": "2026-06-26T15:49:21.587394+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "AI website and automation setup \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for AI website and automation setup \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the AI website and automation setup \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the AI website and automation setup \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
+    },
+    {
+      "id": "CAM-401196C6",
+      "business_name": "test",
+      "offer_name": "test",
+      "created_at": "2026-06-27T03:37:50.606467+00:00",
+      "status": "draft",
+      "buyer_breakdown": {
+        "tier_1_count": 14,
+        "tier_2_count": 11,
+        "tier_3_count": 0,
+        "total_scored": 25
+      },
+      "top_tier_buyers": [
+        {
+          "persona_type": "Solo Owner",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Multi-Location Operator",
+          "segment": "Local Service",
+          "icp_fit": 30,
+          "signal_score": 35,
+          "total_score": 65,
+          "tier": "Tier 2",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Signal-triggered sequence within 48 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "DTC Founder",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Amazon FBA Seller",
+          "segment": "E-commerce",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "email",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        },
+        {
+          "persona_type": "Indie Founder",
+          "segment": "SaaS",
+          "icp_fit": 30,
+          "signal_score": 65,
+          "total_score": 95,
+          "tier": "Tier 1",
+          "detected_signals": [],
+          "best_channel": "linkedin",
+          "recommended_action": "Immediate personalized outreach within 24 hours",
+          "recommended_sequence_type": "personalized"
+        }
+      ],
+      "sequence_plan": [
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        },
+        {
+          "signal_name": "High ICP fit",
+          "persona_type": "general",
+          "offer_name": "test \u2014 Quick Revenue Audit",
+          "sequence_type": "personalized",
+          "steps": [
+            {
+              "day": 1,
+              "action": "Send personalized DM via email",
+              "template": "Hey {name}, I noticed {signal_angle}. We generated a revenue system for test \u2014 Quick Revenue Audit \u2014 want to see it?",
+              "channel": "email"
+            },
+            {
+              "day": 3,
+              "action": "Follow up with value add",
+              "template": "Hey {name}, following up on the test \u2014 Quick Revenue Audit system. Quick wins: {quick_win}. Worth 5 min?",
+              "channel": "email"
+            },
+            {
+              "day": 7,
+              "action": "Call or close attempt",
+              "template": "Last follow-up on the test \u2014 Quick Revenue Audit system. If timing is off, no worries \u2014 the offer is ready when you are.",
+              "channel": "email"
+            }
+          ],
+          "total_steps": 3,
+          "channel": "email",
+          "urgency": 85
+        }
+      ],
+      "recommended_channel": "email",
+      "total_sequence_steps": 9
     }
   ]
 }

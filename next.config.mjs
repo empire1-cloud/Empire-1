@@ -14,7 +14,7 @@ const nextConfig = {
       },
       {
         source: '/api/:path*',
-        destination: `${hybridBackendUrl}/:path*`,
+        destination: `${hybridBackendUrl}/api/:path*`,
       },
     ];
   },

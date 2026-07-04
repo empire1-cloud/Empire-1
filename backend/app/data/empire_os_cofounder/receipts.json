@@ -1,0 +1,31 @@
+[
+  {
+    "execution_id": "EX-840775F14D",
+    "queue_item_id": "Q-5D8649C2",
+    "handler": "health_recheck",
+    "policy_class": "read_only",
+    "started_at": "2026-07-03T20:52:41.082423+00:00",
+    "completed_at": "2026-07-03T20:52:41.885992+00:00",
+    "inputs_used": {
+      "title": "Stabilize system health",
+      "type": "daily_goal",
+      "priority": "high",
+      "reason": "Review degraded or unhealthy components before shipping more work.",
+      "suggested_step": "Investigate the unhealthy component summary in the co-founder brief."
+    },
+    "action_taken": "Re-ran system health adapter and captured the current health report.",
+    "files_or_records_changed": [],
+    "verification": {
+      "ok": false,
+      "status": "failed",
+      "checked": [
+        "system_health.available",
+        "system_health.status"
+      ],
+      "error": "Health report was incomplete."
+    },
+    "final_status": "failed",
+    "error": "Health report was incomplete.",
+    "approval_required": false
+  }
+]
