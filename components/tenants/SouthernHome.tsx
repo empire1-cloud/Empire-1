@@ -362,6 +362,173 @@ const HTML = `
   </footer>
 `;
 
+/* ── SVG LOGO — Southern Lyfestyle medallion ── */
+const SouthernLogo = ({ size = 240 }: { size?: number }) => (
+  <svg
+    viewBox="0 0 300 300"
+    width={size}
+    height={size}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="logo-svg"
+  >
+    <defs>
+      <radialGradient id="sl-bg" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stopColor="#2a1505" />
+        <stop offset="100%" stopColor="#0a0805" />
+      </radialGradient>
+      <linearGradient id="sl-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" />
+        <stop offset="50%" stopColor="#D4AF37" />
+        <stop offset="100%" stopColor="#8B6914" />
+      </linearGradient>
+      <linearGradient id="sl-gold2" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#FFE55C" />
+        <stop offset="40%" stopColor="#D4AF37" />
+        <stop offset="100%" stopColor="#7a5a0a" />
+      </linearGradient>
+      <linearGradient id="sl-rose" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FF4060" />
+        <stop offset="100%" stopColor="#8B1A1A" />
+      </linearGradient>
+      <linearGradient id="sl-amber" x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" stopOpacity="0.3" />
+        <stop offset="100%" stopColor="#cc5500" stopOpacity="0" />
+      </linearGradient>
+      <filter id="sl-glow">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+      <filter id="sl-rose-glow">
+        <feGaussianBlur stdDeviation="2" result="blur" />
+        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+      <path id="top-arc" d="M 40,150 A 110,110 0 0,1 260,150" />
+      <path id="bot-arc" d="M 55,170 A 110,110 0 0,0 245,170" />
+    </defs>
+
+    {/* Glow burst behind */}
+    <circle cx="150" cy="150" r="95" fill="url(#sl-amber)" />
+
+    {/* Main medallion disc */}
+    <circle cx="150" cy="150" r="130" fill="url(#sl-bg)" />
+
+    {/* Outer decorative ring */}
+    <circle cx="150" cy="150" r="130" stroke="url(#sl-gold)" strokeWidth="10" fill="none" />
+    <circle cx="150" cy="150" r="122" stroke="rgba(212,175,55,.2)" strokeWidth="1" fill="none" />
+    <circle cx="150" cy="150" r="118" stroke="rgba(212,175,55,.12)" strokeWidth="1" fill="none" />
+
+    {/* Greek-key tick marks around ring */}
+    {Array.from({ length: 36 }).map((_, i) => {
+      const angle = (i * 10 - 90) * (Math.PI / 180);
+      const r1 = 118; const r2 = 123;
+      return (
+        <line
+          key={i}
+          x1={150 + r1 * Math.cos(angle)} y1={150 + r1 * Math.sin(angle)}
+          x2={150 + r2 * Math.cos(angle)} y2={150 + r2 * Math.sin(angle)}
+          stroke="rgba(212,175,55,.5)" strokeWidth={i % 3 === 0 ? 2 : 1}
+        />
+      );
+    })}
+
+    {/* Circular text — top: SOUTHERN LYFESTYLE */}
+    <text fontFamily="'Inter', sans-serif" fontSize="11" fontWeight="700" letterSpacing="3" fill="url(#sl-gold)" textAnchor="middle">
+      <textPath href="#top-arc" startOffset="50%">SOUTHERN  LYFESTYLE</textPath>
+    </text>
+
+    {/* Circular text — bottom: EL MONTE · SGV · SINCE DAY ONE */}
+    <text fontFamily="'Inter', sans-serif" fontSize="9" fontWeight="600" letterSpacing="2.5" fill="rgba(212,175,55,.7)" textAnchor="middle">
+      <textPath href="#bot-arc" startOffset="50%">EL MONTE  ·  SGV  ·  SINCE DAY ONE</textPath>
+    </text>
+
+    {/* Ornate S — filigree body */}
+    <g transform="translate(150,152)" filter="url(#sl-glow)">
+      {/* S outer path */}
+      <path
+        d="M 18,-44 C 42,-44 52,-28 52,-14 C 52,2 40,14 18,20 C -8,28 -22,36 -22,54 C -22,70 -10,82 18,82 C 38,82 50,74 50,62"
+        stroke="url(#sl-gold2)" strokeWidth="14" fill="none" strokeLinecap="round"
+      />
+      <path
+        d="M 18,-44 C 42,-44 52,-28 52,-14 C 52,2 40,14 18,20 C -8,28 -22,36 -22,54 C -22,70 -10,82 18,82 C 38,82 50,74 50,62"
+        stroke="url(#sl-gold2)" strokeWidth="8" fill="none" strokeLinecap="round" opacity="0.6"
+      />
+      {/* Filigree swirls */}
+      <path d="M 30,-30 C 44,-20 46,-8 36,0" stroke="rgba(255,215,0,.5)" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <path d="M -8,38 C -20,46 -20,56 -8,60" stroke="rgba(255,215,0,.5)" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <circle cx="52" cy="-14" r="4" fill="var(--gold)" opacity="0.7" />
+      <circle cx="-22" cy="54" r="4" fill="var(--gold)" opacity="0.7" />
+    </g>
+
+    {/* Rose 1 — left center */}
+    <g transform="translate(82,158)" filter="url(#sl-rose-glow)">
+      <circle cx="0" cy="0" r="14" fill="url(#sl-rose)" opacity="0.9" />
+      <circle cx="0" cy="0" r="9" fill="#DC143C" opacity="0.8" />
+      <circle cx="0" cy="0" r="5" fill="#FF4060" opacity="0.6" />
+      <path d="M -12,-6 C -8,-14 8,-14 12,-6" stroke="#2d6b1f" strokeWidth="2" fill="none" />
+      <path d="M -6,10 L -6,26 C -6,28 -4,28 -2,26" stroke="#2d6b1f" strokeWidth="2" fill="none" strokeLinecap="round" />
+    </g>
+
+    {/* Rose 2 — right high */}
+    <g transform="translate(214,118)" filter="url(#sl-rose-glow)">
+      <circle cx="0" cy="0" r="16" fill="url(#sl-rose)" opacity="0.85" />
+      <circle cx="0" cy="0" r="10" fill="#DC143C" opacity="0.8" />
+      <circle cx="0" cy="0" r="5" fill="#FF4060" opacity="0.6" />
+      <path d="M -8,10 L -4,24 C -2,28 2,26 2,22" stroke="#2d6b1f" strokeWidth="2" fill="none" strokeLinecap="round" />
+    </g>
+
+    {/* Rose 3 — bottom center */}
+    <g transform="translate(148,212)" filter="url(#sl-rose-glow)">
+      <circle cx="0" cy="0" r="12" fill="url(#sl-rose)" opacity="0.9" />
+      <circle cx="0" cy="0" r="7" fill="#DC143C" opacity="0.8" />
+      <circle cx="0" cy="0" r="3.5" fill="#FF4060" opacity="0.6" />
+    </g>
+
+    {/* Vine tendrils */}
+    <path d="M 96,162 C 120,140 140,130 148,100" stroke="#2d6b1f" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.8" />
+    <path d="M 198,122 C 185,142 172,158 162,180" stroke="#2d6b1f" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.8" />
+    <path d="M 152,212 C 148,195 145,178 148,160" stroke="#2d6b1f" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.7" />
+
+    {/* Gold sparkles */}
+    {[
+      [105, 95], [195, 85], [228, 175], [78, 185], [165, 76], [120, 230],
+    ].map(([cx, cy], i) => (
+      <g key={i} transform={`translate(${cx},${cy})`}>
+        <line x1="-4" y1="0" x2="4" y2="0" stroke="var(--gold)" strokeWidth="1" opacity="0.7" />
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="var(--gold)" strokeWidth="1" opacity="0.7" />
+        <circle cx="0" cy="0" r="1.5" fill="var(--gold-bright)" opacity="0.9" />
+      </g>
+    ))}
+
+    {/* Small daisy flowers */}
+    {[[88,112],[210,200]].map(([cx,cy],i) => (
+      <g key={i} transform={`translate(${cx},${cy})`}>
+        {[0,45,90,135,180,225,270,315].map((a, j) => (
+          <ellipse key={j} cx={5*Math.cos(a*Math.PI/180)} cy={5*Math.sin(a*Math.PI/180)} rx="3" ry="1.5" fill="white" opacity="0.7" transform={`rotate(${a})`} />
+        ))}
+        <circle cx="0" cy="0" r="3" fill="var(--gold)" opacity="0.9" />
+      </g>
+    ))}
+  </svg>
+);
+
+/* ── MINI NAV MARK ── */
+const NavMark = () => (
+  <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="17" stroke="url(#nm-sl-gold)" strokeWidth="1.5" />
+    <g transform="translate(20,22)">
+      <path d="M 6,-12 C 12,-12 14,-7 14,-4 C 14,0 10,3 5,5 C -2,7 -6,9 -6,14 C -6,18 -2,21 6,21 C 10,21 13,19 13,17"
+        stroke="#D4AF37" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+    </g>
+    <defs>
+      <linearGradient id="nm-sl-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#8B6914" stopOpacity="0.5" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 export default function SouthernHome() {
   useEffect(() => {
     // Load fonts
