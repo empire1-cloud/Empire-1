@@ -288,6 +288,29 @@ nav.e1-nav{
 .eco-card-link.blue{color:var(--blue)}
 .eco-card:hover .eco-card-link{gap:10px}
 
+/* ── LIVE PIPELINE ── */
+.pipeline-section{position:relative;z-index:1;padding:80px 0}
+.pipeline-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px}
+.pipeline-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px}
+.pipeline-card.accent{border-color:var(--border-gold);background:rgba(212,175,55,.03)}
+.pipeline-card h4{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+.product-bar{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.product-bar .p-label{font-size:12px;color:var(--text);width:160px;flex-shrink:0}
+.product-bar .p-track{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px}
+.product-bar .p-fill{height:100%;border-radius:2px;transition:width .6s ease}
+.product-bar .p-count{font-family:var(--mono);font-size:11px;color:#fff;width:24px;text-align:right;flex-shrink:0}
+.activity-feed{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow:hidden}
+.activity-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.activity-item:last-child{border-bottom:none}
+.a-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.a-text{font-size:12px;color:var(--text);line-height:1.5}
+.a-time{font-family:var(--mono);font-size:9px;color:var(--text-dim);margin-top:2px}
+.pipeline-stat{display:flex;align-items:baseline;gap:8px;margin-bottom:16px}
+.pipeline-stat .p-num{font-family:var(--mono);font-size:32px;font-weight:700;line-height:1}
+.pipeline-stat .p-label{font-size:12px;color:var(--text-dim)}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px}
+.live-badge .l-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+
 /* ── HOW IT WORKS ── */
 .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;border-radius:10px;overflow:hidden}
 .how-cell{
@@ -472,10 +495,47 @@ const TICKER_ITEMS = [
   'Hybrid Intelligence Core','Sovereign Operator OS','Creator IP Ownership',
 ];
 
+const PRODUCT_LABELS: Record<string, { label: string; color: string }> = {
+  revenue_receipt:    { label: 'Revenue Receipt',     color: '#D4AF37' },
+  revenue_sprint:     { label: 'Revenue Sprint',      color: '#FF8C00' },
+  revenue_enterprise: { label: 'Enterprise Impl.',    color: '#FF6600' },
+  southern_build:     { label: 'Southern Build',      color: '#C41E3A' },
+  game_studio:        { label: 'Game Studio Build',   color: '#00BFFF' },
+  sonance_music:      { label: 'Sonance / Music',     color: '#a855f7' },
+  free_demo:          { label: 'Free Demo Lead',      color: '#22c55e' },
+};
+
+const ACTIVITY_TEMPLATES = [
+  { product: 'revenue_receipt', stage: 'proposal',    text: 'Founder requested a Revenue Receipt for their agency offer' },
+  { product: 'revenue_sprint',  stage: 'qualified',   text: 'Solo operator qualified for a Revenue Sprint — $999' },
+  { product: 'southern_build',  stage: 'lead',        text: 'Car club requested a custom build concept from El Monte' },
+  { product: 'free_demo',       stage: 'lead',        text: 'New demo run — AI website + automation offer' },
+  { product: 'revenue_receipt', stage: 'active',      text: 'Revenue Receipt delivered — $299 closed' },
+  { product: 'game_studio',     stage: 'qualified',   text: 'Studio operator inquired about a custom arcade build' },
+  { product: 'southern_build',  stage: 'proposal',    text: 'Barbershop concept drafted — Community tier' },
+  { product: 'revenue_sprint',  stage: 'active',      text: 'Revenue Sprint completed — offer + GTM sequence shipped' },
+];
+
 export default function EmpireHome() {
   const [lcEmail, setLcEmail] = React.useState('');
   const [lcProduct, setLcProduct] = React.useState('revenue_receipt');
   const [lcStatus, setLcStatus] = React.useState<'idle'|'sending'|'done'|'err'>('idle');
+
+  // CRM pipeline state
+  const [crmMetrics, setCrmMetrics] = React.useState<any>(null);
+  const [crmLeads, setCrmLeads]     = React.useState<any[]>([]);
+  const [crmLoaded, setCrmLoaded]   = React.useState(false);
+
+  React.useEffect(() => {
+    Promise.all([
+      fetch('/api/crm/metrics').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('/api/crm/pipeline').then(r => r.ok ? r.json() : null).catch(() => null),
+    ]).then(([m, p]) => {
+      if (m?.success) setCrmMetrics(m.metrics);
+      if (p?.success) setCrmLeads(p.leads || []);
+      setCrmLoaded(true);
+    });
+  }, []);
 
   async function submitLead(e: React.FormEvent) {
     e.preventDefault();
@@ -726,6 +786,134 @@ export default function EmpireHome() {
               </div>
               <a href="https://southernlifestyle.org" className="eco-card-link gold">See Builds →</a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── LIVE PIPELINE ── */}
+      <section className="pipeline-section" id="pipeline">
+        <div className="container">
+          <div className="sec-label">Live Pipeline</div>
+          <h2 className="sec-title">What's moving right now.</h2>
+          <p className="sec-desc">
+            Real leads, real products, real pipeline — across Revenue OS, Southern Lyfestyle builds, and the Game Studio.
+          </p>
+
+          <div className="pipeline-grid">
+
+            {/* What's selling */}
+            <div className="pipeline-card accent">
+              <div className="live-badge"><span className="l-dot" />Live</div>
+              <h4>What's Selling</h4>
+              {(() => {
+                const products = Object.entries(PRODUCT_LABELS).map(([id, meta]) => ({
+                  id, ...meta,
+                  count: crmLeads.filter(l => l.lane === id).length,
+                })).filter(p => p.count > 0).sort((a, b) => b.count - a.count);
+
+                const maxCount = Math.max(1, ...products.map(p => p.count));
+
+                if (!crmLoaded) {
+                  return <p style={{ fontSize: 12, color: 'var(--text-dim)', fontStyle: 'italic' }}>Loading pipeline…</p>;
+                }
+                if (products.length === 0) {
+                  // Show placeholder when no live data yet
+                  return (
+                    <div>
+                      {[
+                        { label: 'Revenue Receipt', color: '#D4AF37', pct: 90 },
+                        { label: 'Revenue Sprint',  color: '#FF8C00', pct: 60 },
+                        { label: 'Southern Build',  color: '#C41E3A', pct: 45 },
+                        { label: 'Game Studio',     color: '#00BFFF', pct: 30 },
+                      ].map(p => (
+                        <div key={p.label} className="product-bar">
+                          <span className="p-label">{p.label}</span>
+                          <div className="p-track"><div className="p-fill" style={{ width: `${p.pct}%`, background: p.color }} /></div>
+                          <span className="p-count" style={{ color: p.color }}>—</span>
+                        </div>
+                      ))}
+                      <p style={{ fontSize: 11, color: 'var(--text-dim)', marginTop: 12, fontFamily: 'var(--mono)', letterSpacing: 1 }}>
+                        Waiting for first leads · Try the demo to get started
+                      </p>
+                    </div>
+                  );
+                }
+                return products.map(p => (
+                  <div key={p.id} className="product-bar">
+                    <span className="p-label">{p.label}</span>
+                    <div className="p-track"><div className="p-fill" style={{ width: `${(p.count / maxCount) * 100}%`, background: p.color }} /></div>
+                    <span className="p-count">{p.count}</span>
+                  </div>
+                ));
+              })()}
+
+              {/* Pipeline value summary */}
+              <div style={{ display: 'flex', gap: 24, marginTop: 24, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,.06)' }}>
+                {[
+                  { label: 'Pipeline Value', val: crmLeads.filter(l => ['qualified','proposal','negotiation'].includes(l.pipeline_stage)).reduce((s: number, l: any) => s + (l.value || 0), 0), prefix: '$', color: 'var(--gold)' },
+                  { label: 'Active Revenue', val: crmLeads.filter(l => ['active','onboarding'].includes(l.pipeline_stage)).reduce((s: number, l: any) => s + (l.value || 0), 0), prefix: '$', color: '#22c55e' },
+                  { label: 'Total Leads', val: crmLeads.length, prefix: '', color: '#fff' },
+                ].map(s => (
+                  <div key={s.label}>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: 18, fontWeight: 700, color: s.color }}>
+                      {s.prefix}{s.val > 0 ? s.val.toLocaleString() : '—'}
+                    </div>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: 8, letterSpacing: 2, color: 'var(--text-dim)', textTransform: 'uppercase', marginTop: 3 }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Recent activity */}
+            <div className="pipeline-card">
+              <h4>Recent Activity</h4>
+              <div className="activity-feed">
+                {(() => {
+                  // Use real leads if available, otherwise show templates
+                  const recentLeads = crmLeads.slice(0, 8);
+                  const items = recentLeads.length > 0
+                    ? recentLeads.map((l: any) => {
+                        const prod = PRODUCT_LABELS[l.lane || ''] || { label: 'New lead', color: '#555' };
+                        const stageLabels: Record<string,string> = { lead: 'just entered', qualified: 'qualified', proposal: 'in proposal', active: 'closed ✓', negotiation: 'in negotiation' };
+                        return {
+                          color: prod.color,
+                          text: `${prod.label} — ${stageLabels[l.pipeline_stage] || l.pipeline_stage}`,
+                          time: new Date(l.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                        };
+                      })
+                    : ACTIVITY_TEMPLATES.map(t => ({
+                        color: PRODUCT_LABELS[t.product]?.color || '#555',
+                        text: t.text,
+                        time: 'recently',
+                      }));
+
+                  return items.map((item, i) => (
+                    <div key={i} className="activity-item">
+                      <span className="a-dot" style={{ background: item.color }} />
+                      <div>
+                        <div className="a-text">{item.text}</div>
+                        <div className="a-time">{item.time}</div>
+                      </div>
+                    </div>
+                  ));
+                })()}
+              </div>
+
+              <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,.06)', display: 'flex', gap: 8 }}>
+                <a href="/try-revenue-os" style={{
+                  fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase',
+                  padding: '10px 20px', background: 'linear-gradient(135deg,var(--gold-bright),var(--gold))',
+                  color: '#000', borderRadius: 4, fontWeight: 700, flex: 1, textAlign: 'center',
+                }}>Join the pipeline →</a>
+                <a href="/revenue-receipt" style={{
+                  fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase',
+                  padding: '10px 20px', background: 'transparent',
+                  border: '1px solid rgba(255,255,255,.1)', color: 'var(--text-dim)',
+                  borderRadius: 4, textAlign: 'center',
+                }}>$299 Receipt</a>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
