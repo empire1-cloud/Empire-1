@@ -2,625 +2,882 @@
 
 import React, { useEffect } from 'react';
 
-const LANDING_STYLES = `
+/* ─────────────────────────────────────────────
+   EMPIRE 1 — Public Landing Page
+   Colors pulled directly from brand logo:
+   Gold   #D4AF37 / #c9a84c
+   Blue   #00BFFF
+   Pink   #FF1493
+   BG     #050508
+───────────────────────────────────────────── */
+
+const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;600;700;800;900&display=swap');
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{font-family:'Inter',system-ui,sans-serif;background:#050508;color:#e0e0e0;line-height:1.6;overflow-x:hidden}
+body{font-family:'Inter',system-ui,sans-serif;background:#050508;color:#e0e0e0;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-
 :root{
-  --pink:#ff1493;
-  --pink-glow:rgba(255,20,147,.12);
-  --pink-border:rgba(255,20,147,.25);
-  --obsidian:#111827;
-  --obsidian-hover:#1a2744;
-  --obsidian-border:rgba(17,24,39,.4);
-  --gold:#ffd700;
-  --purple:#a855f7;
-  --green:#22c55e;
+  --gold:#D4AF37;
+  --gold-bright:#FFD700;
+  --gold-dim:#8B6914;
+  --blue:#00BFFF;
+  --pink:#FF1493;
   --bg:#050508;
-  --card:var(--obsidian);
-  --card-hover:var(--obsidian-hover);
-  --card-border:rgba(255,255,255,.06);
-  --text:#e0e0e0;
-  --text-dim:#777;
+  --card:#0d0d12;
+  --border:rgba(255,255,255,.07);
+  --border-gold:rgba(212,175,55,.3);
+  --border-pink:rgba(255,20,147,.25);
+  --border-blue:rgba(0,191,255,.25);
+  --text:#c8c8d0;
+  --text-dim:#555;
   --mono:'JetBrains Mono',monospace;
 }
 
-.container{max-width:1200px;margin:0 auto;padding:0 24px}
-.mono{font-family:var(--mono)}
-.section{padding:100px 0}
-.section-label{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--pink);margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.section-label::before{content:'';width:24px;height:1px;background:var(--pink)}
-.section-title{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.12;margin-bottom:20px;color:#fff}
-.section-desc{font-size:17px;color:var(--text-dim);max-width:600px;line-height:1.7}
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:4px}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0;backdrop-filter:blur(24px);background:rgba(5,5,8,.85);border-bottom:1px solid var(--card-border)}
-nav .container{display:flex;align-items:center;justify-content:space-between}
-.nav-brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:700;font-size:15px;color:#fff;letter-spacing:1px}
-.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--pink)}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{font-size:13px;color:var(--text-dim);transition:color .2s}
-.nav-links a:hover{color:var(--pink)}
-.nav-cta{font-family:var(--mono);font-size:12px;padding:10px 24px;border:1px solid var(--pink);color:var(--pink);border-radius:6px;transition:all .2s;letter-spacing:1px}
-.nav-cta:hover{background:var(--pink);color:#000}
+/* ── GRID BG ── */
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(212,175,55,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,175,55,.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 0%,#000 40%,transparent 100%)}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding-top:80px}
-.hero::before{content:'';position:absolute;inset:0;background:
-  radial-gradient(ellipse 700px 500px at 50% 25%,rgba(255,20,147,.06),transparent 70%),
-  radial-gradient(ellipse 500px 500px at 80% 70%,rgba(255,20,147,.03),transparent 60%);pointer-events:none}
-.hero-content{position:relative;z-index:2;max-width:700px}
-.hero-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink);margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.hero-eyebrow .pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--green)}50%{opacity:.3}}
-.hero h1{font-size:clamp(36px,5.5vw,62px);font-weight:900;line-height:1.06;color:#fff;margin-bottom:24px;letter-spacing:-.02em}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--text-dim);line-height:1.7;margin-bottom:36px;max-width:540px}
-.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-.btn-primary{font-family:var(--mono);font-size:13px;padding:14px 32px;background:linear-gradient(135deg,var(--pink),#d000a0);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;letter-spacing:1px;transition:all .25s;text-transform:uppercase;display:inline-block}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,20,147,.25)}
-.btn-secondary{font-family:var(--mono);font-size:13px;padding:14px 32px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;letter-spacing:1px;transition:all .25s;display:inline-block}
-.btn-secondary:hover{border-color:var(--pink);color:var(--pink)}
+/* ── NAV ── */
+nav.e1-nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:68px;display:flex;align-items:center;
+  padding:0 40px;
+  background:rgba(5,5,8,.82);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-mark{display:flex;align-items:center;gap:10px;cursor:pointer}
+.nav-mark svg{width:36px;height:36px;flex-shrink:0}
+.nav-wordmark{font-family:var(--mono);font-size:14px;font-weight:700;letter-spacing:3px;color:#fff;text-transform:uppercase}
+.nav-wordmark span{color:var(--pink)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{
+  font-family:var(--mono);font-size:11px;letter-spacing:2px;
+  padding:10px 22px;text-transform:uppercase;
+  background:transparent;border:1px solid var(--gold);color:var(--gold);
+  border-radius:4px;transition:all .2s;cursor:pointer
+}
+.nav-cta:hover{background:var(--gold);color:#000}
 
-/* STATS BAR */
-.stats-bar{display:flex;gap:48px;margin-top:56px;padding-top:36px;border-top:1px solid var(--card-border)}
-.stat-item .stat-num{font-family:var(--mono);font-size:32px;font-weight:700;color:#fff}
-.stat-item .stat-num span{color:var(--pink)}
-.stat-item .stat-label{font-size:12px;color:var(--text-dim);margin-top:2px;letter-spacing:.5px}
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:100px 24px 80px;text-align:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 900px 600px at 50% 30%,rgba(212,175,55,.055),transparent 70%),
+    radial-gradient(ellipse 600px 600px at 20% 80%,rgba(0,191,255,.04),transparent 60%),
+    radial-gradient(ellipse 600px 600px at 80% 80%,rgba(255,20,147,.04),transparent 60%);
+}
 
-/* PROOF BAR */
-.proof-bar{padding:48px 0;border-bottom:1px solid var(--card-border)}
-.proof-bar .container{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
-.proof-chip{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--text-dim);white-space:nowrap}
-.proof-chip .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+/* ── LOGO MEDALLION (SVG animated) ── */
+.logo-wrap{position:relative;display:inline-block;margin-bottom:48px}
+.logo-wrap img.logo-png{width:180px;height:180px;object-fit:contain;display:block}
+.logo-svg-fallback{width:180px;height:180px}
+@keyframes ring-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes ring-spin-rev{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+@keyframes glow-pulse{
+  0%,100%{opacity:.6;filter:drop-shadow(0 0 12px var(--blue))}
+  50%{opacity:1;filter:drop-shadow(0 0 28px var(--pink))}
+}
+.ring-outer{animation:ring-spin 18s linear infinite;transform-origin:center}
+.ring-inner{animation:ring-spin-rev 12s linear infinite;transform-origin:center}
+.logo-glow{animation:glow-pulse 3s ease-in-out infinite}
+.logo-halo{
+  position:absolute;inset:-20px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(212,175,55,.12) 0%,transparent 70%);
+  animation:glow-pulse 3s ease-in-out infinite;
+}
 
-/* MEGA CARDS */
-.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
-.mega-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:40px;position:relative;overflow:hidden;transition:all .3s}
-.mega-card:hover{border-color:var(--pink-border);box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.mega-card.full{grid-column:span 2}
-.mega-card .card-badge{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;display:inline-block;margin-bottom:20px}
-.badge-live{color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)}
-.badge-core{color:var(--pink);background:var(--pink-glow);border:1px solid var(--pink-border)}
-.badge-revenue{color:var(--gold);background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2)}
-.badge-api{color:var(--purple);background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2)}
-.mega-card h3{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px}
-.mega-card p{font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:20px}
-.mega-card ul{list-style:none}
-.mega-card ul li{font-size:13px;color:var(--text-dim);padding:5px 0;display:flex;align-items:flex-start;gap:8px}
-.mega-card ul li::before{content:'→';color:var(--pink);font-family:var(--mono);flex-shrink:0}
+/* ── HERO TEXT ── */
+@keyframes fade-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;
+  margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px;
+  animation:fade-up .8s ease both;animation-delay:.1s;opacity:0;
+}
+.hero-eyebrow .live-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--blue);
+  box-shadow:0 0 8px var(--blue);
+  animation:glow-pulse 2s ease-in-out infinite;
+}
+.hero-h1{
+  font-size:clamp(38px,6vw,76px);font-weight:900;line-height:1.04;color:#fff;
+  letter-spacing:-.03em;margin-bottom:24px;
+  animation:fade-up .8s ease both;animation-delay:.25s;opacity:0;
+}
+.hero-h1 .g{
+  background:linear-gradient(135deg,var(--gold-bright) 0%,var(--gold) 40%,#c9a84c 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-h1 .p{
+  background:linear-gradient(135deg,var(--pink),#c000a0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:clamp(16px,2vw,20px);color:var(--text);line-height:1.7;
+  max-width:600px;margin:0 auto 40px;
+  animation:fade-up .8s ease both;animation-delay:.4s;opacity:0;
+}
+.hero-ctas{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  animation:fade-up .8s ease both;animation-delay:.55s;opacity:0;
+}
+.btn-gold{
+  font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  padding:15px 36px;border-radius:5px;cursor:pointer;transition:all .25s;
+  background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#000;font-weight:700;
+  border:none;display:inline-block;
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(212,175,55,.3)}
+.btn-ghost{
+  font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  padding:14px 36px;border-radius:5px;cursor:pointer;transition:all .25s;
+  background:transparent;color:#fff;border:1px solid rgba(255,255,255,.15);display:inline-block;
+}
+.btn-ghost:hover{border-color:var(--pink);color:var(--pink)}
+.btn-text{
+  font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  padding:14px 20px;color:var(--text-dim);transition:color .2s;display:inline-block;cursor:pointer;
+}
+.btn-text:hover{color:var(--gold)}
 
-/* HOW IT WORKS */
-.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:28px;margin-top:48px;counter-reset:step}
-.step{position:relative}
-.step::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:var(--mono);font-size:44px;font-weight:700;color:rgba(255,20,147,.12);line-height:1;margin-bottom:14px;display:block}
-.step h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
-.step p{font-size:13px;color:var(--text-dim);line-height:1.7}
+/* ── LIVE STATS BAR ── */
+.stats-bar{
+  display:flex;gap:0;margin-top:64px;
+  border:1px solid var(--border);border-radius:8px;overflow:hidden;
+  animation:fade-up .8s ease both;animation-delay:.7s;opacity:0;
+}
+.stat-cell{
+  flex:1;padding:20px 28px;position:relative;
+  border-right:1px solid var(--border);
+}
+.stat-cell:last-child{border-right:none}
+.stat-cell::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.stat-cell:hover::before{opacity:1}
+.stat-num{font-family:var(--mono);font-size:28px;font-weight:700;color:#fff;line-height:1}
+.stat-num.gold{color:var(--gold)}
+.stat-num.pink{color:var(--pink)}
+.stat-num.blue{color:var(--blue)}
+.stat-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-top:6px}
 
-/* PRICING GRID */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-.price-card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:32px;transition:all .3s;position:relative}
-.price-card.pop{border-color:var(--pink-border);box-shadow:0 0 50px rgba(255,20,147,.06)}
-.price-card.pop::before{content:'RECOMMENDED';position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:2px;padding:4px 14px;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border-radius:4px;font-weight:700}
-.price-card .tier-name{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
-.price-card .price{font-size:40px;font-weight:900;color:#fff;line-height:1}
-.price-card .price small{font-size:14px;font-weight:400;color:var(--text-dim)}
-.price-card .price-desc{font-size:13px;color:var(--text-dim);margin:14px 0 20px;line-height:1.5}
-.price-card ul{list-style:none;margin-bottom:24px}
-.price-card ul li{font-size:12px;padding:5px 0;color:var(--text-dim);display:flex;align-items:center;gap:6px}
-.price-card ul li::before{content:'✓';color:var(--pink);font-size:11px;font-weight:700}
-.price-card .btn-primary{width:100%;text-align:center;font-size:12px;padding:12px}
+/* ── TICKER ── */
+.ticker-wrap{
+  overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:14px 0;background:rgba(212,175,55,.02);position:relative;z-index:1;
+}
+.ticker-inner{display:flex;gap:0;white-space:nowrap;animation:ticker 40s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{
+  font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--text-dim);
+  text-transform:uppercase;padding:0 40px;
+  display:flex;align-items:center;gap:12px;
+}
+.ticker-item .t-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
 
-/* ENTERPRISE TIERS */
-.enterprise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:48px;border-radius:14px;overflow:hidden}
-.ent-cell{background:var(--card);padding:36px 24px;text-align:center;transition:all .3s}
-.ent-cell:hover{background:var(--card-hover)}
-.ent-cell .ent-tier{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--pink);margin-bottom:10px}
-.ent-cell .ent-price{font-size:28px;font-weight:900;color:#fff}
-.ent-cell .ent-sub{font-size:11px;color:var(--text-dim);margin:6px 0 16px}
-.ent-cell .ent-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px}
-.ent-cell .ent-desc{font-size:12px;color:var(--text-dim);line-height:1.6}
+/* ── SECTION COMMON ── */
+.section{position:relative;z-index:1;padding:100px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+.sec-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-label::before{content:'';width:20px;height:1px;background:var(--gold)}
+.sec-title{font-size:clamp(26px,4vw,46px);font-weight:800;color:#fff;line-height:1.1;margin-bottom:16px;letter-spacing:-.02em}
+.sec-desc{font-size:16px;color:var(--text);line-height:1.7;max-width:560px}
 
-/* ICON ROW */
-.icon-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
-.tag{font-family:var(--mono);font-size:11px;padding:6px 14px;background:rgba(255,255,255,.04);border:1px solid var(--card-border);border-radius:6px;color:var(--text-dim);transition:all .2s}
-.tag:hover{border-color:var(--pink-border);color:var(--pink)}
+/* ── FEATURE HERO (Revenue OS) ── */
+.feature-hero{
+  position:relative;overflow:hidden;
+  border:1px solid var(--border-gold);border-radius:16px;
+  padding:60px;margin-top:56px;
+  background:linear-gradient(135deg,rgba(212,175,55,.04) 0%,rgba(5,5,8,0) 60%);
+}
+.feature-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--pink),transparent);
+}
+.feature-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.feature-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.feature-title{font-size:clamp(24px,3.5vw,40px);font-weight:800;color:#fff;line-height:1.1;margin-bottom:16px}
+.feature-desc{font-size:15px;color:var(--text);line-height:1.75;margin-bottom:28px}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.feature-list li{
+  font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:10px;
+}
+.feature-list li::before{content:'→';color:var(--gold);font-family:var(--mono);flex-shrink:0;margin-top:1px}
+.feature-demo-box{
+  background:rgba(0,0,0,.6);border:1px solid var(--border);border-radius:10px;
+  padding:28px;font-family:var(--mono);font-size:12px;
+}
+.demo-line{padding:6px 0;border-bottom:1px solid var(--border);color:var(--text-dim);display:flex;align-items:center;gap:8px}
+.demo-line:last-child{border-bottom:none}
+.demo-line .ok{color:var(--gold);font-weight:700}
+.demo-line .ping{color:var(--blue)}
+.demo-line .val{color:#fff;margin-left:auto}
+.demo-cta{
+  margin-top:20px;display:block;text-align:center;
+  padding:14px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));
+  color:#000;font-weight:700;border-radius:6px;font-size:12px;letter-spacing:2px;
+  text-transform:uppercase;transition:all .2s;cursor:pointer;
+}
+.demo-cta:hover{box-shadow:0 8px 32px rgba(212,175,55,.25);transform:translateY(-1px)}
 
-/* AUDIENCE CARDS */
-.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
-.audience-card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:24px;text-align:center;transition:all .3s}
-.audience-card:hover{border-color:var(--pink-border);box-shadow:0 12px 40px rgba(0,0,0,.3)}
-.audience-card .audience-icon{font-size:28px;margin-bottom:10px}
-.audience-card h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
-.audience-card p{font-size:12px;color:var(--text-dim);line-height:1.5}
+/* ── ECOSYSTEM GRID ── */
+.eco-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
+.eco-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:32px;position:relative;overflow:hidden;transition:all .3s;cursor:default;
+}
+.eco-card::after{
+  content:'';position:absolute;inset:0;border-radius:12px;opacity:0;
+  transition:opacity .3s;pointer-events:none;
+}
+.eco-card:hover{transform:translateY(-3px)}
+.eco-card.c-gold::after{box-shadow:inset 0 0 0 1px var(--border-gold)}
+.eco-card.c-pink::after{box-shadow:inset 0 0 0 1px var(--border-pink)}
+.eco-card.c-blue::after{box-shadow:inset 0 0 0 1px var(--border-blue)}
+.eco-card:hover::after{opacity:1}
+.eco-card:hover.c-gold{box-shadow:0 20px 60px rgba(212,175,55,.08)}
+.eco-card:hover.c-pink{box-shadow:0 20px 60px rgba(255,20,147,.08)}
+.eco-card:hover.c-blue{box-shadow:0 20px 60px rgba(0,191,255,.08)}
+.eco-icon{font-size:32px;margin-bottom:16px;display:block}
+.eco-badge{
+  font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 10px;border-radius:3px;display:inline-block;margin-bottom:14px;
+}
+.eco-badge.gold{color:var(--gold);background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.2)}
+.eco-badge.pink{color:var(--pink);background:rgba(255,20,147,.08);border:1px solid rgba(255,20,147,.2)}
+.eco-badge.blue{color:var(--blue);background:rgba(0,191,255,.08);border:1px solid rgba(0,191,255,.2)}
+.eco-badge.green{color:#22c55e;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2)}
+.eco-card h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+.eco-card p{font-size:13px;color:var(--text-dim);line-height:1.65;margin-bottom:16px}
+.eco-tags{display:flex;flex-wrap:wrap;gap:6px}
+.eco-tag{font-family:var(--mono);font-size:9px;letter-spacing:1px;padding:4px 8px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:3px;color:var(--text-dim)}
+.eco-card-link{
+  display:inline-flex;align-items:center;gap:6px;margin-top:20px;
+  font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  transition:gap .2s;
+}
+.eco-card-link.gold{color:var(--gold)}
+.eco-card-link.pink{color:var(--pink)}
+.eco-card-link.blue{color:var(--blue)}
+.eco-card:hover .eco-card-link{gap:10px}
 
-/* HIC CAPABILITIES */
-.hic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
-.hic-item{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:20px;text-align:center;transition:all .3s}
-.hic-item:hover{border-color:var(--pink-border)}
-.hic-item .hic-label{font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--pink);margin-bottom:6px}
-.hic-item .hic-desc{font-size:12px;color:var(--text-dim);line-height:1.5}
+/* ── HOW IT WORKS ── */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;border-radius:10px;overflow:hidden}
+.how-cell{
+  background:var(--card);padding:40px 32px;position:relative;
+  counter-increment:step;
+}
+.how-cell::before{
+  font-family:var(--mono);font-size:64px;font-weight:700;
+  content:counter(step,decimal-leading-zero);
+  color:rgba(212,175,55,.06);line-height:1;display:block;margin-bottom:16px;
+}
+.how-cell h3{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.how-cell p{font-size:13px;color:var(--text-dim);line-height:1.65}
+.how-grid{counter-reset:step}
 
-/* CTA */
-.final-cta{text-align:center;padding:120px 0}
-.final-cta h2{font-size:clamp(32px,5vw,52px);font-weight:900;color:#fff;margin-bottom:20px;line-height:1.1}
-.final-cta p{font-size:17px;color:var(--text-dim);margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto}
-.final-cta .hero-ctas{justify-content:center}
+/* ── SOCIAL PROOF ── */
+.proof-strip{
+  display:flex;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  margin-top:56px;
+}
+.proof-cell{flex:1;padding:32px 28px;border-right:1px solid var(--border);text-align:center}
+.proof-cell:last-child{border-right:none}
+.proof-num{font-family:var(--mono);font-size:36px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
+.proof-num.gold{color:var(--gold)}
+.proof-desc{font-size:12px;color:var(--text-dim)}
 
-/* FOOTER */
-footer{padding:48px 0;border-top:1px solid var(--card-border)}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
-.footer-brand p{font-size:12px;color:var(--text-dim);line-height:1.7;margin-top:8px}
-.footer-col h4{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#fff;margin-bottom:14px}
+/* ── FINAL CTA ── */
+.final-cta{
+  position:relative;z-index:1;
+  padding:120px 32px;text-align:center;overflow:hidden;
+}
+.final-cta::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 800px 500px at 50% 50%,rgba(212,175,55,.06),transparent 70%);
+}
+.cta-badge{
+  font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:20px;display:block;
+}
+.cta-title{
+  font-size:clamp(32px,5vw,60px);font-weight:900;color:#fff;line-height:1.06;
+  letter-spacing:-.02em;margin-bottom:20px;
+}
+.cta-sub{font-size:17px;color:var(--text);max-width:500px;margin:0 auto 40px;line-height:1.65}
+.cta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-note{
+  margin-top:20px;font-family:var(--mono);font-size:10px;letter-spacing:1px;
+  color:var(--text-dim);
+}
+
+/* ── FOOTER ── */
+footer.e1-footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);padding:56px 0 32px;
+}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-brand{display:flex;flex-direction:column;gap:12px}
+.footer-brand svg{width:48px;height:48px}
+.footer-brand p{font-size:12px;color:var(--text-dim);line-height:1.7;max-width:260px}
+.footer-col h5{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px}
 .footer-col a{display:block;font-size:12px;color:var(--text-dim);margin-bottom:8px;transition:color .2s}
-.footer-col a:hover{color:var(--pink)}
-.footer-bottom{margin-top:36px;padding-top:24px;border-top:1px solid var(--card-border);text-align:center}
-.footer-bottom p{font-family:var(--mono);font-size:11px;color:#444;letter-spacing:1px}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{
+  padding-top:28px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.footer-bottom p{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase}
+.footer-status{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase}
+.footer-status .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .mega-grid{grid-template-columns:1fr}
-  .mega-card.full{grid-column:span 1}
-  .pricing-grid{grid-template-columns:1fr}
-  .enterprise-grid{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr 1fr;gap:20px}
-  .audience-grid{grid-template-columns:1fr 1fr}
-  .hic-grid{grid-template-columns:1fr 1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .feature-hero-inner{grid-template-columns:1fr}
+  .eco-grid{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .proof-strip{flex-direction:column}
+  .proof-cell{border-right:none;border-bottom:1px solid var(--border)}
+  .proof-cell:last-child{border-bottom:none}
+  nav.e1-nav{padding:0 20px}
+  .nav-links{display:none}
 }
 @media(max-width:600px){
-  .stats-bar{flex-direction:column;gap:16px}
-  .nav-links{display:none}
-  .pricing-grid{grid-template-columns:1fr}
-  .enterprise-grid{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr}
-  .audience-grid{grid-template-columns:1fr}
-  .hic-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .section{padding:60px 0}
+  .stats-bar{flex-direction:column;gap:0}
+  .stat-cell{border-right:none;border-bottom:1px solid var(--border)}
+  .stat-cell:last-child{border-bottom:none}
+  .feature-hero{padding:32px 24px}
+  .section{padding:64px 0}
+  .footer-inner{grid-template-columns:1fr}
 }
 `;
 
-const LANDING_HTML = `
+/* ── SVG LOGO MEDALLION ── */
+const LogoSVG = () => (
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-svg-fallback logo-glow">
+    {/* Outer glow ring */}
+    <circle cx="100" cy="100" r="95" stroke="url(#ring-grad)" strokeWidth="1.5" opacity="0.6" className="ring-outer" />
+    {/* Main medallion */}
+    <circle cx="100" cy="100" r="88" fill="url(#medal-bg)" />
+    {/* Greek-key border ring */}
+    <circle cx="100" cy="100" r="88" stroke="url(#gold-ring)" strokeWidth="8" fill="none" />
+    {/* Neon blue arc left */}
+    <path d="M 30 100 A 70 70 0 0 1 100 30" stroke="#00BFFF" strokeWidth="3" strokeLinecap="round" opacity="0.9" filter="url(#blue-glow)" />
+    {/* Neon pink arc right */}
+    <path d="M 170 100 A 70 70 0 0 1 100 170" stroke="#FF1493" strokeWidth="3" strokeLinecap="round" opacity="0.9" filter="url(#pink-glow)" />
+    {/* Center symbol: angular spiral / E1 mark */}
+    <g transform="translate(100,100)">
+      {/* Outer square frame */}
+      <rect x="-36" y="-36" width="72" height="72" rx="2" stroke="url(#sym-gold)" strokeWidth="3" fill="none" />
+      {/* Inner notch top-left */}
+      <polyline points="-36,-36 -18,-36 -18,-18 -36,-18" stroke="url(#sym-gold)" strokeWidth="2.5" fill="none" strokeLinejoin="round" />
+      {/* Angular spiral center */}
+      <polyline points="-24,24 -24,-24 24,-24 24,24 -10,24 -10,-10 10,-10 10,10" stroke="url(#sym-gold)" strokeWidth="3.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+      {/* Bolt accent top-right */}
+      <polyline points="18,-36 36,-20 24,-8" stroke="url(#sym-gold)" strokeWidth="2.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+    </g>
+    {/* Circuit dots on ring */}
+    {[0,45,90,135,180,225,270,315].map((a,i) => (
+      <circle
+        key={i}
+        cx={100 + 88 * Math.cos((a - 90) * Math.PI / 180)}
+        cy={100 + 88 * Math.sin((a - 90) * Math.PI / 180)}
+        r="2.5"
+        fill="#D4AF37"
+        opacity="0.6"
+      />
+    ))}
+    <defs>
+      <radialGradient id="medal-bg" cx="50%" cy="35%" r="60%">
+        <stop offset="0%" stopColor="#1a1a2e" />
+        <stop offset="100%" stopColor="#050508" />
+      </radialGradient>
+      <linearGradient id="gold-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" stopOpacity="0.8" />
+        <stop offset="50%" stopColor="#D4AF37" />
+        <stop offset="100%" stopColor="#8B6914" stopOpacity="0.6" />
+      </linearGradient>
+      <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#00BFFF" />
+        <stop offset="100%" stopColor="#FF1493" />
+      </linearGradient>
+      <linearGradient id="sym-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" />
+        <stop offset="100%" stopColor="#D4AF37" />
+      </linearGradient>
+      <filter id="blue-glow">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+      <filter id="pink-glow">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+    </defs>
+  </svg>
+);
 
-<!-- NAV -->
-<nav>
-  <div class="container">
-    <div class="nav-brand"><span class="nav-dot"></span>EMPIRE REVENUE OS</div>
-    <div class="nav-links">
-      <a href="/try-revenue-os">Try Revenue OS</a>
-      <a href="/revenue-os">Revenue OS</a>
-      <a href="/revenue-receipt">Receipt</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#hic">HIC</a>
-      <a href="/try-revenue-os" class="nav-cta">TRY THE DEMO →</a>
-    </div>
-  </div>
-</nav>
+/* ── MINI LOGO MARK (nav) ── */
+const NavMark = () => (
+  <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="18" stroke="url(#nm-gold)" strokeWidth="1.5" />
+    <circle cx="20" cy="20" r="14" fill="rgba(212,175,55,0.06)" />
+    <g transform="translate(20,20)">
+      <rect x="-7" y="-7" width="14" height="14" rx="1" stroke="#D4AF37" strokeWidth="1.5" fill="none" />
+      <polyline points="-5,5 -5,-5 5,-5 5,5 -1,5 -1,-1 3,-1" stroke="#D4AF37" strokeWidth="1.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+    </g>
+    <path d="M 6 20 A 14 14 0 0 1 20 6" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+    <path d="M 34 20 A 14 14 0 0 1 20 34" stroke="#FF1493" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+    <defs>
+      <linearGradient id="nm-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" stopOpacity="0.8" />
+        <stop offset="100%" stopColor="#8B6914" stopOpacity="0.4" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-eyebrow"><span class="pulse"></span> EMPIRE REVENUE OS · PUBLIC DEMO</div>
-      <h1>Turn your business into a<br><em>revenue system by Monday.</em></h1>
-      <p class="hero-sub">Empire Revenue OS generates your paid offer, buyer list, GTM signals, outreach campaign, payment path, and delivery receipt from one prompt. Public demo available. No admin access required.</p>
-      <div class="hero-ctas">
-        <a href="/try-revenue-os" class="btn-primary">Try Empire Revenue OS →</a>
-        <a href="/revenue-receipt" class="btn-secondary">Generate Revenue Receipt</a>
-        <a href="/revenue-os" style="font-family:var(--mono);font-size:12px;padding:14px 16px;color:var(--text-dim);transition:color .2s">Revenue OS Cockpit →</a>
-      </div>
-      <div class="stats-bar">
-        <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Priced offers</div></div>
-        <div class="stat-item"><div class="stat-num">25</div><div class="stat-label">Buyer profiles</div></div>
-        <div class="stat-item"><div class="stat-num">✓</div><div class="stat-label">GTM scores + signals</div></div>
-        <div class="stat-item"><div class="stat-num">✓</div><div class="stat-label">Cold DMs + emails</div></div>
-        <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">Pipeline stages</div></div>
-        <div class="stat-item"><div class="stat-num">✓</div><div class="stat-label">Checkout + delivery</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROOF BAR -->
-<div class="proof-bar">
-  <div class="container">
-    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Try it now — no login</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--green)"></span>Cold DMs + email copy</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>Checkout + manual payment</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--pink)"></span>Delivery receipt</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>10-stage pipeline</div>
-    <div class="proof-chip"><span class="dot" style="background:var(--gold)"></span>GTM buyer scoring</div>
-  </div>
-</div>
-
-<!-- WHAT REVENUE OS GENERATES -->
-<section class="section" id="what-it-generates">
-  <div class="container">
-    <div class="section-label">What Revenue OS generates</div>
-    <h2 class="section-title">From one prompt to a sellable revenue system.</h2>
-    <p class="section-desc">Enter a business, repo, creator brand, or agency offer. Empire outputs everything you need to go from zero to paid customer.</p>
-    <div class="mega-grid">
-      <div class="mega-card">
-        <span class="card-badge badge-revenue">OFFER LADDER</span>
-        <h3>Paid Offer Ladder</h3>
-        <p>Generate starter, core, and sprint offers with clear pricing and delivery scope based on your existing product or service.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-live">BUYER PROFILES</span>
-        <h3>Buyer Profiles</h3>
-        <p>Identify target buyer personas, their pain points, and which offer fits each segment. Personas only — no real contact data.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-core">GTM INTELLIGENCE</span>
-        <h3>GTM Intelligence</h3>
-        <p>Score buyers by ICP fit, detect why-now signals, assign buyer tiers, and recommend campaign actions targeting the highest-value prospects first.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-live">OUTREACH COPY</span>
-        <h3>Outreach Copy</h3>
-        <p>Create cold DMs, emails, follow-ups, objection replies, and close messages ready to copy and send. No email sending — copy-paste only.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-api">PAYMENT PATH</span>
-        <h3>Payment Path</h3>
-        <p>Stripe checkout when configured, or manual payment fallback with clear instructions for MVP selling. No subscription billing yet.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-revenue">DELIVERY RECEIPT</span>
-        <h3>Delivery Receipt</h3>
-        <p>Produce a customer-facing proof artifact after the work is delivered. Includes delivered assets, next 7 days, and upsell recommendation.</p>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:36px">
-      <a href="/try-revenue-os" class="btn-primary">Try the public demo →</a>
-    </div>
-  </div>
-</section>
-
-<!-- START HERE PRICING -->
-<section class="section" id="pricing">
-  <div class="container">
-    <div class="section-label">Start here</div>
-    <h2 class="section-title">Try the product first, then scale.</h2>
-    <p class="section-desc">You do not need to start with enterprise adoption. Try the public demo, upgrade to a Revenue Receipt or Sprint, and expand when the system pays for itself.</p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="tier-name">Free Demo</div>
-        <div class="price">Free</div>
-        <div class="price-desc">Try the public Revenue OS flow. Use the demo payload or enter your own business to see what a revenue system looks like.</div>
-        <ul>
-          <li>Full Revenue OS output</li>
-          <li>3 priced offers</li>
-          <li>25 buyer profiles</li>
-          <li>Cold DMs + email copy</li>
-          <li>GTM intelligence preview</li>
-          <li>72-hour action plan</li>
-        </ul>
-        <a href="/try-revenue-os" class="btn-primary">Try Empire Revenue OS →</a>
-      </div>
-      <div class="price-card pop">
-        <div class="tier-name">Revenue Receipt</div>
-        <div class="price">$299</div>
-        <div class="price-desc">One generated revenue system: paid offers, buyer profiles, GTM signals, outreach copy, payment path, and delivery receipt. The goal is to help you close one customer.</div>
-        <ul>
-          <li>Everything in Free Demo</li>
-          <li>Full offer ladder</li>
-          <li>GTM layer scoring</li>
-          <li>Campaign sequence</li>
-          <li>Checkout integration</li>
-          <li>Delivery receipt</li>
-        </ul>
-        <a href="/revenue-receipt" class="btn-primary">Generate Receipt →</a>
-      </div>
-      <div class="price-card">
-        <div class="tier-name">Revenue Sprint</div>
-        <div class="price">$999</div>
-        <div class="price-desc">A deeper done-with-you sprint to refine the offer, GTM sequence, lead pipeline, and delivery receipt. Designed to help you launch revenue motion faster.</div>
-        <ul>
-          <li>Everything in Revenue Receipt</li>
-          <li>Custom offer refinement</li>
-          <li>GTM sequence setup</li>
-          <li>Lead pipeline configuration</li>
-          <li>Delivery receipt customization</li>
-          <li>Follow-up session</li>
-        </ul>
-        <a href="mailto:manda@empire1.cloud" class="btn-primary">Book Revenue Sprint</a>
-      </div>
-    </div>
-    <p style="text-align:center;font-size:13px;color:var(--text-dim);margin-top:24px">If a $299 Revenue Receipt helps you close one $500–$1,000 customer, it can pay for itself.</p>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section" id="how-it-works">
-  <div class="container">
-    <div class="section-label">How it works</div>
-    <h2 class="section-title">From input to revenue in minutes.</h2>
-    <p class="section-desc">No setup, no admin access, no onboarding call. Enter your business and get a complete revenue system.</p>
-    <div class="steps">
-      <div class="step">
-        <h3>Enter your business</h3>
-        <p>Fill in your offer, target customer, and revenue goal. Or click "Use Demo Payload" to see it in action immediately.</p>
-      </div>
-      <div class="step">
-        <h3>Revenue OS generates</h3>
-        <p>The system outputs your offer ladder, buyer profiles, outreach copy, payment path, and delivery receipt — all from one prompt.</p>
-      </div>
-      <div class="step">
-        <h3>GTM scores buyers</h3>
-        <p>Buyers are scored by ICP fit, tiered by priority, and matched with why-now signals. The campaign is built for the highest-value targets first.</p>
-      </div>
-      <div class="step">
-        <h3>Copy or save</h3>
-        <p>Copy cold DMs and emails directly from the result. Save your lead info to keep the output for later reference.</p>
-      </div>
-      <div class="step">
-        <h3>Collect payment</h3>
-        <p>Use Stripe checkout when configured, or follow the manual payment instructions. Mark paid and deliver the receipt as proof of work.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHO IT IS FOR -->
-<section class="section" id="audience">
-  <div class="container">
-    <div class="section-label">Who it is for</div>
-    <h2 class="section-title">Built for operators who need revenue motion now.</h2>
-    <p class="section-desc">Revenue OS is designed for people who already have something to sell and need a complete system to get paid this week.</p>
-    <div class="audience-grid">
-      <div class="audience-card">
-        <div class="audience-icon">👤</div>
-        <h3>Solo founders</h3>
-        <p>One-person operations who need a complete revenue system without hiring a sales team.</p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">🏢</div>
-        <h3>Small agencies</h3>
-        <p>Agency owners who want to package and sell their services with clear offers and outreach.</p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">🎨</div>
-        <h3>Creator brands</h3>
-        <p>Creators with an audience who need a sellable offer and a path to convert followers into customers.</p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">📍</div>
-        <h3>Local service businesses</h3>
-        <p>Electricians, cleaners, landscapers who want to stop relying on word-of-mouth and build a sales pipeline.</p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">💻</div>
-        <h3>Indie SaaS builders</h3>
-        <p>Developers with a product who need buyer profiles, GTM signals, and outreach copy to get first customers.</p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon">⚡</div>
-        <h3>Operators with no GTM</h3>
-        <p>Anyone who has a repo, product, or service but no revenue motion. Revenue OS builds the motion for you.</p>
-      </div>
-    </div>
-    <div style="margin-top:32px;padding:20px;background:rgba(255,20,147,.04);border:1px solid var(--pink-border);border-radius:10px;text-align:center">
-      <p style="font-size:13px;color:var(--text-dim)"><strong style="color:var(--pink)">Not for:</strong> People who only want free consulting, have no offer, no urgency, no buying authority, or no ability to deliver.</p>
-    </div>
-  </div>
-</section>
-
-<!-- GTM LAYER -->
-<section class="section" id="gtm">
-  <div class="container">
-    <div class="section-label">GTM Layer</div>
-    <h2 class="section-title">Targeting brain inside Revenue OS.</h2>
-    <p class="section-desc">Revenue OS does not just generate copy. It decides who to target first, why now, and what sequence to send.</p>
-    <div class="mega-grid">
-      <div class="mega-card">
-        <span class="card-badge badge-core">ICP SCORING</span>
-        <h3>ICP Fit Scoring</h3>
-        <p>Each buyer profile is scored on a 70-point ICP fit model covering buyer fit, urgency fit, budget/pain fit, and delivery fit — plus a 30-point signal score for a total of 100.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-live">BUYER TIERS</span>
-        <h3>Buyer Tiers</h3>
-        <p>Buyers are ranked into 5 tiers: Tier 1 (80–100), Tier 2 (60–79), Tier 3 (40–59), Monitor (20–39), and Exclude (0–19). The campaign targets the highest-value prospects first.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-revenue">WHY-NOW SIGNALS</span>
-        <h3>Why-Now Signals</h3>
-        <p>Detect signals that indicate a buyer is ready to act: new founder launch, funding round, revenue plateau, competitor move, regulatory change, or seasonal peak.</p>
-      </div>
-      <div class="mega-card">
-        <span class="card-badge badge-api">SEQUENCE ENGINE</span>
-        <h3>Signal-to-Sequence Logic</h3>
-        <p>Each signal maps to a recommended sequence type — personalized, educational, case-study, or event-triggered. The campaign plan is generated from the highest-priority signals.</p>
-      </div>
-      <div class="mega-card full">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-          <div>
-            <h3>What comes out</h3>
-            <ul>
-              <li>Scored buyer profiles with ICP + signal breakdown</li>
-              <li>Buyer tier assignment per profile</li>
-              <li>Detected why-now signals with priority levels</li>
-              <li>Recommended campaign with sequences and steps</li>
-              <li>Weekly GTM update plan</li>
-              <li>Next actions prioritized by impact</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Scoring model</h3>
-            <p style="font-size:13px;color:var(--text-dim);line-height:1.8"><strong style="color:#fff">ICP fit: 70 points</strong><br>Buyer fit: 25 · Urgency fit: 20<br>Budget/pain fit: 15 · Delivery fit: 10<br><strong style="color:#fff">Signal score: 30 points</strong><br>Strength + timing + relevance<br><strong style="color:#fff">Total: 100 points</strong><br>5 tiers from Tier 1 to Exclude</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:36px">
-      <a href="/try-revenue-os" class="btn-primary">Try the GTM-powered demo →</a>
-    </div>
-  </div>
-</section>
-
-<!-- POWERED BY HIC -->
-<section class="section" id="hic">
-  <div class="container">
-    <div class="section-label">Powered by Hybrid Intelligence Core</div>
-    <h2 class="section-title">The engine underneath Revenue OS.</h2>
-    <p class="section-desc">Hybrid Intelligence Core is the multi-engine orchestration layer that powers Revenue OS: routing, pipelines, GTM intelligence, billing, and execution logging.</p>
-    <div class="hic-grid">
-      <div class="hic-item"><div class="hic-label">ROUTING</div><div class="hic-desc">Multi-engine router dispatches each Revenue OS task to the appropriate capability — offer generation, buyer scoring, outreach writing, pipeline modeling.</div></div>
-      <div class="hic-item"><div class="hic-label">MONEY PIPELINE</div><div class="hic-desc">Revenue pipeline generator structures offers, pricing, pipeline stages, and checkout recommendations into a sellable workflow.</div></div>
-      <div class="hic-item"><div class="hic-label">PIPELINE COMPOSER</div><div class="hic-desc">Chains engines into multi-step workflows. Revenue OS commands are composed pipelines — not one monolithic call.</div></div>
-      <div class="hic-item"><div class="hic-label">GTM LAYER</div><div class="hic-desc">ICP scoring, buyer tiering, signal detection, and campaign sequencing that turns buyer profiles into targeted outreach.</div></div>
-      <div class="hic-item"><div class="hic-label">EXECUTION LOGGER</div><div class="hic-desc">Every Revenue OS command run is logged with engine path, status, and input/output data for audit and analytics.</div></div>
-      <div class="hic-item"><div class="hic-label">API / KEY INFRA</div><div class="hic-desc">REST API layer with key management, usage tracking, and rate limiting powers both the Revenue OS endpoints and the public try flow.</div></div>
-      <div class="hic-item"><div class="hic-label">BILLING / CHECKOUT</div><div class="hic-desc">Stripe integration when configured, manual payment fallback when not. The checkout desk routes through the existing billing router.</div></div>
-      <div class="hic-item"><div class="hic-label">REVENUE COMMANDS</div><div class="hic-desc">The Revenue OS command center is a unified interface that chains all HIC capabilities into one prompt-to-receipt workflow.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- IMPLEMENTATION / ENTERPRISE -->
-<section class="section" id="enterprise">
-  <div class="container">
-    <div class="section-label">Implementation & Enterprise</div>
-    <h2 class="section-title">Scale into custom infrastructure.</h2>
-    <p class="section-desc">The $299 Revenue Receipt is the entry product. Higher tiers are for implementation, white-label, and full Hybrid Intelligence Core adoption.</p>
-    <div class="enterprise-grid">
-      <div class="ent-cell">
-        <div class="ent-tier">IMPLEMENTATION</div>
-        <div class="ent-price">$5K+</div>
-        <div class="ent-sub">/engagement</div>
-        <div class="ent-name">Revenue OS Implementation</div>
-        <div class="ent-desc">Customized Revenue OS installation connected to your existing workflow. Offer refinement, GTM setup, and pipeline integration.</div>
-      </div>
-      <div class="ent-cell" style="border:1px solid var(--pink-border)">
-        <div class="ent-tier" style="color:var(--gold)">ADOPTION</div>
-        <div class="ent-price">$50K+</div>
-        <div class="ent-sub">/engagement</div>
-        <div class="ent-name">HIC Core Adoption</div>
-        <div class="ent-desc">Custom AI infrastructure with dashboards, routing, execution workflows, API access, and private HIC implementation for your team.</div>
-      </div>
-      <div class="ent-cell">
-        <div class="ent-tier" style="color:var(--purple)">PARTNER</div>
-        <div class="ent-price">25%</div>
-        <div class="ent-sub">revenue share</div>
-        <div class="ent-name">Platform / White-Label License</div>
-        <div class="ent-desc">For partners or agencies who want to use Empire as the engine behind client delivery. Your brand, our infrastructure.</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:36px">
-      <a href="mailto:manda@empire1.cloud" class="btn-secondary">Talk to the Architect</a>
-    </div>
-  </div>
-</section>
-
-<!-- EMPIRE ECOSYSTEM -->
-<section class="section" style="padding-bottom:0">
-  <div class="container">
-    <div class="section-label">Empire ecosystem</div>
-    <h2 class="section-title">Revenue OS is the commercial front door.</h2>
-    <p class="section-desc">The broader Empire ecosystem powers specialized domains. Each one is an independent business running on the same core infrastructure.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:36px;border-radius:14px;overflow:hidden">
-      <div style="background:var(--card);padding:28px 16px;text-align:center">
-        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px">PARENT</div>
-        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px">SLA113</div>
-        <div style="font-size:11px;color:var(--text-dim)">Parent / control plane</div>
-      </div>
-      <div style="background:var(--card);padding:28px 16px;text-align:center">
-        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px">U1</div>
-        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px">Lyrica 3</div>
-        <div style="font-size:11px;color:var(--text-dim)">Creator-owned music platform</div>
-      </div>
-      <div style="background:var(--card);padding:28px 16px;text-align:center">
-        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px">U2</div>
-        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px">Cultura</div>
-        <div style="font-size:11px;color:var(--text-dim)">Cultural intelligence OS</div>
-      </div>
-      <div style="background:var(--card);padding:28px 16px;text-align:center">
-        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px">U3</div>
-        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px">Southern</div>
-        <div style="font-size:11px;color:var(--text-dim)">White-label game/lifestyle engine</div>
-      </div>
-      <div style="background:var(--card);padding:28px 16px;text-align:center">
-        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px">U4</div>
-        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px">Soulfire</div>
-        <div style="font-size:11px;color:var(--text-dim)">Ecosystem orchestration</div>
-      </div>
-      <div style="background:var(--card);padding:28px 16px;text-align:center">
-        <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px">U5</div>
-        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px">Archisynapse</div>
-        <div style="font-size:11px;color:var(--text-dim)">Payments / ledger infrastructure</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:24px">
-      <p style="font-size:12px;color:var(--text-dim)">Plus: Hybrid Intelligence Core — engine / orchestration layer powering all of the above.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-cta">
-  <div class="container">
-    <h2>Ready to try the revenue machine?</h2>
-    <p>Start with the public demo. If it helps you see a path to one customer, upgrade into a Revenue Receipt or Sprint.</p>
-    <div class="hero-ctas" style="justify-content:center">
-      <a href="/try-revenue-os" class="btn-primary">Try Empire Revenue OS →</a>
-      <a href="/revenue-receipt" class="btn-secondary">Generate Revenue Receipt</a>
-      <a href="mailto:manda@empire1.cloud" class="btn-secondary">Talk to the Architect</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div style="font-family:var(--mono);font-weight:700;font-size:15px;color:#fff;letter-spacing:1px">EMPIRE REVENUE OS</div>
-        <p>Revenue OS is the commercial front door. Hybrid Intelligence Core is the engine underneath. Built in El Monte, CA · SGV since day one.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Product</h4>
-        <a href="/try-revenue-os">Try Revenue OS</a>
-        <a href="/revenue-os">Revenue OS Cockpit</a>
-        <a href="/revenue-receipt">Revenue Receipt</a>
-      </div>
-      <div class="footer-col">
-        <h4>Ecosystem</h4>
-        <a href="#hic">Hybrid Intelligence Core</a>
-        <a href="#enterprise">Enterprise</a>
-        <a href="#pricing">Pricing</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="mailto:manda@empire1.cloud">manda@empire1.cloud</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>EMPIRE REVENUE OS · POWERED BY HYBRID INTELLIGENCE CORE</p>
-    </div>
-  </div>
-</footer>
-
-`;
+const TICKER_ITEMS = [
+  'Revenue OS','GTM Intelligence','Buyer Scoring','Offer Ladder','Outreach Desk',
+  'Lead Pipeline','Stripe Checkout','Delivery Receipt','Game Studio','Vision Engine',
+  'Logic Engine','Audio Forge','Compliance Layer','Music Production','Cultural Intelligence',
+  'Hybrid Intelligence Core','Sovereign Operator OS','Creator IP Ownership',
+];
 
 export default function EmpireHome() {
   useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Alex+Brush&display=swap';
-    document.head.appendChild(link);
-
-    return () => {
-      document.head.removeChild(link);
+    // Intercept anchor clicks for smooth nav
+    const handler = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
+      if (!a) return;
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')!)?.scrollIntoView({ behavior: 'smooth' });
     };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
   }, []);
+
+  const tickerDouble = [...TICKER_ITEMS, ...TICKER_ITEMS];
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: LANDING_STYLES }} />
-      <div dangerouslySetInnerHTML={{ __html: LANDING_HTML }} />
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      <div className="grid-bg" />
+
+      {/* ── NAV ── */}
+      <nav className="e1-nav">
+        <div className="nav-inner">
+          <a href="/" className="nav-mark">
+            <NavMark />
+            <span className="nav-wordmark">EMPIRE <span>1</span></span>
+          </a>
+          <div className="nav-links">
+            <a href="/try-revenue-os">Revenue OS</a>
+            <a href="/revenue-receipt">Receipt</a>
+            <a href="#ecosystem">Ecosystem</a>
+            <a href="#pricing">Pricing</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/try-revenue-os" className="nav-cta">Try Free →</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* ── HERO ── */}
+      <section className="hero">
+        <div className="logo-wrap">
+          <div className="logo-halo" />
+          {/* Try real PNG first, fallback to SVG */}
+          <picture>
+            <source srcSet="/empire1-logo.png" type="image/png" />
+            <LogoSVG />
+          </picture>
+        </div>
+
+        <div className="hero-eyebrow">
+          <span className="live-dot" />
+          Empire 1 · AI Ecosystem · Live
+        </div>
+
+        <h1 className="hero-h1">
+          <span className="g">Build your revenue.</span>
+          <br />
+          <span className="p">Ship your product.</span>
+          <br />
+          Own your culture.
+        </h1>
+
+        <p className="hero-sub">
+          Empire 1 is the platform for founders, operators, and builders who want AI-powered
+          revenue systems, game studios, music production, and cultural intelligence — in one place.
+        </p>
+
+        <div className="hero-ctas">
+          <a href="/try-revenue-os" className="btn-gold">Try Revenue OS Free →</a>
+          <a href="#ecosystem" className="btn-ghost">See the Ecosystem</a>
+          <a href="/revenue-receipt" className="btn-text">Generate Receipt ↓</a>
+        </div>
+
+        <div className="stats-bar" style={{ maxWidth: 860 }}>
+          {[
+            { num: '3', label: 'Priced Offers', cls: 'gold' },
+            { num: '25', label: 'Buyer Profiles', cls: '' },
+            { num: '10', label: 'Pipeline Stages', cls: '' },
+            { num: '100', label: 'ICP Score Model', cls: 'blue' },
+            { num: '$0', label: 'To Try Demo', cls: 'pink' },
+            { num: '✓', label: 'Delivery Receipt', cls: 'gold' },
+          ].map((s) => (
+            <div key={s.label} className="stat-cell" style={{ textAlign: 'center' }}>
+              <div className={`stat-num ${s.cls}`}>{s.num}</div>
+              <div className="stat-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── TICKER ── */}
+      <div className="ticker-wrap">
+        <div className="ticker-inner">
+          {tickerDouble.map((item, i) => (
+            <div key={i} className="ticker-item">
+              <span className="t-dot" />
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── REVENUE OS FEATURE ── */}
+      <section className="section" id="revenue-os">
+        <div className="container">
+          <div className="sec-label">Main Product</div>
+          <h2 className="sec-title">Turn your business into a revenue system.</h2>
+          <p className="sec-desc">
+            One prompt. Full output: paid offers, buyer profiles, GTM signals, outreach copy,
+            checkout path, and delivery receipt. No login required to try.
+          </p>
+
+          <div className="feature-hero">
+            <div className="feature-hero-inner">
+              <div>
+                <div className="feature-label">Empire Revenue OS</div>
+                <h3 className="feature-title">From zero to sellable<br />by Monday.</h3>
+                <p className="feature-desc">
+                  Enter your business, offer, and revenue goal. Empire Revenue OS generates
+                  everything you need to close your first customer this week — buyer personas,
+                  outreach scripts, GTM scoring, and a payment path.
+                </p>
+                <ul className="feature-list">
+                  <li>3 priced offers with delivery scope</li>
+                  <li>25 buyer profiles with ICP scoring</li>
+                  <li>Cold DMs, emails, follow-ups, and close messages</li>
+                  <li>GTM intelligence — buyer tiers and why-now signals</li>
+                  <li>Stripe checkout or manual payment fallback</li>
+                  <li>Delivery receipt as proof of work</li>
+                </ul>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                  <a href="/try-revenue-os" className="btn-gold">Try it free →</a>
+                  <a href="/revenue-receipt" className="btn-ghost">Generate $299 Receipt</a>
+                </div>
+              </div>
+
+              <div className="feature-demo-box">
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: 3, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>
+                  Live System Output
+                </div>
+                {[
+                  { label: 'Offer Ladder', val: '3 tiers built', ok: true },
+                  { label: 'Buyer Profiles', val: '25 generated', ok: true },
+                  { label: 'GTM Score', val: '92 / Tier 1', ok: true },
+                  { label: 'Cold DMs', val: '5 ready to send', ok: true },
+                  { label: 'Payment Path', val: 'Stripe + Manual', ok: true },
+                  { label: 'Delivery Receipt', val: 'Generated', ok: true },
+                ].map((row) => (
+                  <div key={row.label} className="demo-line">
+                    <span className="ok">✓</span>
+                    <span>{row.label}</span>
+                    <span className="val">{row.val}</span>
+                  </div>
+                ))}
+                <a href="/try-revenue-os" className="demo-cta">Run Revenue OS on your business →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── ECOSYSTEM ── */}
+      <section className="section" id="ecosystem">
+        <div className="container">
+          <div className="sec-label">The Full Platform</div>
+          <h2 className="sec-title">One ecosystem. Four domains.</h2>
+          <p className="sec-desc">
+            Empire 1 is not just a revenue tool. It's a full AI platform built for founders
+            who operate across business, gaming, music, and culture.
+          </p>
+
+          <div className="eco-grid">
+            <div className="eco-card c-gold">
+              <span className="eco-icon">⚡</span>
+              <span className="eco-badge gold">Revenue · Live</span>
+              <h3>Revenue OS</h3>
+              <p>AI-generated revenue systems: offers, buyer profiles, GTM scoring, outreach copy, checkout, and delivery receipts. The full motion from zero to paid customer.</p>
+              <div className="eco-tags">
+                <span className="eco-tag">Offer Ladder</span>
+                <span className="eco-tag">GTM Intelligence</span>
+                <span className="eco-tag">Lead Pipeline</span>
+                <span className="eco-tag">Stripe Checkout</span>
+              </div>
+              <a href="/try-revenue-os" className="eco-card-link gold">Try Free →</a>
+            </div>
+
+            <div className="eco-card c-blue">
+              <span className="eco-icon">🎮</span>
+              <span className="eco-badge blue">Gaming · Studio</span>
+              <h3>Game Studio</h3>
+              <p>Full AI game development pipeline — vision engine, logic generator, audio forge, compliance layer, and one-click build deployment. Slot machines to open-world.</p>
+              <div className="eco-tags">
+                <span className="eco-tag">Vision Engine</span>
+                <span className="eco-tag">Logic Engine</span>
+                <span className="eco-tag">Audio Forge</span>
+                <span className="eco-tag">Compliance</span>
+              </div>
+              <a href="/sla113" className="eco-card-link blue">Open Studio →</a>
+            </div>
+
+            <div className="eco-card c-pink">
+              <span className="eco-icon">🎵</span>
+              <span className="eco-badge pink">Music · Production</span>
+              <h3>Sonance Pro</h3>
+              <p>Stem-deck music production, AI audio generation, multi-track composition, and SL Universal pulse stream. Creator IP ownership built in from day one.</p>
+              <div className="eco-tags">
+                <span className="eco-tag">Stem Deck</span>
+                <span className="eco-tag">Audio Forge</span>
+                <span className="eco-tag">SL Universal</span>
+                <span className="eco-tag">IP Ownership</span>
+              </div>
+              <a href="/admin/stem-deck" className="eco-card-link pink">Open Studio →</a>
+            </div>
+
+            <div className="eco-card c-gold">
+              <span className="eco-icon">🌆</span>
+              <span className="eco-badge green">Culture · Digital Art</span>
+              <h3>Southern Lyfestyle</h3>
+              <p>Custom digital worlds for car clubs, barbershops, families, and communities. Every build is personal — arcade games, tribute art, neighborhood circuits.</p>
+              <div className="eco-tags">
+                <span className="eco-tag">Custom Arcades</span>
+                <span className="eco-tag">Tribute Builds</span>
+                <span className="eco-tag">Car Clubs</span>
+                <span className="eco-tag">Community</span>
+              </div>
+              <a href="https://southernlifestyle.org" className="eco-card-link gold">See Builds →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ── */}
+      <section className="section" id="how">
+        <div className="container">
+          <div className="sec-label">How it works</div>
+          <h2 className="sec-title">Input → System → Revenue.</h2>
+          <p className="sec-desc">No onboarding call. No setup. Enter your business and get a complete revenue system in minutes.</p>
+          <div className="how-grid">
+            <div className="how-cell">
+              <h3>Enter your business</h3>
+              <p>Fill in your offer, target customer, and revenue goal. Or click "Use Demo Payload" to see the full system in action immediately — no account needed.</p>
+            </div>
+            <div className="how-cell">
+              <h3>Revenue OS generates</h3>
+              <p>The system outputs your full revenue motion: offer ladder, 25 buyer profiles, GTM scoring, outreach copy, a payment path, and a delivery receipt.</p>
+            </div>
+            <div className="how-cell">
+              <h3>Copy, send, collect</h3>
+              <p>Copy cold DMs and emails directly. Buy the full Receipt for $299 or book a Sprint for $999. Stripe checkout or manual payment — your call.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROOF STRIP ── */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="proof-strip">
+            <div className="proof-cell">
+              <div className="proof-num gold">$0</div>
+              <div className="proof-desc">to try the full demo</div>
+            </div>
+            <div className="proof-cell">
+              <div className="proof-num">3 min</div>
+              <div className="proof-desc">from input to full output</div>
+            </div>
+            <div className="proof-cell">
+              <div className="proof-num gold">$299</div>
+              <div className="proof-desc">Revenue Receipt — full system</div>
+            </div>
+            <div className="proof-cell">
+              <div className="proof-num">245+</div>
+              <div className="proof-desc">AI engines in the stack</div>
+            </div>
+            <div className="proof-cell">
+              <div className="proof-num gold">4</div>
+              <div className="proof-desc">domains — revenue, gaming, music, culture</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PRICING ── */}
+      <section className="section" id="pricing">
+        <div className="container">
+          <div className="sec-label">Start here</div>
+          <h2 className="sec-title">Try first. Scale when it pays for itself.</h2>
+          <p className="sec-desc">The demo is free. The $299 Receipt is designed to help you close one customer. If it works, it pays for itself.</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginTop: 48 }}>
+            {[
+              {
+                name: 'Free Demo', price: 'Free', accent: 'var(--text-dim)',
+                desc: 'Try the full Revenue OS flow. Use your own business or the demo payload.',
+                items: ['Full output — offers, buyers, GTM', 'Cold DMs + email copy', '72-hour action plan', 'No account required'],
+                cta: 'Try Free Now', href: '/try-revenue-os', ghost: false,
+              },
+              {
+                name: 'Revenue Receipt', price: '$299', accent: 'var(--gold)', pop: true,
+                desc: 'One complete revenue system. Designed to help you close your first customer.',
+                items: ['Everything in Free Demo', 'Full GTM layer scoring', 'Campaign sequence', 'Checkout + delivery receipt'],
+                cta: 'Generate Receipt', href: '/revenue-receipt', ghost: false,
+              },
+              {
+                name: 'Revenue Sprint', price: '$999', accent: 'var(--text-dim)',
+                desc: 'Done-with-you sprint. Refine your offer, GTM, pipeline, and delivery.',
+                items: ['Everything in Receipt', 'Custom offer refinement', 'GTM sequence setup', 'Follow-up session'],
+                cta: 'Book Sprint', href: 'mailto:founder@empire1.cloud', ghost: true,
+              },
+            ].map((plan) => (
+              <div key={plan.name} style={{
+                background: 'var(--card)', border: `1px solid ${plan.pop ? 'var(--border-gold)' : 'var(--border)'}`,
+                borderRadius: 12, padding: 32, position: 'relative',
+                boxShadow: plan.pop ? '0 0 48px rgba(212,175,55,.06)' : 'none',
+              }}>
+                {plan.pop && (
+                  <div style={{
+                    position: 'absolute', top: -11, left: '50%', transform: 'translateX(-50%)',
+                    fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: 2, padding: '4px 14px',
+                    background: 'linear-gradient(135deg,var(--gold-bright),var(--gold))',
+                    color: '#000', borderRadius: 4, fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap',
+                  }}>Most popular</div>
+                )}
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: 2, color: plan.accent, textTransform: 'uppercase', marginBottom: 12 }}>{plan.name}</div>
+                <div style={{ fontSize: 40, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 12 }}>{plan.price}</div>
+                <p style={{ fontSize: 13, color: 'var(--text-dim)', lineHeight: 1.6, marginBottom: 20 }}>{plan.desc}</p>
+                <ul style={{ listStyle: 'none', marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {plan.items.map((item) => (
+                    <li key={item} style={{ fontSize: 12, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ color: 'var(--gold)', fontFamily: 'var(--mono)', fontSize: 10 }}>✓</span> {item}
+                    </li>
+                  ))}
+                </ul>
+                <a href={plan.href} style={{
+                  display: 'block', textAlign: 'center', padding: '13px 20px',
+                  fontFamily: 'var(--mono)', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase',
+                  borderRadius: 5, cursor: 'pointer', transition: 'all .2s',
+                  background: plan.ghost ? 'transparent' : plan.pop ? 'linear-gradient(135deg,var(--gold-bright),var(--gold))' : 'rgba(255,255,255,.06)',
+                  color: plan.ghost ? 'var(--text-dim)' : plan.pop ? '#000' : '#fff',
+                  border: plan.ghost ? '1px solid var(--border)' : 'none', fontWeight: 700,
+                }}>{plan.cta}</a>
+              </div>
+            ))}
+          </div>
+          <p style={{ textAlign: 'center', fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-dim)', letterSpacing: 1, marginTop: 20 }}>
+            If the $299 Receipt helps you close one $500 customer — it pays for itself.
+          </p>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ── */}
+      <section className="final-cta">
+        <span className="cta-badge">Ready to build</span>
+        <h2 className="cta-title">
+          Your revenue system<br />
+          <span style={{ background: 'linear-gradient(135deg,#FFD700,#D4AF37)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            starts Monday.
+          </span>
+        </h2>
+        <p className="cta-sub">Enter your business, pick your channel, get your full system. No login. No setup. Just results.</p>
+        <div className="cta-btns">
+          <a href="/try-revenue-os" className="btn-gold">Try Empire Revenue OS →</a>
+          <a href="/revenue-receipt" className="btn-ghost">Generate a Receipt</a>
+        </div>
+        <p className="cta-note">Free demo · No account · $299 to go full</p>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="e1-footer">
+        <div className="container">
+          <div className="footer-inner">
+            <div className="footer-brand">
+              <NavMark />
+              <span style={{ fontFamily: 'var(--mono)', fontSize: 14, fontWeight: 700, letterSpacing: 3, color: '#fff' }}>
+                EMPIRE <span style={{ color: 'var(--pink)' }}>1</span>
+              </span>
+              <p>AI ecosystem for founders, operators, and builders. Revenue OS, game studio, music production, and cultural intelligence — in one platform.</p>
+            </div>
+            <div className="footer-col">
+              <h5>Products</h5>
+              <a href="/try-revenue-os">Revenue OS Demo</a>
+              <a href="/revenue-receipt">Revenue Receipt</a>
+              <a href="/revenue-os">OS Cockpit</a>
+              <a href="/dashboard">Dashboard</a>
+            </div>
+            <div className="footer-col">
+              <h5>Platform</h5>
+              <a href="/sla113">Game Studio</a>
+              <a href="/admin/stem-deck">Sonance Pro</a>
+              <a href="https://southernlifestyle.org">Southern Lyfestyle</a>
+            </div>
+            <div className="footer-col">
+              <h5>Contact</h5>
+              <a href="mailto:founder@empire1.cloud">founder@empire1.cloud</a>
+              <a href="mailto:founder@empire1.cloud">Book Revenue Sprint</a>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>© 2026 Empire 1 · All rights reserved</p>
+            <div className="footer-status">
+              <span className="dot" />
+              All Systems Operational
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
