@@ -5,8 +5,15 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime, timezone
 import uuid
+import asyncio
 
 from database import get_database
+try:
+    from services.email_service import send_email, RESEND_AVAILABLE
+except ImportError:
+    RESEND_AVAILABLE = False
+    async def send_email(*args, **kwargs):
+        return None
 
 router = APIRouter(prefix="/crm", tags=["CRM"])
 
@@ -84,7 +91,55 @@ async def create_lead(lead: LeadCreate):
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     doc["updated_at"] = doc["created_at"]
     await db.crm_leads.insert_one(doc)
+    doc.pop("_id", None)
+
+    # Send confirmation email if the lead provided an address
+    if doc.get("email") and RESEND_AVAILABLE:
+        asyncio.create_task(_send_lead_confirmation(doc))
+
     return {"success": True, "lead": doc}
+
+
+async def _send_lead_confirmation(lead: dict):
+    """Fire-and-forget confirmation email after a lead is created."""
+    name   = lead.get("name", "there")
+    source = lead.get("source", "the form").replace("_", " ")
+    notes  = lead.get("notes", "")
+
+    product_labels = {
+        "revenue_receipt":    "Revenue Receipt ($299)",
+        "revenue_sprint":     "Revenue Sprint ($999)",
+        "revenue_enterprise": "Enterprise Implementation",
+        "southern_build":     "Southern Lyfestyle Build",
+        "game_studio":        "Game Studio Build",
+        "sonance_music":      "Sonance / Music Production",
+        "free_demo":          "Free Demo",
+    }
+    product = product_labels.get(lead.get("lane", ""), "our platform")
+
+    html = f"""
+    <div style="font-family:Inter,sans-serif;background:#050508;color:#e0e0e0;padding:40px;max-width:560px;margin:0 auto;">
+      <div style="margin-bottom:24px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#D4AF37;text-transform:uppercase;">Empire 1</span>
+      </div>
+      <h2 style="font-size:24px;font-weight:700;color:#fff;margin:0 0 8px;">We got your request, {name}.</h2>
+      <p style="font-size:14px;color:#777;margin:0 0 24px;">You reached out via <strong style="color:#e0e0e0;">{source}</strong>.</p>
+      <div style="background:#0d0d12;border:1px solid rgba(212,175,55,.2);border-radius:8px;padding:24px;margin-bottom:24px;">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:#D4AF37;text-transform:uppercase;margin:0 0 8px;">Product Interest</p>
+        <p style="font-size:16px;font-weight:700;color:#fff;margin:0;">{product}</p>
+      </div>
+      {"<div style='background:#0d0d12;border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:24px;margin-bottom:24px;'><p style='font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:3px;color:#555;text-transform:uppercase;margin:0 0 8px;'>Your Message</p><p style='font-size:13px;color:#c8c8d0;margin:0;white-space:pre-wrap;'>" + notes[:500] + "</p></div>" if notes else ""}
+      <p style="font-size:13px;color:#555;line-height:1.7;">We'll be in touch shortly. In the meantime, try the <a href="https://empire1.cloud/try-revenue-os" style="color:#D4AF37;">free Revenue OS demo</a> — no account needed.</p>
+      <div style="margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:#333;text-transform:uppercase;">Empire 1 · empire1.cloud · founder@empire1.cloud</p>
+      </div>
+    </div>
+    """
+    await send_email(
+        to_email=lead["email"],
+        subject="Empire 1 — We got your request",
+        html_content=html,
+    )
 
 
 @router.get("/leads/{lead_id}")

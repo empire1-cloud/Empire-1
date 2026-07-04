@@ -33,20 +33,51 @@ const plans = [
 
 export default function EmpireDashboard() {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('admin@empire1.cloud'); // Mock session
+  const [email, setEmail] = useState('');
+  const [stripeConfigured, setStripeConfigured] = useState<boolean | null>(null);
+  const [billingStatus, setBillingStatus] = useState<string>('—');
+  const [nextBilling, setNextBilling] = useState<string>('—');
+
+  useEffect(() => {
+    // Check if Stripe is configured and load billing info
+    fetch('/api/billing/status')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (d) setStripeConfigured(d.stripe_configured ?? false);
+      })
+      .catch(() => setStripeConfigured(false));
+
+    // Try to load team billing info
+    fetch('/api/billing/team')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d) return;
+        setBillingStatus(d.subscription?.plan ?? d.tier ?? 'Free');
+        if (d.subscription?.current_period_end) {
+          const date = new Date(d.subscription.current_period_end * 1000);
+          setNextBilling(date.toISOString().split('T')[0]);
+        }
+        if (d.owner_email) setEmail(d.owner_email);
+      })
+      .catch(() => {});
+  }, []);
 
   const handlePortalRedirect = async () => {
+    if (!stripeConfigured) return;
     setLoading(true);
-    const res = await getCustomerPortal('cus_test_123'); // Mock ID
-    if (res.portal_url) {
-      window.location.href = res.portal_url;
-    }
+    try {
+      const res = await fetch('/api/billing/portal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ return_url: window.location.href }) });
+      if (res.ok) {
+        const d = await res.json();
+        if (d.portal_url) { window.location.href = d.portal_url; return; }
+      }
+    } catch {}
     setLoading(false);
   };
 
   const handleSubscribe = async (tierId: string) => {
     setLoading(true);
-    const res = await createCheckoutSession(tierId, email);
+    const res = await createCheckoutSession(tierId, email || 'contact@empire1.cloud');
     if (res.checkout_url) {
       window.location.href = res.checkout_url;
     }
@@ -164,21 +195,35 @@ export default function EmpireDashboard() {
               <div className="space-y-4 pt-4 border-t border-white/5">
                 <div className="flex items-center justify-between">
                   <span className="text-[9px] uppercase tracking-widest text-[#444] font-bold">Status</span>
-                  <span className="text-[9px] uppercase tracking-widest text-[#c9a84c] font-bold">Professional Tier</span>
+                  <span className="text-[9px] uppercase tracking-widest text-[#c9a84c] font-bold">{billingStatus}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-[9px] uppercase tracking-widest text-[#444] font-bold">Next Billing</span>
-                  <span className="text-[9px] uppercase tracking-widest text-white font-mono">2026-04-11</span>
+                  <span className="text-[9px] uppercase tracking-widest text-white font-mono">{nextBilling}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] uppercase tracking-widest text-[#444] font-bold">Stripe</span>
+                  <span className={`text-[9px] uppercase tracking-widest font-bold ${stripeConfigured === null ? 'text-[#444]' : stripeConfigured ? 'text-green-500' : 'text-[#737373]'}`}>
+                    {stripeConfigured === null ? 'Checking…' : stripeConfigured ? 'Connected' : 'Not configured'}
+                  </span>
                 </div>
               </div>
 
-              <button 
-                onClick={handlePortalRedirect}
-                className="w-full h-14 bg-white/5 border border-white/10 text-white text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-white/10 transition-all group"
-              >
-                <CreditCard className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                Access Customer Portal
-              </button>
+              {stripeConfigured ? (
+                <button
+                  onClick={handlePortalRedirect}
+                  disabled={loading}
+                  className="w-full h-14 bg-white/5 border border-white/10 text-white text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-white/10 transition-all group disabled:opacity-50"
+                >
+                  <CreditCard className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  {loading ? 'Opening…' : 'Access Customer Portal'}
+                </button>
+              ) : (
+                <div className="w-full h-14 bg-white/[0.02] border border-white/5 text-[#444] text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-3">
+                  <CreditCard className="w-4 h-4" />
+                  Set STRIPE_SECRET_KEY to enable
+                </div>
+              )}
             </div>
           </div>
 
