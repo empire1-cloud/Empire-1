@@ -1,423 +1,465 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getSla113AdminHeaders } from '@/lib/sla113Auth';
+
+/* ── Empire 1 product lanes ── */
+const PRODUCT_LANES = [
+  { id: 'revenue_receipt',   label: 'Revenue Receipt',        price: '$299',    color: 'bg-amber-100 text-amber-800',   dot: '#D4AF37' },
+  { id: 'revenue_sprint',    label: 'Revenue Sprint',         price: '$999',    color: 'bg-yellow-100 text-yellow-800', dot: '#FF8C00' },
+  { id: 'revenue_enterprise',label: 'Enterprise Impl.',       price: '$5K+',    color: 'bg-orange-100 text-orange-800', dot: '#FF6600' },
+  { id: 'southern_build',    label: 'Southern Build',         price: '$250–1K', color: 'bg-red-100 text-red-800',       dot: '#C41E3A' },
+  { id: 'game_studio',       label: 'Game Studio Build',      price: 'Custom',  color: 'bg-blue-100 text-blue-800',     dot: '#00BFFF' },
+  { id: 'sonance_music',     label: 'Sonance / Music',        price: 'Custom',  color: 'bg-purple-100 text-purple-800', dot: '#a855f7' },
+  { id: 'free_demo',         label: 'Free Demo Lead',         price: '$0',      color: 'bg-green-100 text-green-800',   dot: '#22c55e' },
+  { id: 'other',             label: 'Other',                  price: '—',       color: 'bg-gray-100 text-gray-600',     dot: '#555'    },
+];
+
+const PIPELINE_STAGES = ['lead','qualified','proposal','negotiation','onboarding','active','at_risk','churned'];
+const LEAD_SOURCES    = ['empire1_landing','southern_request','revenue_os_try','referral','linkedin','cold_outreach','other'];
+
+const stageColor: Record<string,string> = {
+  lead:        'bg-gray-100 text-gray-700',
+  qualified:   'bg-blue-100 text-blue-700',
+  proposal:    'bg-purple-100 text-purple-700',
+  negotiation: 'bg-amber-100 text-amber-700',
+  onboarding:  'bg-cyan-100 text-cyan-700',
+  active:      'bg-emerald-100 text-emerald-700',
+  at_risk:     'bg-orange-100 text-orange-700',
+  churned:     'bg-red-100 text-red-700',
+};
+
+const laneMap = Object.fromEntries(PRODUCT_LANES.map(l => [l.id, l]));
 
 interface Lead {
-  id: string;
-  name: string;
-  company?: string;
-  email?: string;
-  phone?: string;
-  source: string;
-  pipeline_stage: string;
-  lane?: string;
-  value: number;
-  probability: number;
-  notes?: string;
-  created_at: string;
-  updated_at: string;
+  id: string; name: string; company?: string; email?: string;
+  phone?: string; source: string; pipeline_stage: string;
+  lane?: string; value: number; notes?: string;
+  created_at: string; updated_at: string;
 }
 
-interface CrmMetrics {
-  total_leads: number;
-  total_pipeline_value: number;
-  stage_counts: Record<string, number>;
-  lane_counts: Record<string, number>;
+interface Metrics {
+  total_leads: number; total_pipeline_value: number;
+  stage_counts: Record<string,number>; lane_counts: Record<string,number>;
 }
-
-const PIPELINE_STAGES = ['lead', 'qualified', 'proposal', 'negotiation', 'onboarding', 'active', 'at_risk', 'churned'];
-const REVENUE_LANES = ['full_stack_builds', 'automation', 'micro_saas', 'white_label', 'enterprise', 'creative_ai', 'admin_ops', 'other'];
-const LEAD_SOURCES = ['website', 'referral', 'cold_outreach', 'conference', 'linkedin', 'partner', 'existing_client', 'other'];
-
-const stageColors: Record<string, string> = {
-  lead: 'bg-gray-100 text-gray-700',
-  qualified: 'bg-blue-100 text-blue-700',
-  proposal: 'bg-purple-100 text-purple-700',
-  negotiation: 'bg-amber-100 text-amber-700',
-  onboarding: 'bg-cyan-100 text-cyan-700',
-  active: 'bg-emerald-100 text-emerald-700',
-  at_risk: 'bg-orange-100 text-orange-700',
-  churned: 'bg-red-100 text-red-700',
-};
-
-const laneLabels: Record<string, string> = {
-  full_stack_builds: 'Full-Stack Builds',
-  automation: 'Automation',
-  micro_saas: 'Micro-SaaS',
-  white_label: 'White Label',
-  enterprise: 'Enterprise',
-  creative_ai: 'Creative AI',
-  admin_ops: 'Admin Ops',
-  other: 'Other',
-};
 
 export default function CRMPanel() {
-  const [tab, setTab] = useState<'pipeline' | 'add' | 'metrics'>('pipeline');
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [metrics, setMetrics] = useState<CrmMetrics | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [tab, setTab]               = useState<'pipeline'|'add'|'metrics'>('pipeline');
+  const [leads, setLeads]           = useState<Lead[]>([]);
+  const [metrics, setMetrics]       = useState<Metrics | null>(null);
+  const [loading, setLoading]       = useState(true);
+  const [selected, setSelected]     = useState<Lead | null>(null);
   const [activities, setActivities] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError]           = useState<string | null>(null);
+  const [actNote, setActNote]       = useState('');
 
-  // Form state
-  const [formName, setFormName] = useState('');
-  const [formCompany, setFormCompany] = useState('');
-  const [formEmail, setFormEmail] = useState('');
-  const [formPhone, setFormPhone] = useState('');
-  const [formSource, setFormSource] = useState('website');
-  const [formNotes, setFormNotes] = useState('');
-  const [formStage, setFormStage] = useState('lead');
-  const [formLane, setFormLane] = useState('');
-  const [formValue, setFormValue] = useState('');
-  const [activityText, setActivityText] = useState('');
+  const [fName, setFName]     = useState('');
+  const [fEmail, setFEmail]   = useState('');
+  const [fPhone, setFPhone]   = useState('');
+  const [fCo, setFCo]         = useState('');
+  const [fSource, setFSource] = useState('empire1_landing');
+  const [fLane, setFLane]     = useState('revenue_receipt');
+  const [fValue, setFValue]   = useState('');
+  const [fNotes, setFNotes]   = useState('');
+  const [fStage, setFStage]   = useState('lead');
 
-  useEffect(() => {
-    loadPipeline();
-    loadMetrics();
-  }, []);
+  useEffect(() => { load(); loadMetrics(); }, []);
 
-  async function loadPipeline() {
-    setLoading(true);
-    setError(null);
+  async function load() {
+    setLoading(true); setError(null);
     try {
-      const res = await fetch('/api/crm/pipeline');
-      if (!res.ok) throw new Error('Failed to load pipeline');
-      const data = await res.json();
-      if (data.success) setLeads(data.leads);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load');
-    } finally {
-      setLoading(false);
-    }
+      const r = await fetch('/api/crm/pipeline', { headers: getSla113AdminHeaders() });
+      if (!r.ok) throw new Error(`Pipeline fetch failed: ${r.status}`);
+      const d = await r.json();
+      if (d.success) setLeads(d.leads);
+    } catch (e: any) { setError(e.message); }
+    finally { setLoading(false); }
   }
 
   async function loadMetrics() {
     try {
-      const res = await fetch('/api/crm/metrics');
-      if (!res.ok) throw new Error('Failed to load metrics');
-      const data = await res.json();
-      if (data.success) setMetrics(data.metrics);
-    } catch (err) {
-      console.error('Metrics load error:', err);
-    }
+      const r = await fetch('/api/crm/metrics', { headers: getSla113AdminHeaders() });
+      if (!r.ok) return;
+      const d = await r.json();
+      if (d.success) setMetrics(d.metrics);
+    } catch {}
   }
 
-  async function loadLeadDetails(lead: Lead) {
-    setSelectedLead(lead);
+  async function openLead(lead: Lead) {
+    setSelected(lead);
     try {
-      const res = await fetch(`/api/crm/leads/${lead.id}`);
-      if (!res.ok) throw new Error('Failed to load lead');
-      const data = await res.json();
-      if (data.success) setActivities(data.activities || []);
-    } catch (err) {
-      console.error('Lead details error:', err);
-    }
+      const r = await fetch(`/api/crm/leads/${lead.id}`, { headers: getSla113AdminHeaders() });
+      if (!r.ok) return;
+      const d = await r.json();
+      if (d.success) setActivities(d.activities || []);
+    } catch {}
   }
 
-  async function createLead() {
-    if (!formName.trim()) return;
+  async function addLead() {
+    if (!fName.trim()) return;
     try {
-      const payload: any = { name: formName, source: formSource };
-      if (formCompany) payload.company = formCompany;
-      if (formEmail) payload.email = formEmail;
-      if (formPhone) payload.phone = formPhone;
-      if (formNotes) payload.notes = formNotes;
-
-      const res = await fetch('/api/crm/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+      const body: any = { name: fName, source: fSource };
+      if (fEmail) body.email = fEmail;
+      if (fPhone) body.phone = fPhone;
+      if (fCo)    body.company = fCo;
+      if (fNotes) body.notes = fNotes;
+      const r = await fetch('/api/crm/leads', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', ...getSla113AdminHeaders() },
+        body: JSON.stringify(body),
       });
-      if (!res.ok) throw new Error('Failed to create lead');
-      const data = await res.json();
-      if (data.success) {
-        if (formStage !== 'lead' || formLane || formValue) {
-          await fetch(`/api/crm/leads/${data.lead.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              pipeline_stage: formStage !== 'lead' ? formStage : undefined,
-              lane: formLane || undefined,
-              value: formValue ? parseFloat(formValue) : undefined,
-            }),
-          });
-        }
-        setFormName(''); setFormCompany(''); setFormEmail('');
-        setFormPhone(''); setFormNotes(''); setFormStage('lead');
-        setFormLane(''); setFormValue('');
-        loadPipeline();
-        loadMetrics();
+      if (!r.ok) throw new Error('Create failed');
+      const d = await r.json();
+      if (d.success && (fLane !== 'other' || fValue || fStage !== 'lead')) {
+        await fetch(`/api/crm/leads/${d.lead.id}`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json', ...getSla113AdminHeaders() },
+          body: JSON.stringify({ lane: fLane, value: fValue ? parseFloat(fValue) : undefined, pipeline_stage: fStage }),
+        });
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create');
-    }
+      setFName(''); setFEmail(''); setFPhone(''); setFCo('');
+      setFNotes(''); setFStage('lead'); setFValue('');
+      load(); loadMetrics();
+      setTab('pipeline');
+    } catch (e: any) { setError(e.message); }
   }
 
-  async function updateLeadStage(leadId: string, stage: string) {
-    try {
-      await fetch(`/api/crm/leads/${leadId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pipeline_stage: stage }),
-      });
-      loadPipeline();
-    } catch (err) {
-      console.error('Update stage error:', err);
-    }
+  async function moveStage(id: string, stage: string) {
+    await fetch(`/api/crm/leads/${id}`, {
+      method: 'PUT', headers: { 'Content-Type': 'application/json', ...getSla113AdminHeaders() },
+      body: JSON.stringify({ pipeline_stage: stage }),
+    });
+    load();
+    if (selected?.id === id) setSelected(prev => prev ? { ...prev, pipeline_stage: stage } : null);
   }
 
   async function addActivity() {
-    if (!selectedLead || !activityText.trim()) return;
-    try {
-      await fetch('/api/crm/activities', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lead_id: selectedLead.id, type: 'note', description: activityText }),
-      });
-      setActivityText('');
-      loadLeadDetails(selectedLead);
-    } catch (err) {
-      console.error('Add activity error:', err);
-    }
+    if (!selected || !actNote.trim()) return;
+    await fetch('/api/crm/activities', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', ...getSla113AdminHeaders() },
+      body: JSON.stringify({ lead_id: selected.id, type: 'note', description: actNote }),
+    });
+    setActNote(''); openLead(selected);
   }
 
-  const leadsByStage = (stage: string) => leads.filter(l => l.pipeline_stage === stage);
+  /* ── What's Selling bar ── */
+  const productTotals = PRODUCT_LANES.map(p => ({
+    ...p,
+    count: leads.filter(l => l.lane === p.id).length,
+    value: leads.filter(l => l.lane === p.id).reduce((s, l) => s + (l.value || 0), 0),
+  })).filter(p => p.count > 0).sort((a, b) => b.count - a.count);
+
+  const activeRevenue = leads
+    .filter(l => ['active','onboarding'].includes(l.pipeline_stage))
+    .reduce((s, l) => s + (l.value || 0), 0);
+
+  const pipelineValue = leads
+    .filter(l => ['qualified','proposal','negotiation'].includes(l.pipeline_stage))
+    .reduce((s, l) => s + (l.value || 0), 0);
+
+  const byStage = (s: string) => leads.filter(l => l.pipeline_stage === s);
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900">CRM</h1>
-        <p className="text-sm text-gray-500 mt-1">Deal pipeline, lead tracking, client lifecycle</p>
-      </div>
-
-      {/* Error Banner */}
-      {error && (
-        <div className="mb-6 rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700">{error}</div>
-      )}
-
-      {/* Tabs */}
-      <div className="flex gap-2 mb-6">
-        <button onClick={() => setTab('pipeline')} className={`px-4 py-2 rounded-md text-sm font-medium ${tab === 'pipeline' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}>Pipeline</button>
-        <button onClick={() => setTab('add')} className={`px-4 py-2 rounded-md text-sm font-medium ${tab === 'add' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}>Add Lead</button>
-        <button onClick={() => setTab('metrics')} className={`px-4 py-2 rounded-md text-sm font-medium ${tab === 'metrics' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}>Metrics</button>
-      </div>
-
-      {tab === 'metrics' && metrics && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-4 gap-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <p className="text-sm text-gray-500">Total Leads</p>
-              <p className="text-3xl font-semibold text-gray-900 mt-2">{metrics.total_leads}</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <p className="text-sm text-gray-500">Pipeline Value</p>
-              <p className="text-3xl font-semibold text-emerald-600 mt-2">${metrics.total_pipeline_value.toLocaleString()}</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <p className="text-sm text-gray-500">Active Deals</p>
-              <p className="text-3xl font-semibold text-blue-600 mt-2">{(metrics.stage_counts?.qualified || 0) + (metrics.stage_counts?.proposal || 0) + (metrics.stage_counts?.negotiation || 0)}</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <p className="text-sm text-gray-500">Active Clients</p>
-              <p className="text-3xl font-semibold text-gray-900 mt-2">{metrics.stage_counts?.active || 0}</p>
-            </div>
+    <div style={{ background: '#050508', minHeight: '100vh', color: '#e0e0e0', fontFamily: 'Inter, sans-serif' }}>
+      <div style={{ padding: '32px 32px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+          <div>
+            <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, letterSpacing: 3, color: '#D4AF37', textTransform: 'uppercase', marginBottom: 6 }}>Sales Pipeline</p>
+            <h1 style={{ fontSize: 24, fontWeight: 700, color: '#fff', margin: 0 }}>CRM</h1>
           </div>
+          <button onClick={() => { load(); loadMetrics(); }} style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, letterSpacing: 2, padding: '8px 16px', background: 'transparent', border: '1px solid rgba(212,175,55,.3)', color: '#D4AF37', borderRadius: 4, cursor: 'pointer' }}>
+            Refresh
+          </button>
+        </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-sm font-medium text-gray-900 mb-4">Pipeline Stages</h3>
-              <div className="space-y-3">
-                {PIPELINE_STAGES.map(stage => (
-                  <div key={stage} className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 capitalize">{stage}</span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-32 h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-gray-900 rounded-full" style={{ width: `${Math.min(100, ((metrics.stage_counts?.[stage] || 0) / Math.max(1, metrics.total_leads)) * 100)}%` }} />
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 w-8 text-right">{metrics.stage_counts?.[stage] || 0}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+        {/* ── WHAT'S SELLING ── */}
+        <div style={{ background: 'rgba(212,175,55,.04)', border: '1px solid rgba(212,175,55,.15)', borderRadius: 8, padding: '16px 20px', marginBottom: 24 }}>
+          <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 3, color: '#D4AF37', textTransform: 'uppercase', marginBottom: 12 }}>
+            What's Selling
+          </p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
+            {productTotals.length === 0
+              ? <span style={{ fontSize: 12, color: '#555' }}>No leads yet — add one or wait for public form submissions.</span>
+              : productTotals.map(p => (
+                <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 4, padding: '6px 12px' }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: p.dot, flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, color: '#fff', fontWeight: 600 }}>{p.label}</span>
+                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#D4AF37' }}>{p.count}</span>
+                  {p.value > 0 && <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: '#555' }}>${p.value.toLocaleString()}</span>}
+                </div>
+              ))
+            }
+          </div>
+          <div style={{ display: 'flex', gap: 24 }}>
+            <div>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 2, color: '#555', textTransform: 'uppercase' }}>Pipeline Value  </span>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 14, fontWeight: 700, color: '#D4AF37' }}>${pipelineValue.toLocaleString()}</span>
             </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-sm font-medium text-gray-900 mb-4">Revenue Lanes</h3>
-              <div className="space-y-3">
-                {REVENUE_LANES.map(lane => (
-                  <div key={lane} className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">{laneLabels[lane] || lane}</span>
-                    <span className="text-sm font-medium text-gray-900">{metrics.lane_counts?.[lane] || 0}</span>
-                  </div>
-                ))}
-              </div>
+            <div>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 2, color: '#555', textTransform: 'uppercase' }}>Active Revenue  </span>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 14, fontWeight: 700, color: '#22c55e' }}>${activeRevenue.toLocaleString()}</span>
+            </div>
+            <div>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 2, color: '#555', textTransform: 'uppercase' }}>Total Leads  </span>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 14, fontWeight: 700, color: '#fff' }}>{leads.length}</span>
             </div>
           </div>
         </div>
-      )}
 
-      {tab === 'add' && (
-        <div className="bg-white border border-gray-200 rounded-lg p-6 max-w-xl">
-          <h2 className="text-lg font-medium text-gray-900 mb-6">New Lead</h2>
-          <div className="space-y-4">
-            <input value={formName} onChange={e => setFormName(e.target.value)} placeholder="Name *" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" />
-            <input value={formCompany} onChange={e => setFormCompany(e.target.value)} placeholder="Company" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" />
-            <div className="grid grid-cols-2 gap-4">
-              <input value={formEmail} onChange={e => setFormEmail(e.target.value)} placeholder="Email" type="email" className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
-              <input value={formPhone} onChange={e => setFormPhone(e.target.value)} placeholder="Phone" className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
-            </div>
-            <select value={formSource} onChange={e => setFormSource(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-              {LEAD_SOURCES.map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
-            </select>
-            <div className="grid grid-cols-3 gap-4">
-              <select value={formStage} onChange={e => setFormStage(e.target.value)} className="border border-gray-300 rounded-md px-3 py-2 text-sm">
-                {PIPELINE_STAGES.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-              <select value={formLane} onChange={e => setFormLane(e.target.value)} className="border border-gray-300 rounded-md px-3 py-2 text-sm">
-                <option value="">No lane</option>
-                {REVENUE_LANES.map(l => <option key={l} value={l}>{laneLabels[l]}</option>)}
-              </select>
-              <input value={formValue} onChange={e => setFormValue(e.target.value)} placeholder="Deal value $" type="number" className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
-            </div>
-            <textarea value={formNotes} onChange={e => setFormNotes(e.target.value)} placeholder="Notes" rows={3} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" />
-            <button onClick={createLead} className="w-full bg-gray-900 text-white rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-800">Create Lead</button>
-          </div>
+        {error && (
+          <div style={{ background: 'rgba(196,30,58,.1)', border: '1px solid rgba(196,30,58,.3)', borderRadius: 6, padding: '12px 16px', marginBottom: 16, fontSize: 13, color: '#e8294a' }}>{error}</div>
+        )}
+
+        {/* Tabs */}
+        <div style={{ display: 'flex', gap: 4, marginBottom: 24 }}>
+          {(['pipeline','add','metrics'] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)} style={{
+              fontFamily: 'JetBrains Mono, monospace', fontSize: 10, letterSpacing: 2,
+              padding: '8px 18px', textTransform: 'uppercase', borderRadius: 4, cursor: 'pointer',
+              background: tab === t ? '#D4AF37' : 'transparent',
+              color: tab === t ? '#000' : '#555',
+              border: tab === t ? 'none' : '1px solid rgba(255,255,255,.08)',
+              fontWeight: tab === t ? 700 : 400,
+            }}>{t}</button>
+          ))}
         </div>
-      )}
+      </div>
 
+      {/* ── PIPELINE ── */}
       {tab === 'pipeline' && (
-        <div className="space-y-6">
+        <div style={{ padding: '0 32px 40px', overflowX: 'auto' }}>
           {loading ? (
-            <div className="text-center py-12 text-gray-500">Loading pipeline...</div>
+            <div style={{ textAlign: 'center', padding: 40, color: '#555' }}>Loading pipeline…</div>
           ) : (
-            <>
-              {/* Kanban-style pipeline grid */}
-              <div className="grid grid-cols-4 gap-4">
-                {PIPELINE_STAGES.slice(0, 4).map(stage => (
-                  <div key={stage} className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-sm font-medium text-gray-900 capitalize">{stage}</h3>
-                      <span className="text-xs text-gray-500">{leadsByStage(stage).length}</span>
-                    </div>
-                    <div className="space-y-2">
-                      {leadsByStage(stage).map(lead => (
-                        <button
-                          key={lead.id}
-                          onClick={() => loadLeadDetails(lead)}
-                          className={`w-full text-left bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow ${selectedLead?.id === lead.id ? 'ring-2 ring-gray-900' : ''}`}
-                        >
-                          <p className="text-sm font-medium text-gray-900 truncate">{lead.name}</p>
-                          {lead.company && <p className="text-xs text-gray-500 truncate mt-0.5">{lead.company}</p>}
-                          {lead.value > 0 && <p className="text-xs font-medium text-emerald-600 mt-1">${lead.value.toLocaleString()}</p>}
-                          <div className="flex gap-1 mt-2">
-                            {lead.lane && <span className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">{laneLabels[lead.lane] || lead.lane}</span>}
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-4 gap-4">
-                {PIPELINE_STAGES.slice(4).map(stage => (
-                  <div key={stage} className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-sm font-medium text-gray-900 capitalize">{stage}</h3>
-                      <span className="text-xs text-gray-500">{leadsByStage(stage).length}</span>
-                    </div>
-                    <div className="space-y-2">
-                      {leadsByStage(stage).map(lead => (
-                        <button
-                          key={lead.id}
-                          onClick={() => loadLeadDetails(lead)}
-                          className={`w-full text-left bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow ${selectedLead?.id === lead.id ? 'ring-2 ring-gray-900' : ''}`}
-                        >
-                          <p className="text-sm font-medium text-gray-900 truncate">{lead.name}</p>
-                          {lead.company && <p className="text-xs text-gray-500 truncate mt-0.5">{lead.company}</p>}
-                          {lead.value > 0 && <p className="text-xs font-medium text-emerald-600 mt-1">${lead.value.toLocaleString()}</p>}
-                          <div className="flex gap-1 mt-2">
-                            {lead.lane && <span className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">{laneLabels[lead.lane] || lead.lane}</span>}
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(200px, 1fr))', gap: 12 }}>
+              {PIPELINE_STAGES.slice(0, 4).map(stage => (
+                <StageColumn key={stage} stage={stage} leads={byStage(stage)} selected={selected} onOpen={openLead} />
+              ))}
+            </div>
+          )}
+          {!loading && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(200px, 1fr))', gap: 12, marginTop: 12 }}>
+              {PIPELINE_STAGES.slice(4).map(stage => (
+                <StageColumn key={stage} stage={stage} leads={byStage(stage)} selected={selected} onOpen={openLead} />
+              ))}
+            </div>
           )}
         </div>
       )}
 
-      {/* Lead Detail Modal */}
-      {selectedLead && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center" onClick={() => setSelectedLead(null)}>
-          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">{selectedLead.name}</h2>
-                {selectedLead.company && <p className="text-sm text-gray-500">{selectedLead.company}</p>}
+      {/* ── ADD LEAD ── */}
+      {tab === 'add' && (
+        <div style={{ padding: '0 32px 40px' }}>
+          <div style={{ background: '#0d0d12', border: '1px solid rgba(255,255,255,.08)', borderRadius: 8, padding: 28, maxWidth: 560 }}>
+            <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, letterSpacing: 3, color: '#D4AF37', textTransform: 'uppercase', marginBottom: 20 }}>Add Lead</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <Field label="Name *"><input value={fName} onChange={e => setFName(e.target.value)} placeholder="Contact name" style={inputStyle} /></Field>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <Field label="Email"><input value={fEmail} onChange={e => setFEmail(e.target.value)} placeholder="email@co.com" style={inputStyle} /></Field>
+                <Field label="Phone"><input value={fPhone} onChange={e => setFPhone(e.target.value)} placeholder="(555) 000-0000" style={inputStyle} /></Field>
               </div>
-              <button onClick={() => setSelectedLead(null)} className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+              <Field label="Company"><input value={fCo} onChange={e => setFCo(e.target.value)} placeholder="Company / brand" style={inputStyle} /></Field>
+              <Field label="Product Interest">
+                <select value={fLane} onChange={e => setFLane(e.target.value)} style={inputStyle}>
+                  {PRODUCT_LANES.map(p => <option key={p.id} value={p.id}>{p.label} {p.price !== '—' ? `— ${p.price}` : ''}</option>)}
+                </select>
+              </Field>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                <Field label="Source">
+                  <select value={fSource} onChange={e => setFSource(e.target.value)} style={inputStyle}>
+                    {LEAD_SOURCES.map(s => <option key={s} value={s}>{s.replace(/_/g,' ')}</option>)}
+                  </select>
+                </Field>
+                <Field label="Stage">
+                  <select value={fStage} onChange={e => setFStage(e.target.value)} style={inputStyle}>
+                    {PIPELINE_STAGES.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </Field>
+                <Field label="Deal Value $"><input value={fValue} onChange={e => setFValue(e.target.value)} placeholder="299" type="number" style={inputStyle} /></Field>
+              </div>
+              <Field label="Notes"><textarea value={fNotes} onChange={e => setFNotes(e.target.value)} placeholder="Context, next steps…" rows={3} style={{ ...inputStyle, resize: 'none' }} /></Field>
+              <button onClick={addLead} style={{ padding: '12px 20px', background: 'linear-gradient(135deg,#FFD700,#D4AF37)', color: '#000', border: 'none', borderRadius: 4, fontFamily: 'JetBrains Mono, monospace', fontSize: 11, letterSpacing: 2, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer' }}>
+                Save Lead
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── METRICS ── */}
+      {tab === 'metrics' && metrics && (
+        <div style={{ padding: '0 32px 40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+            {[
+              { label: 'Total Leads', val: metrics.total_leads, color: '#fff' },
+              { label: 'Pipeline Value', val: `$${pipelineValue.toLocaleString()}`, color: '#D4AF37' },
+              { label: 'Active Revenue', val: `$${activeRevenue.toLocaleString()}`, color: '#22c55e' },
+              { label: 'Active Clients', val: metrics.stage_counts?.active || 0, color: '#00BFFF' },
+            ].map(c => (
+              <div key={c.label} style={{ background: '#0d0d12', border: '1px solid rgba(255,255,255,.08)', borderRadius: 8, padding: '20px 24px' }}>
+                <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 2, color: '#555', textTransform: 'uppercase', marginBottom: 8 }}>{c.label}</p>
+                <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 28, fontWeight: 700, color: c.color }}>{c.val}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div style={{ background: '#0d0d12', border: '1px solid rgba(255,255,255,.08)', borderRadius: 8, padding: 24 }}>
+              <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 3, color: '#D4AF37', textTransform: 'uppercase', marginBottom: 16 }}>Leads by Product</p>
+              {PRODUCT_LANES.map(p => {
+                const cnt = metrics.lane_counts?.[p.id] || 0;
+                const max = Math.max(1, ...PRODUCT_LANES.map(q => metrics.lane_counts?.[q.id] || 0));
+                return (
+                  <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+                    <span style={{ fontSize: 12, color: '#c8c8d0', width: 160, flexShrink: 0 }}>{p.label}</span>
+                    <div style={{ flex: 1, height: 4, background: 'rgba(255,255,255,.06)', borderRadius: 2 }}>
+                      <div style={{ height: '100%', borderRadius: 2, background: p.dot, width: `${(cnt / max) * 100}%`, transition: 'width .3s' }} />
+                    </div>
+                    <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#fff', width: 20, textAlign: 'right' }}>{cnt}</span>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="p-6 space-y-4">
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div><span className="text-gray-500">Stage:</span> <span className={`ml-2 px-2 py-0.5 rounded text-xs font-medium ${stageColors[selectedLead.pipeline_stage] || 'bg-gray-100'}`}>{selectedLead.pipeline_stage}</span></div>
-                <div><span className="text-gray-500">Value:</span> <span className="ml-2 font-medium">${selectedLead.value.toLocaleString()}</span></div>
-                <div><span className="text-gray-500">Lane:</span> <span className="ml-2">{selectedLead.lane ? (laneLabels[selectedLead.lane] || selectedLead.lane) : '-'}</span></div>
-                <div><span className="text-gray-500">Source:</span> <span className="ml-2 capitalize">{selectedLead.source.replace('_', ' ')}</span></div>
-                {selectedLead.email && <div className="col-span-2"><span className="text-gray-500">Email:</span> <span className="ml-2">{selectedLead.email}</span></div>}
-                {selectedLead.phone && <div className="col-span-2"><span className="text-gray-500">Phone:</span> <span className="ml-2">{selectedLead.phone}</span></div>}
-              </div>
+            <div style={{ background: '#0d0d12', border: '1px solid rgba(255,255,255,.08)', borderRadius: 8, padding: 24 }}>
+              <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 3, color: '#D4AF37', textTransform: 'uppercase', marginBottom: 16 }}>Pipeline Stages</p>
+              {PIPELINE_STAGES.map(s => {
+                const cnt = metrics.stage_counts?.[s] || 0;
+                const max = Math.max(1, ...PIPELINE_STAGES.map(q => metrics.stage_counts?.[q] || 0));
+                return (
+                  <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+                    <span style={{ fontSize: 12, color: '#c8c8d0', width: 100, flexShrink: 0, textTransform: 'capitalize' }}>{s}</span>
+                    <div style={{ flex: 1, height: 4, background: 'rgba(255,255,255,.06)', borderRadius: 2 }}>
+                      <div style={{ height: '100%', borderRadius: 2, background: '#D4AF37', width: `${(cnt / max) * 100}%`, opacity: 0.7 }} />
+                    </div>
+                    <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#fff', width: 20, textAlign: 'right' }}>{cnt}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
-              {/* Stage quick-change */}
+      {/* ── LEAD DETAIL DRAWER ── */}
+      {selected && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.7)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setSelected(null)}>
+          <div style={{ background: '#0d0d12', border: '1px solid rgba(212,175,55,.2)', borderRadius: 10, width: '100%', maxWidth: 500, margin: 16, maxHeight: '85vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
-                <p className="text-xs text-gray-500 mb-2">Move to stage:</p>
-                <div className="flex flex-wrap gap-1">
-                  {PIPELINE_STAGES.map(stage => (
-                    <button
-                      key={stage}
-                      onClick={() => updateLeadStage(selectedLead.id, stage)}
-                      className={`px-2 py-1 rounded text-xs font-medium ${selectedLead.pipeline_stage === stage ? 'ring-2 ring-gray-900 ' + stageColors[stage] : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-                    >
-                      {stage}
-                    </button>
-                  ))}
-                </div>
+                <p style={{ fontSize: 18, fontWeight: 700, color: '#fff', margin: 0 }}>{selected.name}</p>
+                {selected.company && <p style={{ fontSize: 12, color: '#555', marginTop: 2 }}>{selected.company}</p>}
+              </div>
+              <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: '#555', fontSize: 20, cursor: 'pointer', padding: 0 }}>×</button>
+            </div>
+            <div style={{ padding: 24 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
+                {[
+                  { k: 'Product', v: laneMap[selected.lane || '']?.label || selected.lane || '—' },
+                  { k: 'Value', v: `$${selected.value?.toLocaleString() || 0}` },
+                  { k: 'Source', v: selected.source?.replace(/_/g, ' ') || '—' },
+                  { k: 'Email', v: selected.email || '—' },
+                ].map(r => (
+                  <div key={r.k}>
+                    <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 8, letterSpacing: 2, color: '#555', textTransform: 'uppercase', marginBottom: 3 }}>{r.k}</p>
+                    <p style={{ fontSize: 13, color: '#e0e0e0' }}>{r.v}</p>
+                  </div>
+                ))}
               </div>
 
-              {selectedLead.notes && (
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Notes:</p>
-                  <p className="text-sm text-gray-700 bg-gray-50 rounded p-3">{selectedLead.notes}</p>
+              {/* Move stage */}
+              <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 8, letterSpacing: 2, color: '#555', textTransform: 'uppercase', marginBottom: 8 }}>Move Stage</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20 }}>
+                {PIPELINE_STAGES.map(s => (
+                  <button key={s} onClick={() => moveStage(selected.id, s)} style={{
+                    fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 1, padding: '5px 10px',
+                    textTransform: 'capitalize', borderRadius: 3, cursor: 'pointer',
+                    background: selected.pipeline_stage === s ? '#D4AF37' : 'rgba(255,255,255,.06)',
+                    color: selected.pipeline_stage === s ? '#000' : '#777',
+                    border: 'none', fontWeight: selected.pipeline_stage === s ? 700 : 400,
+                  }}>{s}</button>
+                ))}
+              </div>
+
+              {selected.notes && (
+                <div style={{ background: 'rgba(0,0,0,.4)', border: '1px solid rgba(255,255,255,.06)', borderRadius: 4, padding: 12, marginBottom: 20 }}>
+                  <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 8, letterSpacing: 2, color: '#555', textTransform: 'uppercase', marginBottom: 6 }}>Notes</p>
+                  <p style={{ fontSize: 13, color: '#c8c8d0', lineHeight: 1.65 }}>{selected.notes}</p>
                 </div>
               )}
 
-              {/* Activity Log */}
-              <div>
-                <p className="text-xs text-gray-500 mb-2">Activity ({activities.length})</p>
-                <div className="space-y-2 max-h-40 overflow-y-auto mb-3">
-                  {activities.map((a: any) => (
-                    <div key={a.id} className="bg-gray-50 rounded p-2 text-sm">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-gray-400">{new Date(a.timestamp).toLocaleString()}</span>
-                        <span className="text-[10px] font-medium text-gray-500 uppercase">{a.type}</span>
-                      </div>
-                      <p className="text-gray-700 mt-1">{a.description}</p>
-                    </div>
-                  ))}
-                  {activities.length === 0 && <p className="text-xs text-gray-400 italic">No activity recorded</p>}
-                </div>
-                <div className="flex gap-2">
-                  <input value={activityText} onChange={e => setActivityText(e.target.value)} placeholder="Add note..." className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm" onKeyDown={e => e.key === 'Enter' && addActivity()} />
-                  <button onClick={addActivity} className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm hover:bg-gray-800">Add</button>
-                </div>
+              {/* Activity */}
+              <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 8, letterSpacing: 2, color: '#555', textTransform: 'uppercase', marginBottom: 8 }}>Activity ({activities.length})</p>
+              <div style={{ maxHeight: 160, overflowY: 'auto', marginBottom: 12, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {activities.length === 0 && <p style={{ fontSize: 12, color: '#444', fontStyle: 'italic' }}>No activity yet.</p>}
+                {activities.map((a: any) => (
+                  <div key={a.id} style={{ background: 'rgba(0,0,0,.3)', border: '1px solid rgba(255,255,255,.05)', borderRadius: 4, padding: '8px 12px' }}>
+                    <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 8, color: '#444', marginBottom: 4 }}>{new Date(a.timestamp).toLocaleString()}</p>
+                    <p style={{ fontSize: 12, color: '#c8c8d0' }}>{a.description}</p>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input value={actNote} onChange={e => setActNote(e.target.value)} onKeyDown={e => e.key === 'Enter' && addActivity()} placeholder="Add note…" style={{ ...inputStyle, flex: 1 }} />
+                <button onClick={addActivity} style={{ padding: '9px 16px', background: '#D4AF37', color: '#000', border: 'none', borderRadius: 4, fontFamily: 'JetBrains Mono, monospace', fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>Add</button>
               </div>
             </div>
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/* ── helpers ── */
+const inputStyle: React.CSSProperties = {
+  width: '100%', padding: '10px 14px', background: 'rgba(0,0,0,.5)',
+  border: '1px solid rgba(255,255,255,.1)', borderRadius: 4,
+  color: '#e0e0e0', fontSize: 13, fontFamily: 'Inter, sans-serif', outline: 'none',
+};
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 8, letterSpacing: 2, color: '#555', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function StageColumn({ stage, leads, selected, onOpen }: { stage: string; leads: Lead[]; selected: Lead | null; onOpen: (l: Lead) => void }) {
+  const laneMap2 = Object.fromEntries(PRODUCT_LANES.map(p => [p.id, p]));
+  return (
+    <div style={{ background: 'rgba(255,255,255,.02)', border: '1px solid rgba(255,255,255,.06)', borderRadius: 6, padding: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, letterSpacing: 2, color: '#777', textTransform: 'capitalize' }}>{stage}</span>
+        <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: '#555' }}>{leads.length}</span>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {leads.map(l => {
+          const prod = laneMap2[l.lane || ''];
+          return (
+            <button key={l.id} onClick={() => onOpen(l)} style={{
+              textAlign: 'left', background: selected?.id === l.id ? 'rgba(212,175,55,.1)' : 'rgba(0,0,0,.4)',
+              border: `1px solid ${selected?.id === l.id ? 'rgba(212,175,55,.4)' : 'rgba(255,255,255,.07)'}`,
+              borderRadius: 4, padding: '10px 12px', cursor: 'pointer', transition: 'all .15s',
+            }}>
+              <p style={{ fontSize: 12, fontWeight: 600, color: '#fff', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</p>
+              {l.company && <p style={{ fontSize: 11, color: '#555', marginTop: 2 }}>{l.company}</p>}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
+                {prod && (
+                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 8, letterSpacing: 1, color: prod.dot }}>
+                    {prod.label}
+                  </span>
+                )}
+                {l.value > 0 && (
+                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, color: '#22c55e', marginLeft: 'auto' }}>
+                    ${l.value.toLocaleString()}
+                  </span>
+                )}
+              </div>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

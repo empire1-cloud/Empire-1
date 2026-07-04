@@ -489,10 +489,38 @@ export default function SouthernHome() {
     const handler = async () => {
       const lane = (document.getElementById('sl-lane') as HTMLSelectElement)?.value;
       const story = (document.getElementById('sl-story') as HTMLTextAreaElement)?.value;
+      const nameEl = document.getElementById('sl-name') as HTMLInputElement | null;
+      const emailEl = document.getElementById('sl-email') as HTMLInputElement | null;
       if (!lane || !story.trim()) return;
 
       draftBtn.textContent = 'Drafting your concept...';
       (draftBtn as HTMLButtonElement).disabled = true;
+
+      // Save lead to CRM in background
+      try {
+        const leadName = nameEl?.value?.trim() || lane;
+        const leadEmail = emailEl?.value?.trim() || undefined;
+        const res = await fetch('/api/crm/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: leadName,
+            email: leadEmail,
+            source: 'southern_request',
+            notes: `Category: ${lane}\n\n${story}`,
+          }),
+        });
+        if (res.ok) {
+          const d = await res.json();
+          if (d.success) {
+            await fetch(`/api/crm/leads/${d.lead.id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ lane: 'southern_build', pipeline_stage: 'lead' }),
+            });
+          }
+        }
+      } catch { /* silent — don't block the draft */ }
 
       const concepts: Record<string, string> = {
         'Car Club': `We'd build a custom lowrider arcade tribute to your car club — your colors, your rides, your logo on every screen. Think classic cruise-night vibes, with your actual cars as the playable characters. The kind of thing that makes the whole crew stop and say "that's us."`,
@@ -738,6 +766,16 @@ export default function SouthernHome() {
 
             {/* Form */}
             <div className="request-box">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label className="form-label" htmlFor="sl-name">Your Name</label>
+                  <input id="sl-name" className="form-input" placeholder="First name or handle" />
+                </div>
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label className="form-label" htmlFor="sl-email">Email (optional)</label>
+                  <input id="sl-email" type="email" className="form-input" placeholder="so we can reach you" />
+                </div>
+              </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="sl-lane">Category</label>
                 <select id="sl-lane" className="form-select">

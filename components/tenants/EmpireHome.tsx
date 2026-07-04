@@ -473,6 +473,33 @@ const TICKER_ITEMS = [
 ];
 
 export default function EmpireHome() {
+  const [lcEmail, setLcEmail] = React.useState('');
+  const [lcProduct, setLcProduct] = React.useState('revenue_receipt');
+  const [lcStatus, setLcStatus] = React.useState<'idle'|'sending'|'done'|'err'>('idle');
+
+  async function submitLead(e: React.FormEvent) {
+    e.preventDefault();
+    if (!lcEmail.trim()) return;
+    setLcStatus('sending');
+    try {
+      await fetch('/api/crm/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: lcEmail.split('@')[0],
+          email: lcEmail,
+          source: 'empire1_landing',
+          notes: `Interested in: ${lcProduct}`,
+        }),
+      });
+      // set lane + value after creation
+      setLcStatus('done');
+      setLcEmail('');
+    } catch {
+      setLcStatus('err');
+    }
+  }
+
   useEffect(() => {
     // Intercept anchor clicks for smooth nav
     const handler = (e: MouseEvent) => {
@@ -819,6 +846,65 @@ export default function EmpireHome() {
           <p style={{ textAlign: 'center', fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-dim)', letterSpacing: 1, marginTop: 20 }}>
             If the $299 Receipt helps you close one $500 customer — it pays for itself.
           </p>
+        </div>
+      </section>
+
+      {/* ── LEAD CAPTURE ── */}
+      <section style={{ position: 'relative', zIndex: 1, padding: '0 0 80px' }}>
+        <div className="container">
+          <div style={{
+            background: 'linear-gradient(135deg,rgba(212,175,55,.06),rgba(255,20,147,.04))',
+            border: '1px solid rgba(212,175,55,.2)', borderRadius: 12, padding: '40px 48px',
+            position: 'relative', overflow: 'hidden',
+          }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg,transparent,var(--gold),var(--pink),transparent)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
+              <div>
+                <p style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: 3, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 8 }}>Stay in the loop</p>
+                <h3 style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: 0 }}>Get notified when we ship new tools.</h3>
+                <p style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 6 }}>Tell us what you're interested in and we'll reach out when it's ready.</p>
+              </div>
+              {lcStatus === 'done' ? (
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 13, color: 'var(--gold)', padding: '14px 24px', border: '1px solid rgba(212,175,55,.3)', borderRadius: 5 }}>
+                  ✓ Got it — we'll be in touch.
+                </div>
+              ) : (
+                <form onSubmit={submitLead} style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <label style={{ fontFamily: 'var(--mono)', fontSize: 8, letterSpacing: 2, color: 'var(--text-dim)', textTransform: 'uppercase' }}>I'm interested in</label>
+                    <select value={lcProduct} onChange={e => setLcProduct(e.target.value)} style={{
+                      background: 'rgba(0,0,0,.6)', border: '1px solid rgba(255,255,255,.1)', color: '#fff',
+                      padding: '11px 14px', borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 11,
+                      letterSpacing: 1, outline: 'none', cursor: 'pointer',
+                    }}>
+                      <option value="revenue_receipt">Revenue Receipt — $299</option>
+                      <option value="revenue_sprint">Revenue Sprint — $999</option>
+                      <option value="southern_build">Southern Lyfestyle Build</option>
+                      <option value="game_studio">Game Studio Build</option>
+                      <option value="sonance_music">Sonance / Music Production</option>
+                      <option value="revenue_enterprise">Enterprise Implementation</option>
+                    </select>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <label style={{ fontFamily: 'var(--mono)', fontSize: 8, letterSpacing: 2, color: 'var(--text-dim)', textTransform: 'uppercase' }}>Your email</label>
+                    <input
+                      type="email" required value={lcEmail} onChange={e => setLcEmail(e.target.value)}
+                      placeholder="you@company.com"
+                      style={{ background: 'rgba(0,0,0,.6)', border: '1px solid rgba(255,255,255,.1)', color: '#fff', padding: '11px 14px', borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 12, outline: 'none', minWidth: 220 }}
+                    />
+                  </div>
+                  <button type="submit" disabled={lcStatus === 'sending'} style={{
+                    padding: '12px 24px', background: 'linear-gradient(135deg,var(--gold-bright),var(--gold))',
+                    color: '#000', border: 'none', borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 11,
+                    letterSpacing: 2, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', opacity: lcStatus === 'sending' ? 0.6 : 1,
+                  }}>
+                    {lcStatus === 'sending' ? 'Saving…' : 'Notify Me →'}
+                  </button>
+                  {lcStatus === 'err' && <p style={{ fontSize: 11, color: 'var(--pink)', width: '100%' }}>Couldn't save — try again.</p>}
+                </form>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
