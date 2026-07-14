@@ -8,7 +8,7 @@ export function generateMetadata(): Metadata {
   const host = headers().get('host') || '';
   const cleanHost = host.split(':')[0].toLowerCase();
 
-  if (cleanHost === 'sla113.southernlifestyle.org' || cleanHost.includes('localhost') || cleanHost.includes('127.0.0.1')) {
+  if (cleanHost === 'sla113.southernlifestyle.org') {
     return {
       title: 'SLA113',
       description: 'SLA113 standalone',
@@ -23,8 +23,9 @@ export function generateMetadata(): Metadata {
   }
 
   return {
-    title: 'Empire One',
-    description: 'Empire One platform homepage',
+    title: 'Empire 1 — Hybrid Intelligence Core',
+    description:
+      'Empire-1 runs on the Hybrid Intelligence Core — a self-governing architecture built on Emergent DNA.',
   };
 }
 
