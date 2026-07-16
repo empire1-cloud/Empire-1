@@ -1,4 +1,4 @@
-"""Empire Operator — governed multi-worker execution queue with receipts."""
+"""Empire Cofounder/Operator — one governed engine with protected deployment modes."""
 
 from __future__ import annotations
 
@@ -11,8 +11,13 @@ from pydantic import BaseModel, Field
 from pymongo import ReturnDocument
 
 from database import get_database
+from app.services.operator_policy import (
+    deployment_mode,
+    enforce_task_scope,
+    resolve_context,
+)
 
-router = APIRouter(prefix="/operator", tags=["Empire Operator"])
+router = APIRouter(prefix="/operator", tags=["Empire Cofounder + Operator"])
 
 TaskStatus = Literal["queued", "claimed", "approval_required", "completed", "failed", "blocked"]
 RiskLevel = Literal["safe", "approval_required", "forbidden"]
@@ -35,6 +40,7 @@ class TaskCreate(BaseModel):
     repository: str = Field(min_length=1, max_length=200)
     action: str = Field(min_length=3, max_length=2000)
     action_type: str = Field(min_length=2, max_length=100)
+    tenant_id: Optional[str] = Field(default=None, max_length=100)
     priority: int = Field(default=50, ge=0, le=100)
     risk: RiskLevel = "safe"
     metadata: dict[str, Any] = Field(default_factory=dict)
@@ -42,6 +48,7 @@ class TaskCreate(BaseModel):
 
 class ClaimRequest(BaseModel):
     worker_id: str = Field(min_length=2, max_length=100)
+    tenant_id: Optional[str] = Field(default=None, max_length=100)
     capabilities: list[str] = Field(default_factory=list)
 
 
@@ -65,26 +72,46 @@ class ApprovalDecision(BaseModel):
 
 
 @router.get("/health")
-async def operator_health():
+async def operator_health(tenant_id: Optional[str] = None):
+    context = resolve_context(tenant_id)
     db = get_database()
     counts = {}
+    base_query = {} if context.mode == "cofounder" else {"tenant_id": context.tenant_id}
     for status in ["queued", "claimed", "approval_required", "completed", "failed", "blocked"]:
-        counts[status] = await db.operator_tasks.count_documents({"status": status})
-    return {"success": True, "service": "empire-operator", "queue": counts}
+        counts[status] = await db.operator_tasks.count_documents({**base_query, "status": status})
+    return {
+        "success": True,
+        "service": "empire-cofounder-operator",
+        "mode": context.mode,
+        "tenant_id": context.tenant_id,
+        "can_cross_universes": context.can_cross_universes,
+        "queue": counts,
+    }
 
 
 @router.get("/tasks")
-async def list_tasks(status: Optional[TaskStatus] = None, limit: int = Query(default=100, ge=1, le=500)):
+async def list_tasks(
+    status: Optional[TaskStatus] = None,
+    tenant_id: Optional[str] = None,
+    limit: int = Query(default=100, ge=1, le=500),
+):
+    context = resolve_context(tenant_id)
     db = get_database()
-    query = {"status": status} if status else {}
+    query: dict[str, Any] = {}
+    if context.mode == "product":
+        query["tenant_id"] = context.tenant_id
+    if status:
+        query["status"] = status
     tasks = await db.operator_tasks.find(query, {"_id": 0}).sort(
         [("priority", -1), ("created_at", 1)]
     ).to_list(limit)
-    return {"success": True, "tasks": tasks}
+    return {"success": True, "mode": context.mode, "tasks": tasks}
 
 
 @router.post("/tasks", status_code=201)
 async def create_task(task: TaskCreate):
+    context = resolve_context(task.tenant_id)
+    enforce_task_scope(context=context, universe=task.universe, repository=task.repository)
     db = get_database()
     created_at = now_iso()
     risk = task.risk
@@ -93,9 +120,12 @@ async def create_task(task: TaskCreate):
     status: TaskStatus = "blocked" if risk == "forbidden" else (
         "approval_required" if risk == "approval_required" else "queued"
     )
+    task_data = task.model_dump(exclude={"tenant_id"})
     document = {
         "id": str(uuid.uuid4()),
-        **task.model_dump(),
+        **task_data,
+        "tenant_id": context.tenant_id,
+        "deployment_mode": context.mode,
         "risk": risk,
         "status": status,
         "worker_id": None,
@@ -113,17 +143,17 @@ async def create_task(task: TaskCreate):
 @router.post("/workers/claim")
 async def claim_next_task(request: ClaimRequest):
     """Atomically claim one safe task so workers can operate concurrently without collisions."""
+    context = resolve_context(request.tenant_id)
     db = get_database()
-    capability_filter: dict[str, Any] = {}
-    if request.capabilities:
-        capability_filter = {
-            "$or": [
-                {"metadata.required_capability": {"$exists": False}},
-                {"metadata.required_capability": {"$in": request.capabilities}},
-            ]
-        }
     query: dict[str, Any] = {"status": "queued", "risk": "safe"}
-    query.update(capability_filter)
+    if context.mode == "product":
+        query["tenant_id"] = context.tenant_id
+        query["deployment_mode"] = "product"
+    if request.capabilities:
+        query["$or"] = [
+            {"metadata.required_capability": {"$exists": False}},
+            {"metadata.required_capability": {"$in": request.capabilities}},
+        ]
     claimed_at = now_iso()
     task = await db.operator_tasks.find_one_and_update(
         query,
@@ -139,7 +169,7 @@ async def claim_next_task(request: ClaimRequest):
         return_document=ReturnDocument.AFTER,
         projection={"_id": 0},
     )
-    return {"success": True, "task": task}
+    return {"success": True, "mode": context.mode, "task": task}
 
 
 @router.post("/tasks/{task_id}/approval")
@@ -161,7 +191,11 @@ async def decide_approval(task_id: str, decision: ApprovalDecision):
     updated = await db.operator_tasks.find_one_and_update(
         {"id": task_id, "status": "approval_required"},
         {
-            "$set": {"status": new_status, "risk": "safe" if decision.approved else "forbidden", "updated_at": now_iso()},
+            "$set": {
+                "status": new_status,
+                "risk": "safe" if decision.approved else "forbidden",
+                "updated_at": now_iso(),
+            },
             "$push": {"receipts": receipt},
         },
         return_document=ReturnDocument.AFTER,
