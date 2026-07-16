@@ -24,7 +24,6 @@ DATABASE_CONNECTED = False
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global DATABASE_CONNECTED
-    # Startup: Connect to database
     try:
         await connect_to_database()
         DATABASE_CONNECTED = True
@@ -33,23 +32,19 @@ async def lifespan(app: FastAPI):
         DATABASE_CONNECTED = False
         logging.exception("Database connection failed on startup; running in degraded mode")
     yield
-    # Shutdown: Close database connection
     if DATABASE_CONNECTED:
         await close_database_connection()
         logging.info("Database connection closed on shutdown")
 
-# Create the main app with lifespan
 app = FastAPI(
     title="Hybrid AI Stack",
-    description="Multi-model AI pipeline with GPT-4o mini, Mistral, Gemini 1.5 Pro, and Claude 3.5 Sonnet",
-    version="2.0.0",
+    description="Multi-model AI pipeline with governed Empire Cofounder and production Operator runtime",
+    version="2.1.0",
     lifespan=lifespan,
 )
 
-# Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-# Import auth and team routers
 from routers.auth import router as auth_router
 from routers.teams import router as teams_router
 from routers.profile import router as profile_router
@@ -61,8 +56,8 @@ from routers.system import router as system_router
 from app.routers.crm import router as crm_router
 from app.routers.business_analytics import router as business_analytics_router
 from app.routers.gtm import router as gtm_router
+from app.routers.operator import router as operator_router
 
-# Import and include all engine routers
 from routers.engines import (
     core_router,
     strategy_router,
@@ -90,26 +85,24 @@ from routers.pipelines import router as pipelines_router
 from routers.sla113 import router as sla113_router
 from app.routers.sla113_orchestration import router as sla113_orchestration_router
 
-# Include auth and team routers first (higher priority)
 api_router.include_router(auth_router)
 api_router.include_router(teams_router)
 api_router.include_router(profile_router)
-api_router.include_router(invites_router)  # Public invite endpoints
-api_router.include_router(billing_router)  # Billing endpoints
-api_router.include_router(api_keys_router)  # API key management
-api_router.include_router(admin_router)  # Admin endpoints (system admin only)
-api_router.include_router(system_router)  # System status endpoints
-api_router.include_router(crm_router)  # Internal CRM (deal pipeline, lead tracking)
-api_router.include_router(business_analytics_router)  # Internal Business Analytics (MRR, usage, KPIs)
-api_router.include_router(gtm_router)  # Internal GTM (campaigns, outreach, launch checklists)
+api_router.include_router(invites_router)
+api_router.include_router(billing_router)
+api_router.include_router(api_keys_router)
+api_router.include_router(admin_router)
+api_router.include_router(system_router)
+api_router.include_router(crm_router)
+api_router.include_router(business_analytics_router)
+api_router.include_router(gtm_router)
+api_router.include_router(operator_router)
 
-# Include protected routers (require auth)
-api_router.include_router(history_protected_router)  # /api/history (protected)
-api_router.include_router(pipelines_router)  # /api/pipelines (protected)
-api_router.include_router(sla113_router)  # /api/sla113
-api_router.include_router(sla113_orchestration_router)  # /api/sla113/orchestrate
+api_router.include_router(history_protected_router)
+api_router.include_router(pipelines_router)
+api_router.include_router(sla113_router)
+api_router.include_router(sla113_orchestration_router)
 
-# Include all engine routers (currently public for backward compatibility)
 api_router.include_router(core_router)
 api_router.include_router(strategy_router)
 api_router.include_router(drift_router)
@@ -126,77 +119,70 @@ api_router.include_router(anime_lore_router)
 api_router.include_router(anime_story_router)
 api_router.include_router(art_direction_router)
 api_router.include_router(money_pipeline_router)
-api_router.include_router(analytics_router)  # Analytics remains public for now (system-wide metrics)
+api_router.include_router(analytics_router)
 api_router.include_router(voxcpm_router)
 api_router.include_router(audio_fx_router)
 api_router.include_router(lyrica_router)
 
 
-# Define Models
 class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
+    model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-# Add your routes to the router instead of directly to app
+
 @api_router.get("/")
 async def root():
     return {"message": "Hello World"}
 
+
 @api_router.get("/health")
 async def health_check():
-    """Health check endpoint for monitoring."""
     return {
         "status": "healthy",
         "database": "connected" if DATABASE_CONNECTED else "degraded",
-        "version": "2.0.0",
+        "version": "2.1.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }
+
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
     db = get_database()
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
+    status_obj = StatusCheck(**input.model_dump())
     doc = status_obj.model_dump()
-    doc['timestamp'] = doc['timestamp'].isoformat()
-    
+    doc["timestamp"] = doc["timestamp"].isoformat()
     _ = await db.status_checks.insert_one(doc)
     return status_obj
+
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
     db = get_database()
-    # Exclude MongoDB's _id field from the query results
     status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
-    
-    # Convert ISO string timestamps back to datetime objects
     for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    
+        if isinstance(check["timestamp"], str):
+            check["timestamp"] = datetime.fromisoformat(check["timestamp"])
     return status_checks
 
-# Include the router in the main app
+
 app.include_router(api_router)
 
-# Root-level health endpoint (for load balancer health checks)
+
 @app.get("/health")
 async def root_health_check():
-    """Root-level health check endpoint for load balancer probes."""
     return {
         "status": "healthy",
         "database": "connected" if DATABASE_CONNECTED else "degraded",
-        "version": "2.0.0",
+        "version": "2.1.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -212,11 +198,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Add execution logging middleware
 from middleware.logging_middleware import ExecutionLoggingMiddleware
 app.add_middleware(ExecutionLoggingMiddleware)
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
