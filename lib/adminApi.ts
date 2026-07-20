@@ -15,9 +15,10 @@ import { getSla113AdminHeaders, getSla113AdminToken, setSla113Session } from '@/
  */
 
 const getApiBase = (): string => {
-  const envUrl = typeof window !== 'undefined' 
-    ? process.env.NEXT_PUBLIC_API_URL 
-    : process.env.NEXT_PUBLIC_API_URL
+  const envUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    process.env.NEXT_PUBLIC_SITE_URL
   
   if (envUrl) return envUrl.replace(/\/$/, '')
   
@@ -26,7 +27,7 @@ const getApiBase = (): string => {
   }
   
   const protocol = typeof window !== 'undefined' ? window.location.protocol : 'https:'
-  const domain = typeof window !== 'undefined' ? window.location.hostname : 'southernlifestyle.org'
+  const domain = typeof window !== 'undefined' ? window.location.hostname : 'empire1.cloud'
   return `${protocol}//${domain}`
 }
 

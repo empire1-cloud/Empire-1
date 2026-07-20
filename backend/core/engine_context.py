@@ -4,11 +4,16 @@ Provides decorators and utilities for protecting engine routes.
 """
 
 import time
+from dataclasses import dataclass
 from functools import wraps
 from typing import Callable, Any, Optional
-from fastapi import Request, HTTPException, Depends
+from bson import ObjectId
+from fastapi import Request, HTTPException, Depends, status
+from fastapi.security import HTTPAuthorizationCredentials
 
 from core.dependencies import get_current_user, get_current_team
+from database import teams_collection, users_collection
+from services.api_key_service import get_api_key_context
 from services.execution_logger_db import log_execution
 
 
@@ -68,6 +73,106 @@ class EngineContext:
             )
 
 
+@dataclass
+class ExecutionAuthMetadata:
+    """Normalized execution auth metadata for JWT or API-key requests."""
+
+    auth_type: str
+    api_key_id: Optional[str] = None
+    api_key_name: Optional[str] = None
+    is_api_key_auth: bool = False
+
+
+async def _resolve_api_key_execution_context(
+    request: Request,
+    authorization: str,
+) -> EngineContext:
+    """Resolve API-key-backed execution identity into EngineContext."""
+    key_ctx = await get_api_key_context(authorization)
+    if not key_ctx:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid API key",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    team_id = key_ctx["team_id"]
+    requested_team_id = request.headers.get("X-Team-ID")
+    if requested_team_id and requested_team_id != team_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="API key cannot access a different team",
+        )
+
+    team = await teams_collection().find_one({
+        "_id": ObjectId(team_id),
+        "is_active": True,
+    })
+    if not team:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Team not found",
+        )
+
+    user = await users_collection().find_one({
+        "_id": ObjectId(key_ctx["user_id"]),
+        "is_active": True,
+    })
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="API key owner not found or inactive",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    team["_id"] = str(team["_id"])
+    team["user_role"] = key_ctx.get("user_role", "owner")
+    user["_id"] = str(user["_id"])
+
+    ctx = EngineContext(user=user, team=team, request=request)
+    ctx.auth_metadata = ExecutionAuthMetadata(
+        auth_type="api_key",
+        api_key_id=key_ctx.get("api_key_id"),
+        api_key_name=key_ctx.get("api_key_name"),
+        is_api_key_auth=True,
+    )
+    return ctx
+
+
+async def resolve_execution_context(request: Request) -> EngineContext:
+    """
+    Resolve execution auth for HIC routes.
+    Supports JWT user/team auth and validated team-scoped API keys.
+    """
+    authorization = request.headers.get("Authorization")
+    if not authorization:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    if authorization.startswith("Bearer hic_") or authorization.startswith("hic_"):
+        return await _resolve_api_key_execution_context(request, authorization)
+
+    if not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unsupported authorization scheme",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    credentials = HTTPAuthorizationCredentials(
+        scheme="Bearer",
+        credentials=authorization[7:],
+    )
+    user = await get_current_user(credentials)
+    team = await get_current_team(request, user)
+    ctx = EngineContext(user=user, team=team, request=request)
+    ctx.auth_metadata = ExecutionAuthMetadata(auth_type="jwt")
+    return ctx
+
+
 async def get_engine_context(
     request: Request,
     user: dict = Depends(get_current_user),
@@ -77,7 +182,19 @@ async def get_engine_context(
     Use this in protected engine routes.
     """
     team = await get_current_team(request, user)
-    return EngineContext(user=user, team=team, request=request)
+    ctx = EngineContext(user=user, team=team, request=request)
+    ctx.auth_metadata = ExecutionAuthMetadata(auth_type="jwt")
+    return ctx
+
+
+async def get_execution_context(request: Request) -> EngineContext:
+    """Dependency for execution routes that accept JWT or API-key auth."""
+    existing = getattr(request.state, "engine_ctx", None)
+    if existing is not None:
+        return existing
+    ctx = await resolve_execution_context(request)
+    request.state.engine_ctx = ctx
+    return ctx
 
 
 async def log_engine_call(

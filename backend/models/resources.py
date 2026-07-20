@@ -71,7 +71,7 @@ class PipelineResponse(BaseModel):
 
 
 # Execution log models
-ExecutionStatus = Literal["pending", "running", "success", "error", "cancelled"]
+ExecutionStatus = Literal["pending", "running", "success", "error", "cancelled", "replayed"]
 
 
 class ExecutionLogCreate(BaseModel):
@@ -82,6 +82,15 @@ class ExecutionLogCreate(BaseModel):
     pipeline_id: Optional[str] = None
     input_data: Dict[str, Any] = {}
     source: str = "direct"  # direct, pipeline, api
+    execution_id: Optional[str] = None
+    idempotency_key: Optional[str] = None
+    request_type: str = "engine"
+    requested_target: Optional[str] = None
+    endpoint: Optional[str] = None
+    method: Optional[str] = None
+    auth_type: Optional[str] = None
+    api_key_id: Optional[str] = None
+    api_key_name: Optional[str] = None
 
 
 class ExecutionLogInDB(BaseModel):
@@ -90,14 +99,28 @@ class ExecutionLogInDB(BaseModel):
     team_id: str
     user_id: str
     engine: str
+    execution_id: Optional[str] = None
+    idempotency_key: Optional[str] = None
     pipeline_id: Optional[str] = None
+    request_type: str = "engine"
+    requested_target: Optional[str] = None
     input_data: Dict[str, Any] = {}
     output_data: Optional[Dict[str, Any]] = None
     error_message: Optional[str] = None
     status: ExecutionStatus = "pending"
+    final_state: ExecutionStatus = "pending"
     source: str = "direct"
     duration_ms: int = 0
+    endpoint: Optional[str] = None
+    method: Optional[str] = None
+    auth_type: Optional[str] = None
+    api_key_id: Optional[str] = None
+    api_key_name: Optional[str] = None
+    step_statuses: List[Dict[str, Any]] = []
+    retry_counts: Dict[str, int] = {}
+    receipt_references: Dict[str, Any] = {}
     created_at: datetime
+    started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
     
     class Config:
@@ -112,15 +135,29 @@ class ExecutionLogResponse(BaseModel):
     user_id: str
     user_email: Optional[str] = None
     engine: str
+    execution_id: Optional[str] = None
+    idempotency_key: Optional[str] = None
     pipeline_id: Optional[str] = None
     pipeline_name: Optional[str] = None
+    request_type: str = "engine"
+    requested_target: Optional[str] = None
     input_summary: Optional[str] = None
     output_summary: Optional[str] = None
     error_message: Optional[str] = None
     status: ExecutionStatus
+    final_state: ExecutionStatus
     source: str
     duration_ms: int
+    endpoint: Optional[str] = None
+    method: Optional[str] = None
+    auth_type: Optional[str] = None
+    api_key_id: Optional[str] = None
+    api_key_name: Optional[str] = None
+    step_statuses: List[Dict[str, Any]] = []
+    retry_counts: Dict[str, int] = {}
+    receipt_references: Dict[str, Any] = {}
     created_at: datetime
+    started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
 
 

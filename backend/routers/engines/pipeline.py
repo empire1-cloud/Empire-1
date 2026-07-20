@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 
-from core.engine_context import EngineContext, get_engine_context
+from core.engine_context import EngineContext, get_execution_context
 from services.pipeline_composer import PipelineComposerEngine
 from services.error_handler import ErrorHandler, PipelineStage
 
@@ -40,7 +40,7 @@ class PipelineComposeResponse(BaseModel):
 @router.post("/pipeline/compose", response_model=PipelineComposeResponse)
 async def compose_pipeline(
     payload: PipelineComposeRequest,
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """Compose a multi-engine pipeline based on request."""
     ctx.require_write()
@@ -64,7 +64,7 @@ async def compose_pipeline(
 @router.post("/pipeline/compose-detailed")
 async def compose_pipeline_detailed(
     payload: PipelineComposeRequest,
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """Compose pipeline with detailed engine descriptions."""
     ctx.require_write()
@@ -86,7 +86,7 @@ async def compose_pipeline_detailed(
 @router.post("/pipeline/custom")
 async def build_custom_pipeline(
     payload: CustomPipelineRequest,
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """Build a custom pipeline from explicit steps."""
     ctx.require_write()
@@ -109,7 +109,7 @@ async def build_custom_pipeline(
 @router.post("/pipeline/validate")
 async def validate_pipeline(
     steps: List[PipelineStepModel],
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """Validate a pipeline configuration."""
     ctx.require_write()
@@ -118,7 +118,7 @@ async def validate_pipeline(
 
 
 @router.get("/pipeline/templates")
-async def get_pipeline_templates(ctx: EngineContext = Depends(get_engine_context)):
+async def get_pipeline_templates(ctx: EngineContext = Depends(get_execution_context)):
     """Get available pre-built pipeline templates."""
     ctx.require_read()
     return PipelineComposerEngine.get_available_templates()
@@ -127,7 +127,7 @@ async def get_pipeline_templates(ctx: EngineContext = Depends(get_engine_context
 @router.get("/pipeline/template/{template_name}")
 async def get_pipeline_template(
     template_name: str,
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """Get a specific pipeline template."""
     ctx.require_read()
@@ -142,7 +142,7 @@ async def get_pipeline_template(
 
 
 @router.get("/pipeline/engines")
-async def get_available_engines(ctx: EngineContext = Depends(get_engine_context)):
+async def get_available_engines(ctx: EngineContext = Depends(get_execution_context)):
     """Get all available engines and their capabilities."""
     ctx.require_read()
     return PipelineComposerEngine.get_available_engines()

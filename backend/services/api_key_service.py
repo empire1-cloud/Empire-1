@@ -235,13 +235,15 @@ async def get_api_key_context(key: str) -> Optional[Dict]:
         "role": "owner",
         "is_active": True,
     })
-    
+
     user_id = owner_membership["user_id"] if owner_membership else team.get("owner_id")
-    
+    user_role = owner_membership["role"] if owner_membership else "owner"
+
     user = await users_collection().find_one({"_id": ObjectId(user_id)})
-    
+
     return {
         "user_id": user_id,
+        "user_role": user_role,
         "team_id": key_info["team_id"],
         "team_name": team["name"],
         "api_key_id": key_info["key_id"],

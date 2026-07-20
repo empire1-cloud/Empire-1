@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://empire1.ai',
+  site: process.env.SITE_URL || 'https://empire1.cloud',
 
   env: {
     schema: {

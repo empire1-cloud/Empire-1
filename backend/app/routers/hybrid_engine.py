@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from typing import Optional
 
+from core.engine_context import EngineContext, get_execution_context
 from ..services.hybrid_engine_runtime import engine_orchestrator
 
 router = APIRouter(prefix="/hybrid", tags=["Hybrid Engine Runtime"])
@@ -11,11 +12,12 @@ router = APIRouter(prefix="/hybrid", tags=["Hybrid Engine Runtime"])
 # ---------------------------------------------------------
 @router.post("/execute/{engine}/{action}")
 async def execute_engine(
+    request: Request,
     engine: str,
     action: str,
     payload: dict,
     timeout: Optional[float] = 60.0,
-    tenant_id: Optional[str] = None,
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """Execute a single engine action."""
     try:
@@ -23,7 +25,17 @@ async def execute_engine(
             engine=engine,
             action=action,
             payload=payload,
-            options={"timeout": timeout, "tenant_id": tenant_id},
+            options={
+                "timeout": timeout,
+                "team_id": ctx.team_id,
+                "user_id": ctx.user_id,
+                "endpoint": str(request.url.path),
+                "method": request.method,
+                "idempotency_key": request.headers.get("Idempotency-Key") or request.headers.get("X-Idempotency-Key"),
+                "auth_type": ctx.auth_metadata.auth_type,
+                "api_key_id": ctx.auth_metadata.api_key_id,
+                "api_key_name": ctx.auth_metadata.api_key_name,
+            },
         )
         return result
     except Exception as e:
@@ -32,15 +44,26 @@ async def execute_engine(
 
 @router.post("/pipeline/execute")
 async def execute_pipeline(
+    request: Request,
     pipeline: list[dict],
     timeout: Optional[float] = 300.0,
-    tenant_id: Optional[str] = None,
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """Execute a pipeline of engines."""
     try:
         results = await engine_orchestrator.execute_pipeline(
             pipeline=pipeline,
-            options={"timeout": timeout, "tenant_id": tenant_id},
+            options={
+                "timeout": timeout,
+                "team_id": ctx.team_id,
+                "user_id": ctx.user_id,
+                "endpoint": str(request.url.path),
+                "method": request.method,
+                "idempotency_key": request.headers.get("Idempotency-Key") or request.headers.get("X-Idempotency-Key"),
+                "auth_type": ctx.auth_metadata.auth_type,
+                "api_key_id": ctx.auth_metadata.api_key_id,
+                "api_key_name": ctx.auth_metadata.api_key_name,
+            },
         )
         return {"success": True, "pipeline": results}
     except Exception as e:

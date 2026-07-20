@@ -9,7 +9,7 @@ from typing import Optional, Dict, Any
 from datetime import datetime
 
 from core.dependencies import get_current_user, get_current_team
-from core.engine_context import get_engine_context, EngineContext
+from core.engine_context import get_execution_context, EngineContext
 from services.execution_logger_db import (
     log_execution,
     get_team_execution_logs,
@@ -43,7 +43,7 @@ async def get_execution_history(
     end_date: Optional[datetime] = Query(None, description="End date filter"),
     limit: int = Query(50, ge=1, le=500, description="Number of logs to return"),
     offset: int = Query(0, ge=0, description="Offset for pagination"),
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """
     Get execution history for the current team.
@@ -65,7 +65,7 @@ async def get_execution_history(
 
 @router.get("/stats")
 async def get_execution_stats(
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """
     Get execution statistics for the current team.
@@ -76,7 +76,7 @@ async def get_execution_stats(
 @router.get("/{log_id}")
 async def get_execution_detail(
     log_id: str,
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """
     Get full details of a specific execution log.
@@ -92,7 +92,7 @@ async def get_execution_detail(
 @router.post("/log")
 async def create_execution_log(
     request: ManualLogRequest,
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """
     Manually log an execution.
@@ -119,7 +119,7 @@ async def create_execution_log(
 
 @router.delete("/clear")
 async def clear_execution_history(
-    ctx: EngineContext = Depends(get_engine_context),
+    ctx: EngineContext = Depends(get_execution_context),
 ):
     """
     Clear all execution history for the current team.

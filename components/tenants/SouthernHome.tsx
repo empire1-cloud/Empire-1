@@ -4,15 +4,7 @@ import React, { useEffect } from 'react';
 
 /*
   SouthernHome — southernlifestyle.org
-  Visual design matches the reference HTML exactly:
-    - Obsidian #050505 background
-    - Liquid Chrome Script (Alex Brush + gradient)
-    - Glassmorphism panels
-    - Gold #D4AF37 accents
-    - Cinematic pan animation
-    - Story modal (Gemini API)
-    - Draft generator (Gemini API)
-    - CRM lead capture on form submit
+  Public Southern front adapted from the provided reference HTML.
 */
 
 const CSS = `
@@ -35,13 +27,13 @@ const CSS = `
 
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--obsidian); }
-  ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
   .mono { font-family: 'JetBrains Mono', monospace; }
 
   .chrome-script {
-    font-family: 'Alex Brush', cursive;
+    font-family: 'Chicano', 'Alex Brush', cursive;
     font-size: 5.5rem;
     line-height: 1.1;
     background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 40%, #555555 50%, #d0d0d0 55%, #ffffff 100%);
@@ -55,7 +47,7 @@ const CSS = `
   }
 
   .chrome-heading {
-    font-family: 'Alex Brush', cursive;
+    font-family: 'Chicano', 'Alex Brush', cursive;
     font-size: 3.5rem;
     line-height: 1.2;
     background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 40%, #555555 50%, #d0d0d0 55%, #ffffff 100%);
@@ -92,7 +84,8 @@ const CSS = `
     background: #111; border: 1px solid #333; color: #fff;
     text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s ease;
   }
-  .btn-solid:hover { background: #222; border-color: var(--gold); color: var(--gold); }
+  .btn-solid:hover:not(:disabled) { background: #222; border-color: var(--gold); color: var(--gold); }
+  .btn-solid:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .input-dark {
     background: rgba(0, 0, 0, 0.8); border: 1px solid #222;
@@ -101,6 +94,7 @@ const CSS = `
   .input-dark:focus { border-color: var(--gold); outline: none; }
 
   .text-gold { color: var(--gold); }
+  .border-gold { border-color: var(--gold); }
 
   /* Gallery card CSS art backgrounds — used when real images are absent */
   .bg-arcade  { background: linear-gradient(135deg,#1a0505 0%,#3d0f0f 40%,#8B1A1A 70%,#c9a84c 100%); }
@@ -108,19 +102,63 @@ const CSS = `
   .bg-tribute { background: linear-gradient(135deg,#050505 0%,#1a0a0a 30%,#2d1a1a 60%,#6b3030 100%); }
   .bg-barber  { background: linear-gradient(135deg,#0d0d0a 0%,#1a1a0a 30%,#2d2d10 60%,#c9a84c 100%); }
 
-  #story-modal { background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 1000; }
+  #story-modal {
+    background: rgba(5, 5, 5, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+  }
+  .typewriter-cursor::after {
+    content: '|';
+    animation: blink 1s step-start infinite;
+    color: var(--gold);
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .southern-gallery-grid,
+  .southern-vision-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .southern-stagger {
+    margin-top: 6rem;
+  }
+
+  @media (max-width: 760px) {
+    .southern-gallery-grid,
+    .southern-vision-grid {
+      grid-template-columns: 1fr;
+    }
+    .southern-stagger {
+      margin-top: 0;
+    }
+    .southern-field-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
 `;
 
 const HTML = `
-  <!-- STORY MODAL -->
-  <div id="story-modal" class="fixed inset-0 hidden items-center justify-center px-6 transition-opacity duration-300 opacity-0" style="z-index:1000;display:none;">
-    <div class="glass-panel p-8 md:p-12 rounded-lg max-w-2xl w-full shadow-2xl relative overflow-hidden transform scale-95 transition-transform duration-300" id="story-modal-content" style="border:1px solid #333;">
-      <div class="flex justify-between items-start mb-6 pb-4" style="border-bottom:1px solid #222;">
-        <div class="mono text-xs font-bold uppercase tracking-widest" style="color:#71717a;">The Story</div>
-        <button id="close-modal-btn" class="mono text-xs uppercase tracking-widest transition-colors" style="color:#71717a;">Close [X]</button>
+  <!-- MUSEUM STORY MODAL -->
+  <div id="story-modal" class="fixed inset-0 hidden flex items-center justify-center transition-opacity duration-500 opacity-0 z-[1000]">
+    <div class="absolute top-8 right-8 z-50">
+      <button id="close-modal-btn" class="text-zinc-500 hover:text-white transition-colors mono text-sm uppercase tracking-widest bg-black/50 px-4 py-2 border border-[#333] rounded-full">Close [X]</button>
+    </div>
+
+    <div class="w-full h-full flex flex-col md:flex-row transform scale-95 transition-transform duration-500" id="story-modal-content">
+      <div class="w-full md:w-3/5 h-1/2 md:h-full bg-black relative flex items-center justify-center p-4 md:p-12">
+        <img id="modal-image" src="" class="max-w-full max-h-full object-contain shadow-2xl border border-[#222]" alt="">
       </div>
-      <h3 id="story-title" class="text-3xl font-light text-white mb-4"></h3>
-      <div id="story-text" class="font-light text-lg leading-relaxed" style="color:#d4d4d8;min-height:100px;display:flex;align-items:center;"></div>
+
+      <div class="w-full md:w-2/5 h-1/2 md:h-full p-8 md:p-16 flex flex-col justify-center overflow-y-auto border-l border-[#111]">
+        <div class="mono text-gold uppercase tracking-widest text-xs font-bold mb-8 border-b border-[#222] pb-4">
+          Canon File Extracted
+        </div>
+        <h3 id="story-title" class="text-4xl md:text-5xl font-light text-white mb-8"></h3>
+        <div id="story-text" class="text-zinc-300 font-light text-lg md:text-xl leading-relaxed"></div>
+      </div>
     </div>
   </div>
 
@@ -134,7 +172,7 @@ const HTML = `
 
   <!-- HERO -->
   <section style="min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 1.5rem 4rem;position:relative;">
-    <img id="hero-logo" src="/southern-logo.png" onerror="this.style.display='none'" alt="Southern Lyfestyle Crest"
+    <img id="hero-logo" src="/southern-logo.jpg" onerror="this.src='/brand/southern-logo.png'" alt="Southern Lyfestyle Crest"
       style="width:8rem;border-radius:9999px;margin-bottom:2rem;box-shadow:0 0 40px rgba(0,0,0,0.8);border:1px solid #27272a;position:relative;z-index:20;">
     <div class="mono text-xs uppercase" style="letter-spacing:0.4em;color:#71717a;margin-bottom:0.5rem;position:relative;z-index:20;">El Monte, California</div>
     <h1 class="chrome-script" style="margin-bottom:1rem;position:relative;z-index:20;">Southern Lyfestyle</h1>
@@ -146,7 +184,8 @@ const HTML = `
     <div class="glass-panel rounded-xl" style="max-width:56rem;width:100%;text-align:center;border-color:#222;position:relative;overflow:hidden;padding:2rem 3rem;">
       <!-- Cinematic BG -->
       <div style="position:absolute;inset:0;z-index:0;overflow:hidden;">
-        <div class="animate-cinematic" style="position:absolute;inset:0;background:linear-gradient(135deg,#0d1a0d 0%,#1a2e10 40%,#2d4a1a 60%,#1a1a0a 100%);opacity:0.5;"></div>
+        <img src="/sgv_lowrider_street_scene.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Street Scene" class="animate-cinematic" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;">
+        <div class="animate-cinematic" style="display:none;position:absolute;inset:0;background:linear-gradient(135deg,#0d1a0d 0%,#1a2e10 40%,#2d4a1a 60%,#1a1a0a 100%);opacity:0.5;"></div>
       </div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top,#050505,rgba(5,5,5,0.8),transparent);z-index:0;"></div>
       <div style="position:relative;z-index:10;">
@@ -199,75 +238,71 @@ const HTML = `
   <!-- GALLERY -->
   <section style="max-width:90rem;margin:0 auto;padding:6rem 1.5rem;">
     <div style="display:flex;align-items:center;gap:1rem;margin-bottom:4rem;padding-bottom:1rem;border-bottom:1px solid #222;">
-      <div style="font-size:1.5rem;color:#fff;font-weight:300;text-transform:uppercase;letter-spacing:0.1em;">Our Work</div>
+      <div style="font-size:1.5rem;color:#fff;font-weight:300;text-transform:uppercase;letter-spacing:0.1em;">Our Work Exhibition</div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+    <div class="southern-gallery-grid">
 
       <!-- Card 1 -->
       <div class="art-card glass-panel rounded-xl" style="padding:1rem;overflow:hidden;border:1px solid #222;position:relative;" data-card="1">
-        <div style="position:relative;height:400px;width:100%;border-radius:0.5rem;overflow:hidden;">
-          <img src="/impala_bounce_slot_game_art.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Arcade Game" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
+        <div style="position:relative;height:450px;width:100%;border-radius:0.5rem;overflow:hidden;">
+          <img src="/impala_bounce_slot_game_art.jpg" onerror="this.src='https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80&w=800'" alt="Arcade Game" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
           <div class="bg-arcade" style="display:none;position:absolute;inset:0;"></div>
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,1),rgba(0,0,0,0.4),transparent);"></div>
           <div style="position:absolute;bottom:0;left:0;padding:1.5rem;width:100%;display:flex;justify-content:space-between;align-items:flex-end;">
             <div>
               <div class="mono" style="font-size:10px;color:#a1a1aa;margin-bottom:0.5rem;letter-spacing:0.1em;text-transform:uppercase;">Arcade &amp; Slots</div>
               <h3 style="font-size:1.875rem;font-weight:300;color:#fff;margin-bottom:0.5rem;">Custom Arcade Games</h3>
-              <p style="font-size:0.875rem;color:#d4d4d8;font-weight:300;">Fully playable software branded to your exact style.</p>
             </div>
-            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="Custom Arcade Games" style="font-size:10px;opacity:0;transition:opacity 0.3s;">Read Story</button>
+            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="Custom Arcade Games" data-img="/impala_bounce_slot_game_art.jpg" style="font-size:10px;opacity:0;transition:opacity 0.3s;">View Piece</button>
           </div>
         </div>
       </div>
 
       <!-- Card 2 -->
-      <div class="art-card glass-panel rounded-xl" style="padding:1rem;overflow:hidden;border:1px solid #222;position:relative;" data-card="2">
-        <div style="position:relative;height:400px;width:100%;border-radius:0.5rem;overflow:hidden;">
-          <img src="/modern_lowrider_cruise_night_scene.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Car Clubs" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
+      <div class="art-card glass-panel rounded-xl southern-stagger" style="padding:1rem;overflow:hidden;border:1px solid #222;position:relative;" data-card="2">
+        <div style="position:relative;height:450px;width:100%;border-radius:0.5rem;overflow:hidden;">
+          <img src="/modern_lowrider_cruise_night_scene.jpg" onerror="this.src='https://images.unsplash.com/photo-1493225457224-eda0e6fd6563?auto=format&fit=crop&q=80&w=800'" alt="Car Clubs" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
           <div class="bg-cruise" style="display:none;position:absolute;inset:0;"></div>
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,1),rgba(0,0,0,0.4),transparent);"></div>
           <div style="position:absolute;bottom:0;left:0;padding:1.5rem;width:100%;display:flex;justify-content:space-between;align-items:flex-end;">
             <div>
               <div class="mono" style="font-size:10px;color:#a1a1aa;margin-bottom:0.5rem;letter-spacing:0.1em;text-transform:uppercase;">Car Clubs</div>
               <h3 style="font-size:1.875rem;font-weight:300;color:#fff;margin-bottom:0.5rem;">The Night Cruise</h3>
-              <p style="font-size:0.875rem;color:#d4d4d8;font-weight:300;">Your exact familia colors and rides on a digital blvd.</p>
             </div>
-            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="The Night Cruise" style="font-size:10px;opacity:0;transition:opacity 0.3s;">Read Story</button>
+            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="The Night Cruise" data-img="/modern_lowrider_cruise_night_scene.jpg" style="font-size:10px;opacity:0;transition:opacity 0.3s;">View Piece</button>
           </div>
         </div>
       </div>
 
       <!-- Card 3 -->
       <div class="art-card glass-panel rounded-xl" style="padding:1rem;overflow:hidden;border:1px solid #222;position:relative;" data-card="3">
-        <div style="position:relative;height:400px;width:100%;border-radius:0.5rem;overflow:hidden;">
-          <img src="/cdcprison-love.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Tribute Builds" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
+        <div style="position:relative;height:450px;width:100%;border-radius:0.5rem;overflow:hidden;">
+          <img src="/cdcprison-love.jpg" onerror="this.src='https://images.unsplash.com/photo-1505784045224-1247b2b29cf3?auto=format&fit=crop&q=80&w=800'" alt="Tribute Builds" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
           <div class="bg-tribute" style="display:none;position:absolute;inset:0;"></div>
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,1),rgba(0,0,0,0.4),transparent);"></div>
           <div style="position:absolute;bottom:0;left:0;padding:1.5rem;width:100%;display:flex;justify-content:space-between;align-items:flex-end;">
             <div>
               <div class="mono" style="font-size:10px;color:#a1a1aa;margin-bottom:0.5rem;letter-spacing:0.1em;text-transform:uppercase;">Paño Arte</div>
               <h3 style="font-size:1.875rem;font-weight:300;color:#fff;margin-bottom:0.5rem;">Tribute Builds</h3>
-              <p style="font-size:0.875rem;color:#d4d4d8;font-weight:300;">Your history translated into interactive art. Respectful and permanent.</p>
             </div>
-            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="Tribute Builds" style="font-size:10px;opacity:0;transition:opacity 0.3s;">Read Story</button>
+            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="Tribute Builds" data-img="/cdcprison-love.jpg" style="font-size:10px;opacity:0;transition:opacity 0.3s;">View Piece</button>
           </div>
         </div>
       </div>
 
       <!-- Card 4 -->
-      <div class="art-card glass-panel rounded-xl" style="padding:1rem;overflow:hidden;border:1px solid #222;position:relative;" data-card="4">
-        <div style="position:relative;height:400px;width:100%;border-radius:0.5rem;overflow:hidden;">
-          <img src="/klingerman_karts_neighborhood_race.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Neighborhoods" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
+      <div class="art-card glass-panel rounded-xl southern-stagger" style="padding:1rem;overflow:hidden;border:1px solid #222;position:relative;" data-card="4">
+        <div style="position:relative;height:450px;width:100%;border-radius:0.5rem;overflow:hidden;">
+          <img src="/klingerman_karts_neighborhood_race.jpg" onerror="this.src='https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&q=80&w=800'" alt="Neighborhoods" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s;filter:brightness(0.75);" class="gallery-img">
           <div class="bg-barber" style="display:none;position:absolute;inset:0;"></div>
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,1),rgba(0,0,0,0.4),transparent);"></div>
           <div style="position:absolute;bottom:0;left:0;padding:1.5rem;width:100%;display:flex;justify-content:space-between;align-items:flex-end;">
             <div>
               <div class="mono" style="font-size:10px;color:#a1a1aa;margin-bottom:0.5rem;letter-spacing:0.1em;text-transform:uppercase;">Community</div>
               <h3 style="font-size:1.875rem;font-weight:300;color:#fff;margin-bottom:0.5rem;">Neighborhood Circuits</h3>
-              <p style="font-size:0.875rem;color:#d4d4d8;font-weight:300;">Digitizing the pulse of the community with safe, fun energy.</p>
             </div>
-            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="Neighborhood Circuits" style="font-size:10px;opacity:0;transition:opacity 0.3s;">Read Story</button>
+            <button class="story-btn btn-solid px-4 py-2 rounded" data-title="Neighborhood Circuits" data-img="/klingerman_karts_neighborhood_race.jpg" style="font-size:10px;opacity:0;transition:opacity 0.3s;">View Piece</button>
           </div>
         </div>
       </div>
@@ -281,75 +316,63 @@ const HTML = `
     [data-card]:hover .gallery-img { transform: scale(1.05); }
   </style>
 
-  <!-- REQUEST / PRICING -->
-  <section id="request" style="max-width:72rem;margin:0 auto;padding:6rem 1.5rem;display:flex;flex-direction:column;gap:3rem;">
-    <div style="display:flex;flex-direction:column;gap:3rem;">
-      <div style="display:flex;gap:3rem;flex-wrap:wrap;">
+  <!-- REQUEST / VISION BOARD GENERATOR -->
+  <section id="request" style="max-width:72rem;margin:0 auto;padding:6rem 1.5rem;display:flex;flex-wrap:wrap;gap:3rem;">
 
-        <!-- Pricing ledger -->
-        <div class="glass-panel rounded-xl" style="padding:2rem;flex:0 0 auto;width:320px;border:1px solid #222;height:fit-content;">
-          <h4 class="mono text-white uppercase tracking-widest" style="font-size:0.75rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid #333;">Build Pricing</h4>
-          <ul style="display:flex;flex-direction:column;gap:1.5rem;font-size:0.875rem;text-transform:uppercase;color:#a1a1aa;margin-bottom:2.5rem;">
-            <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;"><span>Personal</span><span style="color:#fff;">$250</span></li>
-            <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;"><span>Community</span><span style="color:#fff;">$500</span></li>
-            <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;color:var(--gold);"><span>Full World</span><span>$750</span></li>
-            <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;"><span>Premium</span><span style="color:#fff;">$1,000</span></li>
-          </ul>
-          <h4 class="mono text-white uppercase tracking-widest" style="font-size:0.75rem;margin-bottom:1.5rem;padding-top:1rem;border-top:1px solid #333;">Add-ons</h4>
-          <div style="display:flex;flex-direction:column;gap:1rem;font-size:0.75rem;color:#71717a;text-transform:uppercase;">
-            <div style="display:flex;justify-content:space-between;"><span>Extra Character</span><span>$50</span></div>
-            <div style="display:flex;justify-content:space-between;"><span>Extra Art</span><span>$100</span></div>
-            <div style="display:flex;justify-content:space-between;"><span>Intro Video</span><span>$150</span></div>
-          </div>
+    <div class="glass-panel rounded-xl" style="padding:2rem;flex:0 0 320px;border:1px solid #222;height:fit-content;">
+      <h4 class="mono text-white uppercase tracking-widest" style="font-size:0.75rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid #333;">Build Pricing</h4>
+      <ul style="display:flex;flex-direction:column;gap:1.5rem;font-size:0.875rem;text-transform:uppercase;color:#a1a1aa;margin:0;">
+        <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;"><span>Personal</span><span style="color:#fff;">$250</span></li>
+        <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;"><span>Community</span><span style="color:#fff;">$500</span></li>
+        <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;color:var(--gold);"><span>Full World</span><span>$750</span></li>
+        <li style="display:flex;justify-content:space-between;padding-bottom:0.5rem;border-bottom:1px solid #222;"><span>Premium</span><span style="color:#fff;">$1,000</span></li>
+      </ul>
+    </div>
+
+    <div class="glass-panel rounded-xl" style="flex:1 1 0%;min-width:320px;padding:1px;border:1px solid rgba(255,255,255,0.08);">
+      <div style="background:#050505;border-radius:0.75rem;padding:2rem 3rem;position:relative;height:100%;">
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-size:1.5rem;font-weight:300;color:#fff;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Request a Build</h2>
+          <p style="font-size:0.875rem;color:#71717a;">Pick your category and tell us your story. We&apos;ll generate a custom concept pitch and AI sketch for you.</p>
         </div>
 
-        <!-- Request form -->
-        <div class="glass-panel rounded-xl" style="flex:1;min-width:0;padding:1px;border:1px solid rgba(255,255,255,0.08);">
-          <div style="background:#050505;border-radius:0.75rem;padding:2rem 3rem;position:relative;height:100%;">
-            <div style="margin-bottom:2.5rem;">
-              <h2 style="font-size:1.5rem;font-weight:300;color:#fff;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Request a Build</h2>
-              <p style="font-size:0.875rem;color:#71717a;">Pick your category. Tell us your story. We&apos;ll draft a free concept for you.</p>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:1.5rem;position:relative;z-index:10;">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-                <div>
-                  <label class="mono" style="font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem;">Your Name</label>
-                  <input id="sl-name" class="input-dark" style="width:100%;padding:1rem;font-size:0.875rem;border-radius:0.25rem;outline:none;" placeholder="First name or handle">
-                </div>
-                <div>
-                  <label class="mono" style="font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem;">Email (optional)</label>
-                  <input id="sl-email" type="email" class="input-dark" style="width:100%;padding:1rem;font-size:0.875rem;border-radius:0.25rem;outline:none;" placeholder="so we can reach you">
-                </div>
-              </div>
-              <div>
-                <label class="mono" style="font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem;">Category</label>
-                <select id="userLane" class="input-dark" style="width:100%;padding:1rem;font-size:0.875rem;border-radius:0.25rem;outline:none;appearance:none;">
-                  <option value="" disabled selected>Select a Category...</option>
-                  <option value="Car Club">Car Club (Plaques &amp; Rides)</option>
-                  <option value="Barbershop">Barbershop (Shop Arcades)</option>
-                  <option value="Couple">Couples (Shared History)</option>
-                  <option value="Family">Family (Roots &amp; Legacy)</option>
-                  <option value="Kids">Kids (Hospital Warriors)</option>
-                  <option value="Tribute">Tribute (Memorials &amp; Paño)</option>
-                </select>
-              </div>
-              <div>
-                <label class="mono" style="font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem;">Your Story</label>
-                <textarea id="userStory" rows="5" class="input-dark" style="width:100%;padding:1rem;font-size:0.875rem;border-radius:0.25rem;outline:none;resize:none;" placeholder="Tell us the history, the memories, or what you want to see built..."></textarea>
-              </div>
-              <button id="draftBtn" class="btn-solid rounded" style="width:100%;padding:1.25rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;font-size:0.75rem;">
-                Generate Draft Concept
-              </button>
-            </div>
-
-            <div id="draftResult" style="margin-top:2rem;display:none;border-top:1px solid #222;padding-top:2rem;">
-              <div class="mono" style="font-size:10px;color:#71717a;margin-bottom:1rem;text-transform:uppercase;">Draft Response</div>
-              <div id="output-text-area" style="padding:1.5rem;background:#0a0a0a;border:1px solid #222;color:#d4d4d8;font-weight:300;line-height:1.75;font-size:0.875rem;border-radius:0.25rem;"></div>
-            </div>
+        <div style="display:flex;flex-direction:column;gap:1.5rem;position:relative;z-index:10;">
+          <div>
+            <label class="mono" style="font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem;">Category</label>
+            <select id="userLane" class="input-dark" style="width:100%;padding:1rem;font-size:0.875rem;border-radius:0.25rem;outline:none;appearance:none;">
+              <option value="" disabled selected>Select a Category...</option>
+              <option value="Car Club">Car Club (Plaques &amp; Rides)</option>
+              <option value="Barbershop">Barbershop (Shop Arcades)</option>
+              <option value="Couple">Couples (Shared History)</option>
+              <option value="Family">Family (Roots &amp; Legacy)</option>
+              <option value="Kids">Kids (Hospital Warriors)</option>
+              <option value="Tribute">Tribute (Memorials &amp; Paño)</option>
+            </select>
           </div>
+
+          <div>
+            <label class="mono" style="font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem;">Your Story</label>
+            <textarea id="userStory" rows="5" class="input-dark" style="width:100%;padding:1rem;font-size:0.875rem;border-radius:0.25rem;outline:none;resize:none;" placeholder="Tell us the history, the memories, or what you want to see built..."></textarea>
+          </div>
+
+          <button id="draftBtn" class="btn-solid rounded" style="width:100%;padding:1.25rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;font-size:0.75rem;">
+            Generate Vision Board
+          </button>
         </div>
 
+        <div id="draftResult" style="margin-top:3rem;display:none;border-top:1px solid #222;padding-top:2.5rem;">
+          <div class="mono text-gold" style="font-size:10px;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:0.75rem;">
+            <div id="gen-loader" class="w-3 h-3 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+            <span id="gen-status">Analyzing story...</span>
+          </div>
+
+          <div class="southern-vision-grid">
+            <div style="background:#000;border:1px solid #222;border-radius:0.25rem;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:250px;">
+              <img id="concept-img" src="" alt="Generated Southern Lyfestyle concept" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s;">
+            </div>
+            <div id="output-text-area" style="color:#d4d4d8;font-weight:300;line-height:1.75;font-size:0.875rem;"></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -540,7 +563,10 @@ export default function SouthernHome() {
     // Gemini endpoint (key from env — set NEXT_PUBLIC_GEMINI_API_KEY)
     const apiKey = (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_GEMINI_API_KEY) || '';
     const geminiEndpoint = apiKey
-      ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`
+      ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`
+      : '';
+    const imageEndpoint = apiKey
+      ? `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`
       : '';
 
     // ── STORY MODAL ──────────────────────────────────────────────
@@ -548,6 +574,7 @@ export default function SouthernHome() {
     const modalContent = document.getElementById('story-modal-content');
     const storyTitle   = document.getElementById('story-title');
     const storyText    = document.getElementById('story-text');
+    const modalImage   = document.getElementById('modal-image') as HTMLImageElement | null;
     const closeBtn     = document.getElementById('close-modal-btn');
 
     function openModal() {
@@ -562,7 +589,7 @@ export default function SouthernHome() {
       if (!modal) return;
       modal.classList.remove('opacity-100');
       modalContent?.classList.remove('scale-100');
-      setTimeout(() => { if (modal) modal.style.display = 'none'; }, 300);
+      setTimeout(() => { if (modal) modal.style.display = 'none'; }, 500);
     }
 
     closeBtn?.addEventListener('click', closeModal);
@@ -578,8 +605,14 @@ export default function SouthernHome() {
     document.querySelectorAll<HTMLElement>('.story-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const title = (e.currentTarget as HTMLElement).getAttribute('data-title') || '';
+        const imgSrc = (e.currentTarget as HTMLElement).getAttribute('data-img') || '';
         if (storyTitle) storyTitle.innerText = title;
-        if (storyText) storyText.innerHTML = "<span style='color:#71717a;font-size:0.875rem;'>Writing story...</span>";
+        if (storyText) storyText.innerHTML = "<span class='typewriter-cursor' style='color:#71717a;'>Retrieving history</span>";
+        if (modalImage) {
+          modalImage.src = imgSrc;
+          modalImage.alt = title;
+          modalImage.onerror = () => { modalImage.src = 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80&w=1200'; };
+        }
         openModal();
 
         if (!geminiEndpoint) {
@@ -598,10 +631,13 @@ export default function SouthernHome() {
       });
     });
 
-    // ── DRAFT GENERATOR + CRM ─────────────────────────────────────
+    // ── DRAFT GENERATOR ───────────────────────────────────────────
     const draftBtn    = document.getElementById('draftBtn') as HTMLButtonElement | null;
     const draftResult = document.getElementById('draftResult');
     const outputArea  = document.getElementById('output-text-area');
+    const imgEl       = document.getElementById('concept-img') as HTMLImageElement | null;
+    const statusEl    = document.getElementById('gen-status');
+    const loaderEl    = document.getElementById('gen-loader');
 
     const draftFallbacks: Record<string, string> = {
       'Car Club': '<strong>Your Club, Your Digital Legacy.</strong><br><br>We\'d build a custom lowrider arcade tribute to your car club — your colors, your rides, your logo on every screen. Think classic cruise-night vibes, with your actual cars as the playable characters.<br><br>The kind of thing that makes the whole crew stop and say "that\'s us."',
@@ -615,64 +651,74 @@ export default function SouthernHome() {
     draftBtn?.addEventListener('click', async () => {
       const laneEl = document.getElementById('userLane') as HTMLSelectElement | null;
       const storyEl = document.getElementById('userStory') as HTMLTextAreaElement | null;
-      const nameEl  = document.getElementById('sl-name')  as HTMLInputElement | null;
-      const emailEl = document.getElementById('sl-email') as HTMLInputElement | null;
-
       const lane  = laneEl?.value || '';
       const story = storyEl?.value?.trim() || '';
 
       if (!lane || !story) {
-        if (outputArea) outputArea.innerHTML = "<span style='color:#ef4444;'>Please select a category and tell us your story.</span>";
-        if (draftResult) draftResult.style.display = 'block';
+        window.alert('Please select a category and tell us your story.');
         return;
       }
 
       if (draftBtn) { draftBtn.disabled = true; draftBtn.innerText = 'Drafting Concept... ⏳'; }
       if (draftResult) draftResult.style.display = 'block';
+      if (imgEl) {
+        imgEl.style.opacity = '0';
+        imgEl.removeAttribute('src');
+      }
+      if (loaderEl) loaderEl.classList.remove('hidden');
+      if (statusEl) statusEl.innerText = 'Writing concept pitch...';
       if (outputArea)  outputArea.innerHTML = "<span style='color:#71717a;'>Thinking...</span>";
 
-      // Save to CRM in background
-      try {
-        const leadName  = nameEl?.value?.trim() || lane;
-        const leadEmail = emailEl?.value?.trim() || undefined;
-        const crmRes = await fetch('/api/crm/leads', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: leadName, email: leadEmail, source: 'southern_request', notes: `Category: ${lane}\n\n${story}` }),
-        });
-        if (crmRes.ok) {
-          const d = await crmRes.json();
-          if (d.success) {
-            await fetch(`/api/crm/leads/${d.lead.id}`, {
-              method: 'PUT', headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ lane: 'southern_build', pipeline_stage: 'lead' }),
-            });
-          }
-        }
-      } catch { /* silent */ }
-
-      // Generate draft
       if (!geminiEndpoint) {
         if (outputArea) outputArea.innerHTML = draftFallbacks[lane] || 'Tell us more and we\'ll draft a concept for you.';
+        if (imgEl) {
+          imgEl.src = '/modern_lowrider_cruise_night_scene.jpg';
+          imgEl.onerror = () => { imgEl.src = 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80&w=800'; };
+          imgEl.onload = () => { imgEl.style.opacity = '1'; };
+        }
+        if (statusEl) statusEl.innerText = 'Vision Board Complete';
+        if (loaderEl) loaderEl.classList.add('hidden');
       } else {
         const prompt = `You are a creative director for Southern Lyfestyle (representing SGV, El Monte, Chicano culture, family, respect).
 Category: ${lane}
 Client Story: ${story}
 
 Write a 2-paragraph concept pitch for a custom digital art piece or game based on their story.
-Tone: Warm, respectful, authentic, down-to-earth. Do NOT use terms like "SLA113", "Canon", "Terminal", "Engine", or "ArtTech".
-Format using simple HTML (<br>, <strong>). Do not use markdown.`;
+Tone: Warm, respectful, authentic, down-to-earth. Do NOT use tech jargon.
+Format using simple HTML (<br>, <strong>). Do not use markdown blocks.`;
 
         try {
           const res  = await fetch(geminiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
           const data = await res.json();
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text || draftFallbacks[lane] || 'Failed to generate concept.';
           if (outputArea) outputArea.innerHTML = text.replace(/```html/g, '').replace(/```/g, '');
+
+          if (imageEndpoint && imgEl) {
+            if (statusEl) statusEl.innerText = 'Sketching visual concept...';
+            const imgPrompt = `A high-end, highly detailed concept art sketch for a ${lane} digital art piece. Theme: ${story}. Style: Beautiful Chicano art, SGV lowrider culture, dark obsidian background, gold and chrome accents, respectful, hyper-realistic masterpiece.`;
+            const imgRes = await fetch(imageEndpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ instances: [{ prompt: imgPrompt }], parameters: { sampleCount: 1 } }),
+            });
+            const imgData = await imgRes.json();
+            const b64 = imgData.predictions?.[0]?.bytesBase64Encoded;
+            if (b64) {
+              imgEl.src = `data:image/png;base64,${b64}`;
+              imgEl.onload = () => { imgEl.style.opacity = '1'; };
+            }
+          }
+
+          if (statusEl) statusEl.innerText = 'Vision Board Complete';
+          if (loaderEl) loaderEl.classList.add('hidden');
         } catch {
           if (outputArea) outputArea.innerHTML = draftFallbacks[lane] || "<span style='color:#ef4444;'>Network error. Please try again.</span>";
+          if (statusEl) statusEl.innerText = 'Network Error. Please try again.';
+          if (loaderEl) loaderEl.classList.add('hidden');
         }
       }
 
-      if (draftBtn) { draftBtn.disabled = false; draftBtn.innerText = 'Generate Draft Concept'; }
+      if (draftBtn) { draftBtn.disabled = false; draftBtn.innerText = 'Generate Vision Board'; }
     });
 
     return () => { document.head.removeChild(link); };

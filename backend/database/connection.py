@@ -166,6 +166,18 @@ async def create_indexes():
         IndexModel([("engine", ASCENDING)]),
         IndexModel([("status", ASCENDING)]),
         IndexModel([("created_at", DESCENDING)]),
+        IndexModel(
+            [("team_id", ASCENDING), ("idempotency_key", ASCENDING)],
+            unique=True,
+            sparse=True,
+            name="execution_team_idempotency_unique",
+        ),
+        IndexModel(
+            [("execution_id", ASCENDING)],
+            unique=True,
+            sparse=True,
+            name="execution_id_unique",
+        ),
     ])
     
     # Password reset tokens indexes
