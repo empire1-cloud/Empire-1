@@ -44,7 +44,12 @@ function detectTenant(host: string): string {
 export function middleware(request: NextRequest) {
   let pathname = request.nextUrl.pathname
   const host = request.headers.get('host') || ''
-  const isDev = host.includes('localhost') || host.includes('127.0.0.1')
+  // Local host detection is used only for developer convenience (tenant routing).
+  // It must NOT gate authentication, because the Host header is client-controlled
+  // and can be spoofed to "localhost" to bypass admin protection.
+  const isLocalHost = host.includes('localhost') || host.includes('127.0.0.1')
+  // Auth bypass is gated on a server-side signal only.
+  const isDevEnv = process.env.NODE_ENV !== 'production'
   const token = request.cookies.get('admin_token')?.value
   const isSla113Path = pathname.startsWith('/admin') || pathname.startsWith('/foundry')
   
@@ -57,7 +62,7 @@ export function middleware(request: NextRequest) {
   }
   
   // In local/dev, allow direct SLA113 console work without DNS host mapping.
-  const tenant = isDev && isSla113Path ? 'sla113' : detectTenant(host)
+  const tenant = isLocalHost && isDevEnv && isSla113Path ? 'sla113' : detectTenant(host)
 
   // Lyrica 3: sluniversal subdomain → /universal mode
   if (tenant === 'lyrica3' && host.split(':')[0].toLowerCase() === 'sluniversal.lyrica3.com' && pathname === '/') {
@@ -77,7 +82,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/', request.url))
     }
 
-    if (pathname !== '/admin/login' && !token && !isDev) {
+    if (pathname !== '/admin/login' && !token && !isDevEnv) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
   }

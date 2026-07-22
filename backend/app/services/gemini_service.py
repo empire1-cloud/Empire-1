@@ -4,9 +4,12 @@ from typing import Dict, Any, Optional
 
 class GeminiService:
     def __init__(self):
-        # We'll use the API key from the environment (extracted from user history)
-        self.api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyBvWiHFNhdicOrYhq3xsmJ0LBqylNWnSR0")
-        self.api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={self.api_key}"
+        # API key is read from the environment only. Never hardcode credentials.
+        self.api_key = os.getenv("GOOGLE_API_KEY")
+        self.api_url = (
+            "https://generativelanguage.googleapis.com/v1beta/models/"
+            f"gemini-pro:generateContent?key={self.api_key}"
+        )
 
     async def generate_beat(self, tenant_id: str) -> Dict[str, Any]:
         """
@@ -14,8 +17,13 @@ class GeminiService:
         - empire1: Sophisticated, sleek, enterprise AI vibe.
         - southern: Grounded, loyal, SGV/IE night atmosphere.
         """
+        if not self.api_key:
+            # No credentials configured — degrade gracefully instead of calling
+            # the API with an empty key.
+            return self._fallback_beat(tenant_id)
+
         prompt = self._get_prompt(tenant_id)
-        
+
         async with httpx.AsyncClient() as client:
             try:
                 response = await client.post(
