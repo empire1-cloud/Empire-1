@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "registry_date": "2026-07-22",
+  "doctrine": "WE EVOLVE. NEVER DELETE.",
+  "authority_model": {
+    "umbrella": "Empire-1",
+    "control_plane": "SLA113",
+    "evidence_rule": "No repository, component, or product may be called finished, missing, live, or nonexistent without an exact repository, ref, commit SHA, entrypoint, and verification result.",
+    "preservation_rule": "Mark, map, reconcile, and evolve. Do not flatten, overwrite, or delete valid implementation lanes."
+  },
+  "readiness_states": {
+    "verified_operational": "Entrypoint and critical flow were executed successfully at the recorded SHA.",
+    "implemented_unverified": "Substantive implementation exists, but current runtime verification is not recorded.",
+    "implemented_fragmented": "Substantive implementation exists across more than one repository or lane and requires explicit adapter/reconciliation work.",
+    "degraded": "Implementation exists, but a known blocker prevents a critical path from being represented as operational.",
+    "not_audited": "No conclusion is permitted until the canonical source is inspected.",
+    "local_only": "Canonical work is known to exist outside the connected GitHub default branch and must be reconciled without deletion."
+  },
+  "products": {
+    "empire_1": {
+      "name": "Empire-1",
+      "role": "Umbrella ecosystem and public commercial front door",
+      "canonical_repository": "empire1-cloud/Empire-1",
+      "canonical_ref": "main",
+      "audited_sha": "5c7548fdca277ae5f6567078882cc75d445c7fec",
+      "readiness": "degraded",
+      "verified_evidence": [
+        "backend/app/routers/sla113_orchestration.py exists and exposes the SLA113 orchestration API",
+        "backend/app/routers/revenue_os.py exists and implements Revenue OS routes, records, pipeline, checkout, receipts, and analytics",
+        "backend/services/money_pipeline_engine.py exists and invokes an LLM-backed structured revenue pipeline"
+      ],
+      "known_blockers": [
+        "backend/app/routers/sla113_orchestration.py imports backend/app/engines/sla113/sla113_orchestration_engine.py, which is absent on the audited main ref",
+        "Revenue OS can continue with deterministic builders when the AI engine fails, without making fallback mode sufficiently prominent",
+        "MoneyPipelineEngine still contains a Gemini provider configuration, which violates the current no-Google/no-Gemini doctrine"
+      ]
+    },
+    "sla113": {
+      "name": "SLA113",
+      "role": "Parent control plane plus exportable white-label runtime",
+      "canonical_repository": "empire1-cloud/sla113",
+      "canonical_ref": "main",
+      "audited_sha": "40777d5807e59c5cd433016669ecb1a001b9be54",
+      "readiness": "implemented_fragmented",
+      "verified_evidence": [
+        "backend/services/hybrid_core.py defines HybridIntelligenceCore",
+        "The core classifies tasks, routes models, executes strategy/plan engines, enforces canon, monitors drift, handles errors, and records execution metadata",
+        "backend/routers/engines/core.py exposes core execute, strategy-to-plan, status, log, and health routes"
+      ],
+      "known_blockers": [
+        "The standalone SLA113 implementation and the embedded Empire-1 SLA113 implementation are not yet governed by one explicit adapter contract",
+        "Empire-1 contains an embedded orchestration import that is not satisfied on its audited main ref"
+      ]
+    },
+    "revenue_os": {
+      "name": "Empire Revenue OS",
+      "role": "Revenue diagnosis, offer, outreach, pipeline, checkout, delivery receipt, and analytics module",
+      "canonical_repository": "empire1-cloud/Empire-1",
+      "canonical_ref": "main",
+      "audited_sha": "5c7548fdca277ae5f6567078882cc75d445c7fec",
+      "entrypoints": [
+        "backend/app/routers/revenue_os.py",
+        "backend/services/money_pipeline_engine.py"
+      ],
+      "readiness": "degraded",
+      "verified_evidence": [
+        "The MoneyPipelineEngine makes an LLM call and parses structured JSON output",
+        "Revenue OS includes lead records, commands, receipts, pipeline stages, checkout state, delivery receipts, and analytics"
+      ],
+      "known_blockers": [
+        "The AI engine call catches broad exceptions and returns None",
+        "Most customer-visible modules are also built through deterministic string templates",
+        "Receipts do not yet make AI mode versus deterministic fallback mode undeniable",
+        "Google/Gemini provider configuration must be removed"
+      ]
+    },
+    "cultura": {
+      "name": "Cultura Vibe Forge",
+      "role": "Cultural authenticity, Soulfire guardrails, and culturally governed creation forge",
+      "canonical_repository": "empire1-cloud/the-cultura-vibe-forge-",
+      "canonical_ref": "main",
+      "audited_sha": "3e18db0ef3c1ac24f494ce5fc9496e304cf3abae",
+      "visibility": "private",
+      "readiness": "implemented_unverified",
+      "verified_evidence": [
+        "backend/server.py is a substantive FastAPI implementation, not an empty scaffold",
+        "The backend includes JWT authentication, MongoDB integration, LLM gateway calls, Soulfire guardrails, artifact generation, and execution support",
+        "The frontend includes landing, login, dashboard, drafts, artifact view, and layout surfaces",
+        "The repository has a multi-commit implementation and deployment history"
+      ],
+      "known_blockers": [
+        "Current deployment and end-to-end runtime health were not executed during this evidence pass",
+        "Required environment configuration must be verified before representing the product as operational"
+      ]
+    },
+    "lyrica_3": {
+      "name": "Lyrica 3",
+      "role": "Creator-owned AI music platform and first GTM wedge",
+      "canonical_repository": "empire1-cloud/Lyrica3-pro",
+      "canonical_ref": "pending canonical branch verification",
+      "readiness": "not_audited",
+      "rule": "Do not infer readiness from another Lyrica repository or stale local copy."
+    },
+    "archisynapse": {
+      "name": "Archisynapse",
+      "role": "Transactions, ledger, fraud, payouts, reconciliation, and revenue intelligence",
+      "canonical_repository": "local microservices lane; GitHub reconciliation pending",
+      "public_baseline_repository": "empire1-cloud/Archisynapse-",
+      "readiness": "local_only",
+      "rule": "Preserve both the microservices lane and the earlier public monolith. Do not flatten or overwrite either."
+    },
+    "empire_auto_cofounder": {
+      "name": "Empire Auto Cofounder",
+      "role": "Private internal founder partner and approval-controlled execution system",
+      "canonical_repository": "private/local canonical lane; remote reconciliation pending",
+      "readiness": "local_only",
+      "rule": "Keep execution fail-closed and preserve divergent checkouts until unique work is reconciled."
+    }
+  },
+  "audit_requirements": {
+    "required_identity": [
+      "repository",
+      "branch_or_ref",
+      "commit_sha",
+      "visibility",
+      "entrypoint"
+    ],
+    "required_verification": [
+      "dependency_install_result",
+      "boot_result",
+      "test_command_and_result",
+      "critical_route_or_flow_result",
+      "deployment_result_or_not_checked"
+    ],
+    "forbidden_conclusions": [
+      "Missing from one repository means nonexistent everywhere",
+      "A route or UI proves its imported engine exists",
+      "Generated output proves the AI path executed",
+      "Folders or filenames prove runtime readiness",
+      "Documentation alone proves implementation"
+    ]
+  }
+}
