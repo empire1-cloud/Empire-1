@@ -10,11 +10,11 @@ const HIC_ENGINES = [
   { tier: 'Routing Engine', tierColor: 'var(--blue)', name: 'Multi-Model Routing', desc: 'Task classification and model selection. Every request goes to the model that\'s strongest at it.', includes: ['Task analysis and classification', 'Best-fit model selection', 'Provider-agnostic routing'] },
   { tier: 'Canon Enforcer', tierColor: 'var(--gold)', name: 'Output Normalization', desc: 'Strip AI-tells, filler, and character breaks. Three different providers sound like one disciplined system.', includes: ['Filler removal', 'Character consistency', 'Tone normalization'] },
   { tier: 'Drift Monitor', tierColor: 'var(--pink)', name: 'Behavioral Tracking', desc: 'Track every model against its own baseline. Tone, quality, compliance, error rate — flag decay before anyone notices.', includes: ['Baseline tracking', 'Anomaly detection', 'Alert thresholds'] },
-  { tier: 'Full HIC License', tierColor: 'var(--text)', name: 'Complete Intelligence Layer', desc: 'Everything above, plus format normalization, all specialized engines, and pipeline composition.', includes: ['All four pillars', '18+ specialized engines', 'Pipeline Composer', 'Fully white-labeled'] },
+  { tier: 'Full HIC License', tierColor: 'var(--text)', name: 'Complete Intelligence Layer', desc: 'Everything above, plus format normalization, the application-configured engine set, and pipeline composition.', includes: ['All four pillars', '18 engines defined in the current HIC application configuration', 'Pipeline Composer', 'Fully white-labeled'] },
 ];
 
 const SLA113 = [
-  { tier: 'Full Factory', name: 'SLA113 Platform License', desc: 'Everything in the HIC license, plus the full operator console, specialized engine set, and self-service branded instance minting.', includes: ['Everything in HIC license', 'Full operator console', '18+ specialized engines', 'Self-service white-label instance minting', 'Pipeline orchestration', 'Revenue and analytics dashboards'] },
+  { tier: 'Full Factory', name: 'SLA113 Platform License', desc: 'Everything in the HIC license, plus the full operator console, a specialized engine and white-label platform stack, and self-service branded instance minting.', includes: ['Everything in HIC license', 'Full operator console', 'Specialized engine and white-label platform stack', 'Self-service white-label instance minting', 'Pipeline orchestration', 'Revenue and analytics dashboards'] },
 ];
 
 export default function LicensingPage() {
@@ -68,7 +68,7 @@ export default function LicensingPage() {
         <div className="wrap">
           <div className="eyebrow">SLA113 FACTORY LICENSE</div>
           <h2>The whole operator platform.</h2>
-          <p>Not just the engine — the full console, 18+ specialized engines, Empire-1 HIC underneath it, and self-service white-label instance minting. Built to demonstrate factory output.</p>
+          <p>Not just the engine — the full console, a specialized engine and white-label platform stack, Empire-1 HIC underneath it, and self-service white-label instance minting. Built to demonstrate factory output.</p>
           <div className="ledger">
             {SLA113.map((item) => (
               <div className="ledger-row" key={item.tier}>
