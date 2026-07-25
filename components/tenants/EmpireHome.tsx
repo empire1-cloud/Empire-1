@@ -91,16 +91,23 @@ const CSS = String.raw`
     text-transform:uppercase;
   }
   .wordmark span{ color:var(--pink); }
-  nav{ display:flex; gap:26px; }
+  nav{ display:flex; gap:20px; }
   nav a{
     font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
+    font-size:11px;
     letter-spacing:0.08em;
     text-transform:uppercase;
     color:var(--muted);
     transition:color .2s;
   }
   nav a:hover{ color:var(--text); }
+  nav a.nav-cta{
+    background:var(--gold);
+    color:#0a0a0a;
+    padding:8px 14px;
+    font-weight:600;
+  }
+  nav a.nav-cta:hover{ box-shadow:0 4px 16px rgba(232,185,35,0.25); }
   @media (max-width:700px){ nav{ display:none; } }
 
   section{ position:relative; z-index:2; }
@@ -395,6 +402,56 @@ const CSS = String.raw`
     font-style:italic;
   }
 
+  /* ===== REVENUE OS SECTION ===== */
+  .revos-panel{
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    border-radius:4px;
+    overflow:hidden;
+    margin-top:34px;
+  }
+  .revos-head{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    padding:14px 22px;
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:9px;
+  }
+  .revos-body{ padding:22px; }
+  .revos-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line-strong);
+    margin-top:22px;
+    border:1px solid var(--line-strong);
+  }
+  @media (max-width:760px){ .revos-grid{ grid-template-columns:1fr; } }
+  .revos-card{
+    background:var(--surface);
+    padding:20px 18px;
+  }
+  .revos-card-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:var(--gold);
+    letter-spacing:0.06em;
+    margin-bottom:10px;
+  }
+  .revos-card h4{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    font-size:17px;
+    margin:0 0 8px;
+  }
+  .revos-card p{
+    font-size:12.5px;
+    line-height:1.55;
+    color:#b4b4bb;
+    margin:0;
+  }
+
   /* ===== FOOTER ===== */
   footer{ padding:60px 28px 40px; border-top:1px solid var(--line); }
   .footer-inner{
@@ -448,16 +505,17 @@ const LANDING_HTML = String.raw`
 <header>
   <div class="header-inner">
     <div class="mark">
-      <img src="empire1_logo.jpeg" alt="Empire 1" style="width:34px;height:34px;object-fit:contain;border-radius:50%;">
+      <img src="empire1_logo.jpeg" alt="Empire 1" style="width:34px;height:34px;object-fit:contain;border-radius:4px;">
       <div class="wordmark">EMPIRE <span>1</span></div>
     </div>
     <nav>
-      <a href="#structure">Structure</a>
-      <a href="#core">Core</a>
-      <a href="#law">The Law</a>
-      <a href="#cockpit">Cockpit</a>
-      <a href="#founder">Founder</a>
-      <a href="#entry">Entry</a>
+      <a href="/">Home</a>
+      <a href="/revenue-os">Revenue OS</a>
+      <a href="/ecosystem">Ecosystem</a>
+      <a href="/hic">HIC</a>
+      <a href="/enterprise">Enterprise</a>
+      <a href="#entry">Licensing</a>
+      <a href="/try-revenue-os" class="nav-cta">Try Free →</a>
     </nav>
   </div>
 </header>
@@ -660,6 +718,53 @@ const LANDING_HTML = String.raw`
   </div>
 </section>
 
+<section class="section" id="revenue-os">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">LIVE PRODUCT PROOF</div>
+      <h2>Turn your business into a revenue system.</h2>
+    </div>
+    <p style="color:#b4b4bb; font-size:15.5px; line-height:1.7; max-width:600px; margin:0 0 34px;">
+      Revenue OS isn't a concept — it's a live product. AI-powered pipeline orchestration from lead generation to deal closure, with real receipts and evidence. Run it free, then decide.
+    </p>
+
+    <div class="revos-panel">
+      <div class="revos-head">
+        <span class="cockpit-dot"></span> revenue-os://pipeline · live
+      </div>
+      <div class="revos-body">
+        <div class="cockpit-line"><span class="ok">✓</span> Lead generation — targeted prospect identification <span class="cockpit-val">automated</span></div>
+        <div class="cockpit-line"><span class="ok">✓</span> Pipeline orchestration — multi-step deal flow <span class="cockpit-val">active</span></div>
+        <div class="cockpit-line"><span class="ok">✓</span> Revenue receipts — verifiable proof of work <span class="cockpit-val">on-chain</span></div>
+        <div class="cockpit-line muted">— from first touch to closed deal, one system —</div>
+      </div>
+    </div>
+
+    <div class="revos-grid">
+      <div class="revos-card">
+        <div class="revos-card-num">01</div>
+        <h4>Free Demo</h4>
+        <p>See Revenue OS run against your business. No account, no commitment — just the system doing what it does.</p>
+      </div>
+      <div class="revos-card">
+        <div class="revos-card-num">02</div>
+        <h4>Revenue Receipt — $299</h4>
+        <p>One complete run. Not a report — a working output you can act on same day. Proof of work, not a promise.</p>
+      </div>
+      <div class="revos-card">
+        <div class="revos-card-num">03</div>
+        <h4>Revenue Sprint — $999</h4>
+        <p>Done-with-you. The Core runs, then we refine together until it's sharp enough to close with.</p>
+      </div>
+    </div>
+
+    <div class="cta-row" style="margin-top:34px;">
+      <a href="/try-revenue-os" class="btn btn-primary">Try Revenue OS Free →</a>
+      <a href="/revenue-os" class="btn btn-ghost">Full Product →</a>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="founder">
   <div class="wrap">
     <div class="eyebrow">Founder's Note</div>
@@ -737,10 +842,16 @@ const LANDING_HTML = String.raw`
 <footer>
   <div class="wrap footer-inner">
     <div class="mark">
-      <img src="empire1_logo.jpeg" alt="Empire 1" style="width:26px;height:26px;object-fit:contain;border-radius:50%;">
+      <img src="empire1_logo.jpeg" alt="Empire 1" style="width:26px;height:26px;object-fit:contain;border-radius:4px;">
       <div class="wordmark" style="font-size:15px;">EMPIRE <span>1</span></div>
     </div>
-    <div class="status"><span class="dot"></span> All systems operational</div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+      <a href="/revenue-os" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Revenue OS</a>
+      <a href="/ecosystem" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Ecosystem</a>
+      <a href="/hic" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">HIC</a>
+      <a href="/enterprise" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Enterprise</a>
+      <a href="#entry" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Licensing</a>
+    </div>
   </div>
   <div class="wrap copy">© 2026 EMPIRE 1 · founder@empire1.cloud</div>
 </footer>
