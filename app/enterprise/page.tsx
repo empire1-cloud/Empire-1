@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 const CAPABILITIES = [
   { num: '01', name: 'Private Deployment', desc: 'Run the Hybrid Intelligence Core on your own infrastructure. No data leaves your environment. Full sovereignty over your intelligence layer.' },
-  { num: '02', name: 'API Access', desc: 'Direct API access to the routing engine, canon enforcement, and all specialized engines. Integrate into your existing stack.' },
-  { num: '03', name: 'Engine Licensing', desc: 'License individual engines or the full engine set. Strategy, analysis, pricing, pipeline, persona — pick what you need.' },
+  { num: '02', name: 'API Access', desc: 'Direct API access to the routing engine, canon enforcement, and specialized engines. Integrate into your existing stack.' },
+  { num: '03', name: 'Engine Licensing', desc: 'License individual engines or the full application-configured engine set. Strategy, analysis, pricing, pipeline, persona — pick what you need.' },
   { num: '04', name: 'Governance Controls', desc: 'Policy enforcement, access controls, audit trails. Run the Core with the governance your organization requires.' },
   { num: '05', name: 'White-Label', desc: 'Fully white-labeled. Zero Empire-1 branding. Your product, your customers, your name — with our intelligence underneath.' },
   { num: '06', name: 'Custom Integrations', desc: 'Connect the Core to your existing tools, workflows, and data sources. Custom pipeline configuration for your specific domain.' },
@@ -18,7 +18,7 @@ const CAPABILITIES = [
 const PATHWAYS = [
   { name: 'Product Access', desc: 'Try Revenue OS for free, purchase a Revenue Receipt ($299), or book a Revenue Sprint ($999). No enterprise agreement required.' },
   { name: 'HIC Licensing', desc: 'License the routing engine, canon enforcement, and drift monitoring for your own product. White-labeled, no Empire-1 branding.' },
-  { name: 'Factory Licensing (SLA113)', desc: 'License the full operator platform — console, 18+ engines, and self-service white-label instance minting.' },
+  { name: 'Factory Licensing (SLA113)', desc: 'License the full operator platform — console, a specialized engine and white-label platform stack, and self-service white-label instance minting.' },
   { name: 'Enterprise Deployment', desc: 'Private infrastructure, governance controls, custom integrations, and dedicated support. Contact us to discuss your requirements.' },
 ];
 
@@ -43,13 +43,13 @@ export default function EnterprisePage() {
       <section className="hero wrap">
         <div className="eyebrow">ENTERPRISE</div>
         <h1>Deploy Empire-1 inside your organization.</h1>
-        <p>Private deployment, API access, engine and pipeline licensing, governance and policy controls, white-label capability, custom integrations, and usage evidence — all verified in the repository.</p>
+        <p>Private deployment, API access, engine and pipeline licensing, governance and policy controls, white-label capability, custom integrations, and usage evidence — offered through a custom enterprise pathway.</p>
       </section>
 
       <section className="section">
         <div className="wrap">
           <div className="eyebrow">CAPABILITIES</div>
-          <h2>What enterprise deployment includes.</h2>
+          <h2>What enterprise deployment can include.</h2>
           <div className="cap-grid">
             {CAPABILITIES.map((cap) => (
               <div className="cap-card" key={cap.num}>
