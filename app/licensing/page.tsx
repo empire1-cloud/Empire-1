@@ -68,7 +68,7 @@ export default function LicensingPage() {
         <div className="wrap">
           <div className="eyebrow">SLA113 FACTORY LICENSE</div>
           <h2>The whole operator platform.</h2>
-          <p>Not just the engine — the full console, 18+ specialized engines, Empire-1 HIC underneath it, and self-service white-label instance minting. Southern Lyfestyle runs on exactly this today.</p>
+          <p>Not just the engine — the full console, 18+ specialized engines, Empire-1 HIC underneath it, and self-service white-label instance minting. Built to demonstrate factory output.</p>
           <div className="ledger">
             {SLA113.map((item) => (
               <div className="ledger-row" key={item.tier}>
