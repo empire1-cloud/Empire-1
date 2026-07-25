@@ -90,7 +90,7 @@ export default function HicPage() {
         <div className="wrap">
           <div className="eyebrow">SPECIALIZED ENGINES</div>
           <h2>Built for specific work, not generic prompts.</h2>
-          <p>Each engine is purpose-built for a domain. Strategy, analysis, pricing, personas, creative direction — routed to the engine that actually knows the domain.</p>
+          <p>The current HIC application configuration defines 18 engines. Backend availability and execution capability are verified separately; the examples below show representative engine roles.</p>
           <div className="engine-grid">
             {ENGINES.map((e) => (
               <div className="engine-card" key={e.name}>
@@ -111,7 +111,7 @@ export default function HicPage() {
 
           <div className="cockpit-panel">
             <div className="cockpit-head">
-              <span className="cockpit-dot" /> hic://core/pipeline · live
+              <span className="cockpit-dot" /> hic://core/pipeline · interface preview
             </div>
             <div className="cockpit-body">
               {PIPELINE_LINES.map((line) => (
@@ -129,7 +129,7 @@ export default function HicPage() {
         <div className="wrap">
           <div className="eyebrow">ACCESS</div>
           <h2>Use the Core directly, or through a universe.</h2>
-          <p>The HIC is available as a standalone intelligence layer, or as the engine underneath Revenue OS, SLA113, and every other Empire-1 universe. Same core, different surfaces.</p>
+          <p>The HIC is available as a standalone intelligence layer, or as the engine underneath Revenue OS, SLA113, and other Empire-1 universes. Same core, different surfaces.</p>
           <div className="cta-row">
             <a href="/revenue-os" className="btn btn-primary">Revenue OS →</a>
             <a href="/enterprise" className="btn btn-ghost">Enterprise Deployment →</a>
