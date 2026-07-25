@@ -7,13 +7,13 @@ export const metadata: Metadata = {
 };
 
 const ECOSYSTEMS = [
-  { tag: 'Intelligence Layer', tagColor: 'var(--blue)', name: 'Hybrid Intelligence Core', desc: 'The routing engine, canon enforcement, format normalization, and drift monitoring that powers every universe. Multi-model orchestration behind one voice.', status: 'Live', dot: 'dot-live' },
-  { tag: 'Factory', tagColor: 'var(--gold)', name: 'SLA113', desc: 'The sovereign control plane and factory that produces white-label operating systems, platforms, and branded business instances. 18+ specialized engines.', status: 'Live', dot: 'dot-live' },
-  { tag: 'Revenue Engine', tagColor: '#3ddc84', name: 'Revenue OS', desc: 'Turn your business into a revenue system. AI-powered pipeline orchestration — from lead generation to deal closure, with real receipts and evidence.', status: 'Live', dot: 'dot-live' },
-  { tag: 'Music Ecosystem', tagColor: 'var(--pink)', name: 'Lyrica 3', desc: 'Creator-owned music intelligence — provenance, rights, and cultural context carried with every piece of work from creation forward.', status: 'Active', dot: 'dot-active' },
-  { tag: 'Trust Layer', tagColor: 'var(--gold)', name: 'Archisynapse', desc: 'The trust, ledger, fraud, royalty, and payment infrastructure. Settlement and verification for every transaction across the empire.', status: 'Active', dot: 'dot-active' },
-  { tag: 'Public Proof', tagColor: 'var(--blue)', name: 'Southern Lyfestyle', desc: 'An independent experience business powered by SLA113. Real revenue, real customers, real proof that the factory works.', status: 'Live', dot: 'dot-live' },
-  { tag: 'Gaming', tagColor: 'var(--pink)', name: 'Southern Arcade', desc: 'Arcade OS built on SLA113 — entertainment as a revenue-generating universe with its own identity and provenance chain.', status: 'Active', dot: 'dot-active' },
+  { tag: 'Intelligence Layer', tagColor: 'var(--blue)', name: 'Hybrid Intelligence Core', desc: 'The routing engine, canon enforcement, format normalization, and drift monitoring that powers every universe. Multi-model orchestration behind one voice.', status: 'Operational', dot: 'dot-live' },
+  { tag: 'Factory', tagColor: 'var(--gold)', name: 'SLA113', desc: 'The sovereign control plane and factory that produces white-label operating systems, platforms, and branded business instances. 18+ specialized engines.', status: 'Operational', dot: 'dot-live' },
+  { tag: 'Revenue Engine', tagColor: '#3ddc84', name: 'Revenue OS', desc: 'Turn your business into a revenue system. AI-powered pipeline orchestration — from lead generation to deal closure, with real receipts and evidence.', status: 'Operational', dot: 'dot-live' },
+  { tag: 'Music Ecosystem', tagColor: 'var(--pink)', name: 'Lyrica 3', desc: 'Creator-owned music intelligence — provenance, rights, and cultural context carried with every piece of work from creation forward.', status: 'In development', dot: 'dot-active' },
+  { tag: 'Trust Layer', tagColor: 'var(--gold)', name: 'Archisynapse', desc: 'The trust, ledger, fraud, royalty, and payment infrastructure. Settlement and verification for every transaction across the empire.', status: 'In development', dot: 'dot-active' },
+  { tag: 'Public Proof', tagColor: 'var(--blue)', name: 'Southern Lyfestyle', desc: 'An independent experience business powered by SLA113. Built to demonstrate factory output.', status: 'Operational', dot: 'dot-live' },
+  { tag: 'Gaming', tagColor: 'var(--pink)', name: 'Southern Arcade', desc: 'Arcade OS built on SLA113 — entertainment as a designed-for-independent-revenue universe with its own identity and provenance chain.', status: 'In development', dot: 'dot-active' },
   { tag: 'Platform', tagColor: 'var(--muted)', name: 'Sonance Pro', desc: 'Professional audio intelligence — sound design, mastering, and production tools built on the Empire-1 core.', status: 'In Development', dot: 'dot-dev' },
   { tag: 'Narrative', tagColor: 'var(--muted)', name: 'Empire Narrative', desc: 'Story intelligence — character consistency, world-building, and narrative coherence across creative projects.', status: 'In Development', dot: 'dot-dev' },
 ];
@@ -65,7 +65,7 @@ export default function EcosystemPage() {
         <div className="wrap">
           <div className="eyebrow">THE LAW</div>
           <h2>If it doesn&apos;t generate revenue, it doesn&apos;t stay.</h2>
-          <p>Every universe under Empire-1 answers to the same law: pull your own weight or get cut. No universe survives on story alone. No universe survives on founder sentiment. What survives here has already proven it can generate real revenue on its own terms.</p>
+          <p>Every universe under Empire-1 answers to the same law: pull your own weight or get cut. No universe survives on story alone. No universe survives on founder sentiment. What survives here is built to demonstrate it can generate real revenue on its own terms.</p>
         </div>
       </section>
     </PublicPageShell>

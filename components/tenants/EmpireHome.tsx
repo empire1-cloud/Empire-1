@@ -681,7 +681,7 @@ const LANDING_HTML = String.raw`
       <div class="law-tag">The Law — No Exceptions</div>
       <h2>If it doesn't generate revenue, it doesn't stay.</h2>
       <p>Every universe under Empire-1 answers to the same law: pull your own weight or get cut. No universe survives on story alone. No universe survives on founder sentiment. This isn't a portfolio of ideas we're precious about — it's an empire, and empires don't carry dead weight.</p>
-      <p>What survives here has already proven it can generate real revenue on its own terms.</p>
+      <p>What survives here is built to demonstrate it can generate real revenue on its own terms.</p>
       <div class="law-tag" style="color:var(--muted)">We evolve. Never delete. But nothing freeloads.</div>
     </div>
   </div>
@@ -712,7 +712,7 @@ const LANDING_HTML = String.raw`
         <div class="cstat"><div class="v">3</div><div class="l">Models Orchestrated</div></div>
         <div class="cstat"><div class="v">95%+</div><div class="l">Canon Compliance</div></div>
         <div class="cstat"><div class="v">Pass</div><div class="l">Revenue Law Status</div></div>
-        <div class="cstat"><div class="v">Live</div><div class="l">Core State</div></div>
+        <div class="cstat"><div class="v">Operational</div><div class="l">Core State</div></div>
       </div>
     </div>
   </div>
@@ -829,7 +829,7 @@ const LANDING_HTML = String.raw`
         <div class="ledger-tier gradient">License · SLA113 Platform</div>
         <div class="ledger-body">
           <h3>License the Factory</h3>
-          <p>Not just the engine — the whole operator platform. Full console, 18+ specialized engines, Empire-1 HIC underneath it, and self-service white-label instance minting. Southern Lyfestyle runs on exactly this today.</p>
+          <p>Not just the engine — the whole operator platform. Full console, 18+ specialized engines, Empire-1 HIC underneath it, and self-service white-label instance minting. Built to demonstrate factory output.</p>
           <div class="ledger-includes">— Everything in the HIC license<br>— Full operator console + specialized engine set<br>— Self-service branded instance minting</div>
         </div>
         <div class="ledger-price" style="font-size:20px;">Custom</div>
