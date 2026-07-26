@@ -5,8 +5,9 @@ import GTMPanel from '@/components/admin/GTMPanel';
 import ViralContentEngine from '@/components/admin/ViralContentEngine';
 import ProgrammingDevelopmentRadar from '@/components/admin/ProgrammingDevelopmentRadar';
 import GTMEngineeringLab from '@/components/admin/GTMEngineeringLab';
+import EmpireSkillForge from '@/components/admin/EmpireSkillForge';
 
-type View = 'operations' | 'viral' | 'development' | 'engineering';
+type View = 'operations' | 'viral' | 'development' | 'engineering' | 'skills';
 
 export default function GTMPage() {
   const [view, setView] = useState<View>('viral');
@@ -17,7 +18,7 @@ export default function GTMPage() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.22em] text-amber-300">Empire-1 GTM</p>
-            <p className="text-xs text-zinc-500">Campaign operations, proof-backed content, development trends, and growth-system engineering</p>
+            <p className="text-xs text-zinc-500">Campaign operations, proof-backed content, development trends, growth-system engineering, and governed skills</p>
           </div>
           <div className="flex flex-wrap rounded-xl border border-white/10 bg-zinc-950 p-1">
             <button
@@ -39,6 +40,12 @@ export default function GTMPage() {
               GTM Eng Lab
             </button>
             <button
+              onClick={() => setView('skills')}
+              className={`rounded-lg px-3 py-2 text-xs font-bold transition ${view === 'skills' ? 'bg-white text-black' : 'text-zinc-500 hover:text-white'}`}
+            >
+              Skill Forge
+            </button>
+            <button
               onClick={() => setView('operations')}
               className={`rounded-lg px-3 py-2 text-xs font-bold transition ${view === 'operations' ? 'bg-white text-black' : 'text-zinc-500 hover:text-white'}`}
             >
@@ -51,6 +58,7 @@ export default function GTMPage() {
       {view === 'viral' && <ViralContentEngine />}
       {view === 'development' && <ProgrammingDevelopmentRadar />}
       {view === 'engineering' && <GTMEngineeringLab />}
+      {view === 'skills' && <EmpireSkillForge />}
       {view === 'operations' && <div className="bg-gray-50 text-gray-900"><GTMPanel /></div>}
     </div>
   );
