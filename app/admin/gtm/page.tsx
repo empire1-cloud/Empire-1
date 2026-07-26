@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import GTMPanel from '@/components/admin/GTMPanel';
 import ViralContentEngine from '@/components/admin/ViralContentEngine';
+import IPSovereigntySignal from '@/components/admin/IPSovereigntySignal';
 import ProgrammingDevelopmentRadar from '@/components/admin/ProgrammingDevelopmentRadar';
 import GTMEngineeringLab from '@/components/admin/GTMEngineeringLab';
 import EmpireSkillForge from '@/components/admin/EmpireSkillForge';
@@ -55,7 +56,12 @@ export default function GTMPage() {
         </div>
       </div>
 
-      {view === 'viral' && <ViralContentEngine />}
+      {view === 'viral' && (
+        <>
+          <IPSovereigntySignal />
+          <ViralContentEngine />
+        </>
+      )}
       {view === 'development' && <ProgrammingDevelopmentRadar />}
       {view === 'engineering' && <GTMEngineeringLab />}
       {view === 'skills' && <EmpireSkillForge />}
