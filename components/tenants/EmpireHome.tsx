@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import RevenueProof from './RevenueProof';
 
 const CSS = String.raw`
 :root{
@@ -452,6 +453,77 @@ const CSS = String.raw`
     margin:0;
   }
 
+
+  /* ===== VERIFIED REVENUE PROOF ===== */
+  .proof-state{
+    border:1px solid var(--line-strong);
+    background:var(--surface);
+    color:#b4b4bb;
+    padding:24px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    line-height:1.7;
+  }
+  .proof-state-warn{ border-color:rgba(232,185,35,.35); color:var(--gold); }
+  .proof-metrics{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border:1px solid var(--line-strong);
+    background:var(--line);
+    gap:1px;
+  }
+  .proof-metric{ background:var(--surface); padding:22px; }
+  .proof-metric span{
+    display:block; color:var(--muted); font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px;
+  }
+  .proof-metric strong{ font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--text); }
+  .proof-grid{ display:grid; grid-template-columns:1fr 1.2fr; gap:14px; margin-top:14px; }
+  .proof-card{ border:1px solid var(--line-strong); background:var(--surface); padding:22px; }
+  .proof-card h3{
+    margin:0 0 16px; color:var(--gold); font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+  }
+  .proof-products,.proof-activity{ display:flex; flex-direction:column; gap:10px; }
+  .proof-product,.proof-activity-row{
+    display:grid; grid-template-columns:8px 1fr auto; align-items:center; gap:10px;
+    color:#c7c7cd; font-size:12px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .proof-product:last-child,.proof-activity-row:last-child{ border-bottom:0; padding-bottom:0; }
+  .proof-product strong{ color:var(--text); font-family:'JetBrains Mono',monospace; }
+  .proof-activity-row time{ color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px; }
+  .proof-dot{ width:7px; height:7px; border-radius:50%; display:inline-block; }
+  .proof-muted{ color:var(--muted); font-size:13px; margin:0; }
+  .proof-intake{
+    display:grid; grid-template-columns:minmax(220px,1.4fr) minmax(180px,1fr) minmax(180px,1fr) auto;
+    gap:10px; align-items:end; margin-top:30px; padding:20px;
+    border:1px solid var(--line-strong); background:var(--surface);
+  }
+  .proof-intake label{
+    display:block; color:var(--text); font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px;
+  }
+  .proof-intake p{ color:var(--muted); font-size:11px; line-height:1.5; margin:0; }
+  .proof-intake input,.proof-intake select{
+    width:100%; min-height:44px; background:#050505; color:var(--text);
+    border:1px solid var(--line-strong); padding:0 12px; font:12px 'JetBrains Mono',monospace;
+  }
+  .proof-intake button{
+    min-height:44px; border:0; background:var(--gold); color:#050505;
+    padding:0 18px; font:600 11px 'JetBrains Mono',monospace; text-transform:uppercase; cursor:pointer;
+  }
+  .proof-intake button:disabled{ opacity:.55; cursor:wait; }
+  .proof-form-ok,.proof-form-error{
+    grid-column:1/-1; font:11px 'JetBrains Mono',monospace;
+  }
+  .proof-form-ok{ color:#3ddc84; }
+  .proof-form-error{ color:#ef4444; }
+  @media (max-width:760px){
+    .proof-metrics,.proof-grid,.proof-intake{ grid-template-columns:1fr; }
+    .proof-activity-row{ grid-template-columns:8px 1fr; }
+    .proof-activity-row time{ grid-column:2; }
+  }
+
   /* ===== FOOTER ===== */
   footer{ padding:60px 28px 40px; border-top:1px solid var(--line); }
   .footer-inner{
@@ -691,28 +763,28 @@ const LANDING_HTML = String.raw`
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">OS Cockpit</div>
-      <h2>Watch the Core run.</h2>
+      <h2>See the Core's operating contract.</h2>
     </div>
     <p style="color:#b4b4bb; font-size:15.5px; line-height:1.7; max-width:600px; margin:0 0 34px;">
-      This isn't a mockup dashboard. It's the actual pipeline every request runs through before anything ships — routed, enforced, normalized, and checked for drift, every time.
+      This public trace explains the control sequence Empire-1 requires. It is architecture—not live telemetry—and it makes no claim that a request ran unless a runtime receipt proves it.
     </p>
 
     <div class="cockpit-panel">
       <div class="cockpit-head">
-        <span class="cockpit-dot"></span> hic://core/pipeline · live
+        <span class="cockpit-dot"></span> hic://core/pipeline · architecture
       </div>
       <div class="cockpit-body">
-        <div class="cockpit-line"><span class="ok">✓</span> Routed — task analyzed, sent to best-fit model <span class="cockpit-val">claude-sonnet-4.5</span></div>
-        <div class="cockpit-line"><span class="ok">✓</span> Canon Enforcer — filler and AI-tells stripped <span class="cockpit-val">compliant</span></div>
-        <div class="cockpit-line"><span class="ok">✓</span> Format Normalizer — output standardized <span class="cockpit-val">markdown</span></div>
-        <div class="cockpit-line"><span class="ok">✓</span> Drift Monitor — checked against baseline <span class="cockpit-val">normal</span></div>
+        <div class="cockpit-line"><span class="ok">01</span> Route contract — classify before provider selection <span class="cockpit-val">required</span></div>
+        <div class="cockpit-line"><span class="ok">02</span> Canon contract — enforce universe identity <span class="cockpit-val">required</span></div>
+        <div class="cockpit-line"><span class="ok">03</span> Format contract — normalize the requested output <span class="cockpit-val">required</span></div>
+        <div class="cockpit-line"><span class="ok">04</span> Evidence contract — compare output to a dated baseline <span class="cockpit-val">receipt required</span></div>
         <div class="cockpit-line muted">— one voice out, regardless of which model answered —</div>
       </div>
       <div class="cockpit-stats">
-        <div class="cstat"><div class="v">3</div><div class="l">Models Orchestrated</div></div>
-        <div class="cstat"><div class="v">95%+</div><div class="l">Canon Compliance</div></div>
-        <div class="cstat"><div class="v">Pass</div><div class="l">Revenue Law Status</div></div>
-        <div class="cstat"><div class="v">Operational</div><div class="l">Core State</div></div>
+        <div class="cstat"><div class="v">Multi</div><div class="l">Provider-capable</div></div>
+        <div class="cstat"><div class="v">Required</div><div class="l">Canon Gate</div></div>
+        <div class="cstat"><div class="v">Defined</div><div class="l">Revenue Law</div></div>
+        <div class="cstat"><div class="v">Receipt</div><div class="l">Runtime Proof Required</div></div>
       </div>
     </div>
   </div>
@@ -721,22 +793,22 @@ const LANDING_HTML = String.raw`
 <section class="section" id="revenue-os">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">LIVE PRODUCT PROOF</div>
+      <div class="eyebrow">PUBLIC PRODUCT ENTRY</div>
       <h2>Turn your business into a revenue system.</h2>
     </div>
     <p style="color:#b4b4bb; font-size:15.5px; line-height:1.7; max-width:600px; margin:0 0 34px;">
-      Revenue OS isn't a concept — it's a live product. AI-powered pipeline orchestration from lead generation to deal closure, with real receipts and evidence. Run it free, then decide.
+      Revenue OS has a public product surface. Submit real business context, inspect the returned output and its generation mode, then decide whether the Receipt or Sprint is worth buying.
     </p>
 
     <div class="revos-panel">
       <div class="revos-head">
-        <span class="cockpit-dot"></span> revenue-os://pipeline · live
+        <span class="cockpit-dot"></span> revenue-os://product · public entry
       </div>
       <div class="revos-body">
-        <div class="cockpit-line"><span class="ok">✓</span> Lead generation — targeted prospect identification <span class="cockpit-val">automated</span></div>
-        <div class="cockpit-line"><span class="ok">✓</span> Pipeline orchestration — multi-step deal flow <span class="cockpit-val">active</span></div>
-        <div class="cockpit-line"><span class="ok">✓</span> Revenue receipts — verifiable proof of work <span class="cockpit-val">on-chain</span></div>
-        <div class="cockpit-line muted">— from first touch to closed deal, one system —</div>
+        <div class="cockpit-line"><span class="ok">01</span> Buyer research — generated from submitted context <span class="cockpit-val">output</span></div>
+        <div class="cockpit-line"><span class="ok">02</span> GTM sequence — staged outreach and action plan <span class="cockpit-val">output</span></div>
+        <div class="cockpit-line"><span class="ok">03</span> Receipt boundary — generation mode must stay explicit <span class="cockpit-val">evidence</span></div>
+        <div class="cockpit-line muted">— public product surface; runtime claims require dated evidence —</div>
       </div>
     </div>
 
@@ -857,6 +929,15 @@ const LANDING_HTML = String.raw`
 </footer>
 `;
 
+const REVENUE_PROOF_MARKER = '<section class="section" id="founder">';
+const revenueProofIndex = LANDING_HTML.indexOf(REVENUE_PROOF_MARKER);
+const LANDING_BEFORE_REVENUE_PROOF = revenueProofIndex >= 0
+  ? LANDING_HTML.slice(0, revenueProofIndex)
+  : LANDING_HTML;
+const LANDING_AFTER_REVENUE_PROOF = revenueProofIndex >= 0
+  ? LANDING_HTML.slice(revenueProofIndex)
+  : '';
+
 export default function EmpireHome() {
   useEffect(() => {
     const handler = (event: MouseEvent) => {
@@ -877,7 +958,11 @@ export default function EmpireHome() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <div dangerouslySetInnerHTML={{ __html: LANDING_HTML }} />
+      <div dangerouslySetInnerHTML={{ __html: LANDING_BEFORE_REVENUE_PROOF }} />
+      <RevenueProof />
+      {LANDING_AFTER_REVENUE_PROOF && (
+        <div dangerouslySetInnerHTML={{ __html: LANDING_AFTER_REVENUE_PROOF }} />
+      )}
     </>
   );
 }
