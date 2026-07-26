@@ -98,7 +98,7 @@ export default function CRMPanel() {
   async function addLead() {
     if (!fName.trim()) return;
     try {
-      const body: any = { name: fName, source: fSource };
+      const body: any = { name: fName, source: fSource, lane: fLane };
       if (fEmail) body.email = fEmail;
       if (fPhone) body.phone = fPhone;
       if (fCo)    body.company = fCo;
@@ -109,10 +109,10 @@ export default function CRMPanel() {
       });
       if (!r.ok) throw new Error('Create failed');
       const d = await r.json();
-      if (d.success && (fLane !== 'other' || fValue || fStage !== 'lead')) {
+      if (d.success && (fValue || fStage !== 'lead')) {
         await fetch(`/api/crm/leads/${d.lead.id}`, {
           method: 'PUT', headers: { 'Content-Type': 'application/json', ...getSla113AdminHeaders() },
-          body: JSON.stringify({ lane: fLane, value: fValue ? parseFloat(fValue) : undefined, pipeline_stage: fStage }),
+          body: JSON.stringify({ value: fValue ? parseFloat(fValue) : undefined, pipeline_stage: fStage }),
         });
       }
       setFName(''); setFEmail(''); setFPhone(''); setFCo('');
