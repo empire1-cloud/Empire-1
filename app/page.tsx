@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
-import EmpireHome from '@/components/tenants/EmpireHome';
+import EmpireCommandCenter from '@/components/tenants/EmpireCommandCenter';
 import SouthernHome from '@/components/tenants/SouthernHome';
 import { redirect } from 'next/navigation';
 
@@ -23,8 +23,8 @@ export function generateMetadata(): Metadata {
   }
 
   return {
-    title: 'Empire One',
-    description: 'Empire One platform homepage',
+    title: 'Empire-1 Command Center',
+    description: 'Navigate the Empire-1 intelligence products, revenue system, factory, and independent product universes.',
   };
 }
 
@@ -41,5 +41,5 @@ export default function RootPage() {
     return <SouthernHome />;
   }
 
-  return <EmpireHome />;
+  return <EmpireCommandCenter />;
 }
