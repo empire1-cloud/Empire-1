@@ -637,16 +637,10 @@ export default function SouthernHome() {
         const leadEmail = emailEl?.value?.trim() || undefined;
         const crmRes = await fetch('/api/crm/leads', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: leadName, email: leadEmail, source: 'southern_request', notes: `Category: ${lane}\n\n${story}` }),
+          body: JSON.stringify({ name: leadName, email: leadEmail, source: 'southern_request', lane: 'southern_build', notes: `Category: ${lane}\n\n${story}` }),
         });
-        if (crmRes.ok) {
-          const d = await crmRes.json();
-          if (d.success) {
-            await fetch(`/api/crm/leads/${d.lead.id}`, {
-              method: 'PUT', headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ lane: 'southern_build', pipeline_stage: 'lead' }),
-            });
-          }
+        if (!crmRes.ok) {
+          throw new Error(`CRM intake failed: ${crmRes.status}`);
         }
       } catch { /* silent */ }
 
