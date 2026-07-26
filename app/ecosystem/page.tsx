@@ -11,16 +11,16 @@ export default function EcosystemPage() {
   return (
     <PublicPageShell>
       <section className="hero wrap">
-        <div className="eyebrow">ECOSYSTEM COMMAND MAP</div>
+        <div className="eyebrow">ECOSYSTEM</div>
         <h1>Every universe has a real place to go.</h1>
         <p>
-          Empire-1 is a federated ecosystem of independent products and businesses. Use the live navigator below to move between finished products, public experiences, internal operating systems, and active builds without flattening their identities.
+          Empire-1 is a federated ecosystem of independent products and businesses. Use the navigator below to move between finished products, public experiences, internal operating systems, and active builds without flattening their identities.
         </p>
       </section>
 
       <section className="section">
         <div className="wrap">
-          <div className="eyebrow">INTERACTIVE NAVIGATOR</div>
+          <div className="eyebrow">PRODUCT NAVIGATOR</div>
           <h2>Choose a universe. Open the actual product.</h2>
           <EcosystemNavigator />
         </div>
