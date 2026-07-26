@@ -214,7 +214,10 @@ nav.e1-nav{
   position:relative;overflow:hidden;
   border:1px solid var(--border-gold);border-radius:16px;
   padding:60px;margin-top:56px;
-  background:linear-gradient(135deg,rgba(212,175,55,.04) 0%,rgba(5,5,8,0) 60%);
+  background:
+    radial-gradient(circle at 15% 15%,rgba(212,175,55,.10),transparent 38%),
+    linear-gradient(135deg,#101014 0%,#08080d 100%);
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
 }
 .feature-hero::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
@@ -222,18 +225,30 @@ nav.e1-nav{
 }
 .feature-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .feature-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
-.feature-title{font-size:clamp(24px,3.5vw,40px);font-weight:800;color:#fff;line-height:1.1;margin-bottom:16px}
-.feature-desc{font-size:15px;color:var(--text);line-height:1.75;margin-bottom:28px}
+.feature-title{
+  font-size:clamp(32px,4vw,48px);font-weight:900;color:#fff;
+  line-height:1.06;margin-bottom:20px;letter-spacing:-.025em;
+  text-shadow:0 2px 24px rgba(255,255,255,.08);
+}
+.feature-desc{
+  font-size:16px;color:#ededf2;line-height:1.8;margin-bottom:28px;
+  max-width:620px;
+}
 .feature-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
 .feature-list li{
-  font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;color:#ededf2;line-height:1.55;
+  display:flex;align-items:flex-start;gap:10px;
 }
 .feature-list li::before{content:'→';color:var(--gold);font-family:var(--mono);flex-shrink:0;margin-top:1px}
 .feature-demo-box{
-  background:rgba(0,0,0,.6);border:1px solid var(--border);border-radius:10px;
+  background:#050508;border:1px solid rgba(255,255,255,.16);border-radius:10px;
   padding:28px;font-family:var(--mono);font-size:12px;
+  box-shadow:inset 0 0 40px rgba(212,175,55,.025);
 }
-.demo-line{padding:6px 0;border-bottom:1px solid var(--border);color:var(--text-dim);display:flex;align-items:center;gap:8px}
+.demo-line{
+  min-height:34px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.10);
+  color:#d9d9e1;display:flex;align-items:center;gap:8px;
+}
 .demo-line:last-child{border-bottom:none}
 .demo-line .ok{color:var(--gold);font-weight:700}
 .demo-line .ping{color:var(--blue)}
@@ -241,10 +256,41 @@ nav.e1-nav{
 .demo-cta{
   margin-top:20px;display:block;text-align:center;
   padding:14px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));
-  color:#000;font-weight:700;border-radius:6px;font-size:12px;letter-spacing:2px;
+  min-height:50px;color:#050508;font-weight:900;border-radius:6px;
+  font-size:12px;line-height:1.35;letter-spacing:1.4px;
   text-transform:uppercase;transition:all .2s;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
 }
 .demo-cta:hover{box-shadow:0 8px 32px rgba(212,175,55,.25);transform:translateY(-1px)}
+
+.feature-hero .btn-gold,
+.feature-hero .btn-ghost{
+  min-height:50px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 24px;
+  font-size:12px;
+  font-weight:900;
+  line-height:1.3;
+  letter-spacing:1.2px;
+  white-space:normal;
+  text-align:center;
+}
+.feature-hero .btn-gold{
+  color:#050508;
+}
+.feature-hero .btn-ghost{
+  color:#fff;
+  background:#141419;
+  border-color:rgba(255,255,255,.34);
+}
+.feature-hero .btn-ghost:hover{
+  color:#fff;
+  background:#1b1b22;
+  border-color:var(--gold);
+}
+
 
 /* ── ECOSYSTEM GRID ── */
 .eco-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
@@ -397,7 +443,17 @@ footer.e1-footer{
   .stats-bar{flex-direction:column;gap:0}
   .stat-cell{border-right:none;border-bottom:1px solid var(--border)}
   .stat-cell:last-child{border-bottom:none}
-  .feature-hero{padding:32px 24px}
+  .feature-hero{padding:36px 22px}
+  .feature-hero-inner{gap:34px}
+  .feature-title{font-size:32px;line-height:1.08}
+  .feature-desc{font-size:16px;line-height:1.75}
+  .feature-list li{font-size:14px;line-height:1.55}
+  .feature-hero .btn-gold,
+  .feature-hero .btn-ghost{width:100%;min-height:52px}
+  .feature-demo-box{padding:22px 18px}
+  .demo-line{font-size:11px;gap:6px}
+  .demo-line .val{font-size:11px;text-align:right}
+  .demo-cta{min-height:54px;font-size:12px;padding:14px 12px}
   .section{padding:64px 0}
   .footer-inner{grid-template-columns:1fr}
 }
@@ -621,10 +677,9 @@ export default function EmpireHome() {
         </h1>
 
         <p className="hero-sub">
-          Empire-1 is the parent ecosystem connecting governed intelligence,
-          revenue systems, creator-owned music, payment infrastructure, and
-          cultural technology — while every product keeps its own identity and
-          revenue path.
+          Empire-1 connects governed intelligence, revenue systems,
+          creator-owned music, payment infrastructure, and cultural technology
+          while every product keeps its own identity and revenue path.
         </p>
 
         <div className="hero-ctas">
