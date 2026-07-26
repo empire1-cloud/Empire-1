@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const DEFAULT_BACKEND_URL = 'https://empire1-backend-339698334666.us-central1.run.app';
-const DEFAULT_SLA113_BACKEND_URL = 'https://empire1-backend-339698334666.us-central1.run.app';
+const DEFAULT_PUBLIC_BACKEND_URL = 'https://api.empire1.cloud';
+const DEFAULT_PUBLIC_SLA113_BACKEND_URL = 'https://api.empire1.cloud';
 
 function normalizeBaseUrl(url: string): string {
   return url.replace(/\/$/, '');
@@ -12,14 +12,19 @@ function isFoundryPath(pathParts: string[]): boolean {
 }
 
 function getBackendBase(pathParts: string[]): string {
-  const hybridConfigured = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL;
-  const sla113Configured = process.env.SLA113_BACKEND_URL;
+  const isProduction = process.env.NODE_ENV === 'production';
 
   if (isFoundryPath(pathParts)) {
-    return normalizeBaseUrl(sla113Configured || DEFAULT_SLA113_BACKEND_URL);
+    const configured = process.env.PUBLIC_SLA113_BACKEND_URL
+      || (!isProduction ? process.env.SLA113_BACKEND_URL : undefined);
+    return normalizeBaseUrl(configured || DEFAULT_PUBLIC_SLA113_BACKEND_URL);
   }
 
-  return normalizeBaseUrl(hybridConfigured || DEFAULT_BACKEND_URL);
+  const configured = process.env.PUBLIC_BACKEND_URL
+    || process.env.NEXT_PUBLIC_API_URL
+    || (!isProduction ? process.env.BACKEND_URL : undefined);
+
+  return normalizeBaseUrl(configured || DEFAULT_PUBLIC_BACKEND_URL);
 }
 
 function buildTargetUrl(pathParts: string[], request: NextRequest): string {
@@ -29,56 +34,52 @@ function buildTargetUrl(pathParts: string[], request: NextRequest): string {
   return `${base}/${path}${search}`;
 }
 
-async function getCloudRunIdentityToken(audience: string): Promise<string | null> {
-  try {
-    const url = `http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=${encodeURIComponent(audience)}&format=full`;
-    const res = await fetch(url, {
-      headers: { 'Metadata-Flavor': 'Google' },
-      cache: 'no-store',
-    });
-
-    if (!res.ok) return null;
-    return await res.text();
-  } catch {
-    return null;
-  }
-}
-
 async function proxy(request: NextRequest, context: { params: { path: string[] } }): Promise<NextResponse> {
   const pathParts = context.params.path || [];
   const targetUrl = buildTargetUrl(pathParts, request);
-  const backendBase = getBackendBase(pathParts);
-  const backendOrigin = new URL(backendBase).origin;
 
   const headers = new Headers(request.headers);
   headers.delete('host');
   headers.delete('content-length');
-
-  // Preserve app-level auth header while adding Cloud Run identity header.
-  const identityToken = await getCloudRunIdentityToken(backendOrigin);
-  if (identityToken) {
-    headers.set('x-serverless-authorization', `Bearer ${identityToken}`);
-  }
+  headers.set('x-empire-proxy', 'public-next-route');
 
   const method = request.method.toUpperCase();
   const hasBody = !['GET', 'HEAD'].includes(method);
 
-  const upstream = await fetch(targetUrl, {
-    method,
-    headers,
-    body: hasBody ? request.body : undefined,
-    duplex: hasBody ? 'half' : undefined,
-    redirect: 'manual',
-  } as RequestInit & { duplex?: 'half' });
+  try {
+    const upstream = await fetch(targetUrl, {
+      method,
+      headers,
+      body: hasBody ? request.body : undefined,
+      duplex: hasBody ? 'half' : undefined,
+      redirect: 'manual',
+      cache: 'no-store',
+    } as RequestInit & { duplex?: 'half' });
 
-  const responseHeaders = new Headers(upstream.headers);
-  responseHeaders.delete('content-encoding');
-  responseHeaders.delete('transfer-encoding');
+    const responseHeaders = new Headers(upstream.headers);
+    responseHeaders.delete('content-encoding');
+    responseHeaders.delete('transfer-encoding');
+    responseHeaders.set('cache-control', 'no-store');
 
-  return new NextResponse(upstream.body, {
-    status: upstream.status,
-    headers: responseHeaders,
-  });
+    return new NextResponse(upstream.body, {
+      status: upstream.status,
+      headers: responseHeaders,
+    });
+  } catch (error) {
+    console.error('Empire public API proxy failed', {
+      path: pathParts.join('/'),
+      error: error instanceof Error ? error.message : 'unknown error',
+    });
+
+    return NextResponse.json(
+      {
+        error: 'Empire backend is temporarily unavailable.',
+        code: 'UPSTREAM_UNAVAILABLE',
+        path: pathParts.join('/'),
+      },
+      { status: 502, headers: { 'cache-control': 'no-store' } },
+    );
+  }
 }
 
 export async function GET(request: NextRequest, context: { params: { path: string[] } }) {
