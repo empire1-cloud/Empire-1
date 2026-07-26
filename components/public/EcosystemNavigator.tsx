@@ -8,9 +8,9 @@ type EcosystemItem = {
   name: string;
   desc: string;
   status: string;
-  href: string;
+  href?: string;
   displayUrl: string;
-  action: string;
+  action?: string;
   external?: boolean;
   accent: string;
 };
@@ -72,9 +72,7 @@ const ITEMS: EcosystemItem[] = [
     name: 'Archisynapse',
     desc: 'Ledger, fraud, royalty, settlement, verification, and payment infrastructure for trusted revenue movement.',
     status: 'Active development',
-    href: '/enterprise',
-    displayUrl: 'Empire-1 trust infrastructure',
-    action: 'View enterprise path',
+    displayUrl: 'Public URL not published yet',
     accent: 'var(--gold)',
   },
   {
@@ -115,9 +113,7 @@ const ITEMS: EcosystemItem[] = [
     name: 'Empire Narrative',
     desc: 'Story intelligence for character consistency, world-building, and narrative coherence across creative projects.',
     status: 'In development',
-    href: '/enterprise',
-    displayUrl: 'Public destination pending',
-    action: 'Discuss the platform',
+    displayUrl: 'Public URL not published yet',
     accent: 'var(--muted)',
   },
 ];
@@ -136,7 +132,7 @@ export default function EcosystemNavigator() {
   return (
     <>
       <style>{`
-        .eco-console{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px;margin-top:40px}.eco-stage,.eco-index{background:linear-gradient(155deg,rgba(17,17,27,.96),rgba(8,8,13,.96));border:1px solid var(--line-strong);border-radius:16px;overflow:hidden}.eco-panel-head{padding:14px 18px;border-bottom:1px solid var(--line);font:10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.eco-stage-body{min-height:430px;padding:32px;display:flex;flex-direction:column;justify-content:space-between}.eco-accent{width:110px;height:2px;margin-bottom:22px}.eco-kicker{font:11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.eco-stage h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,7vw,72px);line-height:.95;margin:14px 0 18px}.eco-stage p{font-size:16px;line-height:1.75;color:#c5c5cd;max-width:720px}.eco-url{font:11px 'JetBrains Mono',monospace;color:var(--blue);margin-top:18px}.eco-state{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:8px 11px;border:1px solid var(--line);border-radius:999px;font:10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em}.eco-state i{width:7px;height:7px;border-radius:50%;background:#41e18b;box-shadow:0 0 9px #41e18b}.eco-stage-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:28px}.eco-open{display:inline-flex;padding:13px 17px;border-radius:8px;background:#fff;color:#050505;font:11px 'JetBrains Mono',monospace;text-transform:uppercase;font-weight:800}.eco-arrows{display:flex;gap:8px}.eco-arrows button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:transparent;color:#fff;font-size:18px;cursor:pointer}.eco-index-list{padding:8px 18px 18px;max-height:500px;overflow:auto}.eco-index button{width:100%;text-align:left;border:0;border-bottom:1px solid rgba(255,255,255,.07);background:transparent;color:var(--text);padding:16px 0;cursor:pointer}.eco-index button:last-child{border-bottom:0}.eco-index button.active strong{color:var(--gold)}.eco-index strong{display:block;font-size:14px;margin-bottom:5px}.eco-index span{font:9.5px 'JetBrains Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.eco-grid-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.eco-mini{padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)}.eco-mini b{display:block;margin-bottom:8px}.eco-mini small{font:10px 'JetBrains Mono',monospace;color:var(--muted)}
+        .eco-console{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px;margin-top:40px}.eco-stage,.eco-index{background:linear-gradient(155deg,rgba(17,17,27,.96),rgba(8,8,13,.96));border:1px solid var(--line-strong);border-radius:16px;overflow:hidden}.eco-panel-head{padding:14px 18px;border-bottom:1px solid var(--line);font:10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.eco-stage-body{min-height:430px;padding:32px;display:flex;flex-direction:column;justify-content:space-between}.eco-accent{width:110px;height:2px;margin-bottom:22px}.eco-kicker{font:11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.eco-stage h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,7vw,72px);line-height:.95;margin:14px 0 18px}.eco-stage p{font-size:16px;line-height:1.75;color:#c5c5cd;max-width:720px}.eco-url{font:11px 'JetBrains Mono',monospace;color:var(--blue);margin-top:18px}.eco-state{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:8px 11px;border:1px solid var(--line);border-radius:999px;font:10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em}.eco-state i{width:7px;height:7px;border-radius:50%;background:#41e18b;box-shadow:0 0 9px #41e18b}.eco-stage-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:28px}.eco-open,.eco-pending{display:inline-flex;padding:13px 17px;border-radius:8px;font:11px 'JetBrains Mono',monospace;text-transform:uppercase;font-weight:800}.eco-open{background:#fff;color:#050505}.eco-pending{border:1px solid var(--line);color:var(--muted)}.eco-arrows{display:flex;gap:8px}.eco-arrows button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:transparent;color:#fff;font-size:18px;cursor:pointer}.eco-index-list{padding:8px 18px 18px;max-height:500px;overflow:auto}.eco-index button{width:100%;text-align:left;border:0;border-bottom:1px solid rgba(255,255,255,.07);background:transparent;color:var(--text);padding:16px 0;cursor:pointer}.eco-index button:last-child{border-bottom:0}.eco-index button.active strong{color:var(--gold)}.eco-index strong{display:block;font-size:14px;margin-bottom:5px}.eco-index span{font:9.5px 'JetBrains Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.eco-grid-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.eco-mini{padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)}.eco-mini b{display:block;margin-bottom:8px}.eco-mini small{font:10px 'JetBrains Mono',monospace;color:var(--muted)}
         @media(max-width:860px){.eco-console{grid-template-columns:1fr}.eco-index-list{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;max-height:none}.eco-grid-links{grid-template-columns:1fr 1fr}}@media(max-width:560px){.eco-stage-body{padding:24px;min-height:470px}.eco-index-list,.eco-grid-links{grid-template-columns:1fr}}
       `}</style>
       <div className="eco-console">
@@ -152,7 +148,9 @@ export default function EcosystemNavigator() {
               <div className="eco-state"><i />{current.status}</div>
             </div>
             <div className="eco-stage-foot">
-              {current.external ? <a className="eco-open" href={current.href} target="_blank" rel="noreferrer">{current.action} ↗</a> : <Link className="eco-open" href={current.href}>{current.action} →</Link>}
+              {current.href && current.action ? (
+                current.external ? <a className="eco-open" href={current.href} target="_blank" rel="noreferrer">{current.action} ↗</a> : <Link className="eco-open" href={current.href}>{current.action} →</Link>
+              ) : <span className="eco-pending">Public destination pending</span>}
               <div className="eco-arrows"><button onClick={() => move(-1)} aria-label="Previous product">←</button><button onClick={() => move(1)} aria-label="Next product">→</button></div>
             </div>
           </div>
