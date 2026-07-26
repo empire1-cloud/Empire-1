@@ -601,7 +601,6 @@ export default function EmpireHome() {
       <section className="hero">
         <div className="logo-wrap">
           <div className="logo-halo" />
-          {/* Try real PNG first, fallback to SVG */}
           <picture>
             <source srcSet="/empire1-logo.png" type="image/png" />
             <LogoSVG />
@@ -610,36 +609,38 @@ export default function EmpireHome() {
 
         <div className="hero-eyebrow">
           <span className="live-dot" />
-          Empire 1 · AI Ecosystem · Live
+          Empire-1 · Independent AI Ecosystem
         </div>
 
         <h1 className="hero-h1">
-          <span className="g">Build your revenue.</span>
+          <span className="g">One ecosystem.</span>
           <br />
-          <span className="p">Ship your product.</span>
+          <span className="p">Four domains.</span>
           <br />
-          Own your culture.
+          Built to move as one.
         </h1>
 
         <p className="hero-sub">
-          Empire 1 is the platform for founders, operators, and builders who want AI-powered
-          revenue systems, game studios, music production, and cultural intelligence — in one place.
+          Empire-1 is the parent ecosystem connecting governed intelligence,
+          revenue systems, creator-owned music, payment infrastructure, and
+          cultural technology — while every product keeps its own identity and
+          revenue path.
         </p>
 
         <div className="hero-ctas">
-          <a href="/try-revenue-os" className="btn-gold">Try Revenue OS Free →</a>
-          <a href="#ecosystem" className="btn-ghost">See the Ecosystem</a>
-          <a href="/revenue-receipt" className="btn-text">Generate Receipt ↓</a>
+          <a href="/ecosystem" className="btn-gold">Explore Empire-1 →</a>
+          <a href="/hic" className="btn-ghost">See the HIC</a>
+          <a href="/revenue-os" className="btn-text">Revenue OS proof ↓</a>
         </div>
 
         <div className="stats-bar" style={{ maxWidth: 860 }}>
           {[
-            { num: '3', label: 'Priced Offers', cls: 'gold' },
-            { num: '25', label: 'Buyer Profiles', cls: '' },
-            { num: '10', label: 'Pipeline Stages', cls: '' },
-            { num: '100', label: 'ICP Score Model', cls: 'blue' },
-            { num: '$0', label: 'To Try Demo', cls: 'pink' },
-            { num: '✓', label: 'Delivery Receipt', cls: 'gold' },
+            { num: '1', label: 'Parent Ecosystem', cls: 'gold' },
+            { num: '4', label: 'Connected Domains', cls: '' },
+            { num: 'HIC', label: 'Shared Intelligence', cls: 'blue' },
+            { num: '✓', label: 'Product Boundaries', cls: 'pink' },
+            { num: '✓', label: 'Evidence First', cls: 'gold' },
+            { num: '→', label: 'Public Proof Paths', cls: '' },
           ].map((s) => (
             <div key={s.label} className="stat-cell" style={{ textAlign: 'center' }}>
               <div className={`stat-num ${s.cls}`}>{s.num}</div>
@@ -660,65 +661,6 @@ export default function EmpireHome() {
           ))}
         </div>
       </div>
-
-      {/* ── REVENUE OS FEATURE ── */}
-      <section className="section" id="revenue-os">
-        <div className="container">
-          <div className="sec-label">Main Product</div>
-          <h2 className="sec-title">Turn your business into a revenue system.</h2>
-          <p className="sec-desc">
-            One prompt. Full output: paid offers, buyer profiles, GTM signals, outreach copy,
-            checkout path, and delivery receipt. No login required to try.
-          </p>
-
-          <div className="feature-hero">
-            <div className="feature-hero-inner">
-              <div>
-                <div className="feature-label">Empire Revenue OS</div>
-                <h3 className="feature-title">From zero to sellable<br />by Monday.</h3>
-                <p className="feature-desc">
-                  Enter your business, offer, and revenue goal. Empire Revenue OS generates
-                  everything you need to close your first customer this week — buyer personas,
-                  outreach scripts, GTM scoring, and a payment path.
-                </p>
-                <ul className="feature-list">
-                  <li>3 priced offers with delivery scope</li>
-                  <li>25 buyer profiles with ICP scoring</li>
-                  <li>Cold DMs, emails, follow-ups, and close messages</li>
-                  <li>GTM intelligence — buyer tiers and why-now signals</li>
-                  <li>Stripe checkout or manual payment fallback</li>
-                  <li>Delivery receipt as proof of work</li>
-                </ul>
-                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                  <a href="/try-revenue-os" className="btn-gold">Try it free →</a>
-                  <a href="/revenue-receipt" className="btn-ghost">Generate $299 Receipt</a>
-                </div>
-              </div>
-
-              <div className="feature-demo-box">
-                <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: 3, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>
-                  Live System Output
-                </div>
-                {[
-                  { label: 'Offer Ladder', val: '3 tiers built', ok: true },
-                  { label: 'Buyer Profiles', val: '25 generated', ok: true },
-                  { label: 'GTM Score', val: '92 / Tier 1', ok: true },
-                  { label: 'Cold DMs', val: '5 ready to send', ok: true },
-                  { label: 'Payment Path', val: 'Stripe + Manual', ok: true },
-                  { label: 'Delivery Receipt', val: 'Generated', ok: true },
-                ].map((row) => (
-                  <div key={row.label} className="demo-line">
-                    <span className="ok">✓</span>
-                    <span>{row.label}</span>
-                    <span className="val">{row.val}</span>
-                  </div>
-                ))}
-                <a href="/try-revenue-os" className="demo-cta">Run Revenue OS on your business →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── ECOSYSTEM ── */}
       <section className="section" id="ecosystem">
@@ -785,6 +727,65 @@ export default function EmpireHome() {
                 <span className="eco-tag">Community</span>
               </div>
               <a href="https://southernlifestyle.org" className="eco-card-link gold">See Builds →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── REVENUE OS FEATURE ── */}
+      <section className="section" id="revenue-os">
+        <div className="container">
+          <div className="sec-label">Main Product</div>
+          <h2 className="sec-title">Turn your business into a revenue system.</h2>
+          <p className="sec-desc">
+            One prompt. Full output: paid offers, buyer profiles, GTM signals, outreach copy,
+            checkout path, and delivery receipt. No login required to try.
+          </p>
+
+          <div className="feature-hero">
+            <div className="feature-hero-inner">
+              <div>
+                <div className="feature-label">Empire Revenue OS</div>
+                <h3 className="feature-title">From zero to sellable<br />by Monday.</h3>
+                <p className="feature-desc">
+                  Enter your business, offer, and revenue goal. Empire Revenue OS generates
+                  everything you need to close your first customer this week — buyer personas,
+                  outreach scripts, GTM scoring, and a payment path.
+                </p>
+                <ul className="feature-list">
+                  <li>3 priced offers with delivery scope</li>
+                  <li>25 buyer profiles with ICP scoring</li>
+                  <li>Cold DMs, emails, follow-ups, and close messages</li>
+                  <li>GTM intelligence — buyer tiers and why-now signals</li>
+                  <li>Stripe checkout or manual payment fallback</li>
+                  <li>Delivery receipt as proof of work</li>
+                </ul>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                  <a href="/try-revenue-os" className="btn-gold">Try it free →</a>
+                  <a href="/revenue-receipt" className="btn-ghost">Generate $299 Receipt</a>
+                </div>
+              </div>
+
+              <div className="feature-demo-box">
+                <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: 3, color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>
+                  Live System Output
+                </div>
+                {[
+                  { label: 'Offer Ladder', val: '3 tiers built', ok: true },
+                  { label: 'Buyer Profiles', val: '25 generated', ok: true },
+                  { label: 'GTM Score', val: '92 / Tier 1', ok: true },
+                  { label: 'Cold DMs', val: '5 ready to send', ok: true },
+                  { label: 'Payment Path', val: 'Stripe + Manual', ok: true },
+                  { label: 'Delivery Receipt', val: 'Generated', ok: true },
+                ].map((row) => (
+                  <div key={row.label} className="demo-line">
+                    <span className="ok">✓</span>
+                    <span>{row.label}</span>
+                    <span className="val">{row.val}</span>
+                  </div>
+                ))}
+                <a href="/try-revenue-os" className="demo-cta">Run Revenue OS on your business →</a>
+              </div>
             </div>
           </div>
         </div>
