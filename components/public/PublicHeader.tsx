@@ -4,13 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 const NAV_LINKS = [
-  { href: '/', label: 'Command Center' },
+  { href: '/', label: 'Home' },
   { href: '/revenue-os', label: 'Revenue OS' },
   { href: '/ecosystem', label: 'Ecosystem' },
   { href: '/hic', label: 'HIC' },
   { href: '/cultura', label: 'Cultura' },
-  { href: '/licensing', label: 'Licensing' },
   { href: '/enterprise', label: 'Enterprise' },
+  { href: '/licensing', label: 'Licensing' },
 ];
 
 export default function PublicHeader() {
