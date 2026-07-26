@@ -1,0 +1,93 @@
+.dock {
+  position: fixed;
+  top: 104px;
+  right: 28px;
+  z-index: 20;
+  width: min(440px, calc(100vw - 260px));
+  min-height: 62px;
+  padding: 10px 11px;
+  border: 1px solid #2c3038;
+  border-left-width: 3px;
+  border-radius: 9px;
+  background: rgba(12, 14, 18, 0.96);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px);
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 31px 31px;
+  gap: 8px;
+  align-items: center;
+  color: #e7e8eb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.live { border-color: #1e7453; border-left-color: #35dc91; }
+.warn { border-color: #705b1d; border-left-color: #ffd12a; }
+.bad { border-color: #722740; border-left-color: #ff4d83; }
+.connecting { border-color: #275e8e; border-left-color: #43a8ff; }
+
+.dockIcon { display: grid; place-items: center; }
+.live .dockIcon { color: #35dc91; }
+.warn .dockIcon { color: #ffd12a; }
+.bad .dockIcon { color: #ff4d83; }
+.connecting .dockIcon { color: #43a8ff; }
+
+.dockCopy { min-width: 0; }
+.dockTop { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.dockTop strong { font-size: 9px; letter-spacing: .12em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dockTop span { font-size: 8px; letter-spacing: .11em; color: #8b909a; }
+.dockMeta { margin-top: 6px; color: #777d89; font-size: 8px; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.iconButton { width: 31px; height: 31px; border: 1px solid #30343d; border-radius: 6px; background: #111319; color: #aeb2ba; display: grid; place-items: center; cursor: pointer; text-decoration: none; }
+.iconButton:hover { border-color: #4a505d; color: #f2f3f4; }
+.spinning { animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.detailShell { min-height: 100vh; background: #08090b; color: #f2f2f4; padding: 44px max(24px, 5vw) 60px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+.detailHeader { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid #25272d; }
+.eyebrow { color: #f6c72e; font-size: 9px; letter-spacing: .21em; }
+.detailHeader h1 { margin: 11px 0 7px; font: 800 clamp(32px, 5vw, 54px)/1 Inter, system-ui, sans-serif; letter-spacing: -.05em; }
+.detailHeader p { margin: 0; color: #767c88; font-size: 10px; line-height: 1.65; }
+.refreshButton { border: 1px solid #2a5e91; background: #0c1420; color: #4aa8ff; border-radius: 7px; padding: 10px 13px; font: 800 9px/1 ui-monospace, monospace; letter-spacing: .12em; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+
+.connectionCard { margin-top: 22px; display: grid; grid-template-columns: 1.2fr repeat(4, minmax(110px, .7fr)); border: 1px solid #292c33; border-left-width: 3px; border-radius: 10px; overflow: hidden; background: #101115; }
+.connectionCard > div { padding: 16px; border-right: 1px solid #26282e; }
+.connectionCard > div:last-child { border-right: 0; }
+.connectionCard span { display: block; color: #676d78; font-size: 8px; letter-spacing: .13em; }
+.connectionCard strong { display: block; margin-top: 10px; font-size: 15px; color: #f1f2f4; }
+.connectionStatus { display: flex; align-items: center; gap: 11px; }
+.connectionStatus > svg { flex: 0 0 auto; }
+.live .connectionStatus > svg { color: #35dc91; }
+.warn .connectionStatus > svg { color: #ffd12a; }
+.bad .connectionStatus > svg { color: #ff4d83; }
+.connecting .connectionStatus > svg { color: #43a8ff; }
+
+.errorBox { margin-top: 12px; border: 1px solid #6d263e; background: #251019; color: #ff709a; border-radius: 8px; padding: 12px 14px; display: flex; align-items: flex-start; gap: 9px; font-size: 9px; line-height: 1.55; }
+.boundaryCard, .jobsCard { margin-top: 16px; border: 1px solid #272a31; border-radius: 10px; background: #101115; padding: 18px; }
+.boundaryCard h2, .jobsHeader h2 { margin: 0; font: 750 15px/1.2 Inter, system-ui, sans-serif; }
+.boundaryCard p { color: #8a8f9a; font-size: 10px; line-height: 1.72; margin: 13px 0 0; max-width: 1050px; }
+.boundaryCard strong { color: #ffd12a; }
+.jobsHeader { display: flex; justify-content: space-between; gap: 15px; align-items: center; margin-bottom: 14px; }
+.jobsHeader span { color: #686e79; font-size: 8px; letter-spacing: .12em; }
+.jobTable { overflow-x: auto; }
+.jobRow { min-width: 820px; display: grid; grid-template-columns: 120px minmax(160px, 1.2fr) 120px 80px 170px 150px; gap: 10px; align-items: center; padding: 11px 8px; border-top: 1px solid #22242a; color: #b8bbc3; font-size: 9px; }
+.jobHead { color: #666c78; letter-spacing: .11em; font-size: 8px; }
+.jobStatus { color: #4ba9ff; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.empty { padding: 28px 8px; color: #676d78; font-size: 10px; }
+.footer { margin-top: 18px; border-top: 1px solid #25272d; padding-top: 16px; display: flex; justify-content: space-between; gap: 16px; color: #696f7b; font-size: 9px; letter-spacing: .1em; }
+.footer a { color: #f6c82f; text-decoration: none; }
+
+@media (max-width: 900px) {
+  .dock { position: fixed; top: auto; bottom: 12px; right: 12px; left: 12px; width: auto; }
+  .connectionCard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .connectionCard > div { border-bottom: 1px solid #26282e; }
+  .detailHeader { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 560px) {
+  .dock { grid-template-columns: 24px minmax(0, 1fr) 30px; }
+  .dock > a { display: none; }
+  .dockTop { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .connectionCard { grid-template-columns: 1fr; }
+  .connectionCard > div { border-right: 0; }
+  .footer { flex-direction: column; }
+}
