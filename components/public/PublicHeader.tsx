@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
+  { href: '/services', label: 'Services' },
   { href: '/revenue-os', label: 'Revenue OS' },
   { href: '/ecosystem', label: 'Ecosystem' },
   { href: '/hic', label: 'HIC' },
@@ -24,12 +25,12 @@ export default function PublicHeader() {
         .pub-mark img{width:34px;height:34px;object-fit:contain;border-radius:4px;}
         .pub-wordmark{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:0.08em;text-transform:uppercase;}
         .pub-wordmark span{color:var(--pink);}
-        .pub-nav{display:flex;gap:26px;}
+        .pub-nav{display:flex;gap:22px;}
         .pub-nav a{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
         .pub-nav a:hover{color:var(--text);}
         .pub-hamburger{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:8px;}
         .pub-hamburger svg{width:24px;height:24px;}
-        @media(max-width:700px){
+        @media(max-width:780px){
           .pub-nav{display:none;}
           .pub-hamburger{display:block;}
         }
