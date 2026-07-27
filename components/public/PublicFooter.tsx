@@ -17,6 +17,11 @@ export default function PublicFooter() {
             EMPIRE <span style={{ color: 'var(--pink)' }}>1</span>
           </div>
         </Link>
+        <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+          <Link href="/services" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Services</Link>
+          <Link href="/services/intake" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Project Intake</Link>
+          <Link href="/enterprise" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Enterprise</Link>
+        </div>
       </div>
       <div className="wrap copy">© 2026 EMPIRE 1 · founder@empire1.cloud</div>
     </footer>

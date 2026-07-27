@@ -16,6 +16,7 @@ const CAPABILITIES = [
 ];
 
 const PATHWAYS = [
+  { name: 'Applied AI Services', desc: 'Start with an AI Operations Audit, Automation Sprint, or Governance Readiness engagement. Designed for businesses that need a working outcome before a platform commitment.' },
   { name: 'Product Access', desc: 'Try Revenue OS for free, purchase a Revenue Receipt ($299), or book a Revenue Sprint ($999). No enterprise agreement required.' },
   { name: 'HIC Licensing', desc: 'License the routing engine, canon enforcement, and drift monitoring for your own product. White-labeled, no Empire-1 branding.' },
   { name: 'Factory Licensing (SLA113)', desc: 'License the full operator platform — console, a specialized engine and white-label platform stack, and self-service white-label instance minting.' },
@@ -44,6 +45,10 @@ export default function EnterprisePage() {
         <div className="eyebrow">ENTERPRISE</div>
         <h1>Deploy Empire-1 inside your organization.</h1>
         <p>Private deployment, API access, engine and pipeline licensing, governance and policy controls, white-label capability, custom integrations, and usage evidence — offered through a custom enterprise pathway.</p>
+        <div className="cta-row">
+          <a href="/services" className="btn btn-primary">Explore Applied AI Services →</a>
+          <a href="#enterprise-contact" className="btn btn-ghost">Request Enterprise Access</a>
+        </div>
       </section>
 
       <section className="section">
@@ -66,17 +71,18 @@ export default function EnterprisePage() {
         <div className="wrap">
           <div className="eyebrow">SEPARATION</div>
           <h2>Clear pathways for every use case.</h2>
-          <p>Enterprise deployment is distinct from product access, HIC licensing, and factory licensing. Each pathway is designed for a specific level of commitment and control.</p>
+          <p>Applied services, enterprise deployment, product access, HIC licensing, and factory licensing remain distinct. Each pathway is designed for a specific level of commitment and control.</p>
           {PATHWAYS.map((p) => (
             <div className="contact-panel" key={p.name}>
               <h3>{p.name}</h3>
               <p>{p.desc}</p>
+              {p.name === 'Applied AI Services' && <a href="/services" className="contact-email">View services and published ranges →</a>}
             </div>
           ))}
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="enterprise-contact">
         <div className="wrap">
           <div className="eyebrow">CONTACT</div>
           <h2>Request Enterprise Access</h2>
@@ -88,7 +94,7 @@ export default function EnterprisePage() {
           </div>
           <div className="cta-row">
             <a href="mailto:enterprise@empire1.cloud" className="btn btn-primary">Request Enterprise Access →</a>
-            <a href="/licensing" className="btn btn-ghost">View Licensing →</a>
+            <a href="/services/intake" className="btn btn-ghost">Start a Smaller Service Project</a>
           </div>
         </div>
       </section>
