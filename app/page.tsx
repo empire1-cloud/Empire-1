@@ -41,5 +41,16 @@ export default function RootPage() {
     return <SouthernHome />;
   }
 
-  return <EmpireHome />;
+  return (
+    <>
+      <EmpireHome />
+      <style dangerouslySetInnerHTML={{ __html: `
+        .services-launch-link{position:fixed;right:18px;bottom:18px;z-index:40;background:#e8b923;color:#080808;padding:13px 17px;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 10px 30px rgba(0,0,0,.38);transition:transform .18s ease,box-shadow .18s ease;}
+        .services-launch-link:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(232,185,35,.24);}
+        .services-launch-link:focus-visible{outline:2px solid #007aff;outline-offset:3px;}
+        @media(max-width:520px){.services-launch-link{left:14px;right:14px;bottom:14px;text-align:center;}}
+      ` }} />
+      <a className="services-launch-link" href="/services" aria-label="Explore Empire-1 Applied AI Services">Applied AI Services →</a>
+    </>
+  );
 }
