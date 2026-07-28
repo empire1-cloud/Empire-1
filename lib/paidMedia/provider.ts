@@ -39,7 +39,8 @@ async function callGateway(
   const url = gatewayUrl(platform);
   if (!url) throw Object.assign(new Error(`${platform} paid-media gateway is not configured.`), { status: 503 });
   const token = envFirst('GTM_PAID_MEDIA_GATEWAY_TOKEN');
-  const headers: Record<string, string> = { 'Content-Type': 'application/json', 'Idempotency-Key': `${campaign.id}:${platform}:${action}` };
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (action !== 'sync') headers['Idempotency-Key'] = `${campaign.id}:${platform}:${action}:${campaign.authorization?.revision || 0}`;
   if (token) headers.Authorization = `Bearer ${token}`;
   const response = await fetch(url, {
     method: 'POST', headers, cache: 'no-store',
@@ -93,7 +94,7 @@ export async function launchPaidMediaCampaign(id: string, input: RecordMap): Pro
   const launchedBy = cleanString(input.launched_by, 'Launched by', 120);
   const campaign = await getCampaignOrThrow(id);
   const authorization = ensureBudgetAuthorization(campaign);
-  if (campaign.status !== 'BUDGET_AUTHORIZED') throw Object.assign(new Error(`Campaign cannot launch from ${campaign.status}.`), { status: 409 });
+  if (!['BUDGET_AUTHORIZED', 'BLOCKED', 'LIVE'].includes(campaign.status)) throw Object.assign(new Error(`Campaign cannot launch from ${campaign.status}.`), { status: 409 });
   if (!campaign.creative) throw Object.assign(new Error('Approved creative is missing.'), { status: 409 });
   if (new Date(authorization.start_at).getTime() > Date.now()) throw Object.assign(new Error('Campaign authorization has not started yet.'), { status: 409 });
   const config = providerStatus();
@@ -107,6 +108,7 @@ export async function launchPaidMediaCampaign(id: string, input: RecordMap): Pro
   const bindings = { ...campaign.provider_bindings };
   const failures: string[] = [];
   for (const platform of campaign.platforms) {
+    if (bindings[platform]?.status === 'LIVE') continue;
     try {
       const result = await callGateway(campaign, platform, 'launch', { launched_by: launchedBy });
       bindings[platform] = {
@@ -271,4 +273,27 @@ export async function revokeProviderCampaigns(id: string, input: RecordMap): Pro
     campaign_id: id, revoked_by: revokedBy, reason, failures,
   });
   return getCampaignOrThrow(id);
+}
+
+export async function syncAllPaidMediaCampaigns(input: RecordMap) {
+  const syncedBy = cleanString(input.synced_by, 'Synced by', 120);
+  const db = await getDb();
+  const campaigns = await db.collection('gtm_paid_media_campaigns')
+    .find({ status: { $in: ['LIVE', 'PAUSE_REQUESTED'] } }, { projection: { _id: 0, id: 1 } })
+    .sort({ updated_at: 1 })
+    .limit(50)
+    .toArray();
+  const results: Array<{ campaign_id:string; status:string; detail?:string }> = [];
+  for (const item of campaigns) {
+    const campaignId = String(item.id || '');
+    if (!campaignId) continue;
+    try {
+      const campaign = await syncPaidMediaCampaign(campaignId, { synced_by: syncedBy });
+      results.push({ campaign_id: campaignId, status: campaign.status });
+    } catch (error) {
+      results.push({ campaign_id: campaignId, status: 'FAILED', detail: error instanceof Error ? error.message : 'Sync failed.' });
+    }
+  }
+  await writeReceipt('PAID_MEDIA_SYNC_ALL_COMPLETED', { synced_by: syncedBy, attempted: results.length, results });
+  return { attempted: results.length, results };
 }
