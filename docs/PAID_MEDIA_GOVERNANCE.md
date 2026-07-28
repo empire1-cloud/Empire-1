@@ -86,6 +86,8 @@ Supported events:
 - `empire1.paid_media.sync`
 - `empire1.paid_media.revoke`
 
+The authenticated `POST /api/gtm/paid-media/sync-all` route synchronizes up to 50 live or pause-pending campaigns. It is intended for an Empire-owned hourly scheduler so guardrails do not depend on a founder opening the console.
+
 Launch responses may include:
 
 ```json
