@@ -3,6 +3,7 @@ import {
   approveCampaign,
   authorizeCampaign,
   createCampaign,
+  dispatchCampaignBatch,
   dispatchJob,
   providerStatus,
   publisherSummary,
@@ -84,6 +85,11 @@ export async function POST(request: NextRequest, context: Context) {
     if (action.length === 3 && action[0] === 'campaigns' && action[2] === 'revoke') {
       const campaign = await revokeCampaign(action[1], input);
       return json({ success: true, campaign });
+    }
+
+    if (action.length === 3 && action[0] === 'campaigns' && action[2] === 'dispatch-batch') {
+      const result = await dispatchCampaignBatch(action[1], input);
+      return json({ success: true, ...result });
     }
 
     if (action.length === 3 && action[0] === 'jobs' && action[2] === 'dispatch') {
