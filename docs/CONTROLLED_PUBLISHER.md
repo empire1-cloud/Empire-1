@@ -101,7 +101,6 @@ Return any `2xx` response to accept the action. An optional `id` or `external_id
 - Batch dispatch is capped at 20 per API call and the admin console runs 10 at a time.
 - A rolling 24-hour campaign limit blocks excess sends.
 - Duplicate content/target combinations are skipped inside the same campaign.
-- Secrets are never accepted in campaign or job payloads.
 - The founder key is stored only in browser `sessionStorage` by the admin UI.
 - Revoking a campaign blocks remaining queued jobs.
 - Replies and conversions are recorded as separate outcomes, not inferred.
