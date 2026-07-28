@@ -122,6 +122,10 @@ export default function HicPage() {
               <div className="cockpit-line muted">— one voice out, regardless of which model answered —</div>
             </div>
           </div>
+
+          <div className="cta-row">
+            <a href="/hic/composer" className="btn btn-ghost">Open Pipeline Composer →</a>
+          </div>
         </div>
       </section>
 
