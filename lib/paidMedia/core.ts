@@ -210,7 +210,7 @@ export async function getCampaignOrThrow(id: string): Promise<PaidMediaCampaign>
 }
 
 export function ensureBudgetAuthorization(campaign: PaidMediaCampaign): PaidMediaAuthorization {
-  if (!campaign.authorization || !['BUDGET_AUTHORIZED', 'LIVE', 'PAUSE_REQUESTED', 'PAUSED', 'AUTO_PAUSED'].includes(campaign.status)) {
+  if (!campaign.authorization || !['BUDGET_AUTHORIZED', 'LIVE', 'PAUSE_REQUESTED', 'PAUSED', 'AUTO_PAUSED', 'BLOCKED'].includes(campaign.status)) {
     throw Object.assign(new Error('Campaign does not have an active budget authorization.'), { status: 409 });
   }
   if (new Date(campaign.authorization.expires_at).getTime() <= Date.now()) {
