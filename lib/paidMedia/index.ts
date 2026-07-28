@@ -11,5 +11,6 @@ export {
   launchPaidMediaCampaign,
   pausePaidMediaCampaign,
   revokeProviderCampaigns,
+  syncAllPaidMediaCampaigns,
   syncPaidMediaCampaign,
 } from './provider';
