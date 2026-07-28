@@ -11,6 +11,7 @@ import {
   requireOperator,
   revokePaidMediaCampaign,
   revokeProviderCampaigns,
+  syncAllPaidMediaCampaigns,
   syncPaidMediaCampaign,
 } from '@/lib/paidMedia';
 
@@ -52,6 +53,9 @@ export async function POST(request: NextRequest, context: Context) {
     requireOperator(request);
     const action = context.params.action || [];
     const input = await body(request);
+    if (action.length === 1 && action[0] === 'sync-all') {
+      return json({ success: true, ...(await syncAllPaidMediaCampaigns(input)) });
+    }
     if (action.length === 1 && action[0] === 'campaigns') {
       return json({ success: true, campaign: await createPaidMediaCampaign(input) }, 201);
     }
