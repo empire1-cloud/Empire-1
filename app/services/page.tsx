@@ -66,6 +66,13 @@ export default function ServicesPage() {
         .services-hero p{max-width:720px;}
         .signal-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;}
         .signal{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;border:1px solid var(--line-strong);padding:9px 12px;color:#b4b4bb;background:var(--surface);}
+        .scan-entry{display:grid;grid-template-columns:1.25fr .75fr;gap:34px;align-items:center;background:linear-gradient(135deg,rgba(232,185,35,.09),rgba(0,122,255,.04));border:1px solid var(--line-strong);padding:34px;margin-top:28px;}
+        @media(max-width:720px){.scan-entry{grid-template-columns:1fr;}}
+        .scan-entry h3{font-family:'Barlow Condensed',sans-serif;font-size:30px;margin:0 0 12px;}
+        .scan-entry p{font-size:14px;line-height:1.65;color:#c7c7cd;margin:0;}
+        .scan-entry .scan-points{list-style:none;padding:0;margin:0;}
+        .scan-entry .scan-points li{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#b4b4bb;padding:9px 0;border-bottom:1px solid var(--line);}
+        .scan-entry .scan-points li::before{content:'→';color:var(--gold);margin-right:9px;}
         .offer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:38px;}
         @media(max-width:760px){.offer-grid{grid-template-columns:1fr;}}
         .offer-card{position:relative;background:var(--surface);border:1px solid var(--line-strong);padding:28px;display:flex;flex-direction:column;min-height:390px;}
@@ -106,8 +113,9 @@ export default function ServicesPage() {
         <h1>Automate the work. Keep control of the decisions.</h1>
         <p>We help startups, creators, and growing businesses turn scattered tools and manual processes into working AI operations—with clear approvals, evidence, and a measurable business outcome.</p>
         <div className="cta-row">
-          <a href="/services/intake" className="btn btn-primary">Start a Project →</a>
-          <a href="#offers" className="btn btn-ghost">See Services</a>
+          <a href="/services/scan" className="btn btn-primary">Run the Free Workflow Scan →</a>
+          <a href="/services/results" className="btn btn-ghost">See Proof and Limits</a>
+          <a href="/services/intake" className="btn btn-ghost">Start a Paid Project</a>
         </div>
         <div className="signal-row">
           <span className="signal">Outcome-first</span>
@@ -117,11 +125,34 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <section className="section">
+        <div className="wrap">
+          <div className="eyebrow">FREE FIRST STEP</div>
+          <h2>Find the leak before buying a build.</h2>
+          <div className="scan-entry">
+            <div>
+              <h3>AI Workflow Leak Snapshot</h3>
+              <p>Describe one workflow that is losing time, leads, money, or control. The scan produces an immediate preliminary result showing the likely leak, first move, human-control boundary, evidence requirement, and recommended next engagement.</p>
+              <div className="cta-row">
+                <a href="/services/scan" className="btn btn-primary">Generate My Snapshot →</a>
+                <a href="/services/results" className="btn btn-ghost">How We Prove Work</a>
+              </div>
+            </div>
+            <ul className="scan-points">
+              <li>No account required</li>
+              <li>No hidden form submission</li>
+              <li>Immediate browser-generated result</li>
+              <li>Clearly labeled preliminary screening</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section className="section" id="offers">
         <div className="wrap">
           <div className="eyebrow">SERVICE LADDER</div>
           <h2>Start with clarity. Build only what earns its place.</h2>
-          <p>Every engagement begins with a defined problem, owner, outcome, and proof standard. Pricing varies with integrations, data sensitivity, and operational complexity.</p>
+          <p>Every paid engagement begins with a defined problem, owner, outcome, and proof standard. Pricing varies with integrations, data sensitivity, and operational complexity.</p>
           <div className="offer-grid">
             {OFFERS.map((offer) => (
               <article className="offer-card" key={offer.name}>
@@ -189,9 +220,10 @@ export default function ServicesPage() {
           <div className="launch-panel">
             <div className="eyebrow">BUILD THE FIRST WIN</div>
             <h2>Bring the workflow that is costing you time, money, or control.</h2>
-            <p>Tell us what is broken, what outcome matters, and what systems are already involved. We will respond with the smallest credible engagement and a clear scope.</p>
+            <p>Start with the free scan or open the full project intake when the problem, owner, desired outcome, and systems are already clear.</p>
             <div className="cta-row">
-              <a href="/services/intake" className="btn btn-primary">Open Project Intake →</a>
+              <a href="/services/scan" className="btn btn-primary">Run the Free Scan →</a>
+              <a href="/services/intake" className="btn btn-ghost">Open Project Intake</a>
               <a href="mailto:founder@empire1.cloud?subject=Empire-1%20Applied%20AI%20Services" className="btn btn-ghost">Email the Founder</a>
             </div>
           </div>
