@@ -19,6 +19,8 @@ export default function PublicFooter() {
         </Link>
         <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
           <Link href="/services" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Services</Link>
+          <Link href="/services/scan" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--gold)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Free Scan</Link>
+          <Link href="/services/results" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Proof</Link>
           <Link href="/services/intake" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Project Intake</Link>
           <Link href="/enterprise" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Enterprise</Link>
         </div>
