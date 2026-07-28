@@ -65,7 +65,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Empire1 Routes - only allow on empire1.cloud
-  if (pathname.startsWith('/dashboard') || pathname.startsWith('/operator')) {
+  if (pathname.startsWith('/dashboard') || pathname.startsWith('/operator') || pathname.startsWith('/crm')) {
     if (tenant !== 'empire1') {
       return NextResponse.redirect(new URL('/', request.url))
     }
