@@ -4,15 +4,16 @@ import { useState } from 'react';
 import GTMPanel from '@/components/admin/GTMPanel';
 import ViralContentEngine from '@/components/admin/ViralContentEngine';
 import ControlledPublisher from '@/components/admin/ControlledPublisher';
+import PaidMediaControlPlane from '@/components/admin/PaidMediaControlPlane';
 import IPSovereigntySignal from '@/components/admin/IPSovereigntySignal';
 import ProgrammingDevelopmentRadar from '@/components/admin/ProgrammingDevelopmentRadar';
 import GTMEngineeringLab from '@/components/admin/GTMEngineeringLab';
 import EmpireSkillForge from '@/components/admin/EmpireSkillForge';
 
-type View = 'publisher' | 'operations' | 'viral' | 'development' | 'engineering' | 'skills';
+type View = 'paid' | 'publisher' | 'operations' | 'viral' | 'development' | 'engineering' | 'skills';
 
 export default function GTMPage() {
-  const [view, setView] = useState<View>('publisher');
+  const [view, setView] = useState<View>('paid');
 
   return (
     <div className="min-h-screen bg-black">
@@ -20,12 +21,18 @@ export default function GTMPage() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.22em] text-amber-300">Empire-1 GTM</p>
-            <p className="text-xs text-zinc-500">Campaign creation, founder authorization, controlled publishing, receipts, and Revenue OS outcomes</p>
+            <p className="text-xs text-zinc-500">Paid-media governance, controlled publishing, funnel operations, receipts, and Revenue OS outcomes</p>
           </div>
           <div className="flex flex-wrap rounded-xl border border-white/10 bg-zinc-950 p-1">
             <button
+              onClick={() => setView('paid')}
+              className={`rounded-lg px-3 py-2 text-xs font-bold transition ${view === 'paid' ? 'bg-amber-300 text-black' : 'text-zinc-500 hover:text-white'}`}
+            >
+              Paid Media
+            </button>
+            <button
               onClick={() => setView('publisher')}
-              className={`rounded-lg px-3 py-2 text-xs font-bold transition ${view === 'publisher' ? 'bg-amber-300 text-black' : 'text-zinc-500 hover:text-white'}`}
+              className={`rounded-lg px-3 py-2 text-xs font-bold transition ${view === 'publisher' ? 'bg-white text-black' : 'text-zinc-500 hover:text-white'}`}
             >
               Controlled Publisher
             </button>
@@ -63,6 +70,7 @@ export default function GTMPage() {
         </div>
       </div>
 
+      {view === 'paid' && <PaidMediaControlPlane />}
       {view === 'publisher' && <ControlledPublisher />}
       {view === 'viral' && (
         <>
