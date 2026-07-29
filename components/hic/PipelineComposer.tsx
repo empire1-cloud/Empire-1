@@ -42,11 +42,22 @@ const STEP_DURATION_MS = 850;
 
 const composerCSS = String.raw`
 .pc-wrap{max-width:1180px;margin:0 auto;padding:0 28px 100px;}
-.pc-hero{padding:80px 0 48px;display:flex;align-items:flex-start;gap:48px;}
-.pc-hero-logo{width:140px;height:140px;flex-shrink:0;filter:drop-shadow(0 0 24px rgba(230,0,122,0.4));animation:heroGlow 3s ease-in-out infinite;}
-@keyframes heroGlow{0%,100%{filter:drop-shadow(0 0 24px rgba(230,0,122,0.4));}50%{filter:drop-shadow(0 0 32px rgba(230,0,122,0.6));}}
-.pc-hero-content{flex:1;}
+.pc-hero{padding:80px 0 48px;position:relative;display:flex;align-items:center;gap:44px;}
+.pc-hero-logo{width:184px;height:184px;flex-shrink:0;object-fit:contain;position:relative;z-index:2;}
+@media(max-width:760px){.pc-hero{flex-direction:column;align-items:flex-start;gap:28px;}.pc-hero-logo{width:128px;height:128px;}}
+.pc-hero-content{flex:1;position:relative;z-index:2;}
 .pc-hero .eyebrow{margin:0 0 12px;}
+
+/* Baked-in watermark — the mark itself, oversized behind the builder */
+.pc-shell{position:relative;}
+.pc-shell::before{
+  content:'';position:absolute;pointer-events:none;z-index:0;
+  right:-140px;top:40px;width:760px;height:760px;max-width:90vw;max-height:90vw;
+  background:url('/empire1_logo.jpeg') center/contain no-repeat;
+  opacity:0.05;filter:grayscale(0.2);
+}
+@media(max-width:900px){.pc-shell::before{right:-220px;opacity:0.035;}}
+@media(prefers-reduced-motion:no-preference){.pc-shell::before{transition:opacity .4s ease;}}
 .pc-hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(36px,6vw,56px);line-height:1;text-transform:uppercase;margin:0;}
 .pc-hero p{font-size:15px;color:#b4b4bb;margin:14px 0 0;max-width:520px;line-height:1.6;}
 
@@ -184,33 +195,7 @@ export default function PipelineComposer() {
 
       <div className="pc-wrap">
         <section className="pc-hero">
-          <svg className="pc-hero-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="goldGradient" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" style={{stopColor:'#ffd700',stopOpacity:1}} />
-                <stop offset="100%" style={{stopColor:'#d4af37',stopOpacity:1}} />
-              </radialGradient>
-              <filter id="magentaGlow">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <circle cx="100" cy="100" r="95" fill="none" stroke="#e6007a" strokeWidth="2" opacity="0.4" filter="url(#magentaGlow)"/>
-            <circle cx="100" cy="100" r="90" fill="url(#goldGradient)" stroke="#b8860b" strokeWidth="2"/>
-            <circle cx="100" cy="100" r="85" fill="none" stroke="#8b6914" strokeWidth="1" opacity="0.5"/>
-            <g stroke="#8b6914" strokeWidth="1.5" fill="none" opacity="0.7">
-              <path d="M 25 100 L 35 100 M 40 100 L 50 100 M 55 100 L 65 100 M 70 100 L 80 100 M 85 100 L 95 100 M 105 100 L 115 100 M 120 100 L 130 100 M 135 100 L 145 100 M 150 100 L 160 100 M 165 100 L 175 100"/>
-              <path d="M 100 25 L 100 35 M 100 40 L 100 50 M 100 55 L 100 65 M 100 70 L 100 80 M 100 85 L 100 95 M 100 105 L 100 115 M 100 120 L 100 130 M 100 135 L 100 145 M 100 150 L 100 160 M 100 165 L 100 175"/>
-            </g>
-            <g fill="#1a1a1a">
-              <rect x="65" y="70" width="35" height="35" rx="2"/>
-              <rect x="72" y="77" width="21" height="21" fill="#ffd700"/>
-              <polygon points="100,70 108,80 108,95 100,85" fill="#ffd700" opacity="0.8"/>
-            </g>
-          </svg>
+          <img className="pc-hero-logo" src="/empire1_logo.jpeg" alt="Empire-1" />
           <div className="pc-hero-content">
             <div className="eyebrow">WORKFLOW ORCHESTRATION</div>
             <h1>Pipeline Composer</h1>
