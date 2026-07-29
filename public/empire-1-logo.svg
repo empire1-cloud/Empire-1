@@ -29,13 +29,24 @@
     <path d="M 100 25 L 100 35 M 100 40 L 100 50 M 100 55 L 100 65 M 100 70 L 100 80 M 100 85 L 100 95 M 100 105 L 100 115 M 100 120 L 100 130 M 100 135 L 100 145 M 100 150 L 100 160 M 100 165 L 100 175"/>
   </g>
 
-  <!-- E1 Symbol -->
+  <!-- Aztec Step-Fret Pattern -->
   <g fill="#1a1a1a">
-    <!-- Main square -->
-    <rect x="65" y="70" width="35" height="35" rx="2"/>
-    <!-- Inner cutout -->
-    <rect x="72" y="77" width="21" height="21" fill="#ffd700"/>
-    <!-- Right accent -->
-    <polygon points="100,70 108,80 108,95 100,85" fill="#ffd700" opacity="0.8"/>
+    <!-- Main stepped pattern center -->
+    <rect x="70" y="75" width="10" height="10"/>
+    <rect x="80" y="75" width="10" height="10" fill="#ffd700"/>
+    <rect x="80" y="85" width="10" height="10"/>
+    <rect x="70" y="85" width="10" height="10" fill="#ffd700"/>
+    <rect x="60" y="85" width="10" height="10"/>
+    <rect x="60" y="75" width="10" height="10" fill="#ffd700"/>
+    <rect x="60" y="95" width="10" height="10" fill="#ffd700"/>
+    <rect x="70" y="95" width="10" height="10"/>
+    <rect x="80" y="95" width="10" height="10" fill="#ffd700"/>
+    <rect x="90" y="85" width="10" height="10" fill="#ffd700"/>
+    <rect x="90" y="75" width="10" height="10"/>
+    <rect x="90" y="95" width="10" height="10"/>
+    <rect x="50" y="95" width="10" height="10"/>
+    <rect x="50" y="85" width="10" height="10" fill="#ffd700"/>
+    <rect x="100" y="85" width="10" height="10"/>
+    <rect x="100" y="95" width="10" height="10" fill="#ffd700"/>
   </g>
 </svg>
