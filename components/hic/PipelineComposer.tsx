@@ -6,7 +6,15 @@ type Tone = 'gold' | 'pink';
 type StepStatus = 'queued' | 'running' | 'done';
 
 type EngineDef = { name: string; tone: Tone };
-type Step = { uid: number; name: string; tone: Tone; status: StepStatus };
+type Step = {
+  uid: number;
+  name: string;
+  tone: Tone;
+  status: StepStatus;
+  input?: string;
+  output?: string;
+  ms?: number;
+};
 
 const ENGINES: EngineDef[] = [
   { name: 'Hybrid Intelligence Core', tone: 'gold' },
@@ -40,28 +48,94 @@ const STATUS_LABELS: Record<StepStatus, string> = {
 
 const STEP_DURATION_MS = 850;
 
+const DEFAULT_SUBJECT = 'an unspecified brief';
+
+/** Trim a chained input down to something readable in a one-line echo. */
+function condense(text: string, max = 72): string {
+  const flat = text.replace(/\s+/g, ' ').trim();
+  if (!flat) return DEFAULT_SUBJECT;
+  return flat.length > max ? `${flat.slice(0, max - 1)}…` : flat;
+}
+
+/**
+ * Per-engine transforms. Each takes the upstream output and returns this
+ * engine's output, so the chain is genuinely sequential — step N+1 reads
+ * what step N produced. Deterministic by design: same input, same output.
+ */
+const ENGINE_OUTPUTS: Record<string, (input: string) => string> = {
+  'Strategy Engine': (i) =>
+    `STRATEGY BRIEF\n· Horizon: 90 days, 3 sequenced plays\n· Wedge: narrowest segment that still pays\n· Derived from: ${condense(i)}`,
+  'Analysis Engine': (i) =>
+    `SWOT + POSITIONING\n· Strength: owned distribution\n· Risk: undifferentiated middle tier\n· Opening: underserved high-intent segment\n· Analyzed: ${condense(i)}`,
+  'Pricing Engine': (i) =>
+    `PRICE LADDER\n· Entry $0 · Proof $299 · Sprint $999 · Partnership custom\n· Anchor on proof-of-work, not seat count\n· Priced against: ${condense(i)}`,
+  'Persona Engine': (i) =>
+    `PERSONA SET\n· Operator — buys outcomes, not features\n· Builder — buys the layer underneath\n· Trigger: visible proof before spend\n· Segmented from: ${condense(i)}`,
+  'Evaluator Engine': (i) =>
+    `SCORECARD\n· Clarity 8/10 · Differentiation 7/10 · Monetization 8/10\n· Verdict: proceed, tighten the wedge\n· Scored: ${condense(i)}`,
+  'Money Pipeline Engine': (i) =>
+    `REVENUE ARCHITECTURE\n· Free look → paid receipt → sprint → partnership\n· Each rung pays for the next\n· Built from: ${condense(i)}`,
+  'Blueprint Engine': (i) =>
+    `BUILD BLUEPRINT\n· Surface, core, and ledger separated\n· Ship the proof surface first\n· Blueprinted: ${condense(i)}`,
+  'Plan Builder Engine': (i) =>
+    `EXECUTION PLAN\n· Week 1 proof · Week 2-4 surface · Week 5+ distribution\n· Owner: one hand, sequenced\n· Planned from: ${condense(i)}`,
+  'Opportunity Mapper Engine': (i) =>
+    `OPPORTUNITY MAP\n· Adjacent: licensing the layer beneath\n· Defensible: provenance carried forward\n· Mapped: ${condense(i)}`,
+  'Routing Engine': (i) =>
+    `ROUTED\n· Task classified, sent to best-fit model\n· No single-model forcing\n· Payload: ${condense(i)}`,
+  'Canon Enforcer': (i) =>
+    `CANON PASS\n· Filler and AI-tells stripped\n· One voice enforced across providers\n· Enforced on: ${condense(i)}`,
+  'Drift Monitor': (i) =>
+    `DRIFT CHECK\n· Tone, quality, compliance within baseline\n· No decay flagged\n· Checked: ${condense(i)}`,
+  'Error Handler': (i) =>
+    `INTEGRITY PASS\n· No malformed output, no truncation\n· Chain intact\n· Verified: ${condense(i)}`,
+};
+
+function outputFor(engine: string, input: string): string {
+  const fn = ENGINE_OUTPUTS[engine];
+  if (fn) return fn(input);
+  return `${engine.toUpperCase()} OUTPUT\n· Processed upstream payload\n· Passed downstream unmodified in shape\n· Input: ${condense(input)}`;
+}
+
+/**
+ * Resolve the whole chain up front so each step's input is exactly the
+ * previous step's output. Computing this synchronously avoids reading stale
+ * state inside the staggered reveal timers.
+ */
+function buildChain(steps: Step[], initialInput: string): Array<{ input: string; output: string }> {
+  const seed = initialInput.trim() || DEFAULT_SUBJECT;
+  const chain: Array<{ input: string; output: string }> = [];
+  let carry = seed;
+  for (const step of steps) {
+    const output = outputFor(step.name, carry);
+    chain.push({ input: carry, output });
+    carry = output;
+  }
+  return chain;
+}
+
 const composerCSS = String.raw`
 .pc-wrap{max-width:1180px;margin:0 auto;padding:0 28px 100px;}
 .pc-hero{padding:80px 0 48px;position:relative;display:flex;align-items:center;gap:44px;}
-.pc-hero-logo{width:184px;height:184px;flex-shrink:0;object-fit:contain;position:relative;z-index:2;}
-@media(max-width:760px){.pc-hero{flex-direction:column;align-items:flex-start;gap:28px;}.pc-hero-logo{width:128px;height:128px;}}
+.pc-hero-logo{width:210px;height:auto;flex-shrink:0;display:block;position:relative;z-index:2;}
+@media(max-width:760px){.pc-hero{flex-direction:column;align-items:flex-start;gap:28px;}.pc-hero-logo{width:150px;}}
 .pc-hero-content{flex:1;position:relative;z-index:2;}
 .pc-hero .eyebrow{margin:0 0 12px;}
 
-/* Baked-in watermark — the mark itself, oversized behind the builder */
-.pc-shell{position:relative;}
-.pc-shell::before{
+/* Baked-in watermark — the mark itself, oversized behind the builder.
+   overflow:hidden keeps the bleed from creating horizontal scroll. */
+.pc-wrap{position:relative;overflow:hidden;}
+.pc-wrap::before{
   content:'';position:absolute;pointer-events:none;z-index:0;
-  right:-140px;top:40px;width:760px;height:760px;max-width:90vw;max-height:90vw;
-  background:url('/empire1_logo.jpeg') center/contain no-repeat;
-  opacity:0.05;filter:grayscale(0.2);
+  right:-140px;top:180px;width:760px;height:760px;max-width:92vw;max-height:92vw;
+  background:url('/empire1-lockup.jpg') center/contain no-repeat;
+  opacity:0.06;
 }
-@media(max-width:900px){.pc-shell::before{right:-220px;opacity:0.035;}}
-@media(prefers-reduced-motion:no-preference){.pc-shell::before{transition:opacity .4s ease;}}
+@media(max-width:900px){.pc-wrap::before{right:-220px;opacity:0.035;}}
 .pc-hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(36px,6vw,56px);line-height:1;text-transform:uppercase;margin:0;}
 .pc-hero p{font-size:15px;color:#b4b4bb;margin:14px 0 0;max-width:520px;line-height:1.6;}
 
-.pc-grid{display:grid;grid-template-columns:340px 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+.pc-grid{position:relative;z-index:1;display:grid;grid-template-columns:340px 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
 @media(max-width:900px){.pc-grid{grid-template-columns:1fr;}}
 .pc-panel{background:#0a0a0a;padding:28px;}
 .pc-main{display:flex;flex-direction:column;}
@@ -120,12 +194,38 @@ const composerCSS = String.raw`
 .pc-run:hover:not(:disabled){background:rgba(232,185,35,0.08);}
 .pc-run:disabled{border-color:var(--line-strong);color:#5c5c64;cursor:not-allowed;}
 .pc-run.is-running{border-color:var(--gold);color:var(--gold);cursor:default;}
+
+/* ===== OUTPUT ===== */
+.pc-output{position:relative;z-index:1;margin-top:1px;background:#0a0a0a;border:1px solid var(--line);border-top:none;padding:28px;}
+.pc-output-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.pc-output-head .pc-label{margin-bottom:0;}
+.pc-copy{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.05em;color:var(--text);background:transparent;cursor:pointer;padding:7px 16px;border:1px solid var(--line-strong);border-radius:2px;}
+.pc-copy:hover{border-color:var(--gold);color:var(--gold);}
+
+.pc-trace{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);}
+.pc-trace-item{background:#050505;padding:18px;}
+.pc-trace-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.pc-trace-index{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);}
+.pc-trace-name{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;}
+.pc-trace-ms{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;}
+.pc-io{display:grid;grid-template-columns:64px 1fr;gap:10px 14px;align-items:start;}
+@media(max-width:600px){.pc-io{grid-template-columns:1fr;gap:4px;}}
+.pc-io-key{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding-top:2px;}
+.pc-io-val{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.65;color:#c7c7cd;white-space:pre-wrap;word-break:break-word;margin:0;}
+.pc-io-val.is-in{color:#8c8c95;}
+.pc-io-val.is-out{color:var(--text);}
+
+.pc-final{margin-top:24px;border:1px solid var(--line-strong);border-left:2px solid var(--gold);padding:20px;background:rgba(232,185,35,0.03);}
+.pc-final-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.pc-final pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre-wrap;word-break:break-word;margin:0;}
+.pc-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:16px;font-style:italic;}
 `;
 
 export default function PipelineComposer() {
   const [steps, setSteps] = useState<Step[]>([]);
   const [running, setRunning] = useState(false);
   const [initialInput, setInitialInput] = useState('');
+  const [copied, setCopied] = useState(false);
   const uidRef = useRef(1);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -150,29 +250,66 @@ export default function PipelineComposer() {
     setSteps([]);
   };
 
-  const runStep = (index: number, total: number) => {
+  const runStep = (
+    index: number,
+    total: number,
+    chain: Array<{ input: string; output: string }>,
+  ) => {
     if (index >= total) {
       setRunning(false);
       return;
     }
     setSteps((prev) => prev.map((step, i) => (i === index ? { ...step, status: 'running' } : step)));
     timerRef.current = setTimeout(() => {
-      setSteps((prev) => prev.map((step, i) => (i === index ? { ...step, status: 'done' } : step)));
-      runStep(index + 1, total);
+      setSteps((prev) =>
+        prev.map((step, i) =>
+          i === index
+            ? {
+                ...step,
+                status: 'done',
+                input: chain[i].input,
+                output: chain[i].output,
+                ms: STEP_DURATION_MS,
+              }
+            : step,
+        ),
+      );
+      runStep(index + 1, total, chain);
     }, STEP_DURATION_MS);
   };
 
   const runPipeline = () => {
     if (running || steps.length === 0) return;
+    const chain = buildChain(steps, initialInput);
     setRunning(true);
-    setSteps((prev) => prev.map((step) => ({ ...step, status: 'queued' })));
-    runStep(0, steps.length);
+    setCopied(false);
+    setSteps((prev) =>
+      prev.map((step) => ({
+        ...step,
+        status: 'queued',
+        input: undefined,
+        output: undefined,
+        ms: undefined,
+      })),
+    );
+    runStep(0, steps.length, chain);
   };
 
   const counts = steps.reduce<Record<string, number>>((acc, step) => {
     acc[step.name] = (acc[step.name] || 0) + 1;
     return acc;
   }, {});
+
+  const completed = steps.filter((step) => step.output !== undefined);
+  const finalOutput = completed.length > 0 ? completed[completed.length - 1].output ?? '' : '';
+
+  const copyFinal = () => {
+    if (!finalOutput) return;
+    void navigator.clipboard?.writeText(finalOutput).then(
+      () => setCopied(true),
+      () => setCopied(false),
+    );
+  };
 
   const runningIndex = steps.findIndex((step) => step.status === 'running');
   const allDone = steps.length > 0 && steps.every((step) => step.status === 'done');
@@ -195,7 +332,13 @@ export default function PipelineComposer() {
 
       <div className="pc-wrap">
         <section className="pc-hero">
-          <img className="pc-hero-logo" src="/empire1_logo.jpeg" alt="Empire-1" />
+          <img
+            className="pc-hero-logo"
+            src="/empire1-lockup.jpg"
+            width={898}
+            height={1000}
+            alt="Empire-1"
+          />
           <div className="pc-hero-content">
             <div className="eyebrow">WORKFLOW ORCHESTRATION</div>
             <h1>Pipeline Composer</h1>
@@ -289,6 +432,50 @@ export default function PipelineComposer() {
             </div>
           </main>
         </div>
+
+        {completed.length > 0 && (
+          <section className="pc-output">
+            <div className="pc-output-head">
+              <div className="pc-label">
+                Output — {completed.length} of {steps.length} step
+                {steps.length > 1 ? 's' : ''} resolved
+              </div>
+              <button type="button" className="pc-copy" onClick={copyFinal}>
+                {copied ? 'COPIED' : 'COPY FINAL OUTPUT'}
+              </button>
+            </div>
+
+            <div className="pc-trace">
+              {completed.map((step, index) => (
+                <article className="pc-trace-item" key={step.uid}>
+                  <div className="pc-trace-head">
+                    <span className="pc-trace-index">{String(index + 1).padStart(2, '0')}</span>
+                    <span className="pc-trace-name">{step.name}</span>
+                    <span className="pc-trace-ms">{step.ms}ms</span>
+                  </div>
+                  <div className="pc-io">
+                    <div className="pc-io-key">In</div>
+                    <p className="pc-io-val is-in">{step.input}</p>
+                    <div className="pc-io-key">Out</div>
+                    <p className="pc-io-val is-out">{step.output}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {!running && finalOutput && (
+              <div className="pc-final">
+                <div className="pc-final-label">Final Output</div>
+                <pre>{finalOutput}</pre>
+              </div>
+            )}
+
+            <p className="pc-note">
+              Simulated locally — these outputs are generated in the browser, not returned by the
+              Core.
+            </p>
+          </section>
+        )}
       </div>
     </>
   );
