@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const DEFAULT_BACKEND_URL = 'https://empire1-backend-339698334666.us-central1.run.app';
-const DEFAULT_SLA113_BACKEND_URL = 'https://empire1-backend-339698334666.us-central1.run.app';
+const DEFAULT_BACKEND_URL = 'https://api.empire1.cloud';
+const DEFAULT_SLA113_BACKEND_URL = 'https://api.empire1.cloud';
 
 function normalizeBaseUrl(url: string): string {
   return url.replace(/\/$/, '');
@@ -12,8 +12,12 @@ function isFoundryPath(pathParts: string[]): boolean {
 }
 
 function getBackendBase(pathParts: string[]): string {
-  const hybridConfigured = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL;
-  const sla113Configured = process.env.SLA113_BACKEND_URL;
+  const isProduction = process.env.NODE_ENV === 'production';
+  const hybridConfigured = process.env.PUBLIC_BACKEND_URL
+    || process.env.NEXT_PUBLIC_API_URL
+    || (!isProduction ? process.env.BACKEND_URL : undefined);
+  const sla113Configured = process.env.PUBLIC_SLA113_BACKEND_URL
+    || (!isProduction ? process.env.SLA113_BACKEND_URL : undefined);
 
   if (isFoundryPath(pathParts)) {
     return normalizeBaseUrl(sla113Configured || DEFAULT_SLA113_BACKEND_URL);
