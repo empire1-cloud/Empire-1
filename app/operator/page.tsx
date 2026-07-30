@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { getSla113AdminHeaders } from '@/lib/sla113Auth';
 
 const TOOLS = [
   {
@@ -92,7 +93,7 @@ export default function OperatorPage() {
       .then(r => setHealth(r.ok ? 'online' : 'offline'))
       .catch(() => setHealth('offline'));
 
-    fetch('/api/crm/metrics')
+    fetch('/api/crm/metrics', { headers: getSla113AdminHeaders() })
       .then(r => r.ok ? r.json() : null)
       .then(d => { if (d?.success) setMetrics(d.metrics); })
       .catch(() => {});
