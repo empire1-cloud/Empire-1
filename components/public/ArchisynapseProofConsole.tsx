@@ -5,6 +5,7 @@ import { useState } from 'react';
 type ProofState = 'ready' | 'validated' | 'blocked';
 
 const checks = [
+  ['Fable-5 intent scope', 'PASS', 'Sandbox intent permits only this Lyrica royalty proof.'],
   ['Merchant identity', 'PASS', 'Sandbox fixture is scoped to Lyrica 3.'],
   ['Provenance packet', 'PASS', 'Ownership event and remix lineage are present.'],
   ['Royalty splits', 'PASS', 'Creator 80% + collaborator 20% = 100%.'],
@@ -95,4 +96,3 @@ export default function ArchisynapseProofConsole() {
     </div>
   );
 }
-
