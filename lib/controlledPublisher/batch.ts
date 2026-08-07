@@ -10,11 +10,11 @@ export async function dispatchCampaignBatch(campaignId: string, input: RecordMap
   ensureAuthorization(campaign);
   const maxJobs = boundedInteger(input.max_jobs, 10, 1, 20);
   const db = await getDb();
-  const jobs = await db.collection('gtm_publish_jobs')
+  const jobs = await db.collection<PublisherJob>('gtm_publish_jobs')
     .find({ campaign_id: campaignId, status: { $in: ['QUEUED', 'BLOCKED', 'FAILED'] } }, { projection: { _id: 0 } })
     .sort({ created_at: 1 })
     .limit(maxJobs)
-    .toArray() as PublisherJob[];
+    .toArray();
 
   const results: Array<{ id: string; status: string; detail?: string }> = [];
   for (const job of jobs) {
