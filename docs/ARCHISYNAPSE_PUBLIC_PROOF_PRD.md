@@ -8,6 +8,7 @@ Publish a meeting-ready Archisynapse proof surface at `/archisynapse` without re
 
 - Canonical implementation repository: `empire1-cloud/archisynapse-v2`
 - Product boundary: Archisynapse is an independent Empire-1 universe and the ledger, receipt, risk, and payment-orchestration rail used by products such as Lyrica 3.
+- Governance boundary: Fable-5 governs intent, evidence, authorization, and release policy; Archisynapse owns the financial execution boundary.
 - Current processor boundary: external processing is disabled by default.
 
 ## Scope
@@ -24,6 +25,7 @@ Publish a meeting-ready Archisynapse proof surface at `/archisynapse` without re
 - No card, bank, wallet, or customer data.
 - No claim of production readiness, certification, uptime, throughput, settlement speed, or live payouts.
 - No fabricated signature or backend receipt.
+- No claim that the sandbox fixture is already a signed Fable-5 token exchange.
 - No deployment of the multi-service financial backend before its database, secrets, processor sandbox, and recovery gates are verified.
 
 ## Acceptance criteria
@@ -34,4 +36,3 @@ Publish a meeting-ready Archisynapse proof surface at `/archisynapse` without re
 4. The external-settlement action resolves to `BLOCKED`, with the disabled processor identified as the governing rule.
 5. The page distinguishes implemented code from pending deployment proof.
 6. The ecosystem navigator links to `/archisynapse` and keeps Archisynapse in active development.
-
