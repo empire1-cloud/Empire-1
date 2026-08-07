@@ -72,7 +72,9 @@ const ITEMS: EcosystemItem[] = [
     name: 'Archisynapse',
     desc: 'Ledger, fraud, royalty, settlement, verification, and payment infrastructure for trusted revenue movement.',
     status: 'Active development',
-    displayUrl: 'Public URL not published yet',
+    href: '/archisynapse',
+    displayUrl: 'empire1.cloud/archisynapse',
+    action: 'Open proof mode',
     accent: 'var(--gold)',
   },
   {
