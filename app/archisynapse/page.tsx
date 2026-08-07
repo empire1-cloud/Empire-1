@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 const statusRows = [
+  ['Fable-5 intent exchange', 'Interface proof only', 'Direct signed token exchange remains an integration gate.'],
   ['Payment records', 'Implemented in code', 'Approved processor sandbox proof remains a release gate.'],
   ['Double-entry ledger', 'Implemented in code', 'Reconciliation and failure testing continue.'],
   ['Royalty receipt path', 'Implemented behind a flag', 'Deployment verification with approved tenant keys remains.'],
@@ -29,7 +30,7 @@ export default function ArchisynapsePage() {
       <section className="hero wrap archi-hero">
         <div className="eyebrow">ARCHISYNAPSE · PUBLIC PROOF MODE</div>
         <h1>Money does not move because a screen says “done.”</h1>
-        <p>Archisynapse is the independent ledger, risk, royalty, receipt, and payment-orchestration rail inside the Empire-1 federation. This public surface proves the control boundary without pretending the financial backend is already in production.</p>
+        <p>Archisynapse is the independent ledger, risk, royalty, receipt, and payment-orchestration rail inside the Empire-1 federation. Fable-5 governs intent, evidence, authorization, and release policy; Archisynapse owns the financial execution boundary. This public surface proves that relationship without pretending the financial backend is already in production.</p>
         <div className="archi-badges">
           <span className="archi-badge gold">Sandbox interface live</span>
           <span className="archi-badge red">External processor disabled</span>
@@ -39,10 +40,10 @@ export default function ArchisynapsePage() {
 
       <section className="section">
         <div className="wrap">
-          <div className="eyebrow">GOVERNED ROYALTY PATH</div>
+          <div className="eyebrow">FABLE-5 GOVERNED ROYALTY PATH</div>
           <h2>Lyrica owns the creator event. Archisynapse proves the money path.</h2>
           <div className="archi-flow">
-            <div className="archi-step"><b>01 · INTENT</b><span>Lyrica submits an authorized royalty obligation.</span></div>
+            <div className="archi-step"><b>01 · FABLE-5 INTENT</b><span>A scoped intent authorizes only Lyrica&apos;s royalty obligation.</span></div>
             <div className="archi-step"><b>02 · IDENTITY</b><span>Tenant and merchant boundaries are checked.</span></div>
             <div className="archi-step"><b>03 · PROVENANCE</b><span>Ownership, lineage, splits, and idempotency are verified.</span></div>
             <div className="archi-step"><b>04 · LEDGER</b><span>Only the transaction service may create balanced postings.</span></div>
@@ -64,7 +65,7 @@ export default function ArchisynapsePage() {
             ))}
           </div>
           <div className="archi-truth">
-            <p><strong>Current public truth:</strong> the multi-service backend contains payment, ledger, risk, analytics, gateway, idempotency, merchant lifecycle, and receipt implementation. Production database verification, managed secrets, processor sandbox evidence, and recovery proof remain release gates. Until those gates pass, this page stays a sandbox proof and external money movement stays off.</p>
+            <p><strong>Current public truth:</strong> the console models the Fable-5 governance contract with sandbox fixtures; it is not yet a signed Fable-5 token exchange. The multi-service backend contains payment, ledger, risk, analytics, gateway, idempotency, merchant lifecycle, and receipt implementation. Production database verification, managed secrets, processor sandbox evidence, and recovery proof remain release gates. Until those gates pass, this page stays a sandbox proof and external money movement stays off.</p>
           </div>
           <div className="archi-links">
             <a className="btn btn-primary" href="https://github.com/empire1-cloud/archisynapse-v2" target="_blank" rel="noreferrer">Inspect canonical code ↗</a>
@@ -76,4 +77,3 @@ export default function ArchisynapsePage() {
     </PublicPageShell>
   );
 }
-
