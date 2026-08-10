@@ -128,12 +128,12 @@ export default function HicPage() {
       <section className="section">
         <div className="wrap">
           <div className="eyebrow">ACCESS</div>
-          <h2>Use the Core directly, or through a universe.</h2>
-          <p>The HIC is available as a standalone intelligence layer, or as the engine underneath Revenue OS, SLA113, and other Empire-1 universes. Same core, different surfaces.</p>
+          <h2>Access the Core through Empire-1.</h2>
+          <p>HIC is the intelligence core inside Empire-1. Customers access it through Empire-1 products, licensed integrations, and SLA113 deployments—not through a separate HIC storefront.</p>
           <div className="cta-row">
-            <a href="/revenue-os" className="btn btn-primary">Revenue OS →</a>
-            <a href="/enterprise" className="btn btn-ghost">Enterprise Deployment →</a>
-            <a href="/licensing" className="btn btn-ghost">License the Engine →</a>
+            <a href="/licensing" className="btn btn-primary">View HIC Pricing →</a>
+            <a href="/revenue-os" className="btn btn-ghost">Revenue OS →</a>
+            <a href="/enterprise" className="btn btn-ghost">Deploy Through Empire-1 →</a>
           </div>
         </div>
       </section>
