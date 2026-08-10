@@ -586,7 +586,7 @@ const LANDING_HTML = String.raw`
       <a href="/ecosystem">Ecosystem</a>
       <a href="/hic">HIC</a>
       <a href="/enterprise">Enterprise</a>
-      <a href="#entry">Licensing</a>
+      <a href="/licensing">Licensing</a>
       <a href="/try-revenue-os" class="nav-cta">Try Free →</a>
     </nav>
   </div>
@@ -633,7 +633,7 @@ const LANDING_HTML = String.raw`
         <div class="ledger-tier blue">Empire-1 HIC</div>
         <div class="ledger-body">
           <h3>The Intelligence Core</h3>
-          <p>The standalone intelligence core — routing, canon, specialized engines, drift monitoring, and operator intelligence.</p>
+          <p>The intelligence core inside Empire-1 — routing, canon, specialized engines, drift monitoring, and operator intelligence.</p>
         </div>
         <div></div>
       </div>
@@ -922,7 +922,7 @@ const LANDING_HTML = String.raw`
       <a href="/ecosystem" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Ecosystem</a>
       <a href="/hic" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">HIC</a>
       <a href="/enterprise" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Enterprise</a>
-      <a href="#entry" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Licensing</a>
+      <a href="/licensing" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;">Licensing</a>
     </div>
   </div>
   <div class="wrap copy">© 2026 EMPIRE 1 · founder@empire1.cloud</div>
