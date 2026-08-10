@@ -633,7 +633,7 @@ const LANDING_HTML = String.raw`
         <div class="ledger-tier blue">Empire-1 HIC</div>
         <div class="ledger-body">
           <h3>The Intelligence Core</h3>
-          <p>The standalone intelligence core — routing, canon, specialized engines, drift monitoring, and operator intelligence.</p>
+          <p>The intelligence core inside Empire-1 — routing, canon, specialized engines, drift monitoring, and operator intelligence.</p>
         </div>
         <div></div>
       </div>
