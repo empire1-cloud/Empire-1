@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const DEFAULT_BACKEND_URL = 'https://api.empire1.cloud';
-const DEFAULT_SLA113_BACKEND_URL = 'https://api.empire1.cloud';
+const DEFAULT_SLA113_BACKEND_URL = 'https://api.sla113.southernlifestyle.org';
 
 function normalizeBaseUrl(url: string): string {
   return url.replace(/\/$/, '');
@@ -33,56 +33,46 @@ function buildTargetUrl(pathParts: string[], request: NextRequest): string {
   return `${base}/${path}${search}`;
 }
 
-async function getCloudRunIdentityToken(audience: string): Promise<string | null> {
-  try {
-    const url = `http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=${encodeURIComponent(audience)}&format=full`;
-    const res = await fetch(url, {
-      headers: { 'Metadata-Flavor': 'Google' },
-      cache: 'no-store',
-    });
-
-    if (!res.ok) return null;
-    return await res.text();
-  } catch {
-    return null;
-  }
-}
-
 async function proxy(request: NextRequest, context: { params: { path: string[] } }): Promise<NextResponse> {
   const pathParts = context.params.path || [];
   const targetUrl = buildTargetUrl(pathParts, request);
-  const backendBase = getBackendBase(pathParts);
-  const backendOrigin = new URL(backendBase).origin;
 
   const headers = new Headers(request.headers);
   headers.delete('host');
   headers.delete('content-length');
-
-  // Preserve app-level auth header while adding Cloud Run identity header.
-  const identityToken = await getCloudRunIdentityToken(backendOrigin);
-  if (identityToken) {
-    headers.set('x-serverless-authorization', `Bearer ${identityToken}`);
-  }
+  headers.delete('x-serverless-authorization');
 
   const method = request.method.toUpperCase();
   const hasBody = !['GET', 'HEAD'].includes(method);
 
-  const upstream = await fetch(targetUrl, {
-    method,
-    headers,
-    body: hasBody ? request.body : undefined,
-    duplex: hasBody ? 'half' : undefined,
-    redirect: 'manual',
-  } as RequestInit & { duplex?: 'half' });
+  try {
+    const upstream = await fetch(targetUrl, {
+      method,
+      headers,
+      body: hasBody ? request.body : undefined,
+      duplex: hasBody ? 'half' : undefined,
+      redirect: 'manual',
+      cache: 'no-store',
+    } as RequestInit & { duplex?: 'half' });
 
-  const responseHeaders = new Headers(upstream.headers);
-  responseHeaders.delete('content-encoding');
-  responseHeaders.delete('transfer-encoding');
+    const responseHeaders = new Headers(upstream.headers);
+    responseHeaders.delete('content-encoding');
+    responseHeaders.delete('transfer-encoding');
 
-  return new NextResponse(upstream.body, {
-    status: upstream.status,
-    headers: responseHeaders,
-  });
+    return new NextResponse(upstream.body, {
+      status: upstream.status,
+      headers: responseHeaders,
+    });
+  } catch (error) {
+    console.error('Empire API proxy failed', { targetUrl, error });
+    return NextResponse.json(
+      {
+        error: 'backend_unreachable',
+        message: 'Empire-1 could not reach its configured API backend.',
+      },
+      { status: 502 },
+    );
+  }
 }
 
 export async function GET(request: NextRequest, context: { params: { path: string[] } }) {
