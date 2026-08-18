@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT/backend"
+exec "${PYTHON:-python}" -m uvicorn app.main:app --host "${EMPIRE_ROUTER_HOST:-127.0.0.1}" --port "${EMPIRE_ROUTER_PORT:-8000}" "$@"
