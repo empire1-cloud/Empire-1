@@ -61,6 +61,7 @@ from routers.system import router as system_router
 from app.routers.crm import router as crm_router
 from app.routers.business_analytics import router as business_analytics_router
 from app.routers.gtm import router as gtm_router
+from app.routers.empire_router import router as empire_router
 
 # Import and include all engine routers
 from routers.engines import (
@@ -184,8 +185,9 @@ async def get_status_checks():
     
     return status_checks
 
-# Include the router in the main app
+# Include routers in the main app
 app.include_router(api_router)
+app.include_router(empire_router)
 
 # Root-level health endpoint (for load balancer health checks)
 @app.get("/health")
