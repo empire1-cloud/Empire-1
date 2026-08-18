@@ -23,6 +23,7 @@ from app.routers.sla113_billing import router as sla113_billing_router
 from app.routers.sla113_engine_dashboard import router as sla113_engine_dashboard_router
 from app.routers.hybrid_engine import router as hybrid_engine_router
 from app.routers.empire1 import router as empire1_router
+from app.routers.empire_router import router as empire_router
 from app.routers.southern import router as southern_router
 from app.routers.sla113_universe import router as sla113_universe_router
 from app.routers.southern_engine_pack import router as southern_engine_pack_router
@@ -85,6 +86,7 @@ app.include_router(sla113_billing_router)
 app.include_router(sla113_engine_dashboard_router)
 app.include_router(hybrid_engine_router)
 app.include_router(empire1_router)
+app.include_router(empire_router)
 app.include_router(southern_router)
 app.include_router(sla113_universe_router)
 app.include_router(southern_engine_pack_router)
