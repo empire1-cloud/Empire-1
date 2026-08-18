@@ -1,0 +1,207 @@
+#!/usr/bin/env python3
+"""Launch real coding-agent clients through Empire-1 Router."""
+
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+import urllib.request
+from pathlib import Path
+from typing import Any
+
+ROUTER_URL = os.getenv("EMPIRE_ROUTER_URL", "http://127.0.0.1:8000/empire1/router").rstrip("/")
+TOKEN = os.getenv("EMPIRE_ROUTER_TOKEN", "").strip() or "empire-local"
+
+
+def headers() -> dict[str, str]:
+    return {"Authorization": f"Bearer {TOKEN}"}
+
+
+def fetch_json(path: str) -> dict[str, Any]:
+    request = urllib.request.Request(f"{ROUTER_URL}/{path.lstrip('/')}", headers=headers())
+    with urllib.request.urlopen(request, timeout=4) as response:
+        return json.load(response)
+
+
+def preflight() -> None:
+    try:
+        payload = fetch_json("health")
+    except Exception as exc:
+        print(f"Empire-1 Router is not reachable at {ROUTER_URL}: {exc}", file=sys.stderr)
+        raise SystemExit(1)
+    if payload.get("status") != "online":
+        print(f"Empire-1 Router is not healthy: {payload}", file=sys.stderr)
+        raise SystemExit(1)
+
+
+def binary(name: str, hint: str) -> str:
+    path = shutil.which(name)
+    if not path:
+        print(f"{name} is not installed. {hint}", file=sys.stderr)
+        raise SystemExit(127)
+    return path
+
+
+def run(command: list[str], env: dict[str, str] | None = None) -> None:
+    raise SystemExit(subprocess.call(command, env=env or os.environ.copy()))
+
+
+def clean_env(prefixes: tuple[str, ...], extra: set[str] | None = None) -> dict[str, str]:
+    extra = extra or set()
+    return {key: value for key, value in os.environ.items() if not any(key.startswith(prefix) for prefix in prefixes) and key not in extra}
+
+
+def model_ids() -> list[str]:
+    payload = fetch_json("v1/models")
+    return [str(item["id"]) for item in payload.get("data", []) if isinstance(item, dict) and item.get("id")]
+
+
+def claude(args: list[str]) -> None:
+    preflight()
+    executable = binary("claude", "Install it with the official Claude Code installer.")
+    env = clean_env(("ANTHROPIC_",), {"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC"})
+    env.update({
+        "ANTHROPIC_BASE_URL": ROUTER_URL,
+        "ANTHROPIC_AUTH_TOKEN": TOKEN,
+        "CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY": "1",
+        "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "190000",
+    })
+    run([executable, *args], env)
+
+
+def toml(key: str, value: Any) -> str:
+    return f"{key}={json.dumps(value)}"
+
+
+def codex(args: list[str]) -> None:
+    preflight()
+    executable = binary("codex", "Install it with the official Codex installer.")
+    launcher = shutil.which("empire") or str(Path(__file__).resolve())
+    config = [
+        "-c", toml("model_provider", "empire1"),
+        "-c", toml("model_providers.empire1.name", "Empire-1 Router"),
+        "-c", toml("model_providers.empire1.base_url", f"{ROUTER_URL}/v1"),
+        "-c", toml("model_providers.empire1.auth.command", launcher),
+        "-c", toml("model_providers.empire1.auth.args", ["token"]),
+        "-c", toml("model_providers.empire1.wire_api", "responses"),
+    ]
+    models = model_ids()
+    if models:
+        config += ["-c", toml("model", models[0])]
+    env = clean_env(("OPENAI_",), {"CODEX_API_KEY"})
+    run([executable, *config, *args], env)
+
+
+def opencode(args: list[str]) -> None:
+    executable = binary("opencode", "Install it from https://opencode.ai/install")
+    passthrough = {"auth", "upgrade", "uninstall", "completion", "--help", "-h", "--version", "-v"}
+    if args and args[0] in passthrough:
+        run([executable, *args])
+    preflight()
+    models = model_ids()
+    if not models:
+        print("Empire-1 Router has no configured model catalog.", file=sys.stderr)
+        raise SystemExit(1)
+    provider_id = "empire-1"
+    model_config = {model: {"name": model, "reasoning": True} for model in models}
+    provider = {"name": "Empire-1 Router", "npm": "@ai-sdk/openai", "options": {"baseURL": f"{ROUTER_URL}/v1", "apiKey": "{env:EMPIRE_OPENCODE_API_KEY}"}}
+    file_config = {"provider": {provider_id: {**provider, "models": model_config}}}
+    overlay = {"provider": {provider_id: provider}, "enabled_providers": [provider_id], "disabled_providers": [], "model": f"{provider_id}/{models[0]}", "small_model": f"{provider_id}/{models[0]}"}
+    with tempfile.TemporaryDirectory(prefix="empire-opencode-") as temp:
+        config_path = Path(temp, "opencode.json")
+        config_path.write_text(json.dumps(file_config, indent=2), encoding="utf-8")
+        env = clean_env(("EMPIRE_OPENCODE_",), {"OPENCODE_CONFIG", "OPENCODE_CONFIG_CONTENT"})
+        env["OPENCODE_CONFIG"] = str(config_path)
+        env["OPENCODE_CONFIG_CONTENT"] = json.dumps(overlay, separators=(",", ":"))
+        env["EMPIRE_OPENCODE_API_KEY"] = TOKEN
+        run([executable, *args], env)
+
+
+def cline(args: list[str]) -> None:
+    executable = binary("cline", "Install it with: npm install -g cline")
+    preflight()
+    models = model_ids()
+    if not models:
+        print("Empire-1 Router has no configured model catalog.", file=sys.stderr)
+        raise SystemExit(1)
+    provider_id = "openai-native"
+    with tempfile.TemporaryDirectory(prefix="empire-cline-") as temp:
+        settings = Path(temp, "settings")
+        settings.mkdir(mode=0o700)
+        providers = {
+            "version": 1,
+            "modes": {},
+            "lastUsedProvider": provider_id,
+            "providers": {provider_id: {"settings": {"provider": provider_id, "apiKey": TOKEN, "model": models[0], "protocol": "openai-responses", "baseUrl": f"{ROUTER_URL}/v1", "capabilities": ["streaming", "tools"]}, "tokenSource": "manual"}},
+        }
+        model_entries = {model: {"name": model, "capabilities": ["streaming", "tools", "reasoning"], "supportsReasoning": True, "apiFormat": "openai-responses"} for model in models}
+        model_registry = {"version": 1, "providers": {provider_id: {"provider": {"name": "Empire-1 Router", "baseUrl": f"{ROUTER_URL}/v1", "defaultModelId": models[0], "protocol": "openai-responses", "client": "openai", "capabilities": ["streaming", "tools"]}, "models": model_entries}}}
+        provider_path = settings / "providers.json"
+        models_path = settings / "models.json"
+        provider_path.write_text(json.dumps(providers, indent=2), encoding="utf-8")
+        models_path.write_text(json.dumps(model_registry, indent=2), encoding="utf-8")
+        os.chmod(provider_path, 0o600)
+        os.chmod(models_path, 0o600)
+        env = os.environ.copy()
+        env["CLINE_PROVIDER_SETTINGS_PATH"] = str(provider_path)
+        env["CLINE_SESSION_BACKEND_MODE"] = "local"
+        run([executable, "--provider", provider_id, *args], env)
+
+
+def pi(args: list[str]) -> None:
+    preflight()
+    executable = binary("pi", "Install it from https://pi.dev/install.sh")
+    extension = Path(os.getenv("EMPIRE_PI_EXTENSION", "~/.local/share/empire1/empire_pi_extension.ts")).expanduser()
+    if not extension.is_file():
+        print(f"Empire Pi extension is missing at {extension}. Re-run install-empire-agents.sh", file=sys.stderr)
+        raise SystemExit(1)
+    env = clean_env(("EMPIRE_PI_",))
+    env["EMPIRE_PI_BASE_URL"] = ROUTER_URL
+    env["EMPIRE_PI_API_KEY"] = TOKEN
+    run([executable, "-e", str(extension), "--models", "empire-1/**", *args], env)
+
+
+def doctor() -> None:
+    payload = fetch_json("health")
+    print(json.dumps(payload, indent=2))
+    for name in ("claude", "codex", "opencode", "pi", "cline"):
+        path = shutil.which(name)
+        print(f"{name:10} {'OK ' + path if path else 'not installed'}")
+
+
+def usage() -> None:
+    print("Usage: empire <claude|codex|opencode|pi|cline|models|doctor|token> [args...]")
+
+
+def main() -> None:
+    if len(sys.argv) < 2:
+        usage()
+        raise SystemExit(2)
+    command, args = sys.argv[1], sys.argv[2:]
+    if command == "token":
+        print(TOKEN)
+    elif command == "models":
+        print(json.dumps(fetch_json("v1/models"), indent=2))
+    elif command == "doctor":
+        doctor()
+    elif command == "claude":
+        claude(args)
+    elif command == "codex":
+        codex(args)
+    elif command == "opencode":
+        opencode(args)
+    elif command == "pi":
+        pi(args)
+    elif command == "cline":
+        cline(args)
+    else:
+        usage()
+        raise SystemExit(2)
+
+
+if __name__ == "__main__":
+    main()
