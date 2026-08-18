@@ -1,4 +1,31 @@
-import type { ExtensionAPI, ProviderModelConfig } from "@earendil-works/pi-coding-agent";
+type ProviderModelConfig = {
+  id: string;
+  name: string;
+  reasoning: boolean;
+  input: string[];
+  cost: {
+    input: number;
+    output: number;
+    cacheRead: number;
+    cacheWrite: number;
+  };
+  contextWindow: number;
+  maxTokens: number;
+};
+
+type ExtensionAPI = {
+  registerProvider: (
+    id: string,
+    config: {
+      name: string;
+      baseUrl: string;
+      apiKey: string;
+      authHeader: boolean;
+      api: "anthropic-messages";
+      models: ProviderModelConfig[];
+    },
+  ) => void;
+};
 
 const API_KEY_ENV = "EMPIRE_PI_API_KEY";
 const BASE_URL_ENV = "EMPIRE_PI_BASE_URL";
