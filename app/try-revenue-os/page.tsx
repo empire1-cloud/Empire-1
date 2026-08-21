@@ -143,7 +143,7 @@ export default function TryRevenueOSPage() {
     <div>
       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem' }}>{label}</label>
       <input value={(form as any)[field]} onChange={f(field)} placeholder={placeholder}
-        style={{ width: '100%', padding: '0.6rem 0.75rem', border: '1px solid #ccc', borderRadius: 6, fontSize: '0.95rem', background: '#fff' }} />
+        style={{ width: '100%', padding: '0.6rem 0.75rem', border: '1px solid #ccc', borderRadius: 6, fontSize: '0.95rem', background: '#fff', color: '#111' }} />
     </div>
   );
 
@@ -151,7 +151,7 @@ export default function TryRevenueOSPage() {
     <div>
       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem' }}>{label}</label>
       <select value={(form as any)[field]} onChange={f(field)}
-        style={{ width: '100%', padding: '0.6rem 0.75rem', border: '1px solid #ccc', borderRadius: 6, fontSize: '0.95rem', background: '#fff' }}>
+        style={{ width: '100%', padding: '0.6rem 0.75rem', border: '1px solid #ccc', borderRadius: 6, fontSize: '0.95rem', background: '#fff', color: '#111' }}>
         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>
