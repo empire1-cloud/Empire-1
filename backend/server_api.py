@@ -53,8 +53,8 @@ api_router.include_router(revenue_receipts_router)
 app.include_router(api_router)
 
 
-@app.get("/health")
-async def health():
+@api_router.get("/health")
+async def health() -> dict:
     return {
         "status": "ok",
         "service": "empire1-api",
