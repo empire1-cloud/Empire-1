@@ -28,8 +28,9 @@ function getBackendBase(pathParts: string[]): string {
 
 function buildTargetUrl(pathParts: string[], request: NextRequest): string {
   const base = getBackendBase(pathParts);
-  const path = pathParts.join('/');
   const search = request.nextUrl.search || '';
+  // Prepend "api" since Next.js route strips the /api prefix
+  const path = ['api', ...pathParts].join('/');
   return `${base}/${path}${search}`;
 }
 
