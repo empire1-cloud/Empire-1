@@ -46,9 +46,11 @@ api_router = APIRouter(prefix="/api")
 
 from app.routers.revenue_os import router as revenue_os_router
 from app.routers.revenue_receipts import router as revenue_receipts_router
+from app.routers.hic import router as hic_router
 
 api_router.include_router(revenue_os_router)
 api_router.include_router(revenue_receipts_router)
+api_router.include_router(hic_router)
 
 app.include_router(api_router)
 
@@ -59,7 +61,7 @@ async def health() -> dict:
         "status": "ok",
         "service": "empire1-api",
         "version": "1.0.0",
-        "routers": ["revenue-os", "revenue-receipts"],
+        "routers": ["revenue-os", "revenue-receipts", "hic"],
     }
 
 
