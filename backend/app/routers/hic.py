@@ -1,373 +1,256 @@
+"""Hybrid Intelligence Core API.
+
+This router is intentionally thin: execution is delegated to the real
+HybridIntelligenceCore service. It must never manufacture successful model
+execution, telemetry, drift, or verification claims.
 """
-HIC API — Hybrid Intelligence Core
-Engine registry, execution, pipeline compose, analytics, drift monitoring.
-Pure Python, no MongoDB. In-memory stores for analytics and history.
-"""
+
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
-from typing import Optional, List, Dict, Any
-from datetime import datetime, timezone
-import time
-import uuid
-import random
-import statistics
+
+from services.hybrid_core import get_core, TaskType
 
 router = APIRouter(prefix="/hybrid", tags=["HIC"])
 
-# ── Engine Registry ──────────────────────────────────────────────────────────
-
 ENGINE_CATEGORIES = {
     "Core": {
-        "color": "#e6007a",
         "engines": {
-            "hybrid_intelligence_core": "Master orchestrator — unified execution endpoint",
+            "hybrid_intelligence_core": "Master orchestrator",
             "routing_engine": "Task classification and model selection",
-            "canon_enforcer": "Output normalization — strips AI-tells, enforces voice",
-            "drift_monitor": "Model behavioral tracking against baselines",
-            "error_handler": "Structured error responses",
-        },
+            "canon_enforcer": "Output normalization and validation",
+            "drift_monitor": "Behavioral drift checks",
+            "error_handler": "Structured error handling",
+        }
     },
     "Intelligence": {
-        "color": "#007aff",
         "engines": {
-            "strategy_engine": "Generate high-level actionable strategies",
+            "strategy_engine": "Generate actionable strategies",
             "plan_builder_engine": "Convert goals into execution plans",
-            "analysis_engine": "Deep SWOT and structured analysis",
-            "opportunity_mapper_engine": "Identify high-leverage opportunities",
-            "evaluator_engine": "Score and evaluate with criteria",
-            "pricing_engine": "Generate pricing structures and tiers",
+            "analysis_engine": "Structured analysis",
+            "opportunity_mapper_engine": "Identify opportunities",
+            "evaluator_engine": "Evaluate against criteria",
+            "pricing_engine": "Generate pricing structures",
             "blueprint_engine": "System architecture blueprints",
-            "persona_engine": "User/customer persona generation",
-        },
+            "persona_engine": "Customer/persona analysis",
+        }
     },
     "Creative": {
-        "color": "#bf5af2",
         "engines": {
-            "anime_character_engine": "Original anime character creation",
-            "anime_lore_engine": "World-building and mythology",
-            "anime_story_engine": "Narrative structure and story arcs",
-            "art_direction_engine": "Visual direction for creative projects",
-        },
+            "anime_character_engine": "Character creation",
+            "anime_lore_engine": "World-building",
+            "anime_story_engine": "Narrative structure",
+            "art_direction_engine": "Visual direction",
+        }
     },
     "Business": {
-        "color": "#30d158",
         "engines": {
-            "money_pipeline_engine": "Transform ideas into monetizable systems",
-            "pipeline_composer_engine": "Multi-engine workflow orchestration",
-        },
+            "money_pipeline_engine": "Revenue pipeline generation",
+            "pipeline_composer_engine": "Multi-step orchestration",
+        }
     },
 }
 
-ALL_ENGINES = {}
-for cat, info in ENGINE_CATEGORIES.items():
-    for eid, desc in info["engines"].items():
-        ALL_ENGINES[eid] = {
-            "id": eid,
-            "name": eid.replace("_engine", "").replace("_", " ").title(),
-            "description": desc,
-            "category": cat,
-            "color": info["color"],
-            "status": "ready",
-            "version": "2.0.0",
+ALL_ENGINES: Dict[str, Dict[str, str]] = {}
+for category, info in ENGINE_CATEGORIES.items():
+    for engine_id, description in info["engines"].items():
+        ALL_ENGINES[engine_id] = {
+            "id": engine_id,
+            "name": engine_id.replace("_engine", "").replace("_", " ").title(),
+            "description": description,
+            "category": category,
+            "status": "available",
         }
-
-# ── In-memory analytics ─────────────────────────────────────────────────────
-
-_executions: List[Dict[str, Any]] = []
-_engine_stats: Dict[str, Dict[str, Any]] = {}
-
-def _record_execution(engine: str, success: bool, latency_ms: float, error: Optional[str] = None):
-    now = datetime.now(timezone.utc).isoformat()
-    entry = {
-        "id": str(uuid.uuid4()),
-        "engine": engine,
-        "success": success,
-        "latency_ms": round(latency_ms, 1),
-        "error": error,
-        "timestamp": now,
-    }
-    _executions.append(entry)
-    if len(_executions) > 500:
-        _executions.pop(0)
-
-    if engine not in _engine_stats:
-        _engine_stats[engine] = {"total": 0, "successes": 0, "errors": 0, "latencies": []}
-    s = _engine_stats[engine]
-    s["total"] += 1
-    if success:
-        s["successes"] += 1
-    else:
-        s["errors"] += 1
-    s["latencies"].append(latency_ms)
-    if len(s["latencies"]) > 100:
-        s["latencies"] = s["latencies"][-100:]
-
-
-# ── Endpoints ────────────────────────────────────────────────────────────────
-
-@router.get("/engines")
-async def list_engines():
-    """List all registered engines with status."""
-    engines = []
-    for eid, info in ALL_ENGINES.items():
-        stats = _engine_stats.get(eid, {})
-        total = stats.get("total", 0)
-        errors = stats.get("errors", 0)
-        lats = stats.get("latencies", [])
-        engines.append({
-            **info,
-            "total_executions": total,
-            "error_rate": round(errors / total * 100, 1) if total > 0 else 0,
-            "avg_latency_ms": round(statistics.mean(lats), 1) if lats else 0,
-        })
-    return {"engines": engines, "total": len(engines)}
-
-
-@router.get("/engines/{engine_id}")
-async def get_engine(engine_id: str):
-    """Get single engine details."""
-    if engine_id not in ALL_ENGINES:
-        raise HTTPException(status_code=404, detail=f"Engine '{engine_id}' not found")
-    info = ALL_ENGINES[engine_id]
-    stats = _engine_stats.get(engine_id, {})
-    total = stats.get("total", 0)
-    errors = stats.get("errors", 0)
-    lats = stats.get("latencies", [])
-    return {
-        **info,
-        "total_executions": total,
-        "error_rate": round(errors / total * 100, 1) if total > 0 else 0,
-        "avg_latency_ms": round(statistics.mean(lats), 1) if lats else 0,
-    }
-
-
-@router.get("/engines/categories")
-async def get_categories():
-    """Get engines grouped by category."""
-    return {"categories": ENGINE_CATEGORIES}
 
 
 class ExecuteRequest(BaseModel):
-    prompt: str
+    prompt: str = Field(min_length=1, max_length=100_000)
     engine: Optional[str] = None
-    context: Optional[str] = None
+    context: Optional[str] = Field(default=None, max_length=100_000)
     force_model: Optional[str] = None
-
-
-@router.post("/execute")
-async def execute_engine(payload: ExecuteRequest):
-    """Execute a task through the HIC core."""
-    engine = payload.engine or "hybrid_intelligence_core"
-    if engine not in ALL_ENGINES:
-        raise HTTPException(status_code=404, detail=f"Engine '{engine}' not found")
-
-    start = time.time()
-    success = True
-    error_msg = None
-
-    try:
-        # Simulate classification + execution
-        model = payload.force_model or random.choice(["claude-sonnet-4.5", "gpt-5.2", "gemini-3-flash"])
-        latency = random.uniform(0.3, 2.5)
-        time.sleep(min(latency, 0.1))  # brief realistic delay
-
-        result = {
-            "engine": engine,
-            "model": model,
-            "input": payload.prompt,
-            "output": {
-                "summary": f"Engine '{ALL_ENGINES[engine]['name']}' processed the request successfully.",
-                "steps": [
-                    f"Task classified and routed to {model}",
-                    "Canon enforcement applied — AI-tells stripped",
-                    "Format normalization complete",
-                    "Drift check passed",
-                ],
-                "risks": [],
-                "resources": [model],
-                "next_action": "Review output and iterate if needed.",
-            },
-            "metadata": {
-                "execution_id": str(uuid.uuid4()),
-                "timestamp": datetime.now(timezone.utc).isoformat(),
-                "model_used": model,
-                "canon_compliant": True,
-            },
-        }
-    except Exception as e:
-        success = False
-        error_msg = str(e)
-        result = {"error": error_msg}
-
-    elapsed = (time.time() - start) * 1000
-    _record_execution(engine, success, elapsed, error_msg)
-
-    return result
 
 
 class PipelineStep(BaseModel):
     engine: str
-    input: str
+    input: str = Field(min_length=1, max_length=100_000)
     output_key: Optional[str] = None
 
 
 class PipelineRequest(BaseModel):
-    objective: str
-    steps: List[PipelineStep]
+    objective: str = Field(min_length=1, max_length=100_000)
+    steps: List[PipelineStep] = Field(min_length=1, max_length=20)
+
+
+def _task_type_for_engine(engine: str) -> Optional[TaskType]:
+    if engine == "plan_builder_engine":
+        return TaskType.PLAN
+    if engine in {"strategy_engine", "money_pipeline_engine", "pricing_engine", "opportunity_mapper_engine", "persona_engine"}:
+        return TaskType.STRATEGY
+    if engine in {"analysis_engine", "evaluator_engine"}:
+        return TaskType.ANALYSIS
+    return None
+
+
+def _serialize_result(result: Any) -> dict:
+    if result.success:
+        return {
+            "success": True,
+            "data": result.data,
+            "metadata": result.metadata,
+        }
+    return {
+        "success": False,
+        "error": result.error,
+        "metadata": result.metadata,
+    }
+
+
+@router.get("/engines")
+async def list_engines():
+    return {"engines": list(ALL_ENGINES.values()), "total": len(ALL_ENGINES)}
+
+
+@router.get("/engines/{engine_id}")
+async def get_engine(engine_id: str):
+    engine = ALL_ENGINES.get(engine_id)
+    if not engine:
+        raise HTTPException(status_code=404, detail=f"Engine '{engine_id}' not found")
+    return engine
+
+
+@router.get("/engines/categories")
+async def get_categories():
+    return {"categories": ENGINE_CATEGORIES}
+
+
+@router.post("/execute")
+async def execute_engine(payload: ExecuteRequest):
+    """Execute through the real HybridIntelligenceCore.
+
+    No synthetic success, random model selection, fake latency, or fabricated
+    canon/drift claims are permitted here.
+    """
+    engine = payload.engine or "hybrid_intelligence_core"
+    if engine not in ALL_ENGINES:
+        raise HTTPException(status_code=404, detail=f"Engine '{engine}' not found")
+
+    core = get_core()
+    task_type = _task_type_for_engine(engine)
+    prompt = payload.prompt
+    if engine not in {"hybrid_intelligence_core", "strategy_engine", "plan_builder_engine"}:
+        prompt = f"Execute the {ALL_ENGINES[engine]['name']} responsibility.\n\n{payload.prompt}"
+
+    result = await core.execute(
+        prompt=prompt,
+        task_type=task_type,
+        context=payload.context,
+        force_model=payload.force_model,
+    )
+    return _serialize_result(result)
 
 
 @router.post("/pipeline/compose")
 async def compose_pipeline(payload: PipelineRequest):
-    """Compose and execute a multi-engine pipeline."""
+    """Run a real sequential pipeline through the HybridIntelligenceCore."""
+    core = get_core()
     results = []
-    total_start = time.time()
+    current_input = payload.objective
 
-    for i, step in enumerate(payload.steps):
+    for index, step in enumerate(payload.steps, start=1):
         if step.engine not in ALL_ENGINES:
-            results.append({"step": i + 1, "engine": step.engine, "success": False, "error": "Engine not found"})
+            results.append({"step": index, "engine": step.engine, "success": False, "error": "Engine not found"})
             continue
 
-        start = time.time()
-        model = random.choice(["claude-sonnet-4.5", "gpt-5.2", "gemini-3-flash"])
-        latency = random.uniform(0.2, 1.8)
-        time.sleep(min(latency, 0.05))
+        task_type = _task_type_for_engine(step.engine)
+        prompt = f"Engine responsibility: {ALL_ENGINES[step.engine]['name']}\nObjective: {payload.objective}\nInput from prior step: {current_input}\nStep instruction: {step.input}"
+        result = await core.execute(prompt=prompt, task_type=task_type)
+        serialized = _serialize_result(result)
+        results.append({"step": index, "engine": step.engine, **serialized})
 
-        result = {
-            "step": i + 1,
-            "engine": step.engine,
-            "success": True,
-            "model": model,
-            "output": {
-                "summary": f"Step {i + 1} — {ALL_ENGINES[step.engine]['name']} completed.",
-                "result": f"Processed input: {step.input[:80]}...",
-            },
-            "latency_ms": round((time.time() - start) * 1000, 1),
-        }
-        results.append(result)
-        _record_execution(step.engine, True, result["latency_ms"])
+        if not result.success:
+            break
+        current_input = str(result.data)
 
-    total_ms = round((time.time() - total_start) * 1000, 1)
     return {
         "objective": payload.objective,
         "steps_completed": len(results),
-        "total_latency_ms": total_ms,
         "results": results,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
     }
 
 
 @router.get("/pipeline/templates")
 async def pipeline_templates():
-    """Get available pipeline templates."""
     return {
         "templates": {
-            "strategy_to_plan": {
-                "name": "Strategy → Plan",
-                "steps": ["strategy_engine", "plan_builder_engine"],
-                "description": "Generate a strategy then convert to execution plan",
-            },
-            "full_analysis": {
-                "name": "Full Analysis",
-                "steps": ["analysis_engine", "opportunity_mapper_engine", "evaluator_engine"],
-                "description": "Deep analysis with opportunity identification and scoring",
-            },
-            "content_pipeline": {
-                "name": "Content Pipeline",
-                "steps": ["persona_engine", "strategy_engine", "art_direction_engine"],
-                "description": "Generate persona, strategy, and visual direction",
-            },
-            "monetize_idea": {
-                "name": "Monetize Idea",
-                "steps": ["strategy_engine", "pricing_engine", "money_pipeline_engine"],
-                "description": "Strategy, pricing, and revenue pipeline from an idea",
-            },
-            "product_blueprint": {
-                "name": "Product Blueprint",
-                "steps": ["blueprint_engine", "plan_builder_engine", "evaluator_engine"],
-                "description": "Architecture, plan, and evaluation for a product",
-            },
+            "strategy_to_plan": {"name": "Strategy → Plan", "steps": ["strategy_engine", "plan_builder_engine"]},
+            "full_analysis": {"name": "Full Analysis", "steps": ["analysis_engine", "opportunity_mapper_engine", "evaluator_engine"]},
+            "content_pipeline": {"name": "Content Pipeline", "steps": ["persona_engine", "strategy_engine", "art_direction_engine"]},
+            "monetize_idea": {"name": "Monetize Idea", "steps": ["strategy_engine", "pricing_engine", "money_pipeline_engine"]},
+            "product_blueprint": {"name": "Product Blueprint", "steps": ["blueprint_engine", "plan_builder_engine", "evaluator_engine"]},
         }
     }
 
 
 @router.get("/analytics")
 async def get_analytics():
-    """Get real-time analytics summary."""
-    total = len(_executions)
-    successes = sum(1 for e in _executions if e["success"])
-    errors = total - successes
-    all_latencies = [e["latency_ms"] for e in _executions]
-
-    # Per-engine breakdown
-    per_engine = {}
-    for eid, stats in _engine_stats.items():
-        t = stats["total"]
-        s = stats["successes"]
-        lats = stats["latencies"]
-        per_engine[eid] = {
-            "name": ALL_ENGINES.get(eid, {}).get("name", eid),
-            "total": t,
-            "successes": s,
-            "errors": stats["errors"],
-            "success_rate": round(s / t * 100, 1) if t > 0 else 0,
-            "avg_latency_ms": round(statistics.mean(lats), 1) if lats else 0,
-        }
-
+    """Return only telemetry actually recorded by the core process."""
+    core = get_core()
+    log = list(core.execution_log)
+    successes = sum(1 for entry in log if entry.get("success"))
     return {
+        "source": "HybridIntelligenceCore.execution_log",
+        "persistence": "process-local; not a durable production telemetry store",
         "summary": {
-            "total_executions": total,
-            "success_rate": round(successes / total * 100, 1) if total > 0 else 0,
-            "avg_latency_ms": round(statistics.mean(all_latencies), 1) if all_latencies else 0,
-            "total_errors": errors,
+            "total_executions": len(log),
+            "successes": successes,
+            "errors": len(log) - successes,
         },
-        "per_engine": per_engine,
-        "recent": _executions[-20:][::-1],
+        "recent": list(reversed(log[-20:])),
     }
 
 
 @router.get("/drift")
 async def get_drift_report():
-    """Get drift monitoring report."""
-    models = ["gpt-5.2", "claude-sonnet-4.5", "gemini-3-flash"]
-    report = {}
-    for model in models:
-        stats = _engine_stats.get(model, {})
-        report[model] = {
-            "status": "normal",
-            "compliance_rate": round(random.uniform(0.92, 1.0), 3),
-            "response_quality": round(random.uniform(0.88, 1.0), 3),
-            "avg_length": random.randint(600, 1200),
-            "issues": [],
-        }
-
+    """Do not manufacture drift scores; return the core's recorded execution metadata."""
+    core = get_core()
+    models = {}
+    for entry in core.execution_log:
+        metadata = entry.get("metadata") or {}
+        model = metadata.get("model_used")
+        if model:
+            models.setdefault(model, {"executions": 0, "last_drift_status": None})
+            models[model]["executions"] += 1
+            models[model]["last_drift_status"] = metadata.get("drift_status")
     return {
-        "overall_status": "healthy",
-        "models": report,
+        "status": "observed",
+        "models": models,
+        "note": "No synthetic compliance or quality percentages are emitted.",
         "checked_at": datetime.now(timezone.utc).isoformat(),
     }
 
 
 @router.get("/history")
 async def get_history(limit: int = 50):
-    """Get execution history."""
+    core = get_core()
+    limit = max(1, min(limit, 100))
+    log = core.execution_log
     return {
-        "executions": _executions[-limit:][::-1],
-        "total": len(_executions),
+        "executions": list(reversed(log[-limit:])),
+        "total": len(log),
+        "persistence": "process-local; durable history is not claimed",
     }
 
 
 @router.get("/status")
 async def system_status():
-    """HIC system status."""
+    core = get_core()
     return {
         "status": "operational",
         "version": "2.0.0",
         "engines_registered": len(ALL_ENGINES),
-        "total_executions": len(_executions),
-        "uptime": "active",
-        "models": {
-            "gpt-5.2": "available",
-            "claude-sonnet-4.5": "available",
-            "gemini-3-flash": "available",
-        },
+        "total_recorded_executions": len(core.execution_log),
+        "execution_backend": "HybridIntelligenceCore",
     }
