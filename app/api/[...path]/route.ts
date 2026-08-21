@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const DEFAULT_BACKEND_URL = 'https://api.empire1.cloud';
+const DEFAULT_BACKEND_URL = 'https://empire-1-api.onrender.com';
 const DEFAULT_SLA113_BACKEND_URL = 'https://api.sla113.southernlifestyle.org';
 
 function normalizeBaseUrl(url: string): string {
