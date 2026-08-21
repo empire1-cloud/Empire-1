@@ -6,7 +6,6 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List
 import uuid
 from datetime import datetime, timezone
 
@@ -14,7 +13,6 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 from database import connect_to_database, close_database_connection, get_database
-from app.core.config import get_settings
 from core.dependencies import get_current_user
 
 DATABASE_CONNECTED = False
@@ -29,8 +27,6 @@ async def lifespan(app: FastAPI):
     except Exception as exc:
         DATABASE_CONNECTED = False
         logging.exception("Database connection failed on startup")
-        # Production must fail closed. A degraded backend can silently lose
-        # auth, tenant, billing, receipt, and audit guarantees.
         if os.getenv("APP_ENV", "development").lower() in {"production", "prod"}:
             raise RuntimeError("Production startup aborted: database is unavailable") from exc
     yield
@@ -62,27 +58,14 @@ from app.routers.empire_router import router as empire_router
 from app.routers.gtm_layer import router as gtm_layer_router
 from app.routers.revenue_os import router as revenue_os_router
 from app.routers.revenue_receipts import router as revenue_receipts_router
+from app.routers.hic import router as hic_router
 
 from routers.engines import (
-    core_router,
-    strategy_router,
-    drift_router,
-    plan_router,
-    analysis_router,
-    opportunity_router,
-    evaluator_router,
-    pricing_router,
-    blueprint_router,
-    persona_router,
-    pipeline_router,
-    anime_character_router,
-    anime_lore_router,
-    anime_story_router,
-    art_direction_router,
-    money_pipeline_router,
-    analytics_router,
-    voxcpm_router,
-    audio_fx_router,
+    core_router, strategy_router, drift_router, plan_router, analysis_router,
+    opportunity_router, evaluator_router, pricing_router, blueprint_router,
+    persona_router, pipeline_router, anime_character_router, anime_lore_router,
+    anime_story_router, art_direction_router, money_pipeline_router,
+    analytics_router, voxcpm_router, audio_fx_router,
 )
 from routers.engines.history_protected import router as history_protected_router
 from routers.engines.lyrica.agents import router as lyrica_router
@@ -104,35 +87,21 @@ api_router.include_router(gtm_router)
 api_router.include_router(gtm_layer_router)
 api_router.include_router(revenue_os_router)
 api_router.include_router(revenue_receipts_router)
-
 api_router.include_router(history_protected_router)
 api_router.include_router(pipelines_router)
 api_router.include_router(sla113_router)
 api_router.include_router(sla113_orchestration_router)
 
-# Engine execution and engine telemetry are authenticated at the router boundary.
-# This removes the previous public-backward-compatibility bypass.
+# HIC now lives behind the authenticated control-plane boundary.
+api_router.include_router(hic_router, dependencies=[Depends(get_current_user)])
+
+# Legacy engine execution and telemetry are no longer public.
 for engine_router in (
-    core_router,
-    strategy_router,
-    drift_router,
-    plan_router,
-    analysis_router,
-    opportunity_router,
-    evaluator_router,
-    pricing_router,
-    blueprint_router,
-    persona_router,
-    pipeline_router,
-    anime_character_router,
-    anime_lore_router,
-    anime_story_router,
-    art_direction_router,
-    money_pipeline_router,
-    analytics_router,
-    voxcpm_router,
-    audio_fx_router,
-    lyrica_router,
+    core_router, strategy_router, drift_router, plan_router, analysis_router,
+    opportunity_router, evaluator_router, pricing_router, blueprint_router,
+    persona_router, pipeline_router, anime_character_router, anime_lore_router,
+    anime_story_router, art_direction_router, money_pipeline_router,
+    analytics_router, voxcpm_router, audio_fx_router, lyrica_router,
 ):
     api_router.include_router(engine_router, dependencies=[Depends(get_current_user)])
 
@@ -161,8 +130,7 @@ async def health_check():
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
     db = get_database()
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
+    status_obj = StatusCheck(**input.model_dump())
     doc = status_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
     await db.status_checks.insert_one(doc)
@@ -173,14 +141,10 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://empire1.cloud",
-        "https://www.empire1.cloud",
-        "https://southernlifestyle.org",
-        "https://www.southernlifestyle.org",
-        "https://arcade.southernlifestyle.org",
-        "https://sla113.southernlifestyle.org",
-        "http://localhost:3000",
-        "http://localhost:5173",
+        "https://empire1.cloud", "https://www.empire1.cloud",
+        "https://southernlifestyle.org", "https://www.southernlifestyle.org",
+        "https://arcade.southernlifestyle.org", "https://sla113.southernlifestyle.org",
+        "http://localhost:3000", "http://localhost:5173",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
