@@ -103,3 +103,4 @@ frontend/node_modules/.cache/default-development/13.pack
 # Agent/session transcripts — never commit (may contain secrets)
 session-ses_*.md
 session-*.log
+frontend/

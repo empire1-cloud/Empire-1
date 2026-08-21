@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: empire1-api
+    runtime: docker
+    dockerfilePath: backend/Dockerfile.api
+    dockerContext: backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ENV
+        value: production
+      - key: PORT
+        value: 8000
