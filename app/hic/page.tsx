@@ -359,16 +359,16 @@ function AnalyticsTab() {
         <div className="hic-section">
           <div className="hic-section-title">Engine Performance</div>
           <div style={{background:'var(--surface)',border:'1px solid var(--line-strong)',borderRadius:4,overflow:'hidden'}}>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 80px 80px 80px 80px',padding:'12px 16px',background:'var(--surface2)',fontFamily:'JetBrains Mono',monospace,fontSize:11,letterSpacing:'0.06em',color:'var(--muted)',textTransform:'uppercase'}}>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 80px 80px 80px 80px',padding:'12px 16px',background:'var(--surface2)',fontFamily:'JetBrains Mono, monospace',fontSize:11,letterSpacing:'0.06em',color:'var(--muted)',textTransform:'uppercase'}}>
               <span>Engine</span><span style={{textAlign:'right'}}>Runs</span><span style={{textAlign:'right'}}>Success</span><span style={{textAlign:'right'}}>Errors</span><span style={{textAlign:'right'}}>Avg Latency</span>
             </div>
             {engines.map(([id, data]: [string, any]) => (
               <div key={id} style={{display:'grid',gridTemplateColumns:'1fr 80px 80px 80px 80px',padding:'10px 16px',borderTop:'1px solid var(--line)',fontSize:13}}>
                 <span style={{fontWeight:600}}>{data.name}</span>
-                <span style={{textAlign:'right',fontFamily:'JetBrains Mono',monospace,fontSize:12}}>{data.total}</span>
-                <span style={{textAlign:'right',fontFamily:'JetBrains Mono',monospace,fontSize:12,color:'var(--green)'}}>{data.success_rate}%</span>
-                <span style={{textAlign:'right',fontFamily:'JetBrains Mono',monospace,fontSize:12,color:data.errors > 0 ? 'var(--pink)' : 'var(--muted)'}}>{data.errors}</span>
-                <span style={{textAlign:'right',fontFamily:'JetBrains Mono',monospace,fontSize:12,color:'var(--gold)'}}>{data.avg_latency_ms > 0 ? data.avg_latency_ms + 'ms' : '—'}</span>
+                <span style={{textAlign:'right',fontFamily:'JetBrains Mono, monospace',fontSize:12}}>{data.total}</span>
+                <span style={{textAlign:'right',fontFamily:'JetBrains Mono, monospace',fontSize:12,color:'var(--green)'}}>{data.success_rate}%</span>
+                <span style={{textAlign:'right',fontFamily:'JetBrains Mono, monospace',fontSize:12,color:data.errors > 0 ? 'var(--pink)' : 'var(--muted)'}}>{data.errors}</span>
+                <span style={{textAlign:'right',fontFamily:'JetBrains Mono, monospace',fontSize:12,color:'var(--gold)'}}>{data.avg_latency_ms > 0 ? data.avg_latency_ms + 'ms' : '—'}</span>
               </div>
             ))}
           </div>
