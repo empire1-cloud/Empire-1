@@ -74,7 +74,7 @@
 
 ```env
 # /app/backend/.env
-EMERGENT_LLM_KEY=sk-emergent-23016EdC2B1B2Fb2a7
+EMERGENT_LLM_KEY=<set-in-environment>  # never commit real keys
 
 # Optional: Use separate keys per provider
 # OPENAI_API_KEY=sk-...
