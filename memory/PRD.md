@@ -56,14 +56,19 @@ A comprehensive backend system featuring 19 specialized AI engines orchestrated 
 
 ## What's Been Implemented
 
+> **Date correction (2026-09-25):** the first six rows were previously dated `2026-01-03`. Git history shows that date is a
+> month typo: the repo's initial commit is `92fa2d8` (2026-02-02), and the playbook (`6db08f9`), PRD (`d6ee2f8`), core engines
+> and `backend/routers/engines/core.py` (`e13a2dc`) were all first committed on 2026-02-03. The `2026-01-03` label was introduced
+> in `4274a56` (2026-02-03), replacing an undated `2026-01`. No commit predates 2026-02-02.
+
 | Date | Feature | Status |
 |------|---------|--------|
-| 2026-01-03 | Integration playbook (HYBRID_AI_STACK_PLAYBOOK.md) | ✅ Done |
-| 2026-01-03 | Hybrid Intelligence Core | ✅ Done |
-| 2026-01-03 | Core engines (Strategy, Plan, Analysis, Opportunity, Evaluator, Pricing, Blueprint, Persona) | ✅ Done |
-| 2026-01-03 | Infrastructure (Canon Enforcer, Drift Monitor, Error Handler, Routing Engine) | ✅ Done |
-| 2026-01-03 | Anime Character Engine | ✅ Done |
-| 2026-01-03 | Pipeline Composer Engine | ✅ Done |
+| 2026-02-03 | Integration playbook (HYBRID_AI_STACK_PLAYBOOK.md) | ✅ Done |
+| 2026-02-03 | Hybrid Intelligence Core | ✅ Done |
+| 2026-02-03 | Core engines (Strategy, Plan, Analysis, Opportunity, Evaluator, Pricing, Blueprint, Persona) | ✅ Done |
+| 2026-02-03 | Infrastructure (Canon Enforcer, Drift Monitor, Error Handler, Routing Engine) | ✅ Done |
+| 2026-02-03 | Anime Character Engine | ✅ Done |
+| 2026-02-03 | Pipeline Composer Engine | ✅ Done |
 | 2026-02-03 | **Router Refactoring** - Split 1450-line monolithic router into 16 modular files | ✅ Done |
 | 2026-02-03 | Anime Lore Engine + API endpoints | ✅ Done |
 | 2026-02-03 | Anime Story Engine + API endpoints | ✅ Done |
