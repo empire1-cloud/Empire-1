@@ -31,7 +31,7 @@ router = APIRouter(prefix="/empire1/router", tags=["Empire-1 Router"])
 def _authorize(authorization: str | None, x_api_key: str | None) -> None:
     expected = os.getenv("EMPIRE_ROUTER_TOKEN", "").strip()
     if not expected:
-        return
+        raise HTTPException(status_code=401, detail="Empire-1 Router token not configured")
     supplied = ""
     if authorization and authorization.lower().startswith("bearer "):
         supplied = authorization[7:].strip()
@@ -46,7 +46,11 @@ def _error(exc: EmpireRouterError) -> HTTPException:
 
 
 @router.get("/health")
-async def health() -> dict[str, Any]:
+async def health(
+    authorization: str | None = Header(default=None),
+    x_api_key: str | None = Header(default=None),
+) -> dict[str, Any]:
+    _authorize(authorization, x_api_key)
     providers = provider_snapshot()
     return {
         "status": "online",
