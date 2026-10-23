@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
-import EmpireHome from '@/components/tenants/EmpireHome';
+import EmpireHomeRefresh from '@/components/tenants/EmpireHomeRefresh';
 import SouthernHome from '@/components/tenants/SouthernHome';
 import { redirect } from 'next/navigation';
 
@@ -8,7 +8,7 @@ export function generateMetadata(): Metadata {
   const host = headers().get('host') || '';
   const cleanHost = host.split(':')[0].toLowerCase();
 
-  if (cleanHost === 'sla113.southernlifestyle.org' || cleanHost.includes('localhost') || cleanHost.includes('127.0.0.1')) {
+  if (cleanHost === 'sla113.southernlifestyle.org' || cleanHost.includes('localhost') || cleanHost === '127.0.0.1') {
     return {
       title: 'SLA113',
       description: 'SLA113 standalone',
@@ -23,8 +23,8 @@ export function generateMetadata(): Metadata {
   }
 
   return {
-    title: 'Empire One',
-    description: 'Empire One platform homepage',
+    title: 'Empire One — Intelligence, Creator Infrastructure & Revenue Systems',
+    description: 'Empire-1 architects connected intelligence, creator infrastructure, governance, and revenue workflows.',
   };
 }
 
@@ -43,7 +43,7 @@ export default function RootPage() {
 
   return (
     <>
-      <EmpireHome />
+      <EmpireHomeRefresh />
       <style dangerouslySetInnerHTML={{ __html: `
         .services-launch-link{position:fixed;right:18px;bottom:18px;z-index:40;background:#e8b923;color:#080808;padding:13px 17px;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 10px 30px rgba(0,0,0,.38);transition:transform .18s ease,box-shadow .18s ease;}
         .services-launch-link:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(232,185,35,.24);}
