@@ -42,6 +42,25 @@ const CSS = String.raw`
 .e1 .footer{padding:34px 0 46px}.e1 .footerinner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}.e1 .footerlinks{display:flex;flex-wrap:wrap;gap:20px;color:var(--muted);font-size:11px}.e1 .footerbottom{margin-top:26px;color:#777785;font:9px ui-monospace,monospace;letter-spacing:.07em}
 @media(max-width:900px){.e1 .herogrid{grid-template-columns:1fr;gap:42px}.e1 .console{max-width:650px}.e1 .products{grid-template-columns:repeat(2,minmax(0,1fr))}.e1 .capgrid,.e1 .contract,.e1 .founder{grid-template-columns:1fr;gap:28px}}
 @media(max-width:620px){.e1 .wrap{width:calc(100% - 32px)}.e1 .nav{min-height:64px}.e1 .navlinks{gap:0}.e1 .navlinks a:not(.navcta){display:none}.e1 .navcta{font-size:10px;padding:10px}.e1 .hero{padding:60px 0 50px}.e1 h1{font-size:clamp(43px,13vw,65px)}.e1 .lead{font-size:15px}.e1 .milestonegrid{grid-template-columns:1fr}.e1 .milestone{border-right:0;border-bottom:1px solid var(--line);padding:17px 20px}.e1 .milestone:last-child{border-bottom:0}.e1 .section{padding:60px 0}.e1 .sectionhead{display:block}.e1 .intro{margin-top:17px}.e1 .products{grid-template-columns:1fr}.e1 .product{min-height:210px}.e1 .integrations{grid-template-columns:repeat(2,minmax(0,1fr))}.e1 .flow{grid-template-columns:repeat(2,1fr)}.e1 .consolebody{padding:14px}.e1 .footerinner{align-items:flex-start;flex-direction:column}}
+
+.e1 .proof-state{border:1px solid var(--line);background:var(--panel);color:#b4b4bb;padding:24px;font:12px/1.7 ui-monospace,monospace}
+.e1 .proof-state-warn{border-color:rgba(242,201,76,.35);color:var(--gold)}
+.e1 .proof-metrics{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--line);gap:1px}
+.e1 .proof-metric{background:var(--panel);padding:22px}.e1 .proof-metric span{display:block;color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.e1 .proof-metric strong{font:22px ui-monospace,monospace;color:#f7f7fb}
+.e1 .proof-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:14px;margin-top:14px}
+.e1 .proof-card{border:1px solid var(--line);background:var(--panel);padding:22px}.e1 .proof-card h3{margin:0 0 16px;color:var(--gold);font:10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
+.e1 .proof-products,.e1 .proof-activity{display:flex;flex-direction:column;gap:10px}
+.e1 .proof-product,.e1 .proof-activity-row{display:grid;grid-template-columns:8px 1fr auto;align-items:center;gap:10px;color:#c7c7d3;font-size:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.e1 .proof-product:last-child,.e1 .proof-activity-row:last-child{border-bottom:0;padding-bottom:0}.e1 .proof-product strong{color:#f7f7fb;font-family:ui-monospace,monospace}
+.e1 .proof-activity-row time{color:var(--muted);font:10px ui-monospace,monospace}.e1 .proof-dot{width:7px;height:7px;border-radius:50%;display:inline-block}.e1 .proof-muted{color:var(--muted);font-size:13px;margin:0}
+.e1 .proof-intake{display:grid;grid-template-columns:minmax(180px,1.4fr) minmax(150px,1fr) minmax(150px,1fr) auto;gap:10px;align-items:end;margin-top:24px;padding:20px;border:1px solid var(--line);background:var(--panel)}
+.e1 .proof-intake label{display:block;color:#f7f7fb;font:11px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.e1 .proof-intake p{color:var(--muted);font-size:11px;line-height:1.5;margin:0}
+.e1 .proof-intake input,.e1 .proof-intake select{width:100%;min-height:44px;background:#07070b;color:#f7f7fb;border:1px solid var(--line);padding:0 12px;font:12px ui-monospace,monospace}
+.e1 .proof-intake button{min-height:44px;border:0;background:var(--gold);color:#050505;padding:0 18px;font:600 11px ui-monospace,monospace;text-transform:uppercase;cursor:pointer}.e1 .proof-intake button:disabled{opacity:.55;cursor:wait}
+.e1 .proof-form-ok,.e1 .proof-form-error{grid-column:1/-1;font:11px ui-monospace,monospace}.e1 .proof-form-ok{color:#3ddc84}.e1 .proof-form-error{color:#ef4444}
+@media(max-width:760px){.e1 .proof-metrics,.e1 .proof-grid,.e1 .proof-intake{grid-template-columns:1fr}.e1 .proof-activity-row{grid-template-columns:8px 1fr}.e1 .proof-activity-row time{grid-column:2}}
+
 @media(prefers-reduced-motion:reduce){.e1 *{scroll-behavior:auto!important;transition:none!important}}
 `;
 
